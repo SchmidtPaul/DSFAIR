@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3390130652",
+    "hash" : "0",
     "id" : "C2295C01",
-    "lastKnownWriteTime" : 1598539220,
-    "last_content_update" : 1598539220044,
+    "lastKnownWriteTime" : 1598539691,
+    "last_content_update" : 1598539691852,
     "path" : "D:/Coding/DSFAIR/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
-        "cursorPosition" : "6,0",
+        "cursorPosition" : "11,0",
         "scrollLine" : "0"
     },
     "read_only" : false,
