@@ -1,2 +1,4 @@
 # DSFAIR
-Data Science of Agriculture in R
+Data Science for Agriculture in R
+
+https://schmidtpaul.github.io/DSFAIR/
