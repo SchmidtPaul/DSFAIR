@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1598538614546.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2470064752",
+    "id" : "FEA21485",
+    "lastKnownWriteTime" : 1598538658,
+    "last_content_update" : 1598538658856,
+    "path" : "D:/Coding/DSFAIR/styles.css",
+    "project_path" : "styles.css",
+    "properties" : {
+        "cursorPosition" : "74,1",
+        "scrollLine" : "65"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "css"
+}
