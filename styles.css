@@ -54,14 +54,14 @@ blockquote p {
 
 
 /***************************/
-/* Table of contents start 
+/* Table of contents start */
 
 #TOC::before {
   content: "";
   display: block;
   height: 200px;
   margin: 2em 20px 40px 20px;
-  background-image: url("img/logo/hexagonMMFAIR.png");
+  background-image: url("img/hexagonDSFAIR.png");
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -185,3 +185,7 @@ a[target]:link:hover::before, a[target]:visited:hover::before{
 
 /* Hyperlinks with a target attribute end */
 /******************************************/
+
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}

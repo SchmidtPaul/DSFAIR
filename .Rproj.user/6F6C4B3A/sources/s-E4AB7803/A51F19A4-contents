@@ -7,6 +7,10 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Examples"
+      menu:
+      - text: "RCBD_ClewerScarisbrick2001"
+        href: RCBD_ClewerScarisbrick2001.html
 output:
   html_document:
     theme: lumen

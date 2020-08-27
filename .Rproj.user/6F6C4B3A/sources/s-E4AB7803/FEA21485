@@ -7,18 +7,18 @@
     "folds" : "",
     "hash" : "0",
     "id" : "FEA21485",
-    "lastKnownWriteTime" : 1598539343,
-    "last_content_update" : 1598539343,
+    "lastKnownWriteTime" : 1598541335,
+    "last_content_update" : 1598541335003,
     "path" : "D:/Coding/DSFAIR/styles.css",
     "project_path" : "styles.css",
     "properties" : {
-        "cursorPosition" : "74,1",
-        "scrollLine" : "158"
+        "cursorPosition" : "190,1",
+        "scrollLine" : "176"
     },
     "read_only" : false,
     "read_only_alternatives" : [
     ],
-    "relative_order" : 4,
+    "relative_order" : 2,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "css"

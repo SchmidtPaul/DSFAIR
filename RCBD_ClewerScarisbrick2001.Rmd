@@ -1,0 +1,165 @@
+---
+title: "Randomized complete block design"
+output: 
+  html_document:
+    includes:
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# formatting tables for html output
+options(knitr.kable.NA = '')
+pacman::p_load(kableExtra, formattable ,htmltools)
+pacman::p_load(purrr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# packages
+pacman::p_load(readr, tidyverse,  # data import and handling
+               emmeans, multcomp, # mean comparisons
+               ggplot2, desplot)  # plots
+
+# data (import via URL)
+dat <- read_csv("https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv")
+```
+```{r, echo=FALSE, purl=FALSE}
+dat %>%
+  kable(escape = FALSE) %>% 
+  kable_styling(bootstrap_options = c("bordered", "hover", "condensed", "responsive"), 
+                full_width = FALSE) %>% 
+  scroll_box(height = "200px")
+```
+
+# Data
+
+This example is taken from Chapter *"2 Randomized complete block design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Clewer and Scarisbrick (2001)](https://www.wiley.com/en-us/Practical+Statistics+and+Experimental+Design+for+Plant+and+Crop+Science-p-9780471899082){target="_blank"}  from a yield (t/ha) trial laid out as a randomized complete `block` design (3 blocks) with `cultivar` (4 cultivars) being the only treatment factor. Thus, we have a total of 12 plots.
+
+## Formatting
+Before anything, the columns `block` and `cultivar` should be encoded as factors, since R by default encoded them as numeric.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(block, cultivar), as.factor)
+```
+
+## Exploring
+
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
+
+```{r, fig.height = 2, fig.width = 4, fig.align = "center"}
+desplot(data = dat,
+  form = cultivar ~ col + row,        # fill color per cultivar
+  out1 = block,                       # bold lines between blocks
+  text = yield, cex = 1, shorten = F, # show yield for each plot
+  main = "Field layout", xlab = "", ylab = "", show.key = F) # formatting
+```
+
+While not necessary for the analysis below, it may be convenient to look at the data as a two-way table with ordered blocks and treatments. In this case we would convert our data, which is in the *long format* into the *wide format* as follows:
+
+```{r}
+dat %>% 
+  dplyr::select(block, cultivar, yield) %>% 
+  pivot_wider(names_from = cultivar, values_from = yield)
+```
+
+We could also have a look at the arithmetic means and standard deviations for yield per `cultivar` or `block`.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(cultivar) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(block) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))
+```
+</div> </div>
+
+Finally, we can plot the raw data
+
+```{r, fig.height = 3, fig.width = 4, fig.align = "center"}
+ggplot(data = dat,
+       aes(y = yield, x = cultivar, color = block)) +
+  geom_point() +  # scatter plot
+  ylim(0, NA) +   # force y-axis to start at 0
+  theme_classic() # clearer plot format 
+```
+
+# Modelling
+
+Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `cultivar` and `block` effects.
+
+```{r}
+mod <- lm(yield ~ cultivar + block, data = dat)
+```
+
+## ANOVA
+
+Moreover, we can conduct an ANOVA for this model.
+
+```{r}
+mod %>% anova()
+```
+
+As can be seen, the F-test finds the `cultivar` effects to be statistically significant (p = `r anova(mod)["cultivar", "Pr(>F)"] %>% round(3)` < 0.05). 
+
+## Mean comparisons
+
+Following a significant F-test, one will want to compare genotype means.
+
+```{r}
+mean_comparisons <- mod %>% 
+  emmeans(pairwise ~ "cultivar", adjust="tukey") %>% # adjust="none" for t-test
+  pluck("emmeans") %>% 
+  cld(details=TRUE, Letters=letters) # add letter display
+
+mean_comparisons$emmeans # adjusted cultivar means
+
+mean_comparisons$comparisons # differences between adjusted cultivar means 
+```
+
+# Present results
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+```{r}
+ggplot() +
+  # black dots representing the raw data
+  geom_point(
+    data = dat,
+    aes(y = yield, x = cultivar)
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = cultivar),
+    color = "red",
+    position = position_nudge(x = 0.1)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons$emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = cultivar),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.1)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = cultivar, label = .group),
+    color = "red",
+    position = position_nudge(x = 0.2)
+  ) + 
+  ylim(0, NA) + # forces y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Cultivar") +      # label x-axis
+  labs(caption = "Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() # clearer plot format 
+```
+

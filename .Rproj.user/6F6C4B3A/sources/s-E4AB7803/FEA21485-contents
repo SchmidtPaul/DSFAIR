@@ -185,3 +185,7 @@ a[target]:link:hover::before, a[target]:visited:hover::before{
 
 /* Hyperlinks with a target attribute end */
 /******************************************/
+
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
