@@ -24,7 +24,6 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <!--All these are favicons-->
 <link rel="apple-touch-icon" sizes="180x180" href="img/logo/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/logo/favicon-32x32.png">
@@ -527,261 +526,52 @@ div.tocify {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
 <a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse,  <span class="co"># data import and handling</span></a>
 <a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp, <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot)  <span class="co"># plots</span></a>
-<a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co"># data (import via URL)</span></a>
-<a class="sourceLine" id="cb1-7" title="7">dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv&quot;</span>)</a></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; ">
-<table class="table table-bordered table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-block
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-cultivar
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-yield
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-row
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-col
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-B1
-</td>
-<td style="text-align:left;">
-C1
-</td>
-<td style="text-align:right;">
-7.4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B1
-</td>
-<td style="text-align:left;">
-C2
-</td>
-<td style="text-align:right;">
-9.8
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B1
-</td>
-<td style="text-align:left;">
-C3
-</td>
-<td style="text-align:right;">
-7.3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B1
-</td>
-<td style="text-align:left;">
-C4
-</td>
-<td style="text-align:right;">
-9.5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B2
-</td>
-<td style="text-align:left;">
-C1
-</td>
-<td style="text-align:right;">
-6.5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B2
-</td>
-<td style="text-align:left;">
-C2
-</td>
-<td style="text-align:right;">
-6.8
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B2
-</td>
-<td style="text-align:left;">
-C3
-</td>
-<td style="text-align:right;">
-6.1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B2
-</td>
-<td style="text-align:left;">
-C4
-</td>
-<td style="text-align:right;">
-8.0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B3
-</td>
-<td style="text-align:left;">
-C1
-</td>
-<td style="text-align:right;">
-5.6
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B3
-</td>
-<td style="text-align:left;">
-C2
-</td>
-<td style="text-align:right;">
-6.2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B3
-</td>
-<td style="text-align:left;">
-C3
-</td>
-<td style="text-align:right;">
-6.4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B3
-</td>
-<td style="text-align:left;">
-C4
-</td>
-<td style="text-align:right;">
-7.4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot)  <span class="co"># plots</span></a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from Chapter <em>“2 Randomized complete block design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.wiley.com/en-us/Practical+Statistics+and+Experimental+Design+for+Plant+and+Crop+Science-p-9780471899082" target="_blank">Clewer and Scarisbrick (2001)</a> from a yield (t/ha) trial laid out as a randomized complete <code>block</code> design (3 blocks) with <code>cultivar</code> (4 cultivars) being the only treatment factor. Thus, we have a total of 12 plots.</p>
+<div id="import" class="section level2">
+<h2>Import</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb2-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">dat</a></code></pre></div>
+<pre><code>## # A tibble: 12 x 5
+##    block cultivar yield   row   col
+##    &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 B1    C1         7.4     2     1
+##  2 B1    C2         9.8     3     1
+##  3 B1    C3         7.3     1     1
+##  4 B1    C4         9.5     4     1
+##  5 B2    C1         6.5     1     2
+##  6 B2    C2         6.8     4     2
+##  7 B2    C3         6.1     3     2
+##  8 B2    C4         8       2     2
+##  9 B3    C1         5.6     2     3
+## 10 B3    C2         6.2     1     3
+## 11 B3    C3         6.4     3     3
+## 12 B3    C4         7.4     4     3</code></pre>
+</div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>block</code> and <code>cultivar</code> should be encoded as factors, since R by default encoded them as numeric.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(block, cultivar), as.factor)</a></code></pre></div>
+<p>Before anything, the columns <code>block</code> and <code>cultivar</code> should be encoded as factors, since R by default encoded them as character.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(block, cultivar), as.factor)</a></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
 <p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">form =</span> cultivar <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row,        <span class="co"># fill color per cultivar</span></a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">out1 =</span> block,                       <span class="co"># bold lines between blocks</span></a>
-<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">text =</span> yield, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> F, <span class="co"># show yield for each plot</span></a>
-<a class="sourceLine" id="cb3-5" title="5">  <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">form =</span> cultivar <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row,        <span class="co"># fill color per cultivar</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">out1 =</span> block,                       <span class="co"># bold lines between blocks</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="dt">text =</span> yield, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> F, <span class="co"># show yield for each plot</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
 <p><img src="RCBD_ClewerScarisbrick2001_files/figure-html/unnamed-chunk-5-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>While not necessary for the analysis below, it may be convenient to look at the data as a two-way table with ordered blocks and treatments. In this case we would convert our data, which is in the <em>long format</em> into the <em>wide format</em> as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(block, cultivar, yield) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> cultivar, <span class="dt">values_from =</span> yield)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(block, cultivar, yield) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> cultivar, <span class="dt">values_from =</span> yield)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   block    C1    C2    C3    C4
 ##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -791,10 +581,10 @@ C4
 <p>We could also have a look at the arithmetic means and standard deviations for yield per <code>cultivar</code> or <code>block</code>.</p>
 <div class="row">
 <div class="col-md-6">
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(cultivar) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
-<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield))</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(cultivar) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
+<a class="sourceLine" id="cb8-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield))</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   cultivar  mean std.dev
 ##   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;
@@ -804,10 +594,10 @@ C4
 ## 4 C4         8.3   1.08</code></pre>
 </div>
 <div class="col-md-6">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(block) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
-<a class="sourceLine" id="cb8-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(block) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
+<a class="sourceLine" id="cb10-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   block  mean std.dev
 ##   &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -817,22 +607,22 @@ C4
 </div>
 </div>
 <p>Finally, we can plot the raw data</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb10-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> cultivar, <span class="dt">color =</span> block)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st">  </span><span class="co"># scatter plot</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st">   </span><span class="co"># force y-axis to start at 0</span></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb12-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> cultivar, <span class="dt">color =</span> block)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st">  </span><span class="co"># scatter plot</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st">   </span><span class="co"># force y-axis to start at 0</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
 <p><img src="RCBD_ClewerScarisbrick2001_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
 <p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and (fixed) <code>cultivar</code> and <code>block</code> effects.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>cultivar <span class="op">+</span><span class="st"> </span>block, <span class="dt">data =</span> dat)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>cultivar <span class="op">+</span><span class="st"> </span>block, <span class="dt">data =</span> dat)</a></code></pre></div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
 <p>Moreover, we can conduct an ANOVA for this model.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -847,12 +637,12 @@ C4
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
 <p>Following a significant F-test, one will want to compare genotype means.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;cultivar&quot;</span>, <span class="dt">adjust=</span><span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># adjust=&quot;none&quot; for t-test</span></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details=</span><span class="ot">TRUE</span>, <span class="dt">Letters=</span>letters) <span class="co"># add letter display</span></a>
-<a class="sourceLine" id="cb14-5" title="5"></a>
-<a class="sourceLine" id="cb14-6" title="6">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted cultivar means</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;cultivar&quot;</span>, <span class="dt">adjust=</span><span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># adjust=&quot;none&quot; for t-test</span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details=</span><span class="ot">TRUE</span>, <span class="dt">Letters=</span>letters) <span class="co"># add letter display</span></a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted cultivar means</span></a></code></pre></div>
 <pre><code>##  cultivar emmean    SE df lower.CL upper.CL .group
 ##  C1          6.5 0.365  6     5.22     7.78  a    
 ##  C3          6.6 0.365  6     5.32     7.88  ab   
@@ -864,7 +654,7 @@ C4
 ## Conf-level adjustment: sidak method for 4 estimates 
 ## P value adjustment: tukey method for comparing a family of 4 estimates 
 ## significance level used: alpha = 0.05</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">mean_comparisons<span class="op">$</span>comparisons <span class="co"># differences between adjusted cultivar means </span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">mean_comparisons<span class="op">$</span>comparisons <span class="co"># differences between adjusted cultivar means </span></a></code></pre></div>
 <pre><code>##  contrast estimate    SE df t.ratio p.value
 ##  C3 - C1       0.1 0.516  6 0.194   0.9971 
 ##  C2 - C1       1.1 0.516  6 2.130   0.2447 
@@ -880,39 +670,39 @@ C4
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
 <p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="co"># black dots representing the raw data</span></a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(</a>
-<a class="sourceLine" id="cb18-4" title="4">    <span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb18-5" title="5">    <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> cultivar)</a>
-<a class="sourceLine" id="cb18-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-7" title="7"><span class="st">  </span><span class="co"># red dots representing the adjusted means</span></a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(</a>
-<a class="sourceLine" id="cb18-9" title="9">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb18-10" title="10">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> cultivar),</a>
-<a class="sourceLine" id="cb18-11" title="11">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb18-12" title="12">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb18-13" title="13">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-14" title="14"><span class="st">  </span><span class="co"># red error bars representing the confidence limits of the adjusted means</span></a>
-<a class="sourceLine" id="cb18-15" title="15"><span class="st">  </span><span class="kw">geom_errorbar</span>(</a>
-<a class="sourceLine" id="cb18-16" title="16">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb18-17" title="17">    <span class="kw">aes</span>(<span class="dt">ymin =</span> lower.CL, <span class="dt">ymax =</span> upper.CL, <span class="dt">x =</span> cultivar),</a>
-<a class="sourceLine" id="cb18-18" title="18">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb18-19" title="19">    <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb18-20" title="20">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb18-21" title="21">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-22" title="22"><span class="st">  </span><span class="co"># red letters </span></a>
-<a class="sourceLine" id="cb18-23" title="23"><span class="st">  </span><span class="kw">geom_text</span>(</a>
-<a class="sourceLine" id="cb18-24" title="24">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb18-25" title="25">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> cultivar, <span class="dt">label =</span> .group),</a>
-<a class="sourceLine" id="cb18-26" title="26">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb18-27" title="27">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb18-28" title="28">  ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-29" title="29"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co"># forces y-axis to start at 0</span></a>
-<a class="sourceLine" id="cb18-30" title="30"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Yield in t/ha&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># label y-axis</span></a>
-<a class="sourceLine" id="cb18-31" title="31"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Cultivar&quot;</span>) <span class="op">+</span><span class="st">      </span><span class="co"># label x-axis</span></a>
-<a class="sourceLine" id="cb18-32" title="32"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-33" title="33"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="co"># black dots representing the raw data</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(</a>
+<a class="sourceLine" id="cb20-4" title="4">    <span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb20-5" title="5">    <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> cultivar)</a>
+<a class="sourceLine" id="cb20-6" title="6">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="st">  </span><span class="co"># red dots representing the adjusted means</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(</a>
+<a class="sourceLine" id="cb20-9" title="9">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb20-10" title="10">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> cultivar),</a>
+<a class="sourceLine" id="cb20-11" title="11">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb20-12" title="12">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb20-13" title="13">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-14" title="14"><span class="st">  </span><span class="co"># red error bars representing the confidence limits of the adjusted means</span></a>
+<a class="sourceLine" id="cb20-15" title="15"><span class="st">  </span><span class="kw">geom_errorbar</span>(</a>
+<a class="sourceLine" id="cb20-16" title="16">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb20-17" title="17">    <span class="kw">aes</span>(<span class="dt">ymin =</span> lower.CL, <span class="dt">ymax =</span> upper.CL, <span class="dt">x =</span> cultivar),</a>
+<a class="sourceLine" id="cb20-18" title="18">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb20-19" title="19">    <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb20-20" title="20">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb20-21" title="21">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-22" title="22"><span class="st">  </span><span class="co"># red letters </span></a>
+<a class="sourceLine" id="cb20-23" title="23"><span class="st">  </span><span class="kw">geom_text</span>(</a>
+<a class="sourceLine" id="cb20-24" title="24">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb20-25" title="25">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> cultivar, <span class="dt">label =</span> .group),</a>
+<a class="sourceLine" id="cb20-26" title="26">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb20-27" title="27">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb20-28" title="28">  ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-29" title="29"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co"># force y-axis to start at 0</span></a>
+<a class="sourceLine" id="cb20-30" title="30"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Yield in t/ha&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># label y-axis</span></a>
+<a class="sourceLine" id="cb20-31" title="31"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Cultivar&quot;</span>) <span class="op">+</span><span class="st">      </span><span class="co"># label x-axis</span></a>
+<a class="sourceLine" id="cb20-32" title="32"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-33" title="33"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
 <p><img src="RCBD_ClewerScarisbrick2001_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 
