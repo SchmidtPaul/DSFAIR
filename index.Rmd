@@ -3,7 +3,7 @@ title: "Data Science for Agriculture in R"
 output: 
   html_document:
     includes:
-    #   in_header: header.html
+      in_header: header.html
       after_body: footer.html
 # params:
 #   hilang:
