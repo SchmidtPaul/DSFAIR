@@ -719,7 +719,7 @@ div.tocify {
 <p>The data contains 24 observations of the following variables: - variety: 4 levels: v1, n = 6; v2, n = 6; v3, n = 6 and v4, n = 6 - yield: Mean = 26.82, SD = 8.49, range = [11.42, 43.32], 0 missing</p>
 </div>
 <div id="model" class="section level2">
-<h2>Model</h2>
+<h2>model</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_eq</span>()</a></code></pre></div>
 <p><span class="math display">\[
 \operatorname{yield} = \alpha + \beta_{1}(\operatorname{variety}_{\operatorname{v2}}) + \beta_{2}(\operatorname{variety}_{\operatorname{v3}}) + \beta_{3}(\operatorname{variety}_{\operatorname{v4}}) + \epsilon
@@ -733,7 +733,7 @@ div.tocify {
 </ul>
 </div>
 <div id="anova-1" class="section level2">
-<h2>ANOVA</h2>
+<h2>anova</h2>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
