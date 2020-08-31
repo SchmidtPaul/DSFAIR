@@ -9,6 +9,8 @@ navbar:
       href: index.html
     - text: "Examples"
       menu:
+      - text: "CRD_Mead1993"
+        href: CRD_Mead1993.html
       - text: "RCBD_ClewerScarisbrick2001"
         href: RCBD_ClewerScarisbrick2001.html
       - text: "alpha_JohnWilliams1995"

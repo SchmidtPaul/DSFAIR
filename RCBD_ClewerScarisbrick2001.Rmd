@@ -52,7 +52,7 @@ desplot(data = dat,
   form = cultivar ~ col + row,        # fill color per cultivar
   out1 = block,                       # bold lines between blocks
   text = yield, cex = 1, shorten = F, # show yield for each plot
-  main = "Field layout", xlab = "", ylab = "", show.key = F) # formatting
+  main = "Field layout", show.key = F) # formatting
 ```
 
 While not necessary for the analysis below, it may be convenient to look at the data as a two-way table with ordered blocks and treatments. In this case we would convert our data, which is in the *long format* into the *wide format* as follows:

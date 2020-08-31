@@ -494,6 +494,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="CRD_Mead1993.html">CRD_Mead1993</a>
+    </li>
+    <li>
       <a href="RCBD_ClewerScarisbrick2001.html">RCBD_ClewerScarisbrick2001</a>
     </li>
     <li>
@@ -582,7 +585,7 @@ div.tocify {
 <a class="sourceLine" id="cb5-3" title="3">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
 <a class="sourceLine" id="cb5-4" title="4">        <span class="dt">out1 =</span> rep,                            <span class="co"># lines between complete blocks/replicates</span></a>
 <a class="sourceLine" id="cb5-5" title="5">        <span class="dt">out2 =</span> inc.block,                      <span class="co"># lines between incomplete blocks</span></a>
-<a class="sourceLine" id="cb5-6" title="6">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-6" title="6">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F)   <span class="co"># formatting</span></a></code></pre></div>
 <p><img src="alpha_JohnWilliams1995_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>An <span class="math inline">\(\alpha\)</span>-design is a design with incomplete blocks, where the blocks can be grouped into complete replicates. Such designs are termed “resolvable”. The model must have an effect for complete replicates, and effects for incomplete blocks must be nested within replicates.</p>
 <p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (<code>gen</code>) or incomplete block (<code>inc.block</code>). Notice that the way the factor variable <code>inc.block</code> is defined, it only has 6 levels (B1, B2, B3, B4, B5, B6). However, as can be clearly seen on the field layout above, there are 18 incomplete blocks, <em>i.e.</em> 6 per replicate. Thus, an actual incomplete block here is identified by the information stored in <code>rep</code> <em>and</em> <code>inc.block</code>. Alternatively, one could have coded the <code>inc.block</code> variable as a factor with 18 levels (B1-B18), but this was not done here.</p>

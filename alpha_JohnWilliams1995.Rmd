@@ -54,7 +54,7 @@ desplot(data = dat,
         text = gen, cex = 0.7, shorten = "no", # show genotype names per plot
         out1 = rep,                            # lines between complete blocks/replicates
         out2 = inc.block,                      # lines between incomplete blocks
-        main = "Field layout", xlab = "", ylab = "", show.key = F) # formatting
+        main = "Field layout", show.key = F)   # formatting
 ```
 
 An $\alpha$-design is a design with incomplete blocks, where the blocks can be grouped into complete replicates. Such designs are termed “resolvable”. The model must have an effect for complete replicates, and effects for incomplete blocks must be nested within replicates.

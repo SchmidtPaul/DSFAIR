@@ -43,4 +43,116 @@ dat <- dat %>%
   mutate_at(vars(variety), as.factor)
 ```
 
+## Exploring
 
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
+
+```{r, fig.height = 3, fig.align = "center"}
+desplot(data = dat,
+        form = variety ~ col + row,              # fill color per genotype, headers per replicate
+        text = variety, cex = 1, shorten = "no", # show genotype names per plot
+        main = "Field layout", show.key = F)     # formatting
+```
+
+While not necessary for the analysis below, it may be convenient to look at the data per variety and sorted by yield:
+
+```{r, warning=FALSE}
+dat %>% 
+  arrange(variety, yield) %>% 
+  dplyr::select(variety, yield) %>% 
+  pivot_wider(names_from = variety, values_from = yield) %>% 
+  unnest()
+```
+
+We could also have a look at the arithmetic means and standard deviations per `variety`:
+
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(variety) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))
+```
+
+We can also create a plot to get a better feeling for the data.
+
+```{r, fig.height = 3, fig.width = 3, fig.align = "center"}
+ggplot(data = dat,
+       aes(y = yield, x = variety)) +
+  geom_point() +  # scatter plot
+  ylim(0, NA) +   # force y-axis to start at 0
+  theme_classic() # clearer plot format 
+```
+
+# Modelling
+
+Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `variety` effects.
+
+```{r, warning=FALSE, message=FALSE}
+mod <- lm(yield ~ variety, data = dat)
+```
+
+## ANOVA
+
+Moreover, we can conduct an ANOVA for this model.
+
+```{r, warning=FALSE, message=FALSE}
+mod %>% anova()
+```
+
+As can be seen, the F-test finds the `variety` effects to be statistically significant (p = `r anova(mod)["variety", "Pr(>F)"] %>% round(8) %>% format(scientific=FALSE)` < 0.05). 
+
+## Mean comparisons
+
+Following a significant F-test, one will want to compare genotype means.
+
+```{r}
+mean_comparisons <- mod %>% 
+  emmeans(pairwise ~ "variety", adjust="tukey") %>% # adjust="none" for t-test
+  pluck("emmeans") %>% 
+  cld(details=TRUE, Letters=letters) # add letter display
+
+mean_comparisons$emmeans # adjusted variety means
+
+mean_comparisons$comparisons # differences between adjusted variety means 
+```
+
+# Present results
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+```{r}
+ggplot() +
+  # black dots representing the raw data
+  geom_point(
+    data = dat,
+    aes(y = yield, x = variety)
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = variety),
+    color = "red",
+    position = position_nudge(x = 0.1)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons$emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = variety),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.1)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = variety, label = .group),
+    color = "red",
+    position = position_nudge(x = 0.2)
+  ) + 
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Variety") +      # label x-axis
+  labs(caption = "Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() # clearer plot format 
+```
