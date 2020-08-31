@@ -16,9 +16,10 @@ pacman::p_load(purrr)
 
 ```{r, message=FALSE, warning=FALSE}
 # packages
-pacman::p_load(readr, tidyverse,  # data import and handling
-               emmeans, multcomp, # mean comparisons
-               ggplot2, desplot)  # plots
+pacman::p_load(readr, tidyverse,     # data import and handling
+               emmeans, multcomp,    # mean comparisons
+               ggplot2, desplot,     # plots
+               report, equatiomatic) # automated analysis summaries
 ```
 
 # Data
@@ -126,6 +127,8 @@ mean_comparisons$comparisons # differences between adjusted cultivar means
 
 # Present results
 
+## Mean comparisons
+
 For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
 
 ```{r}
@@ -165,3 +168,26 @@ ggplot() +
   theme_classic() # clearer plot format 
 ```
 
+## dataset
+
+```{r results='asis'}
+dat %>% 
+  dplyr::select(-row, -col) %>% 
+  report() %>% text_short()
+```
+
+## model
+
+```{r results='asis'}
+mod %>% extract_eq()
+
+mod %>% report() %>% text_short()
+```
+
+## anova
+
+```{r results='asis'}
+mod %>% 
+  anova %>% 
+  report() %>% text_short()
+```

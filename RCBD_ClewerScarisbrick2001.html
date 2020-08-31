@@ -542,9 +542,10 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse,  <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp, <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot)  <span class="co"># plots</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse,     <span class="co"># data import and handling</span></a>
+<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,    <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot,     <span class="co"># plots</span></a>
+<a class="sourceLine" id="cb1-5" title="5">               report, equatiomatic) <span class="co"># automated analysis summaries</span></a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from Chapter <em>“2 Randomized complete block design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.wiley.com/en-us/Practical+Statistics+and+Experimental+Design+for+Plant+and+Crop+Science-p-9780471899082" target="_blank">Clewer and Scarisbrick (2001)</a> from a yield (t/ha) trial laid out as a randomized complete <code>block</code> design (3 blocks) with <code>cultivar</code> (4 cultivars) being the only treatment factor. Thus, we have a total of 12 plots.</p>
@@ -687,6 +688,8 @@ div.tocify {
 </div>
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
+<div id="mean-comparisons-1" class="section level2">
+<h2>Mean comparisons</h2>
 <p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="co"># black dots representing the raw data</span></a>
@@ -723,6 +726,44 @@ div.tocify {
 <a class="sourceLine" id="cb20-33" title="33"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-34" title="34"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
 <p><img src="RCBD_ClewerScarisbrick2001_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="dataset" class="section level2">
+<h2>dataset</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<pre><code>## The data contains 12 observations of the following variables:
+##   - block: 3 levels: B1, n = 4; B2, n = 4 and B3, n = 4
+##   - cultivar: 4 levels: C1, n = 3; C2, n = 3; C3, n = 3 and C4, n = 3
+##   - yield: Mean = 7.25, SD = 1.31, range = [5.60, 9.80], 0 missing</code></pre>
+</div>
+<div id="model" class="section level2">
+<h2>model</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_eq</span>()</a></code></pre></div>
+<p><span class="math display">\[
+\operatorname{yield} = \alpha + \beta_{1}(\operatorname{cultivar}_{\operatorname{C2}}) + \beta_{2}(\operatorname{cultivar}_{\operatorname{C3}}) + \beta_{3}(\operatorname{cultivar}_{\operatorname{C4}}) + \beta_{4}(\operatorname{block}_{\operatorname{B2}}) + \beta_{5}(\operatorname{block}_{\operatorname{B3}}) + \epsilon
+\]</span></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<p>We fitted a linear model to predict yield with cultivar and block.The model’s explanatory power is substantial (R2 = 0.87, adj. R2 = 0.77). The model’s intercept is at 7.75. Within this model:</p>
+<ul>
+<li>The effect of cultivarC2 is positive and can be considered as large and not significant (beta = 1.10, std. beta = 0.84, p = 0.077).</li>
+<li>The effect of cultivarC3 is positive and can be considered as tiny and not significant (beta = 0.10, std. beta = 0.08, p = 0.853).</li>
+<li>The effect of cultivarC4 is positive and can be considered as very large and significant (beta = 1.80, std. beta = 1.38, p &lt; .05).</li>
+<li>The effect of blockB2 is negative and can be considered as very large and significant (beta = -1.65, std. beta = -1.26, p &lt; .05).</li>
+<li>The effect of blockB3 is negative and can be considered as very large and significant (beta = -2.10, std. beta = -1.61, p &lt; .01).</li>
+</ul>
+</div>
+<div id="anova-1" class="section level2">
+<h2>anova</h2>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<p>The ANOVA suggests that:</p>
+<ul>
+<li>The main effect of cultivar is significant (F(3, 6) = 5.53, p = 0.037) and can be considered as large (partial omega squared = 0.58).</li>
+<li>The main effect of block is significant (F(2, 6) = 12.23, p = 0.008) and can be considered as large (partial omega squared = 0.71).</li>
+</ul>
+</div>
 </div>
 
 &nbsp;

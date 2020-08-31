@@ -542,9 +542,10 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse, forcats,  <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,          <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot)           <span class="co"># plots</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse, forcats, <span class="co"># data import and handling</span></a>
+<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,         <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot,          <span class="co"># plots</span></a>
+<a class="sourceLine" id="cb1-5" title="5">               report, equatiomatic)      <span class="co"># automated analysis summaries</span></a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from <em>“Example 4.3”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420" target="_blank">“Quantitative Methods in Biosciences (3402-420)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.routledge.com/Statistical-Methods-in-Agriculture-and-Experimental-Biology/Mead/p/book/9781584881872" target="_blank">Mead et al. (1993, p.52)</a> from a yield trial with melons. The trial had 4 melon varieties (<code>variety</code>). Each variety was tested on six field plots. The allocation of treatments (varieties) to experimental units (plots) was completely at random. Thus, the experiment was laid out as a completely randomized design (CRD).</p>
@@ -671,6 +672,8 @@ div.tocify {
 </div>
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
+<div id="mean-comparisons-1" class="section level2">
+<h2>Mean comparisons</h2>
 <p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="co"># black dots representing the raw data</span></a>
@@ -707,6 +710,38 @@ div.tocify {
 <a class="sourceLine" id="cb18-33" title="33"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-34" title="34"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
 <p><img src="CRD_Mead1993_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="dataset" class="section level2">
+<h2>dataset</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<p>The data contains 24 observations of the following variables: - variety: 4 levels: v1, n = 6; v2, n = 6; v3, n = 6 and v4, n = 6 - yield: Mean = 26.82, SD = 8.49, range = [11.42, 43.32], 0 missing</p>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_eq</span>()</a></code></pre></div>
+<p><span class="math display">\[
+\operatorname{yield} = \alpha + \beta_{1}(\operatorname{variety}_{\operatorname{v2}}) + \beta_{2}(\operatorname{variety}_{\operatorname{v3}}) + \beta_{3}(\operatorname{variety}_{\operatorname{v4}}) + \epsilon
+\]</span></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<p>We fitted a linear model to predict yield with variety.The model’s explanatory power is substantial (R2 = 0.78, adj. R2 = 0.75). The model’s intercept is at 20.49. Within this model:</p>
+<ul>
+<li>The effect of varietyv2 is positive and can be considered as very large and significant (beta = 16.91, std. beta = 1.99, p &lt; .001).</li>
+<li>The effect of varietyv3 is negative and can be considered as very small and not significant (beta = -1.00, std. beta = -0.12, p = 0.691).</li>
+<li>The effect of varietyv4 is positive and can be considered as very large and significant (beta = 9.41, std. beta = 1.11, p &lt; .01).</li>
+</ul>
+</div>
+<div id="anova-1" class="section level2">
+<h2>ANOVA</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
+<p>The ANOVA suggests that:</p>
+<ul>
+<li>The main effect of variety is significant (F(3, 20) = 23.42, p &lt; .001) and can be considered as large (partial omega squared = 0.74).</li>
+</ul>
+</div>
 </div>
 
 &nbsp;

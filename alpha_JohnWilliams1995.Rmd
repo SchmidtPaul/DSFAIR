@@ -16,10 +16,11 @@ pacman::p_load(purrr)
 
 ```{r, message=FALSE, warning=FALSE}
 # packages
-pacman::p_load(readr, tidyverse, forcats,  # data import and handling
-               lme4,                       # linear mixed model 
-               emmeans, multcomp,          # mean comparisons
-               ggplot2, desplot)           # plots
+pacman::p_load(readr, tidyverse, forcats, # data import and handling
+               lme4,                      # linear mixed model 
+               emmeans, multcomp,         # mean comparisons
+               ggplot2, desplot,          # plots
+               report, equatiomatic)      # automated analysis summaries
 ```
 
 # Data
@@ -154,6 +155,8 @@ mean_comparisons$emmeans # adjusted genotype means
 
 # Present results
 
+# Mean comparisons
+
 For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
 
 ```{r}
@@ -195,6 +198,10 @@ ggplot() +
   theme_classic() # clearer plot format 
 ```
 
+## dataset
 
-
-
+```{r results='asis'}
+dat %>% 
+  dplyr::select(-plot, -row, -col) %>% 
+  report() %>% text_short()
+```
