@@ -25,4 +25,22 @@ pacman::p_load(readr, tidyverse, forcats,  # data import and handling
 
 This example is taken from *"Example 4.3"* of the course material ["Quantitative Methods in Biosciences (3402-420)"](https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Mead et al. (1993, p.52)](https://www.routledge.com/Statistical-Methods-in-Agriculture-and-Experimental-Biology/Mead/p/book/9781584881872){target="_blank"} from a yield trial with melons. The trial had 4 melon varieties (`variety`). Each variety was tested on six field plots. The allocation of treatments (varieties) to experimental units (plots) was completely at random. Thus, the experiment was laid out as a completely randomized design (CRD).
 
+## Import
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993.csv"
+dat <- read_csv(dataURL)
+
+dat
+```
+
+## Formatting
+Before anything, the column `variety` should be encoded as a factor, since R by default encoded it as a character variable.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(variety), as.factor)
+```
+
 

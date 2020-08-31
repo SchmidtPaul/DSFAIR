@@ -545,6 +545,34 @@ div.tocify {
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from <em>“Example 4.3”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420" target="_blank">“Quantitative Methods in Biosciences (3402-420)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.routledge.com/Statistical-Methods-in-Agriculture-and-Experimental-Biology/Mead/p/book/9781584881872" target="_blank">Mead et al. (1993, p.52)</a> from a yield trial with melons. The trial had 4 melon varieties (<code>variety</code>). Each variety was tested on six field plots. The allocation of treatments (varieties) to experimental units (plots) was completely at random. Thus, the experiment was laid out as a completely randomized design (CRD).</p>
+<div id="import" class="section level2">
+<h2>Import</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb2-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993.csv&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">dat</a></code></pre></div>
+<pre><code>## # A tibble: 24 x 2
+##    yield variety
+##    &lt;dbl&gt; &lt;chr&gt;  
+##  1  25.1 v1     
+##  2  17.2 v1     
+##  3  26.4 v1     
+##  4  16.1 v1     
+##  5  22.2 v1     
+##  6  15.9 v1     
+##  7  40.2 v2     
+##  8  35.2 v2     
+##  9  32.0 v2     
+## 10  36.5 v2     
+## # ... with 14 more rows</code></pre>
+</div>
+<div id="formatting" class="section level2">
+<h2>Formatting</h2>
+<p>Before anything, the column <code>variety</code> should be encoded as a factor, since R by default encoded it as a character variable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(variety), as.factor)</a></code></pre></div>
+</div>
 </div>
 
 &nbsp;

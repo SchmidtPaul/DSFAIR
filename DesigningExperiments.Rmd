@@ -23,20 +23,26 @@ pacman::p_load(tidyverse,        # data handling
 
 # Example Setup
 ```{r}
+# 2 pesiticides
 TrtPest   <- paste0("P", 1:2)    # P1 & P2
 n_TrtPest <- n_distinct(TrtPest) # 2
 
+# 4 soil treatments
 TrtSoil   <- paste0("S", 1:4)    # S1 - S4
 n_TrtSoil <- n_distinct(TrtSoil) # 4
 
+# 6 fertilizer
 TrtFert   <- paste0("N", 1:6)    # N1 - N6
 n_TrtFert <- n_distinct(TrtFert) # 6
 
+# 15 genotpyes
 TrtGen    <- paste0("G", 1:15)   # G1 - G15
 n_TrtGen  <- n_distinct(TrtGen)  # 15
 
+# 2 check varieties
 Checks    <- c("Std_A", "Std_B")
 
+# number of replicates
 n_Reps    <- 3
 ```
 
