@@ -81,7 +81,7 @@ dat %>%
 ```
 </div> </div>
 
-Finally, we can plot the raw data
+We can also create a plot to get a better feeling for the data.
 
 ```{r, fig.height = 3, fig.width = 4, fig.align = "center"}
 ggplot(data = dat,
@@ -160,7 +160,8 @@ ggplot() +
   ylim(0, NA) + # force y-axis to start at 0
   ylab("Yield in t/ha") + # label y-axis
   xlab("Cultivar") +      # label x-axis
-  labs(caption = "Means followed by a common letter are not significantly different according to the Tukey-test") +
+  labs(caption = "Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
 ```
 

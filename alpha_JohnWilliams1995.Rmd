@@ -1,0 +1,200 @@
+---
+title: "Alpha design"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# formatting tables for html output
+options(knitr.kable.NA = '')
+pacman::p_load(kableExtra, formattable ,htmltools)
+pacman::p_load(purrr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# packages
+pacman::p_load(readr, tidyverse, forcats,  # data import and handling
+               lme4,                       # linear mixed model 
+               emmeans, multcomp,          # mean comparisons
+               ggplot2, desplot)           # plots
+```
+
+# Data
+
+This example is taken from Chapter *"3.8 Analysis of an $\alpha$-design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [John and Williams (1995)](https://onlinelibrary.wiley.com/doi/abs/10.1002/bimj.4710380703){target="_blank"} from a yield (t/ha) trial laid out as an alpha design. The trial had 24 genotypes (`gen`), three complete replicates (`rep`) and six incomplete blocks (`inc.block`) within each replicate. The block size was four.
+
+## Import
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/John%26Williams1995.csv"
+dat <- read_csv(dataURL)
+
+dat
+```
+
+## Formatting
+Before anything, the columns `plot`, `rep`, `inc.block` and `gen` should be encoded as factors, since R by default encoded them as character.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(plot:gen), as.factor)
+```
+
+## Exploring
+
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
+
+```{r, fig.height = 3, fig.align = "center"}
+desplot(data = dat,
+        form = gen ~ col + row | rep,          # fill color per genotype, headers per replicate
+        text = gen, cex = 0.7, shorten = "no", # show genotype names per plot
+        out1 = rep,                            # lines between complete blocks/replicates
+        out2 = inc.block,                      # lines between incomplete blocks
+        main = "Field layout", xlab = "", ylab = "", show.key = F) # formatting
+```
+
+An $\alpha$-design is a design with incomplete blocks, where the blocks can be grouped into complete replicates. Such designs are termed “resolvable”. The model must have an effect for complete replicates, and effects for incomplete blocks must be nested within replicates.
+
+We could also have a look at the arithmetic means and standard deviations for yield per genotype (`gen`) or incomplete block (`inc.block`). Notice that the way the factor variable `inc.block` is defined, it only has 6 levels (`r levels(dat$inc.block)`). However, as can be clearly seen on the field layout above, there are 18 incomplete blocks, *i.e.* 6 per replicate. Thus, an actual incomplete block here is identified by the information stored in `rep` *and* `inc.block`. Alternatively, one could have coded the `inc.block` variable as a factor with 18 levels (B1-B18), but this was not done here.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(gen) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield)) %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(rep, inc.block) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))  %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> </div>
+
+We can also create a plot to get a better feeling for the data.
+
+```{r, fig.align = "center"}
+plotdata <- dat %>% 
+  group_by(gen) %>% 
+  mutate(mean_yield = mean(yield)) %>% # add column with mean yield per gen
+  ungroup() %>% 
+  mutate(gen = fct_reorder(.f = gen, .x = mean_yield)) # sort factor variable by mean yield
+
+ggplot(data = plotdata, 
+       aes(x = gen)) +
+  geom_point(aes(y = yield, shape = rep)) +  # scatter plot observed
+  geom_point(aes(y = mean_yield), color = "cornflowerblue") + # scatter plot mean
+  ylim(0, NA) +   # force y-axis to start at 0
+  labs(caption = "Blue dots represent arithmetic mean per genotype") +
+  theme_classic() # clearer plot format 
+```
+
+# Modelling
+
+Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `gen` and `block` effects. There also needs to be term for the 18 incomplete blocks (*i.e.* `rep:inc.block`) in the model, but it can be taken either as a fixed or a random effect. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# blocks as fixed (linear model)
+mod.fb <- lm(yield ~ gen + rep +
+               rep:inc.block,
+             data = dat)
+
+mod.fb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# blocks as random (linear mixed model)
+mod.rb <- lmer(yield ~ gen + rep +
+                 (1 | rep:inc.block),
+               data = dat)
+
+mod.rb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> </div>
+
+As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more accurate in terms of comparing genotypes.
+
+# Mean comparisons
+
+```{r}
+mean_comparisons <- mod.rb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+mean_comparisons$emmeans # adjusted genotype means
+```
+
+# Present results
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+```{r}
+ggplot() +
+  # black dots representing the raw data
+  geom_point(
+    data = plotdata,
+    aes(y = yield, x = gen)
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = gen),
+    color = "red",
+    position = position_nudge(x = 0.1)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons$emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = gen),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.1)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons$emmeans,
+    aes(y = lower.CL, x = gen, label = .group),
+    color = "red",
+    angle = 90,
+    hjust = 1,
+    position = position_nudge(y = - 0.1)
+  ) + 
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Genotype") +      # label x-axis
+  labs(caption = "Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() # clearer plot format 
+```
+
+
+
+

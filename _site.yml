@@ -11,6 +11,12 @@ navbar:
       menu:
       - text: "RCBD_ClewerScarisbrick2001"
         href: RCBD_ClewerScarisbrick2001.html
+      - text: "alpha_JohnWilliams1995"
+        href: alpha_JohnWilliams1995.html
+    - text: "Summaries"
+      menu:
+      - text: "Designing experiments"
+        href: DesigningExperiments.html
 output:
   html_document:
     theme: lumen
