@@ -164,7 +164,7 @@ ggplot() +
   ylab("Yield in t/ha") + # label y-axis
   xlab("Cultivar") +      # label x-axis
   labs(caption = "Black dots represent raw data
-       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Red dots and error bars represent adjusted mean with 95% confidence limits per cultivar
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
 ```
