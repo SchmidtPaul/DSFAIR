@@ -24,7 +24,7 @@ pacman::p_load(readr, tidyverse,     # data import and handling
 
 # Data
 
-This example is taken from Chapter *"2 Randomized complete block design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Clewer and Scarisbrick (2001)](https://www.wiley.com/en-us/Practical+Statistics+and+Experimental+Design+for+Plant+and+Crop+Science-p-9780471899082){target="_blank"}  from a yield (t/ha) trial laid out as a randomized complete `block` design (3 blocks) with `cultivar` (4 cultivars) being the only treatment factor. Thus, we have a total of 12 plots.
+This example is taken from Chapter *"2 Randomized complete block design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Clewer and Scarisbrick (2001)](https://www.wiley.com/en-us/Practical+Statistics+and+Experimental+Design+for+Plant+and+Crop+Science-p-9780471899082){target="_blank"} from a yield (t/ha) trial laid out as a randomized complete `block` design (3 blocks) with `cultivar` (4 cultivars) being the only treatment factor. Thus, we have a total of 12 plots.
 
 ## Import
 
