@@ -17,6 +17,8 @@ navbar:
         href: augmented_Pattersen1994.html
       - text: "alpha_JohnWilliams1995"
         href: alpha_JohnWilliams1995.html
+      - text: "rowcol_KemptonFox1997"
+        href: rowcol_KemptonFox1997.html
     - text: "Summaries"
       menu:
       - text: "Designing experiments"

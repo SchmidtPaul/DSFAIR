@@ -17,7 +17,7 @@ pacman::p_load(purrr)
 ```{r, message=FALSE, warning=FALSE}
 # packages
 pacman::p_load(janitor, readr, tidyverse, # data import and handling
-               lme4,                      # linear mixed model 
+               lme4, lmerTest,            # linear mixed model 
                emmeans, multcomp,         # mean comparisons
                ggplot2, desplot)          # plots 
 ```
@@ -72,12 +72,145 @@ dat %>%
 
 We can also create a plot to get a better feeling for the data.
 
-```{r, fig.align = "center"}
+```{r, fig.align = "center", warning=FALSE, message=FALSE}
 ggplot(data = dat,
-       aes(y = yield, x = gen)) +
+       aes(y = yield, x = gen, color=rep)) +
   geom_point() +  # scatter plot
   ylim(0, NA) +   # force y-axis to start at 0
-  theme_classic() # clearer plot format 
+  theme_classic() + # clearer plot format 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5), # rotate x-axis label
+        panel.grid.major.x = element_line(), # add vertikal grid lines
+        legend.position = "top") # legend on top 
 ```
 
+# Modelling
 
+Finally, we can decide to fit a linear model with `yield` as the response variable and fixed `gen` and `rep` effects. There also need to be terms for the 5 rows (`row`) and 7 columns (`col`) per replicate. Notice that they can either be taken as a fixed or a random effects. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.
+
+Also notice that in our dataset the `row` and `col` columns were defined as *numeric* because this format is needed when creating the field layout with desplot as we did above. However, now in order to have row and column effects in our model, we need to define them as factors. To make this clear, we will not just change the format, but create a copy of these two columns in the correct format:
+
+```{r}
+dat <- dat %>% 
+  mutate(row_fct = as.factor(row),
+         col_fct = as.factor(col))
+```
+
+Furthermore, when building our model we must ensure that row and column effects are being estimated **per replicate**. Thuse, we have 2x5 row effects and 2x7 column effects. This can be done as:
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# rows and cols fixed (linear model)
+mod.fb <- lm(yield ~ gen + rep +
+               rep:row_fct + 
+               rep:col_fct,
+             data = dat)
+
+mod.fb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# rows and cols random (linear mixed model)
+mod.rb <- lmer(yield ~ gen + rep +
+                 (1|rep:row_fct) + 
+                 (1|rep:col_fct),
+               data = dat)
+
+mod.rb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> </div>
+
+As a result, we find that the model with random row and column effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.
+
+## ANOVA
+
+Thus, we can conduct an ANOVA for this model.
+
+```{r}
+mod.rb %>% anova()
+```
+
+As can be seen, the F-test finds the `gen` effects to be statistically significant (p = `r anova(mod.rb)["gen", "Pr(>F)"] %>% round(4)` < 0.05). 
+
+## Mean comparisons
+
+```{r}
+mean_comparisons <- mod.rb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+mean_comparisons$emmeans # adjusted genotype means
+```
+
+# Present results
+
+## Mean comparisons
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+```{r}
+# sort gen factors according to emmean
+# for adjusted means
+mean_comparisons$emmeans <- mean_comparisons$emmeans %>% 
+  mutate(gen = fct_reorder(.f = gen, .x = emmean))
+
+# for raw data
+dat <- dat %>% 
+  mutate(gen = fct_relevel(.f = gen, 
+                           as.character(mean_comparisons$emmeans$gen)))
+
+ggplot() +
+  # black dots representing the raw data
+  geom_point(
+    data = dat,
+    aes(y = yield, x = gen)
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = gen),
+    color = "red",
+    position = position_nudge(x = 0.1)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons$emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = gen),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.1)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons$emmeans,
+    aes(y = lower.CL, x = gen, label = .group),
+    color = "red",
+    angle = 90,
+    hjust = 1,
+    position = position_nudge(y = - 0.1)
+  ) + 
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Genotype") +      # label x-axis
+  labs(caption = "Black dots represent raw data
+       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() + # clearer plot format 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis label
+```

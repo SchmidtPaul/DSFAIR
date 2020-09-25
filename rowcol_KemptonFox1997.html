@@ -505,6 +505,9 @@ div.tocify {
     <li>
       <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
     </li>
+    <li>
+      <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -546,7 +549,7 @@ div.tocify {
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
 <a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(janitor, readr, tidyverse, <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               lme4,                      <span class="co"># linear mixed model </span></a>
+<a class="sourceLine" id="cb1-3" title="3">               lme4, lmerTest,            <span class="co"># linear mixed model </span></a>
 <a class="sourceLine" id="cb1-4" title="4">               emmeans, multcomp,         <span class="co"># mean comparisons</span></a>
 <a class="sourceLine" id="cb1-5" title="5">               ggplot2, desplot)          <span class="co"># plots </span></a></code></pre></div>
 <div id="data" class="section level1">
@@ -563,10 +566,10 @@ div.tocify {
 ##    rep     row   col gen   yield
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
 ##  1 Rep1      1     1 G20    3.77
-##  2 Rep1      1     2 G4     3.21
+##  2 Rep1      1     2 G04    3.21
 ##  3 Rep1      1     3 G33    4.55
 ##  4 Rep1      1     4 G28    4.09
-##  5 Rep1      1     5 G7     5.05
+##  5 Rep1      1     5 G07    5.05
 ##  6 Rep1      1     6 G12    4.19
 ##  7 Rep1      1     7 G30    3.27
 ##  8 Rep1      2     1 G10    3.44
@@ -602,48 +605,219 @@ div.tocify {
 ##    gen    mean std.dev
 ##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
 ##  1 G19    6.07  1.84  
-##  2 G7     5.74  0.976 
+##  2 G07    5.74  0.976 
 ##  3 G33    5.13  0.820 
-##  4 G6     4.96  0.940 
-##  5 G9     4.94  1.68  
+##  4 G06    4.96  0.940 
+##  5 G09    4.94  1.68  
 ##  6 G11    4.93  1.03  
 ##  7 G14    4.92  0.877 
 ##  8 G27    4.89  1.80  
-##  9 G3     4.78  0.0424
+##  9 G03    4.78  0.0424
 ## 10 G25    4.78  0.361 
 ## 11 G21    4.76  1.27  
 ## 12 G20    4.75  1.39  
-## 13 G5     4.72  0.686 
-## 14 G1     4.69  0.757 
+## 13 G05    4.72  0.686 
+## 14 G01    4.69  0.757 
 ## 15 G32    4.62  1.21  
 ## 16 G18    4.6   1.24  
 ## 17 G12    4.59  0.559 
 ## 18 G34    4.51  1.16  
-## 19 G13    4.36  0.361 
-## 20 G8     4.36  0.488 
+## 19 G08    4.36  0.488 
+## 20 G13    4.36  0.361 
 ## 21 G17    4.22  0.580 
 ## 22 G16    4.2  NA     
 ## 23 G10    4.07  0.891 
 ## 24 G31    3.98  1.02  
 ## 25 G28    3.95  0.198 
-## 26 G2     3.88  0.389 
+## 26 G02    3.88  0.389 
 ## 27 G24    3.84  0.318 
 ## 28 G29    3.76  1.27  
 ## 29 G35    3.76  1.52  
 ## 30 G30    3.75  0.679 
-## 31 G4     3.62  0.587 
+## 31 G04    3.62  0.587 
 ## 32 G26    3.58  1.44  
 ## 33 G22    3.54  0.0778
 ## 34 G23    3.26  1.42  
 ## 35 G15    1.93 NA</code></pre>
 <p>We can also create a plot to get a better feeling for the data.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb8-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen, <span class="dt">color=</span>rep)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st">  </span><span class="co"># scatter plot</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st">   </span><span class="co"># force y-axis to start at 0</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co"># clearer plot format </span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>), <span class="co"># rotate x-axis label</span></a>
+<a class="sourceLine" id="cb8-7" title="7">        <span class="dt">panel.grid.major.x =</span> <span class="kw">element_line</span>(), <span class="co"># add vertikal grid lines</span></a>
+<a class="sourceLine" id="cb8-8" title="8">        <span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="co"># legend on top </span></a></code></pre></div>
 <p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="modelling" class="section level1">
+<h1>Modelling</h1>
+<p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and fixed <code>gen</code> and <code>rep</code> effects. There also need to be terms for the 5 rows (<code>row</code>) and 7 columns (<code>col</code>) per replicate. Notice that they can either be taken as a fixed or a random effects. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.</p>
+<p>Also notice that in our dataset the <code>row</code> and <code>col</code> columns were defined as <em>numeric</em> because this format is needed when creating the field layout with desplot as we did above. However, now in order to have row and column effects in our model, we need to define them as factors. To make this clear, we will not just change the format, but create a copy of these two columns in the correct format:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row_fct =</span> <span class="kw">as.factor</span>(row),</a>
+<a class="sourceLine" id="cb9-3" title="3">         <span class="dt">col_fct =</span> <span class="kw">as.factor</span>(col))</a></code></pre></div>
+<p>Furthermore, when building our model we must ensure that row and column effects are being estimated <strong>per replicate</strong>. Thuse, we have 2x5 row effects and 2x7 column effects. This can be done as:</p>
+<div class="row">
+<div class="col-md-6">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># rows and cols fixed (linear model)</span></a>
+<a class="sourceLine" id="cb10-2" title="2">mod.fb &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>gen <span class="op">+</span><span class="st"> </span>rep <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">               </span>rep<span class="op">:</span>row_fct <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="st">               </span>rep<span class="op">:</span>col_fct,</a>
+<a class="sourceLine" id="cb10-5" title="5">             <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7">mod.fb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
+<a class="sourceLine" id="cb10-9" title="9">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
+<a class="sourceLine" id="cb10-10" title="10">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<pre><code>## [1] 0.4083057</code></pre>
+</div>
+<div class="col-md-6">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># rows and cols random (linear mixed model)</span></a>
+<a class="sourceLine" id="cb12-2" title="2">mod.rb &lt;-<span class="st"> </span><span class="kw">lmer</span>(yield <span class="op">~</span><span class="st"> </span>gen <span class="op">+</span><span class="st"> </span>rep <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">                 </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>row_fct) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="st">                 </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>col_fct),</a>
+<a class="sourceLine" id="cb12-5" title="5">               <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7">mod.rb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
+<a class="sourceLine" id="cb12-9" title="9">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
+<a class="sourceLine" id="cb12-10" title="10">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<pre><code>## [1] 0.4020136</code></pre>
+</div>
+</div>
+<p>As a result, we find that the model with random row and column effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
+<div id="anova" class="section level2">
+<h2>ANOVA</h2>
+<p>Thus, we can conduct an ANOVA for this model.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+##      Sum Sq Mean Sq NumDF  DenDF F value   Pr(&gt;F)   
+## gen 15.0149 0.44161    34 13.770  4.8988 0.001465 **
+## rep  1.5606 1.56061     1 12.651 17.3119 0.001183 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>As can be seen, the F-test finds the <code>gen</code> effects to be statistically significant (p = 0.0015 &lt; 0.05).</p>
+</div>
+<div id="mean-comparisons" class="section level2">
+<h2>Mean comparisons</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod.rb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
+<a class="sourceLine" id="cb16-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
+<a class="sourceLine" id="cb16-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
+<a class="sourceLine" id="cb16-7" title="7"></a>
+<a class="sourceLine" id="cb16-8" title="8">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted genotype means</span></a></code></pre></div>
+<pre><code>##  gen emmean    SE   df lower.CL upper.CL .group
+##  G15   3.22 0.443 23.5     1.62     4.81  a    
+##  G23   3.42 0.304 25.6     2.34     4.51  a    
+##  G04   3.52 0.305 25.5     2.43     4.61  a    
+##  G35   3.60 0.309 25.8     2.50     4.70  a    
+##  G26   3.76 0.316 26.8     2.64     4.88  ab   
+##  G29   3.79 0.308 25.9     2.70     4.89  ab   
+##  G31   3.86 0.309 26.1     2.76     4.96  ab   
+##  G24   3.89 0.302 25.3     2.81     4.97  abc  
+##  G02   3.91 0.309 26.1     2.82     5.01  abc  
+##  G30   3.95 0.305 25.5     2.87     5.04  abc  
+##  G16   3.95 0.439 22.9     2.37     5.54  abc  
+##  G22   4.01 0.311 26.4     2.91     5.12  abc  
+##  G17   4.15 0.312 26.1     3.04     5.26  abc  
+##  G32   4.26 0.308 25.9     3.17     5.36  abc  
+##  G28   4.29 0.310 25.7     3.19     5.40  abc  
+##  G34   4.30 0.302 25.3     3.22     5.38  abc  
+##  G20   4.32 0.302 25.3     3.24     5.40  abc  
+##  G10   4.33 0.309 25.7     3.23     5.43  abc  
+##  G09   4.35 0.306 25.8     3.26     5.44  abc  
+##  G05   4.40 0.308 25.7     3.30     5.49  abc  
+##  G18   4.56 0.310 26.4     3.46     5.67  abc  
+##  G21   4.59 0.304 25.5     3.51     5.68  abc  
+##  G08   4.60 0.312 26.2     3.49     5.71  abc  
+##  G25   4.64 0.310 25.7     3.54     5.74  abc  
+##  G13   4.68 0.312 26.1     3.57     5.79  abc  
+##  G27   4.70 0.311 26.1     3.59     5.81  abc  
+##  G14   4.76 0.305 25.6     3.68     5.85  abc  
+##  G01   4.81 0.303 25.4     3.73     5.90  abc  
+##  G33   4.91 0.312 26.2     3.81     6.02  abc  
+##  G11   4.93 0.308 26.0     3.84     6.03  abc  
+##  G12   4.95 0.319 26.6     3.82     6.08  abc  
+##  G07   5.09 0.305 25.5     4.00     6.17  abc  
+##  G03   5.10 0.311 25.8     3.99     6.20  abc  
+##  G06   5.41 0.312 26.0     4.30     6.52   bc  
+##  G19   5.67 0.311 25.9     4.56     6.78    c  
+## 
+## Results are averaged over the levels of: rep 
+## Degrees-of-freedom method: kenward-roger 
+## Confidence level used: 0.95 
+## Conf-level adjustment: sidak method for 35 estimates 
+## P value adjustment: tukey method for comparing a family of 35 estimates 
+## significance level used: alpha = 0.05</code></pre>
+</div>
+</div>
+<div id="present-results" class="section level1">
+<h1>Present results</h1>
+<div id="mean-comparisons-1" class="section level2">
+<h2>Mean comparisons</h2>
+<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># sort gen factors according to emmean</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="co"># for adjusted means</span></a>
+<a class="sourceLine" id="cb18-3" title="3">mean_comparisons<span class="op">$</span>emmeans &lt;-<span class="st"> </span>mean_comparisons<span class="op">$</span>emmeans <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gen =</span> <span class="kw">fct_reorder</span>(<span class="dt">.f =</span> gen, <span class="dt">.x =</span> emmean))</a>
+<a class="sourceLine" id="cb18-5" title="5"></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="co"># for raw data</span></a>
+<a class="sourceLine" id="cb18-7" title="7">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gen =</span> <span class="kw">fct_relevel</span>(<span class="dt">.f =</span> gen, </a>
+<a class="sourceLine" id="cb18-9" title="9">                           <span class="kw">as.character</span>(mean_comparisons<span class="op">$</span>emmeans<span class="op">$</span>gen)))</a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="st">  </span><span class="co"># black dots representing the raw data</span></a>
+<a class="sourceLine" id="cb18-13" title="13"><span class="st">  </span><span class="kw">geom_point</span>(</a>
+<a class="sourceLine" id="cb18-14" title="14">    <span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb18-15" title="15">    <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen)</a>
+<a class="sourceLine" id="cb18-16" title="16">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-17" title="17"><span class="st">  </span><span class="co"># red dots representing the adjusted means</span></a>
+<a class="sourceLine" id="cb18-18" title="18"><span class="st">  </span><span class="kw">geom_point</span>(</a>
+<a class="sourceLine" id="cb18-19" title="19">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb18-20" title="20">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> gen),</a>
+<a class="sourceLine" id="cb18-21" title="21">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb18-22" title="22">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb18-23" title="23">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-24" title="24"><span class="st">  </span><span class="co"># red error bars representing the confidence limits of the adjusted means</span></a>
+<a class="sourceLine" id="cb18-25" title="25"><span class="st">  </span><span class="kw">geom_errorbar</span>(</a>
+<a class="sourceLine" id="cb18-26" title="26">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb18-27" title="27">    <span class="kw">aes</span>(<span class="dt">ymin =</span> lower.CL, <span class="dt">ymax =</span> upper.CL, <span class="dt">x =</span> gen),</a>
+<a class="sourceLine" id="cb18-28" title="28">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb18-29" title="29">    <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb18-30" title="30">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb18-31" title="31">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-32" title="32"><span class="st">  </span><span class="co"># red letters </span></a>
+<a class="sourceLine" id="cb18-33" title="33"><span class="st">  </span><span class="kw">geom_text</span>(</a>
+<a class="sourceLine" id="cb18-34" title="34">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
+<a class="sourceLine" id="cb18-35" title="35">    <span class="kw">aes</span>(<span class="dt">y =</span> lower.CL, <span class="dt">x =</span> gen, <span class="dt">label =</span> .group),</a>
+<a class="sourceLine" id="cb18-36" title="36">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb18-37" title="37">    <span class="dt">angle =</span> <span class="dv">90</span>,</a>
+<a class="sourceLine" id="cb18-38" title="38">    <span class="dt">hjust =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb18-39" title="39">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">y =</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb18-40" title="40">  ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-41" title="41"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co"># force y-axis to start at 0</span></a>
+<a class="sourceLine" id="cb18-42" title="42"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Yield in t/ha&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># label y-axis</span></a>
+<a class="sourceLine" id="cb18-43" title="43"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="op">+</span><span class="st">      </span><span class="co"># label x-axis</span></a>
+<a class="sourceLine" id="cb18-44" title="44"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Black dots represent raw data</span></a>
+<a class="sourceLine" id="cb18-45" title="45"><span class="st">       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype</span></a>
+<a class="sourceLine" id="cb18-46" title="46"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-47" title="47"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co"># clearer plot format </span></a>
+<a class="sourceLine" id="cb18-48" title="48"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>)) <span class="co"># rotate x-axis label</span></a></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
 

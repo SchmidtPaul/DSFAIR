@@ -137,7 +137,7 @@ mod.rb %>%
 ```
 </div> </div>
 
-As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more accurate in terms of comparing genotypes.
+As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.
 
 ## ANOVA
 
