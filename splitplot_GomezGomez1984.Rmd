@@ -1,0 +1,214 @@
+---
+title: "Split-plot design"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# formatting tables for html output
+options(knitr.kable.NA = '')
+pacman::p_load(kableExtra, formattable ,htmltools)
+pacman::p_load(purrr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# packages
+pacman::p_load(readr, tidyverse, forcats, # data import and handling
+               lme4, lmerTest,            # linear mixed model 
+               emmeans, multcomp,         # mean comparisons
+               ggplot2, desplot)          # plots
+```
+
+# Data
+
+This example is taken from Chapter *"5 Split-plots"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers slightly modified version of data published in [Gomez & Gomez (1984)](https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920){target="_blank"} from a yield (kg/ha) trial laid out as a split-plot design. The trial had 4 genotypes (`G`), 6 nitrogen levels (`N` or `n_amount`) with 3 complete replicates (`rep`) and 6 incomplete blocks (`mainplot`) within each replicate.
+
+## Import
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984.csv"
+dat <- read_csv(dataURL)
+
+dat
+```
+
+## Formatting
+
+Before anything, the columns `rep`, `mainplot`, `G` and `N` should be encoded as factors, since R by default encoded them as character.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(rep:N), as.factor)
+```
+
+## Exploring
+
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `col` of each plot in the trial. 
+
+```{r, fig.height = 3, fig.align = "center"}
+desplot(data = dat,
+        form = rep ~ col + row | rep, # fill color per rep, headers per rep
+        text = G, cex = 1, shorten = "no", # show genotype names per plot
+        col = N, # color of genotype names for each N-level
+        out1 = mainplot, out1.gpar = list(col = "black"), # lines between mainplots
+        out2 = row, out2.gpar = list(col = "darkgrey"), # lines between rows
+        main = "Field layout", show.key = TRUE, key.cex = 0.7) # formatting
+```
+
+Split-plot designs are designs for factorial experiments, which involve two independent randomization steps. The field was divided into three **blocks (replicates)**. Each block was divided into six main plots. For every block separately, the six fertilizer treatments were randomly allocated to **main plots**. Every main plot was split into four sub plots to accommodate the four varieties. Separately for each main plot, the varieties were randomly allocated to the four **sub-plots**. It is important to recognize that nitrogen, the so-called main plot factor, was randomized according to a randomized complete block design. Varieties, corresponding to the so-called sub-plot factor, were also randomized according to a randomized complete block design, taking main plots as block. This type of split-plot design is the most common form, but there are many other forms of „the“ split-plot design depending on the design according to which the main plot and sub plot factors are randomized.
+
+We could now have a look at the arithmetic means and standard deviations for yield per genotype (`G`) and nitrogen level (`N`).
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(G) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield)) %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(N) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))  %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> </div>
+
+We can also create a plot to get a better feeling for the data.
+
+```{r, fig.align = "center", warning=FALSE, message=FALSE}
+ggplot(data = dat, 
+       aes(y = yield, 
+           x = N,
+           color = N)) +
+  facet_grid(~G) + # facette per N level
+  geom_point() +  # scatter plot observed
+  theme_bw() + # clearer plot format 
+  theme(legend.position = "top") # legend on top
+```
+
+# Modelling
+
+Finally, we can decide to fit a linear model with `yield` as the response variable. In this example it makes sense to group the effects in our model as either *design effects* or *treatment effects*. The *treatments* here are the genotypes `G` and the nitrogen levels `N` which we will include in the model as main effects, but also via their interaction effect `G:N`. Regarding the *design*, split-plot designs have two randomization units, which need to be represented in the linear model: main plots and sub plots. As a general principle, each randomization units needs to be represented by a random effect, so each randomization unit has its own error term. In the example, fertilizer levels are compared at the main plot level (`mainplot`), so the main plot error is the relevant error term. The genotypes are compared at the sub plot level, and so the sub plot error is the relevant error term. Furthermore, the model needs to contain a block (`rep`) effect because the main plots were randomized in complete blocks.
+
+```{r}
+mod <- lmer(yield ~ G + N + G:N + 
+              rep + (1|rep:mainplot), 
+            data=dat)
+```
+
+
+## ANOVA
+
+Thus, we can conduct an ANOVA for this model.
+
+```{r}
+mod %>% anova()
+```
+
+As can be seen, the F-test finds the `G:N` interaction effects to be statistically significant (p < 0.05). As a result, we should compare the adjusted means for all genotype-nitrogen level combinations.
+
+## Mean comparisons
+
+### Option 1: Between all 24 combinations
+
+```{r}
+all_mean_comparisons <- mod %>%
+  emmeans(pairwise ~ N:G,
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>% # alternative: lmer.df = "satterthwaite"
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+all_mean_comparisons$emmeans # adjusted means
+```
+
+### Option 2: Within each genotype
+
+```{r}
+withinG_mean_comparisons <- mod %>%
+  emmeans(pairwise ~ N | G,
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>% # alternative: lmer.df = "satterthwaite"
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+withinG_mean_comparisons$emmeans # adjusted means
+```
+
+# Present results
+
+## Mean comparisons
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+We will do this for *Option 2: Within each genotype*:
+
+```{r}
+formatted_emmeans <- withinG_mean_comparisons$emmeans %>% 
+  as_tibble()
+
+ggplot() +
+  facet_grid(~G) +
+  # black dots representing the raw data
+  geom_point(
+    data = dat,
+    aes(y = yield, x = N)
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = formatted_emmeans,
+    aes(y = emmean, x = N),
+    color = "red",
+    position = position_nudge(x = 0.1)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = formatted_emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = N),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.1)
+  ) +
+  # red letters 
+  geom_text(
+    data = formatted_emmeans,
+    aes(y = lower.CL, x = N, label = .group),
+    color = "red",
+    angle = 90,
+    hjust = 1,
+    position = position_nudge(y = - 1)
+  ) + 
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Nitrogen Level") +      # label x-axis
+  labs(caption = "The four facettes represent genotypes A, B, C and D
+       Black dots represent raw data
+       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype-nitrogen level combination
+       Per genotype, means followed by a common letter are not significantly different according to the Tukey-test and within") +
+  theme_bw() + # clearer plot format 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis label
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

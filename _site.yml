@@ -19,6 +19,8 @@ navbar:
         href: alpha_JohnWilliams1995.html
       - text: "rowcol_KemptonFox1997"
         href: rowcol_KemptonFox1997.html
+      - text: "splitplot_GomezGomez1984"
+        href: splitplot_GomezGomez1984.html
     - text: "Summaries"
       menu:
       - text: "Designing experiments"
