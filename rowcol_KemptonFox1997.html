@@ -551,7 +551,7 @@ div.tocify {
 <a class="sourceLine" id="cb1-5" title="5">               ggplot2, desplot)          <span class="co"># plots </span></a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from Chapter <em>“3.10 Analysis of a resolvable row-column design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.springer.com/de/book/9780412547508" target="_blank">Kempton and Fox (1997)</a> from a yield trial laid out as a resolvable row-column design. When two blocking structures are used which are arranged in rows and columns, we have a <em>row-column design</em>. If rows and columns can be grouped to form complete replicates, the design is <em>resolvable</em>, as in case of one-way blocking. The trial had 35 genotypes (<code>gen</code>), 2 complete replicates (<code>rep</code>) with 5 rows (<code>row</code>) and 7 columns (<code>col</code>). Thus, a complete replicate is subdivided into incomplete rows and columns.</p>
+<p>This example is taken from Chapter <em>“3.10 Analysis of a resolvable row-column design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.springer.com/de/book/9780412547508" target="_blank">Kempton and Fox (1997)</a> from a yield trial laid out as a resolvable row-column design. The trial had 35 genotypes (<code>gen</code>), 2 complete replicates (<code>rep</code>) with 5 rows (<code>row</code>) and 7 columns (<code>col</code>). Thus, a complete replicate is subdivided into incomplete rows and columns.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (import via URL)</span></a>
@@ -561,18 +561,89 @@ div.tocify {
 <a class="sourceLine" id="cb2-5" title="5">dat</a></code></pre></div>
 <pre><code>## # A tibble: 70 x 5
 ##    rep     row   col gen   yield
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 Rep1      1     1 G20   3.77 
-##  2 Rep1      1     2 G4    3.21 
-##  3 Rep1      1     3 G33   4.55 
-##  4 Rep1      1     4 G28   4.09 
-##  5 Rep1      1     5 G7    5.05 
-##  6 Rep1      1     6 G12   4.19 
-##  7 Rep1      1     7 G30   3.27 
-##  8 Rep1      2     1 G10   3.44 
-##  9 Rep1      2     2 G14   4.30 
-## 10 Rep1      2     3 G16   .    
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 Rep1      1     1 G20    3.77
+##  2 Rep1      1     2 G4     3.21
+##  3 Rep1      1     3 G33    4.55
+##  4 Rep1      1     4 G28    4.09
+##  5 Rep1      1     5 G7     5.05
+##  6 Rep1      1     6 G12    4.19
+##  7 Rep1      1     7 G30    3.27
+##  8 Rep1      2     1 G10    3.44
+##  9 Rep1      2     2 G14    4.3 
+## 10 Rep1      2     3 G16   NA   
 ## # ... with 60 more rows</code></pre>
+</div>
+<div id="formatting" class="section level2">
+<h2>Formatting</h2>
+<p>Before anything, the columns <code>gen</code> and <code>rep</code> should be encoded as factors, since R by default encoded them as character.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(gen, rep), as.factor)</a></code></pre></div>
+</div>
+<div id="exploring" class="section level2">
+<h2>Exploring</h2>
+<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb5-2" title="2">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row <span class="op">|</span><span class="st"> </span>rep,            <span class="co"># fill color per genotype, headers per replicate</span></a>
+<a class="sourceLine" id="cb5-3" title="3">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,   <span class="co"># show genotype names per plot</span></a>
+<a class="sourceLine" id="cb5-4" title="4">        <span class="dt">out1 =</span> row, <span class="dt">out1.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>), <span class="co"># lines between rows</span></a>
+<a class="sourceLine" id="cb5-5" title="5">        <span class="dt">out2 =</span> col, <span class="dt">out2.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>), <span class="co"># lines between columns</span></a>
+<a class="sourceLine" id="cb5-6" title="6">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F)     <span class="co"># formatting</span></a></code></pre></div>
+<p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>When two blocking structures are used which are arranged in rows and columns, we have a <em>row-column design</em>. If rows and columns can be grouped to form complete replicates, the design is <em>resolvable</em>, as in case of one-way blocking.</p>
+<p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (<code>gen</code>).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
+<pre><code>## # A tibble: 35 x 3
+##    gen    mean std.dev
+##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 G19    6.07  1.84  
+##  2 G7     5.74  0.976 
+##  3 G33    5.13  0.820 
+##  4 G6     4.96  0.940 
+##  5 G9     4.94  1.68  
+##  6 G11    4.93  1.03  
+##  7 G14    4.92  0.877 
+##  8 G27    4.89  1.80  
+##  9 G3     4.78  0.0424
+## 10 G25    4.78  0.361 
+## 11 G21    4.76  1.27  
+## 12 G20    4.75  1.39  
+## 13 G5     4.72  0.686 
+## 14 G1     4.69  0.757 
+## 15 G32    4.62  1.21  
+## 16 G18    4.6   1.24  
+## 17 G12    4.59  0.559 
+## 18 G34    4.51  1.16  
+## 19 G13    4.36  0.361 
+## 20 G8     4.36  0.488 
+## 21 G17    4.22  0.580 
+## 22 G16    4.2  NA     
+## 23 G10    4.07  0.891 
+## 24 G31    3.98  1.02  
+## 25 G28    3.95  0.198 
+## 26 G2     3.88  0.389 
+## 27 G24    3.84  0.318 
+## 28 G29    3.76  1.27  
+## 29 G35    3.76  1.52  
+## 30 G30    3.75  0.679 
+## 31 G4     3.62  0.587 
+## 32 G26    3.58  1.44  
+## 33 G22    3.54  0.0778
+## 34 G23    3.26  1.42  
+## 35 G15    1.93 NA</code></pre>
+<p>We can also create a plot to get a better feeling for the data.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb8-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st">  </span><span class="co"># scatter plot</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st">   </span><span class="co"># force y-axis to start at 0</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 
