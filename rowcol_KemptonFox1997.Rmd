@@ -26,3 +26,38 @@ pacman::p_load(janitor, readr, tidyverse, # data import and handling
 
 This example is taken from Chapter *"3.10 Analysis of a resolvable row-column design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Kempton and Fox (1997)](https://www.springer.com/de/book/9780412547508){target="_blank"} from a yield trial laid out as a resolvable row-column design. When two blocking structures are used which are arranged in rows and columns, we have a *row-column design*. If rows and columns can be grouped to form complete replicates, the design is *resolvable*, as in case of one-way blocking. The trial had 35 genotypes (`gen`), 2 complete replicates (`rep`) with 5 rows (`row`) and 7 columns (`col`). Thus, a complete replicate is subdivided into incomplete rows and columns.
 
+## Import
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Kempton%26Fox1997.csv"
+dat <- read_csv(dataURL)
+
+dat
+```
+
+## Formatting
+Before anything, the columns `gen` and `rep` should be encoded as factors, since R by default encoded them as character.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(gen, rep), as.factor)
+```
+
+## Exploring
+
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `col` of each plot in the trial. 
+
+```{r, fig.height = 3, fig.align = "center"}
+desplot(data = dat,
+        form = gen ~ col + row | rep,            # fill color per genotype, headers per replicate
+        text = gen, cex = 0.7, shorten = "no",   # show genotype names per plot
+        out1 = row, out1.gpar=list(col="black"), # lines between rows
+        out2 = col, out2.gpar=list(col="black"), # lines between columns
+        main = "Field layout", show.key = F)     # formatting
+```
+
+
+
+
+
