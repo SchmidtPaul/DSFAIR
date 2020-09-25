@@ -13,6 +13,8 @@ navbar:
         href: CRD_Mead1993.html
       - text: "RCBD_ClewerScarisbrick2001"
         href: RCBD_ClewerScarisbrick2001.html
+      - text: "augmented_Pattersen1994"
+        href: augmented_Pattersen1994.html
       - text: "alpha_JohnWilliams1995"
         href: alpha_JohnWilliams1995.html
     - text: "Summaries"

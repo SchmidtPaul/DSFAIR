@@ -17,10 +17,9 @@ pacman::p_load(purrr)
 ```{r, message=FALSE, warning=FALSE}
 # packages
 pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4,                      # linear mixed model 
+               lme4, lmerTest,            # linear mixed model 
                emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot,          # plots
-               report, equatiomatic)      # automated analysis summaries
+               ggplot2, desplot)          # plots
 ```
 
 # Data
@@ -140,7 +139,17 @@ mod.rb %>%
 
 As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more accurate in terms of comparing genotypes.
 
-# Mean comparisons
+## ANOVA
+
+Thus, we can conduct an ANOVA for this model.
+
+```{r Test}
+mod.rb %>% anova()
+```
+
+As can be seen, the F-test finds the `gen` effects to be statistically significant (p < 0.05). 
+
+## Mean comparisons
 
 ```{r}
 mean_comparisons <- mod.rb %>%
@@ -155,7 +164,7 @@ mean_comparisons$emmeans # adjusted genotype means
 
 # Present results
 
-# Mean comparisons
+## Mean comparisons
 
 For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
 
@@ -197,12 +206,4 @@ ggplot() +
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
-```
-
-## dataset
-
-```{r results='asis'}
-dat %>% 
-  dplyr::select(-plot, -row, -col) %>% 
-  report() %>% text_short()
 ```

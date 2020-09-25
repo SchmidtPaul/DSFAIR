@@ -16,11 +16,198 @@ pacman::p_load(purrr)
 
 ```{r, message=FALSE, warning=FALSE}
 # packages
-pacman::p_load(readr, tidyverse) # data import and handling
+pacman::p_load(janitor, readr, tidyverse, # data import and handling
+               lme4,                      # linear mixed model 
+               emmeans, multcomp,         # mean comparisons
+               ggplot2, desplot)          # plots 
 ```
 
 # Data
 
 This example is taken from Chapter *"3.7 Analysis of a non-resolvable augmented design"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Peterson (199)](https://www.taylorfrancis.com/books/9780429078491){target="_blank"} from a yield trial laid out as an augmented design. The genotypes (`gen`) include 3 standards (`st`, `ci`, `wa`) and 30 new cultivars of interest. The trial was laid out in 6 blocks (`block`). The 3 standards are tested in each block, while each entry is tested in only one of the blocks. Therefore, the blocks are *"incomplete blocks"*.
 
+## Import
 
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Pattersen1994.csv"
+dat <- read_csv(dataURL)
+
+dat
+```
+
+## Formatting
+Before anything, the columns `gen` and `block` should be encoded as factors, since R by default encoded them as character.
+
+```{r}
+dat <- dat %>% 
+  mutate_at(vars(gen, block), as.factor)
+```
+
+## Exploring
+
+In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
+
+Notice that for this example it makes sense to put in some extra effort to explicitly assign colors to the genotypes in a way that differntiates the standards (`st`, `ci`, `wa`) from the other genotypes.
+
+```{r, fig.height = 5, fig.align = "center"}
+# create a color-generating function
+get_shades_of_blue <- colorRampPalette(colors=c("skyblue", "royalblue4"))
+blue_30  <- get_shades_of_blue(30) # 30 shades of blue
+orange_3 <- c("darkorange", "darkorange2", "darkorange3") # 3 shades of orange
+blue_30_and_orange_3 <- c(blue_30, orange_3) # combine into single vector                  
+
+desplot(data = dat,
+        form = gen ~ col + row, # fill color per genotype, headers per replicate
+        col.regions = blue_30_and_orange_3,  # custom colors
+        text = gen, cex = 1, shorten = "no", # show genotype names per plot
+        out1 = block,                        # lines between complete blocks/replicates
+        main = "Field layout", show.key = F) # formatting
+```
+
+We could also have a look at the arithmetic means and standard deviations for yield per genotype (gen) or block (inc.block). It must be clear, however, that except for the standards (`st`, `ci`, `wa`), there is always only a single value per genotype, so that the mean simply is that value and a standard error cannot be calculated at all.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(gen) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield)) %>% 
+  arrange(std.dev, desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+dat %>% 
+  group_by(block) %>% 
+  summarize(mean    = mean(yield),
+            std.dev = sd(yield))  %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
+</div> </div>
+
+```{r}
+ggplot(data = dat, 
+       aes(y = yield,
+           x = gen,
+           color = gen,
+           shape = block)) +
+  geom_point(size = 2) + # scatter plot with larger dots
+  ylim(0, NA) + # force y-axis to start at 0
+  scale_color_manual(values = blue_30_and_orange_3) + # custom colors
+  guides(color = FALSE) + # turn off legend for colors
+  theme_classic() + # clearer plot format
+  theme(legend.position = "top") # legend on top
+```
+
+# Modelling
+
+Finally, we can decide to fit a linear model with `yield` as the response variable and `gen` as fixed effects, since our goal is to compare them to each other. Since the trial was laid out in blocks, we also need `block` effects in the model, but these can be taken either as a fixed or as random effects. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better. 
+
+<div class = "row"> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# blocks as fixed (linear model)
+mod.fb <- lm(yield ~ gen + block,
+             data = dat)
+
+mod.fb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> <div class = "col-md-6">
+```{r, warning=FALSE, message=FALSE}
+# blocks as random (linear mixed model)
+mod.rb <- lmer(yield ~ gen + (1 | block),
+               data = dat)
+
+mod.rb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("contrasts") %>% # extract diffs
+  as_tibble %>% # format to table
+  pluck("SE") %>% # extract s.e.d. column
+  mean # get arithmetic mean
+```
+</div> </div>
+
+As a result, we find that the model with fixed block effects has the slightly smaller s.e.d. and is therefore more accurate in terms of comparing genotypes.
+
+## ANOVA
+
+Thus, we can conduct an ANOVA for this model.
+
+```{r}
+mod.fb %>% anova()
+```
+
+As can be seen, the F-test finds the `gen` effects to be statistically significant (p = `r anova(mod.fb)["gen", "Pr(>F)"] %>% round(3)` < 0.05). 
+
+## Mean comparisons
+
+It can be seen that while some genotypes have a higher yield than others, no differences are found to be statistically significant here. Accordingly, notice that *e.g.* for `gen 11`, which is the genotype with the highest adjusted yield mean (=3055), its lower confidence limit (=1587) includes `gen 12`, which is the genotype with the lowest adjusted yield mean (=1632). 
+
+```{r}
+mean_comparisons <- mod.fb %>%
+  emmeans(pairwise ~ "gen",
+          adjust = "tukey",
+          lmer.df = "kenward-roger") %>%
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+mean_comparisons$emmeans # adjusted genotype means
+```
+
+# Present results
+
+## Mean comparisons
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
+
+```{r}
+ggplot() +
+  # blue/orange dots representing the raw data
+  geom_point(
+    data = dat,
+    aes(y = yield, x = gen, color = gen)
+  ) +
+  scale_color_manual(values = blue_30_and_orange_3) + # custom colors
+  guides(color = FALSE) + # turn off legend for colors
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons$emmeans,
+    aes(y = emmean, x = gen),
+    color = "red",
+    position = position_nudge(x = 0.2)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons$emmeans,
+    aes(ymin = lower.CL, ymax = upper.CL, x = gen),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = 0.2)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons$emmeans,
+    aes(y = lower.CL, x = gen, label = .group),
+    color = "red",
+    angle = 90,
+    hjust = 1,
+    position = position_nudge(y = - 25)
+  ) + 
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Genotype") +      # label x-axis
+  labs(caption = "Blue/orange dots represent raw data
+       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() # clearer plot format 
+```
