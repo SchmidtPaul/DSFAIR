@@ -199,3 +199,9 @@ This example is taken from *"Example 5.4"* of the course material ["Quantitative
   + Compute an ANOVA 
   + Perform multiple (mean) comparisons using the LSD test/t-test.
 * Repeat the analysis, but this time remove all moisture values larger than 12 at the very beginning.
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv"
+ex1dat <- read_csv(dataURL)
+```

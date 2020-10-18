@@ -757,9 +757,12 @@ div.tocify {
 <h1>Exercises</h1>
 <div id="exercise-1" class="section level2">
 <h2>Exercise 1</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb23-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv&quot;</span></a>
+<a class="sourceLine" id="cb23-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a></code></pre></div>
 <p>This example is taken from <em>“Example 5.4”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420" target="_blank">“Quantitative Methods in Biosciences (3402-420)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.routledge.com/Statistical-Methods-in-Agriculture-and-Experimental-Biology/Mead/p/book/9781584881872" target="_blank">Mead et al. (1993, p.54)</a>. The percentage moisture content is determined from multiple samples for each of four different soils. Notice that for this dataset you have no information on any specific field trial layout (<em>i.e.</em> <code>row</code> or <code>col</code> column are not present in the dataset). Therefore you should skip trying to create a field layout with <code>desplot()</code> and instead focus on the following:</p>
 <ul>
-<li>Explore the data
+<li>Explore
 <ul>
 <li>How many samples per soil were taken?</li>
 <li>Which soil has the highest value for moisture?</li>
