@@ -211,3 +211,27 @@ ggplot() +
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
 ```
+
+# Exercises
+
+## Exercise 1
+
+TThis example is taken from Chapter *"3.9 Analysis of a resolvable design with checks"* of the course material ["Mixed models for metric data (3402-451)"](https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data from an augmented design that was laid out for 90 entries and 6 checks. The block size was 10. Incomplete blocks were formed according to a 10 x 10 lattice design, in which incomplete blocks can be grouped into complete replicates. Thus, this is a resolvable design. Checks are coded as 1001 to 1006, while the 90 entries are coded as 2 to 100 (note that there are no entries with labels 11, 21, 31, 41, 51, 61, 71, 81 and 91). Some of the checks have extra replication. We here consider the trait “yield”.
+
+
+It considers data published in [Gomez & Gomez (1984)](https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920){target="_blank"}. A randomized complete block experiment was conducted to assess the yield (kg/ha) of rice cultivar *IR8* at six different seeding densities (kg/ha).
+
+**Important:** The treatment factor (`density`) is actually quantitative variable, but for this exercise you should define it as a `factor` variable with 6 levels anyway. (Notice, however, that in such a case a regression analysis with `density` being a numeric variable is actually more efficient that ANOVA followed by multiple comparison of means.)
+
+* Explore
+  + Create a field layout with `desplot()`
+  + Draw a plot with moisture values per soil
+* Analyze
+  + Compute an ANOVA 
+  + Perform multiple (mean) comparisons using the LSD test/t-test.
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv"
+ex1dat <- read_csv(dataURL)
+```
