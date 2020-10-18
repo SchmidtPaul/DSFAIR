@@ -832,6 +832,37 @@ div.tocify {
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
+<div id="exercises" class="section level1">
+<h1>Exercises</h1>
+<div id="exercise-1" class="section level2">
+<h2>Exercise 1</h2>
+<p>TThis example is taken from Chapter <em>“3.9 Analysis of a resolvable design with checks”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data from an augmented design that was laid out for 90 entries and 6 checks. The block size was 10. Incomplete blocks were formed according to a 10 x 10 lattice design, in which incomplete blocks can be grouped into complete replicates. Thus, this is a resolvable design. Checks are coded as 1001 to 1006, while the 90 entries are coded as 2 to 100 (note that there are no entries with labels 11, 21, 31, 41, 51, 61, 71, 81 and 91). Some of the checks have extra replication. We here consider the trait “yield”.</p>
+<ul>
+<li>Explore
+<ul>
+<li>Draw a plot with yield per genotype</li>
+</ul></li>
+<li>Analyze
+<ul>
+<li>Set up two models: One with blocks as fixed and one with blocks as random. Compare their average s.e.d. between genotype means. Choose the model with the smaller value.</li>
+<li>Compute an ANOVA for the chose model.</li>
+<li>Perform multiple (mean) comparisons based on the chosen model.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb20-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/PiephoAugmentedLattice.csv&quot;</span></a>
+<a class="sourceLine" id="cb20-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">desplot</span>(<span class="dt">data =</span> ex1dat,</a>
+<a class="sourceLine" id="cb20-6" title="6">        <span class="dt">form =</span> block <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row <span class="op">|</span><span class="st"> </span>rep, <span class="co"># fill color per block, headers per replicate</span></a>
+<a class="sourceLine" id="cb20-7" title="7">        <span class="dt">text =</span> geno, <span class="dt">cex =</span> <span class="fl">0.75</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
+<a class="sourceLine" id="cb20-8" title="8">        <span class="dt">col  =</span> genoCheck, <span class="co"># different color for check genotypes</span></a>
+<a class="sourceLine" id="cb20-9" title="9">        <span class="dt">out1 =</span> rep,   <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>), <span class="co"># lines between reps</span></a>
+<a class="sourceLine" id="cb20-10" title="10">        <span class="dt">out2 =</span> block, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>), <span class="co"># lines between blocks</span></a>
+<a class="sourceLine" id="cb20-11" title="11">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
+<p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
 
 &nbsp;
 <hr />

@@ -206,7 +206,7 @@ This example is taken from *"Example 5.11"* of the course material ["Quantitativ
   + Draw a plot with moisture values per soil
 * Analyze
   + Compute an ANOVA 
-  + Perform multiple (mean) comparisons using the LSD test/t-test.
+  + Perform multiple (mean) comparisonss
 
 ```{r, message=FALSE, warning=FALSE}
 # data (import via URL)
