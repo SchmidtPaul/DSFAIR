@@ -14,7 +14,7 @@ library(dplyr); library(tibble); library(tidyr)
 
 # Hi there!{.tabset .tabset-fade .tabset-pills}
 
-This is a github page under construction.
+This is a github page under construction. It contains a collection of example analyses that are typical in agricultural sciences or similar life science fields. 
 
 # Approach
 Where possible, I try to use example data/analyses for our chapters that have been published in peer-reviewed journals or in university lecture course material.
