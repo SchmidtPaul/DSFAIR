@@ -192,3 +192,24 @@ mod %>%
   anova %>% 
   report() %>% text_short()
 ```
+
+# Exercises
+
+## Exercise 1
+
+This example is taken from *"Example 5.11"* of the course material ["Quantitative Methods in Biosciences (3402-420)"](https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420){target="_blank"} by [Prof. Dr. Hans-Peter Piepho](https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257){target="_blank"}. It considers data published in [Gomez & Gomez (1984)](https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920){target="_blank"}. A randomized complete block experiment was conducted to assess the yield (kg/ha) of rice cultivar *IR8* at six different seeding densities (kg/ha).
+
+**Important:** The treatment factor (`density`) is actually quantitative variable, but for this exercise you should define it as a `factor` variable with 6 levels anyway. (Notice, however, that in such a case a regression analysis with `density` being a numeric variable is actually more efficient that ANOVA followed by multiple comparison of means.)
+
+* Explore
+  + Create a field layout with `desplot()`
+  + Draw a plot with moisture values per soil
+* Analyze
+  + Compute an ANOVA 
+  + Perform multiple (mean) comparisons using the LSD test/t-test.
+
+```{r, message=FALSE, warning=FALSE}
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv"
+ex1dat <- read_csv(dataURL)
+```

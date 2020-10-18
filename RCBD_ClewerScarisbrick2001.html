@@ -772,6 +772,29 @@ div.tocify {
 </ul>
 </div>
 </div>
+<div id="exercises" class="section level1">
+<h1>Exercises</h1>
+<div id="exercise-1" class="section level2">
+<h2>Exercise 1</h2>
+<p>This example is taken from <em>“Example 5.11”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/modul/quantitative-methods-in-biosciences-3402-420" target="_blank">“Quantitative Methods in Biosciences (3402-420)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920" target="_blank">Gomez &amp; Gomez (1984)</a>. A randomized complete block experiment was conducted to assess the yield (kg/ha) of rice cultivar <em>IR8</em> at six different seeding densities (kg/ha).</p>
+<p><strong>Important:</strong> The treatment factor (<code>density</code>) is actually quantitative variable, but for this exercise you should define it as a <code>factor</code> variable with 6 levels anyway. (Notice, however, that in such a case a regression analysis with <code>density</code> being a numeric variable is actually more efficient that ANOVA followed by multiple comparison of means.)</p>
+<ul>
+<li>Explore
+<ul>
+<li>Create a field layout with <code>desplot()</code></li>
+<li>Draw a plot with moisture values per soil</li>
+</ul></li>
+<li>Analyze
+<ul>
+<li>Compute an ANOVA</li>
+<li>Perform multiple (mean) comparisons using the LSD test/t-test.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb25-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv&quot;</span></a>
+<a class="sourceLine" id="cb25-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a></code></pre></div>
+</div>
+</div>
 
 &nbsp;
 <hr />
