@@ -35,34 +35,34 @@ p.small {line-height: 1;}
 </style>
 
 <p class="small">
-
-Contact </br>
-<a href="mailto:schmidtpaul1989@outlook.com" style="color: #003f75ff;">
-<i class="fa fa-envelope" style="color: #003f75ff;">
-</i> schmidtpaul1989@outlook.com </a> </br>
 <i class="fa fa-home" style="color: #003f75ff;">
 </i> Hamburg, Germany </br>
-<a href="https://github.com/SchmidtPaul/" style="color: lightgrey;">
+
+Contact </br>
+<a href="mailto:schmidtpaul1989@outlook.com">
+<i class="fa fa-envelope" style="color: #003f75ff;">
+</i> schmidtpaul1989@outlook.com </a> </br>
+<a href="https://github.com/SchmidtPaul/">
 <i class="fa fa-github" style="color: #003f75ff;">
 </i> GitHub </a> </br>
-<a href="https://www.linkedin.com/in/schmidtpaul1989/" style="color: lightgrey;">
+<a href="https://www.linkedin.com/in/schmidtpaul1989/">
 <i class="fa fa-linkedin" style="color: #003f75ff;">
 </i> LinkedIn </a> </br>
-<a href="https://www.researchgate.net/profile/Paul_Schmidt17" style="color: lightgrey;">
+<a href="https://www.researchgate.net/profile/Paul_Schmidt17">
 <i class="fa fa-pencil" style="color: #003f75ff;">
 </i> ResearchGate </a> </br>
-<a href="https://www.xing.com/profile/Paul_Schmidt393/cv" style="color: lightgrey;">
+<a href="https://www.xing.com/profile/Paul_Schmidt393/cv">
 <i class="fa fa-xing" style="color: #003f75ff;">
 </i> Xing </a> 
 
 Websites </br>
-<a href="https://schmidtpaul.github.io/crashcouRse/" style="color: #003f75ff;">
+<a href="https://schmidtpaul.github.io/crashcouRse/">
 <i class="fa fa-window-maximize" style="color: #003f75ff;">
 </i> CrashcouRse </a> </br>
-<a href="https://schmidtpaul.github.io/DSFAIR/" style="color: #003f75ff;">
+<a href="https://schmidtpaul.github.io/DSFAIR/">
 <i class="fa fa-window-maximize" style="color: #003f75ff;">
 </i> DSFAIR: Data Science for Agriculture in R </a> </br>
-<a href="https://schmidtpaul.github.io/MMFAIR/" style="color: #003f75ff;">
+<a href="https://schmidtpaul.github.io/MMFAIR/">
 <i class="fa fa-window-maximize" style="color: #003f75ff;">
 </i> MMFAIR: Mixed Models for Agriculture in R </a> </br>
 

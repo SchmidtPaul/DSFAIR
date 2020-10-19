@@ -48,7 +48,7 @@ dat <- dat %>%
 
 In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
 
-```{r, fig.height = 3, fig.align = "center"}
+```{r, fig.height = 3, fig.align = "center", warning=FALSE, message=FALSE}
 desplot(data = dat,
         form = variety ~ col + row,              # fill color per genotype, headers per replicate
         text = variety, cex = 1, shorten = "no", # show genotype names per plot
@@ -205,3 +205,56 @@ This example is taken from *"Example 5.4"* of the course material ["Quantitative
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv"
 ex1dat <- read_csv(dataURL)
 ```
+
+## Solution Exercise 1
+
+```{r, message=FALSE, warning=FALSE}
+# exercise 1
+
+# packages
+pacman::p_load(readr, tidyverse, forcats, # data import and handling
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot,          # plots
+               report, equatiomatic)      # automated analysis summaries
+
+# data (import via URL)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv"
+ex1dat <- read_csv(dataURL)
+
+# in case of removing all moisture values larger than 12 run this:
+# ex1dat <- ex1dat %>% 
+#   filter(moisture <= 12)
+
+# format first!
+ex1dat <- ex1dat %>% 
+  mutate_at(vars(soil), as.factor)
+
+# How many samples per soil were taken?
+ex1dat %>% 
+  count(soil)
+
+# Which soil has the highest value for moisture?
+ex1dat %>% 
+  group_by(soil) %>% 
+  summarise(mean = mean(moisture)) %>% 
+  arrange(desc(mean))
+
+# Draw a plot with moisture values per soil
+ggplot(data = ex1dat,
+       aes(y = moisture, x = soil)) +
+  geom_point() +
+  ylim(0, NA) +
+  theme_classic()
+
+# Compute an ANOVA
+mod <- lm(moisture ~ soil, data = ex1dat)
+
+mod %>% anova() # significant!
+
+# Perform multiple (mean) comparisons using the LSD test/t-test.
+mod %>% 
+  emmeans(pairwise ~ "soil", adjust="none") %>% # adjust="none" for t-test
+  pluck("emmeans") %>% 
+  cld(details=TRUE, Letters=letters)
+```
+
