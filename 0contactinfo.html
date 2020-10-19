@@ -11,7 +11,7 @@
 
 
 
-<title>Data Science for Agriculture in R</title>
+<title>Dr. Paul Schmidt</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,6 +24,8 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <!--All these are favicons-->
 <link rel="apple-touch-icon" sizes="180x180" href="img/logo/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/logo/favicon-32x32.png">
@@ -458,21 +460,333 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data Science for Agriculture in R</h1>
+<h1 class="title toc-ignore">Dr. Paul Schmidt</h1>
 
 </div>
 
 
-<div id="hi-there" class="section level1 tabset tabset-fade tabset-pills">
-<h1>Hi there!</h1>
-<p>This is a github page under construction. It contains a collection of example analyses that are typical in agricultural sciences or similar life science fields.</p>
-</div>
-<div id="approach" class="section level1">
-<h1>Approach</h1>
-<p>Where possible, I try to use example data/analyses for our chapters that have been published in peer-reviewed journals or in university lecture course material.</p>
-<p>In terms of R syntax, I generally try to follow the approach presented on the <a href="https://r4ds.had.co.nz/" target="_blank">“R for Data Science” website</a>, making use of:</p>
-<p><a href="https://CRAN.R-project.org/package=dplyr"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" width="80"></a> <a href="https://CRAN.R-project.org/package=ggplot2"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80"></a> <a href="https://r4ds.had.co.nz/pipes.html"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/pipe.png" width="80"></a> <a href="https://CRAN.R-project.org/package=purrr"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/purrr.png" width="80"></a> <a href="https://CRAN.R-project.org/package=scales"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/scales.png" width="80"></a> <a href="https://CRAN.R-project.org/package=stringr"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/stringr.png" width="80"></a> <a href="https://CRAN.R-project.org/package=tibble"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tibble.png" width="80"></a> <a href="https://CRAN.R-project.org/package=tidyr"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyr.png" width="80"></a> <a href="https://CRAN.R-project.org/package=tidyverse"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" width="80"></a></p>
-</div>
+<!-- Image -->
+<style>
+img {border-radius: 50%;}
+</style>
+<p><img src="https://avatars3.githubusercontent.com/u/31928213?s=400&u=d5ca44cc7f39c7f4e2e79b4cffeeb3d0d0a321fb&v=4" style="width:33%; margin-left: 20px" align="right" alt="Avatar"></p>
+<!-- Contact symbols -->
+<style>
+p.small {line-height: 1;}
+</style>
+<p class="small">
+<p>Contact </br> <a href="mailto:schmidtpaul1989@outlook.com" style="color: #003f75ff;"> <i class="fa fa-envelope" style="color: #003f75ff;"> </i> schmidtpaul1989@outlook.com </a> </br> <i class="fa fa-home" style="color: #003f75ff;"> </i> Hamburg, Germany </br> <a href="https://github.com/SchmidtPaul/" style="color: lightgrey;"> <i class="fa fa-github" style="color: #003f75ff;"> </i> GitHub </a> </br> <a href="https://www.linkedin.com/in/schmidtpaul1989/" style="color: lightgrey;"> <i class="fa fa-linkedin" style="color: #003f75ff;"> </i> LinkedIn </a> </br> <a href="https://www.researchgate.net/profile/Paul_Schmidt17" style="color: lightgrey;"> <i class="fa fa-pencil" style="color: #003f75ff;"> </i> ResearchGate </a> </br> <a href="https://www.xing.com/profile/Paul_Schmidt393/cv" style="color: lightgrey;"> <i class="fa fa-xing" style="color: #003f75ff;"> </i> Xing </a></p>
+<p>Websites </br> <a href="https://schmidtpaul.github.io/crashcouRse/" style="color: #003f75ff;"> <i class="fa fa-window-maximize" style="color: #003f75ff;"> </i> CrashcouRse </a> </br> <a href="https://schmidtpaul.github.io/DSFAIR/" style="color: #003f75ff;"> <i class="fa fa-window-maximize" style="color: #003f75ff;"> </i> DSFAIR: Data Science for Agriculture in R </a> </br> <a href="https://schmidtpaul.github.io/MMFAIR/" style="color: #003f75ff;"> <i class="fa fa-window-maximize" style="color: #003f75ff;"> </i> MMFAIR: Mixed Models for Agriculture in R </a> </br></p>
+</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;color: lightgrey !important;">
+English
+</th>
+<th style="text-align:left;color: lightgrey !important;">
+Deutsch
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+I completed my <strong>PhD</strong> in biostatistics at the University of Hohenheim in 2019 and have been working as a <strong>data scientist</strong> in life sciences at <a href="https://www.biomath.de/">BioMath</a> since then. I also give beginner and advanced <strong>workshops</strong> in R.
+</td>
+<td style="text-align:left;">
+Ich habe 2019 meine <strong>Promotion</strong> im Fachgebiet Biostatistik an der Universität Hohenheim abgeschlossen und arbeite seitdem als <strong>Data Scientist</strong> in den Life Sciences bei <a href="https://www.biomath.de/">BioMath</a>. Außerdem gebe ich <strong>Workshops</strong> in R für Einsteiger und Fortgeschrittene.
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-minimal" style='font-size: 10px; font-family: "Trebuchet MS", verdana, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Time
+</th>
+<th style="text-align:left;">
+Title
+</th>
+<th style="text-align:left;">
+Language
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+Duration
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Nov 2020
+</td>
+<td style="text-align:left;">
+Planning experimental designs, repeated measurements, and their analyses in R
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Kassel
+</td>
+<td style="text-align:left;">
+2d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov 2020
+</td>
+<td style="text-align:left;">
+Data science for life sciences with R (part 1)
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Thünen-Institut, Braunschweig
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct 2020
+</td>
+<td style="text-align:left;">
+Experimental Design - Practicals in R
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+CIHEAM Zaragoza via zoom
+</td>
+<td style="text-align:left;">
+5d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mar 2020
+</td>
+<td style="text-align:left;">
+Real-time consultation on statistics and mixed models in R
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Kassel
+</td>
+<td style="text-align:left;">
+2d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dec 2019
+</td>
+<td style="text-align:left;">
+Basics of applied statistics
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Rostock
+</td>
+<td style="text-align:left;">
+2d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov 2019
+</td>
+<td style="text-align:left;">
+Data science for life sciences with R (part 2)
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Thünen-Institut, Braunschweig
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct 2019
+</td>
+<td style="text-align:left;">
+Data science for life sciences with R (part 1)
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Thünen-Institut, Braunschweig
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sep 2019
+</td>
+<td style="text-align:left;">
+Essential basics of statistics
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Rostock
+</td>
+<td style="text-align:left;">
+2d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov 2018
+</td>
+<td style="text-align:left;">
+Mixed models with R
+</td>
+<td style="text-align:left;">
+Ger
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Thünen-Institut, Braunschweig
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+May 2018
+</td>
+<td style="text-align:left;">
+Implementation of yield stability assessment with ASReml-R
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Bangladesh Rice Research Institute, Gazipur
+</td>
+<td style="text-align:left;">
+1d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-2018
+</td>
+<td style="text-align:left;">
+Statistical analysis with SAS (monthly)
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Hohenheim, Stuttgart
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-2018
+</td>
+<td style="text-align:left;">
+Statistical analysis with R (monthly)
+</td>
+<td style="text-align:left;">
+Eng
+<html>
+<body>
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</body>
+</html>
+</td>
+<td style="text-align:left;">
+Universität Hohenheim, Stuttgart
+</td>
+<td style="text-align:left;">
+3d
+</td>
+</tr>
+</tbody>
+</table>
 
 &nbsp;
 <hr />
