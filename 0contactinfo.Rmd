@@ -23,6 +23,33 @@ workshops <- read.table(file = "https://raw.githubusercontent.com/SchmidtPaul/CV
   rename(Time = 1) %>% tibble
 ```
 
+<!-- hyperlink style -->
+<style>
+a:link {
+  color: #003f75ff;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #003f75ff;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #003f75ff;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #003f75ff;
+  background-color: transparent;
+  text-decoration: underline;
+}
+</style> 
+
 <!-- Image -->
 <style>
 img {border-radius: 50%;}
