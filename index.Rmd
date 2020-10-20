@@ -8,8 +8,9 @@ output:
 ---
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # packages for better formatting tables for html output
-library(kableExtra); library(formattable)
-library(dplyr); library(tibble); library(tidyr)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+pacman::p_load(kableExtra, formattable ,htmltools)
+pacman::p_load(tidyverse)
 ```
 
 # Hi there!{.tabset .tabset-fade .tabset-pills}
