@@ -667,8 +667,8 @@ div.tocify {
 <a class="sourceLine" id="cb5-4" title="4">        <span class="dt">out1 =</span> row, <span class="dt">out1.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>), <span class="co"># lines between rows</span></a>
 <a class="sourceLine" id="cb5-5" title="5">        <span class="dt">out2 =</span> col, <span class="dt">out2.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>), <span class="co"># lines between columns</span></a>
 <a class="sourceLine" id="cb5-6" title="6">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F)     <span class="co"># formatting</span></a></code></pre></div>
-<pre><code>## Warning in if (class(data) == &quot;formula&quot;) {: the condition has length &gt; 1 and only
-## the first element will be used</code></pre>
+<pre><code>## Warning in if (class(data) == &quot;formula&quot;) {: Bedingung hat Länge &gt; 1 und nur das
+## erste Element wird benutzt</code></pre>
 <p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>When two blocking structures are used which are arranged in rows and columns, we have a <em>row-column design</em>. If rows and columns can be grouped to form complete replicates, the design is <em>resolvable</em>, as in case of one-way blocking.</p>
 <p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (<code>gen</code>).</p>
@@ -897,6 +897,43 @@ div.tocify {
 <p><img src="rowcol_KemptonFox1997_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
+<div id="exercises" class="section level1">
+<h1>Exercises</h1>
+<div id="exercise-1" class="section level2">
+<h2>Exercise 1</h2>
+<p>This example is taken from <em>“Example 8”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data from a yield trial with oat. There were 64 genotypes laid out as a 8 x 8 lattice with 3 replicates.</p>
+<ul>
+<li>Explore
+<ul>
+<li>Which genotypes have missing yield observations?</li>
+<li>Create a field trial layout using ´desplot()´ where the plots are filled according to their yield. Try to see whether some areas have lower/higher yields.<br />
+</li>
+</ul></li>
+<li>Analyze
+<ul>
+<li>Set up the model with random incomplete block effects.</li>
+<li>Extract the variance components.</li>
+<li>Compute an ANOVA</li>
+<li>Perform multiple (mean) comparisons using the LSD test/t-test.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># data (import via URL)</span></a>
+<a class="sourceLine" id="cb21-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/RowColFromUtz.csv&quot;</span></a>
+<a class="sourceLine" id="cb21-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a></code></pre></div>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   rep = col_character(),
+##   row = col_double(),
+##   col = col_double(),
+##   inc_block = col_character(),
+##   treat = col_character(),
+##   yield = col_double(),
+##   height = col_double(),
+##   TKW = col_double()
+## )</code></pre>
+</div>
+</div>
 
 &nbsp;
 <hr />
@@ -914,6 +951,9 @@ div.tocify {
     <a href="https://github.com/SchmidtPaul/" class="fa fa-github" style="color: #003f75ff;"></a>
 </p>
 
+<style>
+img {border-radius: 0%;}
+</style>
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fschmidtpaul.github.io%2FDSFAIR%2F&count_bg=%23003F75&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" class="center"/></a>
 
 &nbsp;
