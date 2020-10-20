@@ -91,7 +91,7 @@ Websites </br>
 </i> DSFAIR: Data Science for Agriculture in R </a> </br>
 <a href="https://schmidtpaul.github.io/MMFAIR/">
 <i class="fa fa-window-maximize" style="color: #003f75ff;">
-</i> MMFAIR: Mixed Models for Agriculture in R </a> </br>
+</i> MMFAIR: <img src="https://github.com/SchmidtPaul/MMFAIR/blob/master/img/logo/favicon-16x16.png"/> Mixed Models for Agriculture in R </a> </br>
 
 </p>
 
