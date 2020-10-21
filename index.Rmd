@@ -15,10 +15,7 @@ pacman::p_load(tidyverse)
 
 # Hi there!{.tabset .tabset-fade .tabset-pills}
 
-This is a github page under construction. It contains a collection of example analyses that are typical in agricultural sciences or similar life science fields. 
-
-# Approach
-Where possible, I try to use example data/analyses for our chapters that have been published in peer-reviewed journals or in university lecture course material.
+[DSFAIR - Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/){target="_blank"} provides a cookbook with statistical analyses of typical examples in life sciences (focus on agriculture/biology). It can be seen as the smaller brother of [MMFAIR - Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/){target="_blank"}, because it deals with more basic analyses. Where possible, I try to use example data/analyses that have been published in university lecture notes or peer-reviewed journals. Note that [CrashcouRse - R für Bio- und Agrarwissenschaftler](https://schmidtpaul.github.io/crashcouRse){target="_blank"} is the German predecessor of this website.
 
 In terms of R syntax, I generally try to follow the approach presented on the ["R for Data Science" website](https://r4ds.had.co.nz/){target="_blank"}, making use of:
 
