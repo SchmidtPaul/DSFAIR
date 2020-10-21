@@ -17,10 +17,10 @@ pacman::p_load(purrr)
 
 ```{r, message=FALSE, warning=FALSE}
 # packages
-pacman::p_load(readr, tidyverse,     # data import and handling
-               emmeans, multcomp,    # mean comparisons
-               ggplot2, desplot,     # plots
-               report, equatiomatic) # automated analysis summaries
+pacman::p_load(agridat, tidyverse, # data import and handling
+               emmeans, multcomp,  # mean comparisons
+               ggplot2, desplot,   # plots
+               report)             # automated analysis summaries
 ```
 
 # Data

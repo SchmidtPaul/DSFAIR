@@ -629,10 +629,10 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse,     <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,    <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot,     <span class="co"># plots</span></a>
-<a class="sourceLine" id="cb1-5" title="5">               report, equatiomatic) <span class="co"># automated analysis summaries</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(agridat, tidyverse, <span class="co"># data import and handling</span></a>
+<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,  <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot,   <span class="co"># plots</span></a>
+<a class="sourceLine" id="cb1-5" title="5">               report)             <span class="co"># automated analysis summaries</span></a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from the <code>agridat</code><em>: Agricultural Datasets</em> package. It considers data published in <a href="https://rdrr.io/github/kwstat/agridat/man/bridges.cucumber.html" target="_blank">Bridges (1989)</a> from a cucumber yield trial set up as a latin square design. Notice that the original dataset considers two trials (at two locations), but we will focus on only a single trial here.</p>
