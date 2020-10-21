@@ -640,8 +640,8 @@ div.tocify {
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (from agridat package)</span></a>
 <a class="sourceLine" id="cb2-2" title="2">dat &lt;-<span class="st"> </span>agridat<span class="op">::</span>bridges.cucumber <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">filter</span>(loc <span class="op">==</span><span class="st"> &quot;Clemson&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>loc)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">filter</span>(loc <span class="op">==</span><span class="st"> &quot;Clemson&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># subset data from only one location</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>loc) <span class="co"># remove loc column which is now unnecessary</span></a>
 <a class="sourceLine" id="cb2-5" title="5"></a>
 <a class="sourceLine" id="cb2-6" title="6">dat</a></code></pre></div>
 <pre><code>##         gen row col yield

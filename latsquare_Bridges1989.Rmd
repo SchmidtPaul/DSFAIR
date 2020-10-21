@@ -32,8 +32,8 @@ This example is taken from the `agridat`*: Agricultural Datasets* package. It co
 ```{r, message=FALSE, warning=FALSE}
 # data (from agridat package)
 dat <- agridat::bridges.cucumber %>% 
-  filter(loc == "Clemson") %>% 
-  dplyr::select(-loc)
+  filter(loc == "Clemson") %>% # subset data from only one location
+  dplyr::select(-loc) # remove loc column which is now unnecessary
 
 dat
 ```
