@@ -204,13 +204,59 @@ This example is taken from *"Example 5.11"* of the course material ["Quantitativ
 
 * Explore
   + Create a field layout with `desplot()`
-  + Draw a plot with moisture values per soil
+  + Draw a plot with yield values per density
 * Analyze
   + Compute an ANOVA 
-  + Perform multiple (mean) comparisonss
+  + Perform multiple (mean) comparisons
 
 ```{r, message=FALSE, warning=FALSE}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv"
 ex1dat <- read_csv(dataURL)
 ```
+
+## Solution Exercise 1
+
+```{r}
+# Exercise 1 of Example 2
+pacman::p_load(readr, tidyverse,     # data import and handling
+               emmeans, multcomp,    # mean comparisons
+               ggplot2, desplot,     # plots
+               report, equatiomatic) # automated analysis summaries
+
+# format
+ex1dat <- ex1dat %>% 
+  mutate_at(vars(density), as.factor)
+
+# Create a field layout with desplot()
+desplot(data = ex1dat,
+        form = density ~ Row + Col,
+        out1 = block)
+
+# desplot does not work yet
+ex1dat %>% 
+  dplyr::select(Row, Col) %>% 
+  table
+
+# Draw a plot with moisture values per soil
+ggplot(data = ex1dat,
+       aes(y = yield, x = density, color = block)) +
+  geom_point() +
+  ylim(0, NA) +
+  theme_classic()
+
+# Compute an ANOVA
+# modelling
+mod <- lm(yield ~ density + block, data = ex1dat)
+
+# anova
+mod %>% anova() # treatment is significant!
+
+# Perform multiple (mean) comparisons
+mean_comparisons <- mod %>% 
+  emmeans(pairwise ~ "density", adjust="tukey") %>% # adjust="none" for t-test
+  pluck("emmeans") %>% 
+  cld(details=TRUE, Letters=letters)
+
+```
+
