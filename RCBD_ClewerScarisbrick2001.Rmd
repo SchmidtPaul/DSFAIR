@@ -233,11 +233,6 @@ desplot(data = ex1dat,
         form = density ~ Row + Col,
         out1 = block)
 
-# desplot does not work yet
-ex1dat %>% 
-  dplyr::select(Row, Col) %>% 
-  table
-
 # Draw a plot with moisture values per soil
 ggplot(data = ex1dat,
        aes(y = yield, x = density, color = block)) +
