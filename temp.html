@@ -393,6 +393,7 @@ all the code for assignment 1
 all the code for assignment 2
 # answer(s) to assignment 2</code></pre>
 <p>Good luck!</p>
+<p>Don’t forget to load the necessary packages!</p>
 </div>
 <div id="assignment-1" class="section level1">
 <h1>Assignment 1</h1>
@@ -434,7 +435,7 @@ all the code for assignment 2
 URL_to_my_data &lt;- 
   paste0(&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/temp/data&quot;, 
          my_birthday, &quot;.csv&quot;)
-dat &lt;- read.csv(URL_to_my_data)</code></pre>
+dat &lt;- read_csv(URL_to_my_data)</code></pre>
 <p>(If for some reason importing data with your birthday does not work, please put <code>19891127</code> as the date instead. This will definitely work.)</p>
 <p>After running the code above with your birthday edited in, your dataset should have been imported into the <code>dat</code> object. This field trial was laid out as an alpha-design. In total, there are 9 incomplete blocks, each comprising 3 plots. The information on these blocks is stored in the <code>block</code> column of the dataset. You can have a look at the basic field layout by using the code below. (Note, that you may add more arguments to the <code>desplot()</code> function if you want.)</p>
 <pre class="r"><code>desplot(data = dat,
