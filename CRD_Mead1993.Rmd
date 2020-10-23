@@ -204,11 +204,12 @@ dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mea
 ex1dat <- read_csv(dataURL)
 ```
 
-`r knitr::current_input()`
+**R-Code and exercise solutions**
 
-Please [click here] to find
- * the R-code for this example combined as an `.R` file
- * including the solutions to this exercise.
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).
 
 ```{r, echo=FALSE, eval=FALSE}
 # exercise 1

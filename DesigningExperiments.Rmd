@@ -9,13 +9,12 @@ output:
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
-pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
+pacman::p_load(kableExtra, formattable, htmltools)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(tidyverse,        # data handling
                agricolae,        # experimental design

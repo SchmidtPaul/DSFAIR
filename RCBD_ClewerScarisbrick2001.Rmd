@@ -7,15 +7,14 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(readr, tidyverse,     # data import and handling
                emmeans, multcomp,    # mean comparisons
@@ -29,7 +28,7 @@ This example is taken from Chapter *"2 Randomized complete block design"* of the
 
 ## Import
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv"
 dat <- read_csv(dataURL)
@@ -68,14 +67,14 @@ dat %>%
 We could also have a look at the arithmetic means and standard deviations for yield per `cultivar` or `block`.
 
 <div class = "row"> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(cultivar) %>% 
   summarize(mean    = mean(yield),
             std.dev = sd(yield))
 ```
 </div> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(block) %>% 
   summarize(mean    = mean(yield),
@@ -207,15 +206,20 @@ This example is taken from *"Example 5.11"* of the course material ["Quantitativ
   + Compute an ANOVA 
   + Perform multiple (mean) comparisons
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv"
 ex1dat <- read_csv(dataURL)
 ```
 
-## Solution Exercise 1
+**R-Code and exercise solutions**
 
-```{r}
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).
+
+```{r, echo=FALSE, eval=FALSE}
 # Exercise 1 of Example 2
 pacman::p_load(readr, tidyverse,     # data import and handling
                emmeans, multcomp,    # mean comparisons
@@ -250,6 +254,5 @@ mean_comparisons <- mod %>%
   emmeans(pairwise ~ "density", adjust="tukey") %>% # adjust="none" for t-test
   pluck("emmeans") %>% 
   cld(details=TRUE, Letters=letters)
-
 ```
 

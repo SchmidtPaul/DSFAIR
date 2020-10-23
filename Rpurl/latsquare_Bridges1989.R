@@ -1,58 +1,21 @@
----
-title: "Latin square design"
-output: 
-  html_document:
-    includes:
-      in_header: header.html
-      after_body: footer.html		
----
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
-# formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
-options(knitr.kable.NA = '')
-pacman::p_load(kableExtra, formattable ,htmltools)
-```
-
-```{r}
 # packages
 pacman::p_load(agridat, tidyverse, # data import and handling
                emmeans, multcomp,  # mean comparisons
                ggplot2, desplot,   # plots
                report)             # automated analysis summaries
-```
 
-# Data
-
-This example is taken from the `agridat`*: Agricultural Datasets* package. It considers data published in [Bridges (1989)](https://rdrr.io/github/kwstat/agridat/man/bridges.cucumber.html){target="_blank"} from a cucumber yield trial set up as a latin square design. Notice that the original dataset considers two trials (at two locations), but we will focus on only a single trial here.  
-
-## Import
-
-```{r}
 # data (from agridat package)
 dat <- agridat::bridges.cucumber %>% 
   filter(loc == "Clemson") %>% # subset data from only one location
   dplyr::select(-loc) # remove loc column which is now unnecessary
 
 dat
-```
 
-## Formatting
-
-While `gen` is already correctly encoded as factor, the columns `row` and `col` should be encoded as factors, too, since R by default encoded them as integer. However, we also want to keep `row` and `col` as integer for the `desplot()` function. Therefore we create copies of these columns encoded as factors and named `rowF` and `colF`
-
-```{r}
 dat <- dat %>% 
   as_tibble() %>% # tibble data format for convenience
   mutate(rowF = row %>% as.factor,
          colF = col %>% as.factor)
-```
 
-## Exploring
-
-In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `col` of each plot in the trial. 
-
-```{r, fig.height = 3, fig.width = 5, fig.align = "center"}
 desplot(data = dat,
         form = gen ~ row + col, flip = TRUE,
         out1 = row, out1.gpar=list(col="black", lwd=3),
@@ -60,65 +23,33 @@ desplot(data = dat,
         text = gen, cex = 1, shorten = "no",
         main = "Field layout", 
         show.key = FALSE)
-```
 
-We could also have a look at the arithmetic means and standard deviations for yield per `genotype`, `row` or `col`.
-
-```{r}
 dat %>% 
   group_by(gen) %>% # genotype
   summarize(mean    = mean(yield),
             std.dev = sd(yield)) %>% 
   arrange(desc(mean))
-```
 
-<div class = "row"> <div class = "col-md-6">
-```{r}
 dat %>% 
   group_by(row) %>% # row
   summarize(mean    = mean(yield),
             std.dev = sd(yield))
-```
-</div> <div class = "col-md-6">
-```{r}
+
 dat %>% 
   group_by(col) %>% # column
   summarize(mean    = mean(yield),
             std.dev = sd(yield))
-```
-</div> </div>
 
-We can also create a plot to get a better feeling for the data.
-
-```{r, fig.height = 3, fig.width = 4, fig.align = "center"}
 ggplot(data = dat,
        aes(y = yield, x = gen, color = rowF, shape=colF)) +
   geom_point(size=2) +  # scatter plot with larger points
   ylim(0, NA) +   # force y-axis to start at 0
   theme_classic() # clearer plot format 
-```
 
-# Modelling
-
-Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `gen` effects, as well as `rowF` and `colF` effects. **Important:** Don't forget to use the variables for rows and columns that are encoded as factors and thus not the ones used in the `desplot()` function above.
-
-```{r}
 mod <- lm(yield ~ gen + rowF + colF, data = dat)
-```
 
-## ANOVA
-
-Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the `gen` effects to be statistically significant (p = `r anova(mod)["gen", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)` < 0.05). 
-
-```{r}
 mod %>% anova()
-```
 
-## Mean comparisons
-
-Following a significant F-test, one will want to compare genotype means.
-
-```{r}
 mean_comparisons <- mod %>% 
   emmeans(pairwise ~ "gen", adjust="tukey") %>% # adjust="none" for t-test
   pluck("emmeans") %>% 
@@ -127,15 +58,7 @@ mean_comparisons <- mod %>%
 mean_comparisons$emmeans # adjusted genotype means
 
 mean_comparisons$comparisons # differences between adjusted genotype means 
-```
 
-# Present results
-
-## Mean comparisons
-
-For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model.
-
-```{r}
 ggplot() +
   # black dots representing the raw data
   geom_point(
@@ -171,27 +94,11 @@ ggplot() +
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
-```
 
-## dataset
-
-```{r results='asis'}
 dat %>% 
   dplyr::select(-row, -col) %>% 
   report() %>% text_short()
-```
 
-## anova
-
-```{r results='asis'}
 mod %>% 
   anova %>% 
   report() %>% text_short()
-```
-
-**R-Code and exercise solutions**
-
-Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
-
- * the entire R-code of each example combined, including
- * solutions to the respective exercise(s).

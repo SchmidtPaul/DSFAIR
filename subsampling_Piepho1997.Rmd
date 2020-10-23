@@ -7,15 +7,14 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
-pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
+pacman::p_load(kableExtra, formattable, htmltools)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(readr, tidyverse, forcats, # data import and handling
                lme4, lmerTest,            # linear mixed model 
@@ -29,7 +28,7 @@ This example is taken from Chapter *"4.1 The sorghum experiment"* of the course 
 
 ## Import
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Piepho1997.csv"
 dat <- read_csv(dataURL)
@@ -137,3 +136,9 @@ mean_comparisons <- mod %>%
 mean_comparisons$emmeans
 ```
 
+**R-Code and exercise solutions**
+
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).

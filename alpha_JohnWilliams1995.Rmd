@@ -7,15 +7,14 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(readr, tidyverse, forcats, # data import and handling
                lme4, lmerTest,            # linear mixed model 
@@ -29,7 +28,7 @@ This example is taken from Chapter *"3.8 Analysis of an $\alpha$-design"* of the
 
 ## Import
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/John%26Williams1995.csv"
 dat <- read_csv(dataURL)
@@ -63,7 +62,7 @@ An $\alpha$-design is a design with incomplete blocks, where the blocks can be g
 We could also have a look at the arithmetic means and standard deviations for yield per genotype (`gen`) or incomplete block (`inc.block`). Notice that the way the factor variable `inc.block` is defined, it only has 6 levels (`r levels(dat$inc.block)`). However, as can be clearly seen on the field layout above, there are 18 incomplete blocks, *i.e.* 6 per replicate. Thus, an actual incomplete block here is identified by the information stored in `rep` *and* `inc.block`. Alternatively, one could have coded the `inc.block` variable as a factor with 18 levels (B1-B18), but this was not done here.
 
 <div class = "row"> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(gen) %>% 
   summarize(mean    = mean(yield),
@@ -72,7 +71,7 @@ dat %>%
   print(n=Inf) # print full table
 ```
 </div> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(rep, inc.block) %>% 
   summarize(mean    = mean(yield),
@@ -106,7 +105,7 @@ ggplot(data = plotdata,
 Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `gen` and `block` effects. There also needs to be term for the 18 incomplete blocks (*i.e.* `rep:inc.block`) in the model, but it can be taken either as a fixed or a random effect. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.
 
 <div class = "row"> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 # blocks as fixed (linear model)
 mod.fb <- lm(yield ~ gen + rep +
                rep:inc.block,
@@ -121,7 +120,7 @@ mod.fb %>%
   mean() # get arithmetic mean
 ```
 </div> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 # blocks as random (linear mixed model)
 mod.rb <- lmer(yield ~ gen + rep +
                  (1 | rep:inc.block),
@@ -207,3 +206,10 @@ ggplot() +
   theme_classic() + # clearer plot format 
   theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis
 ```
+
+**R-Code and exercise solutions**
+
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).

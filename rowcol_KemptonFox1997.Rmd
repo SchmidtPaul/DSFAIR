@@ -7,15 +7,14 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(janitor, readr, tidyverse, # data import and handling
                lme4, lmerTest,            # linear mixed model 
@@ -29,7 +28,7 @@ This example is taken from Chapter *"3.10 Analysis of a resolvable row-column de
 
 ## Import
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Kempton%26Fox1997.csv"
 dat <- read_csv(dataURL)
@@ -62,7 +61,7 @@ When two blocking structures are used which are arranged in rows and columns, we
 
 We could also have a look at the arithmetic means and standard deviations for yield per genotype (`gen`).
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(gen) %>% 
   summarize(mean    = mean(yield, na.rm=TRUE),
@@ -73,7 +72,7 @@ dat %>%
 
 We can also create a plot to get a better feeling for the data.
 
-```{r, fig.align = "center", warning=FALSE, message=FALSE}
+```{r, fig.align = "center"}
 ggplot(data = dat,
        aes(y = yield, x = gen, color=rep)) +
   geom_point() +  # scatter plot
@@ -99,7 +98,7 @@ dat <- dat %>%
 Furthermore, when building our model we must ensure that row and column effects are being estimated **per replicate**. Thuse, we have 2x5 row effects and 2x7 column effects. This can be done as:
 
 <div class = "row"> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 # rows and cols fixed (linear model)
 mod.fb <- lm(yield ~ gen + rep +
                rep:row_fct + 
@@ -115,7 +114,7 @@ mod.fb %>%
   mean() # get arithmetic mean
 ```
 </div> <div class = "col-md-6">
-```{r, warning=FALSE, message=FALSE}
+```{r}
 # rows and cols random (linear mixed model)
 mod.rb <- lmer(yield ~ gen + rep +
                  (1|rep:row_fct) + 
@@ -227,9 +226,15 @@ This example is taken from *"Example 8"* of the course material ["Mixed models f
   + Compute an ANOVA 
   + Perform multiple (mean) comparisons using the LSD test/t-test.
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/RowColFromUtz.csv"
 ex1dat <- read_csv(dataURL)
 ```
 
+**R-Code and exercise solutions**
+
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).

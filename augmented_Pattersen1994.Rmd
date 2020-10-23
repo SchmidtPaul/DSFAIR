@@ -254,3 +254,10 @@ desplot(data = ex1dat,
         out2 = block, out2.gpar = list(col = "darkgrey"), # lines between blocks
         main = "Field layout", show.key = F) # formatting
 ```
+
+**R-Code and exercise solutions**
+
+Please [click here](https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl){target="_blank"} to find a folder with `.R` files. Each file contains
+
+ * the entire R-code of each example combined, including
+ * solutions to the respective exercise(s).
