@@ -711,7 +711,7 @@ div.tocify {
 </blockquote>
 <div id="variance-component-estimates" class="section level2">
 <h2>Variance component estimates</h2>
-<p>We can extract the variance component estimates as follows:</p>
+<p>We can extract the variance component estimates for our mixed model as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">VarCorr</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>

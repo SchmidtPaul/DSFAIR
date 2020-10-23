@@ -106,6 +106,16 @@ mod <- lmer(yield ~ G + N + G:N +
             data=dat)
 ```
 
+## Variance component estimates
+
+We can extract the variance component estimates for our mixed model as follows:
+
+```{r}
+mod %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
+```
 
 ## ANOVA
 

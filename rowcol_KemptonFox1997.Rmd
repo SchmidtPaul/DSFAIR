@@ -65,7 +65,8 @@ We could also have a look at the arithmetic means and standard deviations for yi
 dat %>% 
   group_by(gen) %>% 
   summarize(mean    = mean(yield, na.rm=TRUE),
-            std.dev = sd(yield, na.rm=TRUE)) %>% 
+            std.dev = sd(yield, na.rm=TRUE),
+            n_missing  = sum(is.na(yield))) %>% 
   arrange(desc(mean)) %>% # sort
   print(n=Inf) # print full table
 ```
@@ -133,6 +134,17 @@ mod.rb %>%
 </div> </div>
 
 As a result, we find that the model with random row and column effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.
+
+## Variance component estimates
+
+We can extract the variance component estimates for our mixed model as follows:
+
+```{r}
+mod.rb %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
+```
 
 ## ANOVA
 

@@ -77,7 +77,17 @@ desplot(data = dat, flip = TRUE,
 
 At this point we must realize that there is an important difference between this trial and a regular RCBD (randomized complete block design) trial ([like this one](RCBD_ClewerScarisbrick2001.html)). It is important to reflect that trays, not pots, are the randomization units. Clearly, pots are pseudo-replications, while trays are true replications. Another way of looking at the experiment is to consider plots (or measurements taken on pots) as repeated measurements on the same experimental unit (tray).
 
-## Plot
+
+
+```{r}
+dat %>% 
+  group_by(treat) %>% 
+  summarize(mean    = mean(TKW, na.rm = TRUE),
+            std.dev = sd(TKW, na.rm = TRUE),
+            n_missing  = sum(is.na(TKW))) %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+```
 
 We can also create a plot to get a better feeling for the data. We here use the `geom_violindot()` extension to `ggplot2` from the `see` package as an alternative to boxplots.
 
@@ -104,7 +114,7 @@ mod <- lmer(TKW ~ treat + block + (1|block:treat),
 
 ## Variance component estimates
 
-We can extract the variance component estimates as follows:
+We can extract the variance component estimates for our mixed model as follows:
 
 ```{r}
 mod %>% 
