@@ -7,15 +7,14 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # packages
 pacman::p_load(readr, tidyverse, forcats, # data import and handling
                emmeans, multcomp,         # mean comparisons
@@ -29,7 +28,7 @@ This example is taken from *"Example 4.3"* of the course material ["Quantitative
 
 ## Import
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993.csv"
 dat <- read_csv(dataURL)
@@ -49,7 +48,7 @@ dat <- dat %>%
 
 In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
 
-```{r, fig.height = 3, fig.align = "center", warning=FALSE, message=FALSE}
+```{r, fig.height = 3, fig.align = "center"}
 desplot(data = dat,
         form = variety ~ col + row,              # fill color per genotype, headers per replicate
         text = variety, cex = 1, shorten = "no", # show genotype names per plot
@@ -58,7 +57,7 @@ desplot(data = dat,
 
 While not necessary for the analysis below, it may be convenient to look at the data per variety and sorted by yield:
 
-```{r, warning=FALSE}
+```{r}
 dat %>% 
   arrange(variety, yield) %>% 
   dplyr::select(variety, yield) %>% 
@@ -68,7 +67,7 @@ dat %>%
 
 We could also have a look at the arithmetic means and standard deviations per `variety`:
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 dat %>% 
   group_by(variety) %>% 
   summarize(mean    = mean(yield),
@@ -89,7 +88,7 @@ ggplot(data = dat,
 
 Finally, we can decide to fit a linear model with `yield` as the response variable and (fixed) `variety` effects.
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 mod <- lm(yield ~ variety, data = dat)
 ```
 
@@ -97,7 +96,7 @@ mod <- lm(yield ~ variety, data = dat)
 
 Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the `variety` effects to be statistically significant (p`r anova(mod)["variety", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)`). 
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 mod %>% anova()
 ```
 
@@ -199,15 +198,19 @@ This example is taken from *"Example 5.4"* of the course material ["Quantitative
   + Perform multiple (mean) comparisons using the LSD test/t-test.
 * Repeat the analysis, but this time remove all moisture values larger than 12 at the very beginning.
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv"
 ex1dat <- read_csv(dataURL)
 ```
 
-## Solution Exercise 1
+`r knitr::current_input()`
 
-```{r, message=FALSE, warning=FALSE}
+Please [click here] to find
+ * the R-code for this example combined as an `.R` file
+ * including the solutions to this exercise.
+
+```{r, echo=FALSE, eval=FALSE}
 # exercise 1
 
 # packages
