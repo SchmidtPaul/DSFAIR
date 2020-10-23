@@ -97,7 +97,8 @@ ggplot(data = plotdata,
   geom_point(aes(y = mean_yield), color = "cornflowerblue") + # scatter plot mean
   ylim(0, NA) +   # force y-axis to start at 0
   labs(caption = "Blue dots represent arithmetic mean per genotype") +
-  theme_classic() # clearer plot format 
+  theme_classic() + # clearer plot format 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis labels
 ```
 
 # Modelling
@@ -113,12 +114,11 @@ mod.fb <- lm(yield ~ gen + rep +
 
 mod.fb %>%
   emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
+          adjust = "tukey") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
   pluck("SE") %>% # extract s.e.d. column
-  mean # get arithmetic mean
+  mean() # get arithmetic mean
 ```
 </div> <div class = "col-md-6">
 ```{r, warning=FALSE, message=FALSE}
@@ -134,7 +134,7 @@ mod.rb %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
   pluck("SE") %>% # extract s.e.d. column
-  mean # get arithmetic mean
+  mean() # get arithmetic mean
 ```
 </div> </div>
 
@@ -142,13 +142,11 @@ As a result, we find that the model with random block effects has the smaller s.
 
 ## ANOVA
 
-Thus, we can conduct an ANOVA for this model.
+Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the `gen` effects to be statistically significant (p`r anova(mod.rb, ddf="Kenward-Roger")["gen", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)`). 
 
-```{r Test}
-mod.rb %>% anova()
+```{r anova}
+mod.rb %>% anova(ddf="Kenward-Roger")
 ```
-
-As can be seen, the F-test finds the `gen` effects to be statistically significant (p < 0.05). 
 
 ## Mean comparisons
 
@@ -206,5 +204,6 @@ ggplot() +
   labs(caption = "Black dots represent raw data
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
        Means followed by a common letter are not significantly different according to the Tukey-test") +
-  theme_classic() # clearer plot format 
+  theme_classic() + # clearer plot format 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis
 ```

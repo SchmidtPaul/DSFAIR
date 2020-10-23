@@ -103,13 +103,11 @@ mod <- lm(yield ~ cultivar + block, data = dat)
 
 ## ANOVA
 
-Moreover, we can conduct an ANOVA for this model.
+Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the `cultivar` effects to be statistically significant (p = `r anova(mod)["cultivar", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)` < 0.05). 
 
 ```{r}
 mod %>% anova()
 ```
-
-As can be seen, the F-test finds the `cultivar` effects to be statistically significant (p = `r anova(mod)["cultivar", "Pr(>F)"] %>% round(3)` < 0.05). 
 
 ## Mean comparisons
 

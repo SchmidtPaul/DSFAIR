@@ -714,7 +714,7 @@ div.tocify {
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>variety, <span class="dt">data =</span> dat)</a></code></pre></div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Moreover, we can conduct an ANOVA for this model.</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the <code>variety</code> effects to be statistically significant (p&lt;0.001).</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
@@ -724,7 +724,6 @@ div.tocify {
 ## Residuals 20  367.65   18.38                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>As can be seen, the F-test finds the <code>variety</code> effects to be statistically significant (p = 0.00000094 &lt; 0.05).</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>

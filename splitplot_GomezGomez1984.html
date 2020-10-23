@@ -731,9 +731,9 @@ div.tocify {
 <a class="sourceLine" id="cb11-3" title="3">            <span class="dt">data=</span>dat)</a></code></pre></div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
-<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the <code>G:N</code> interaction effects to be statistically significant (p&lt;0.001).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>(<span class="dt">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</a></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##       Sum Sq  Mean Sq NumDF DenDF F value    Pr(&gt;F)    
 ## G   89885075 29961692     3    36 85.7416 &lt; 2.2e-16 ***
 ## N   19192886  3838577     5    10 10.9849 0.0008277 ***
@@ -741,7 +741,7 @@ div.tocify {
 ## G:N 69378044  4625203    15    36 13.2360 2.078e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>As can be seen, the F-test finds the <code>G:N</code> interaction effects to be statistically significant (p &lt; 0.05). As a result, we should compare the adjusted means for all genotype-nitrogen level combinations.</p>
+<p>Therefore, we should compare the adjusted means for all genotype-nitrogen level combinations.</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
@@ -750,7 +750,7 @@ div.tocify {
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">all_mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> </span>N<span class="op">:</span>G,</a>
 <a class="sourceLine" id="cb14-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb14-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># alternative: lmer.df = &quot;satterthwaite&quot;</span></a>
+<a class="sourceLine" id="cb14-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
 <a class="sourceLine" id="cb14-7" title="7"></a>
@@ -793,7 +793,7 @@ div.tocify {
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">withinG_mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> </span>N <span class="op">|</span><span class="st"> </span>G,</a>
 <a class="sourceLine" id="cb16-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb16-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># alternative: lmer.df = &quot;satterthwaite&quot;</span></a>
+<a class="sourceLine" id="cb16-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
 <a class="sourceLine" id="cb16-7" title="7"></a>

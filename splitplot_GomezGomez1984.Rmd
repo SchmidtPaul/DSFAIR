@@ -110,13 +110,13 @@ mod <- lmer(yield ~ G + N + G:N +
 
 ## ANOVA
 
-Thus, we can conduct an ANOVA for this model.
+Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the `G:N` interaction effects to be statistically significant (p`r anova(mod, ddf="Kenward-Roger")["G:N", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)`). 
 
 ```{r}
-mod %>% anova()
+mod %>% anova(ddf="Kenward-Roger")
 ```
 
-As can be seen, the F-test finds the `G:N` interaction effects to be statistically significant (p < 0.05). As a result, we should compare the adjusted means for all genotype-nitrogen level combinations.
+Therefore, we should compare the adjusted means for all genotype-nitrogen level combinations.
 
 ## Mean comparisons
 
@@ -126,7 +126,7 @@ As can be seen, the F-test finds the `G:N` interaction effects to be statistical
 all_mean_comparisons <- mod %>%
   emmeans(pairwise ~ N:G,
           adjust = "tukey",
-          lmer.df = "kenward-roger") %>% # alternative: lmer.df = "satterthwaite"
+          lmer.df = "kenward-roger") %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
 
@@ -139,7 +139,7 @@ all_mean_comparisons$emmeans # adjusted means
 withinG_mean_comparisons <- mod %>%
   emmeans(pairwise ~ N | G,
           adjust = "tukey",
-          lmer.df = "kenward-roger") %>% # alternative: lmer.df = "satterthwaite"
+          lmer.df = "kenward-roger") %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
 

@@ -20,7 +20,7 @@ pacman::p_load(purrr)
 pacman::p_load(readr, tidyverse, forcats, # data import and handling
                lme4, lmerTest,            # linear mixed model 
                emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots
+               ggplot2, desplot, see)     # plots
 ```
 
 # Data
@@ -45,5 +45,95 @@ Before anything, the columns `treat`, `block` and `plant` should be encoded as f
 dat <- dat %>% 
   mutate_at(vars(treat, block, plant), as.factor) %>% 
   mutate(treat = fct_relevel(treat, c("Ctrl", "Top6", "Top1")))
+```
+
+## Exploring
+
+In order to obtain a layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. In addition, we I would like to manually choose colors for the three treatments here and stick to them throughout the example:
+
+```{r}
+treat_colors <- c(Ctrl="seagreen", Top6="seagreen3" , Top1="seagreen2")
+
+desplot(data = dat, flip = TRUE,
+  form = treat ~ col + row | block,
+  col.regions = treat_colors,
+  main = "Trial layout", show.key = TRUE)
+```
+
+Looking at this, it seems like the trial was laid out as a randomized complete block design with 4 complete blocks. This, however, would mean that we have 3x4=12 observations in our dataset. Yet, our dataset has 120 observations. 
+
+This is because what we are looking at in the plot above are only the 12 trays laid on the 4 tables that stood in the greenhouse. On top of each tray were 10 separate sorghum plant pots, respectively. To make this clear, we can plot this trial again as:
+
+```{r}
+treat_colors <- c(Ctrl="seagreen", Top6="seagreen3" , Top1="seagreen2")
+
+desplot(data = dat, flip = TRUE,
+  form = treat ~ col + row | block,
+  text = plant, cex = 1,
+  out1 = treat, 
+  out2 = plant, out2.gpar=list(col="darkgrey"),
+  col.regions = treat_colors,
+  main = "Trial layout", show.key = TRUE)
+```
+
+At this point we must realize that there is an important difference between this trial and a regular RCBD (randomized complete block design) trial ([like this one](RCBD_ClewerScarisbrick2001.html)). It is important to reflect that trays, not pots, are the randomization units. Clearly, pots are pseudo-replications, while trays are true replications. Another way of looking at the experiment is to consider plots (or measurements taken on pots) as repeated measurements on the same experimental unit (tray).
+
+## Plot
+
+We can also create a plot to get a better feeling for the data. We here use the `geom_violindot()` extension to `ggplot2` from the `see` package as an alternative to boxplots.
+
+```{r}
+ggplot(data = dat, 
+       aes(y=TKW, x=treat, fill=treat)) +
+  geom_violindot(fill_dots = "black", size_dots = 15) +
+  scale_fill_manual(values = treat_colors) +
+  ylim(0, NA) +
+  theme_modern()
+```
+
+
+# Modelling
+
+Because of the way that 10 plants with the same treatment always stand together on a tray, our model ignores the fact that plants from the same tray will be correlated due to common environmental conditions. Clearly, if the treatments are the same on each tray, plants on the same tray are expected to be more similar than plants from different trays. The correlation of plants on the same tray can be modeled by adding a **random tray effect**. Notice that a tray is always all plant pots from one treatment (=`treat`) on one of the four tables (=`block`):
+
+```{r}
+mod <- lmer(TKW ~ treat + block + (1|block:treat),
+            data=dat)
+```
+
+> **Why can't I just get the mean value per tray and then use these in a regular RCBD analysis? There are four tray means per treatment (one for each block), so the means data has a total of twelve observations.** Ideally, the means would have been computed from ten plants on each tray. However, some observations are missing, so some means are based on only nine or eight observations. It is known the the standard error of a mean decreases with the number of observations, so some means will be more accurate than others. This difference in acuracy cannot be accounted for by a simple analysis of means. In fact, the analysis of means is not strictly valid because heterogeneity of variance is ignored. We will see later how a mixed model can be used for a more refined analysis.
+
+## Variance component estimates
+
+We can extract the variance component estimates as follows:
+
+```{r}
+mod %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
+```
+
+## ANOVA
+
+Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) does not find the `treat` effects to be statistically significant (p = `r anova(mod, ddf="Kenward-Roger")["treat", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)` > 0.05). 
+
+```{r}
+mod %>% anova(ddf="Kenward-Roger")
+```
+
+## Mean comparisons
+
+Analogous to the result from the F-test in the ANOVA, the comparing the means does not find any significant differences between the treatment means either:
+
+```{r}
+mean_comparisons <- mod %>% 
+  emmeans(pairwise ~ "treat",
+          adjust  = "tukey",
+          lmer.df = "kenward-roger") %>% 
+  pluck("emmeans") %>%
+  cld(details = TRUE, Letters = letters) # add letter display
+
+mean_comparisons$emmeans
 ```
 

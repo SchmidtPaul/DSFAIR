@@ -756,7 +756,8 @@ div.tocify {
 <a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> mean_yield), <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># scatter plot mean</span></a>
 <a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st">   </span><span class="co"># force y-axis to start at 0</span></a>
 <a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Blue dots represent arithmetic mean per genotype&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co"># clearer plot format </span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>)) <span class="co"># rotate x-axis labels</span></a></code></pre></div>
 <p><img src="alpha_JohnWilliams1995_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -772,12 +773,11 @@ div.tocify {
 <a class="sourceLine" id="cb11-5" title="5"></a>
 <a class="sourceLine" id="cb11-6" title="6">mod.fb <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb11-8" title="8">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb11-9" title="9">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
-<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb11-13" title="13"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-8" title="8">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.2766288</code></pre>
 </div>
 <div class="col-md-6">
@@ -793,22 +793,21 @@ div.tocify {
 <a class="sourceLine" id="cb13-10" title="10"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
 <a class="sourceLine" id="cb13-11" title="11"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
 <a class="sourceLine" id="cb13-12" title="12"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb13-13" title="13"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-13" title="13"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.2700388</code></pre>
 </div>
 </div>
 <p>As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
-<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the <code>gen</code> effects to be statistically significant (p&lt;0.001).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>(<span class="dt">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</a></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##      Sum Sq Mean Sq NumDF  DenDF F value    Pr(&gt;F)    
-## gen 10.6786 0.46429    23 34.736  5.4478 4.376e-06 ***
-## rep  1.5703 0.78513     2 10.394  9.2124  0.004992 ** 
+## gen 10.5070 0.45683    23 35.498  5.3628 4.496e-06 ***
+## rep  1.5703 0.78513     2 11.519  9.2124  0.004078 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>As can be seen, the F-test finds the <code>gen</code> effects to be statistically significant (p &lt; 0.05).</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
@@ -895,7 +894,8 @@ div.tocify {
 <a class="sourceLine" id="cb19-34" title="34"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Black dots represent raw data</span></a>
 <a class="sourceLine" id="cb19-35" title="35"><span class="st">       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype</span></a>
 <a class="sourceLine" id="cb19-36" title="36"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-37" title="37"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<a class="sourceLine" id="cb19-37" title="37"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co"># clearer plot format </span></a>
+<a class="sourceLine" id="cb19-38" title="38"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>)) <span class="co"># rotate x-axis</span></a></code></pre></div>
 <p><img src="alpha_JohnWilliams1995_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 </div>

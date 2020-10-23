@@ -116,12 +116,11 @@ mod.fb <- lm(yield ~ gen + block,
 
 mod.fb %>%
   emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
+          adjust = "tukey") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
   pluck("SE") %>% # extract s.e.d. column
-  mean # get arithmetic mean
+  mean() # get arithmetic mean
 ```
 </div> <div class = "col-md-6">
 ```{r, warning=FALSE, message=FALSE}
@@ -136,7 +135,7 @@ mod.rb %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
   pluck("SE") %>% # extract s.e.d. column
-  mean # get arithmetic mean
+  mean() # get arithmetic mean
 ```
 </div> </div>
 
@@ -144,13 +143,11 @@ As a result, we find that the model with fixed block effects has the slightly sm
 
 ## ANOVA
 
-Thus, we can conduct an ANOVA for this model.
+Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the `gen` effects to be statistically significant (p = `r anova(mod.fb)["gen", "Pr(>F)"] %>% format.pval(pv = ., eps = .001, digits = 2)` < 0.05). 
 
 ```{r}
 mod.fb %>% anova()
 ```
-
-As can be seen, the F-test finds the `gen` effects to be statistically significant (p = `r anova(mod.fb)["gen", "Pr(>F)"] %>% round(3)` < 0.05). 
 
 ## Mean comparisons
 
@@ -159,8 +156,7 @@ It can be seen that while some genotypes have a higher yield than others, no dif
 ```{r}
 mean_comparisons <- mod.fb %>%
   emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
+          adjust = "tukey") %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
 

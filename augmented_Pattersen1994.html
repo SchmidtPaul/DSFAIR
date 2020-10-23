@@ -773,12 +773,11 @@ div.tocify {
 <a class="sourceLine" id="cb11-4" title="4"></a>
 <a class="sourceLine" id="cb11-5" title="5">mod.fb <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb11-7" title="7">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb11-8" title="8">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-7" title="7">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 461.3938</code></pre>
 </div>
 <div class="col-md-6">
@@ -793,14 +792,14 @@ div.tocify {
 <a class="sourceLine" id="cb13-9" title="9"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
 <a class="sourceLine" id="cb13-10" title="10"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
 <a class="sourceLine" id="cb13-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb13-12" title="12"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-12" title="12"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 462.0431</code></pre>
 </div>
 </div>
 <p>As a result, we find that the model with fixed block effects has the slightly smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model.</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the <code>gen</code> effects to be statistically significant (p = 0.0091 &lt; 0.05).</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.fb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
@@ -811,19 +810,17 @@ div.tocify {
 ## Residuals 10   911027   91103                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>As can be seen, the F-test finds the <code>gen</code> effects to be statistically significant (p = 0.009 &lt; 0.05).</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
 <p>It can be seen that while some genotypes have a higher yield than others, no differences are found to be statistically significant here. Accordingly, notice that <em>e.g.</em> for <code>gen 11</code>, which is the genotype with the highest adjusted yield mean (=3055), its lower confidence limit (=1587) includes <code>gen 12</code>, which is the genotype with the lowest adjusted yield mean (=1632).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod.fb <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb17-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb17-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
-<a class="sourceLine" id="cb17-7" title="7"></a>
-<a class="sourceLine" id="cb17-8" title="8">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted genotype means</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted genotype means</span></a></code></pre></div>
 <pre><code>##  gen emmean  SE df lower.CL upper.CL .group
 ##  12    1632 341 10      164     3100  a    
 ##  06    1823 341 10      355     3291  a    

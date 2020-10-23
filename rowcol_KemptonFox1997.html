@@ -750,12 +750,11 @@ div.tocify {
 <a class="sourceLine" id="cb10-6" title="6"></a>
 <a class="sourceLine" id="cb10-7" title="7">mod.fb <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb10-9" title="9">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb10-10" title="10">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
-<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb10-14" title="14"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-9" title="9">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.4083057</code></pre>
 </div>
 <div class="col-md-6">
@@ -772,22 +771,21 @@ div.tocify {
 <a class="sourceLine" id="cb12-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
 <a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
 <a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="st">  </span>mean <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-14" title="14"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.4020136</code></pre>
 </div>
 </div>
 <p>As a result, we find that the model with random row and column effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
-<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the <code>gen</code> effects to be statistically significant (p = 0.0025 &lt; 0.05).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>(<span class="dt">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</a></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##      Sum Sq Mean Sq NumDF  DenDF F value   Pr(&gt;F)   
-## gen 15.0149 0.44161    34 13.770  4.8988 0.001465 **
-## rep  1.5606 1.56061     1 12.651 17.3119 0.001183 **
+## gen 14.4965 0.42637    34 12.358  4.8394 0.002515 **
+## rep  1.5596 1.55956     1 13.009 17.3002 0.001120 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>As can be seen, the F-test finds the <code>gen</code> effects to be statistically significant (p = 0.0015 &lt; 0.05).</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
