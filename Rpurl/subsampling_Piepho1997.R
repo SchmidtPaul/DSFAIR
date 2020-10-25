@@ -31,6 +31,14 @@ desplot(data = dat, flip = TRUE,
   col.regions = treat_colors,
   main = "Trial layout", show.key = TRUE)
 
+dat %>% 
+  group_by(treat) %>% 
+  summarize(mean    = mean(TKW, na.rm = TRUE),
+            std.dev = sd(TKW, na.rm = TRUE),
+            n_missing  = sum(is.na(TKW))) %>% 
+  arrange(desc(mean)) %>% # sort
+  print(n=Inf) # print full table
+
 ggplot(data = dat, 
        aes(y=TKW, x=treat, fill=treat)) +
   geom_violindot(fill_dots = "black", size_dots = 15) +

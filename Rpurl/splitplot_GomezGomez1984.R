@@ -48,6 +48,11 @@ mod <- lmer(yield ~ G + N + G:N +
               rep + (1|rep:mainplot), 
             data=dat)
 
+mod %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
+
 mod %>% anova(ddf="Kenward-Roger")
 
 all_mean_comparisons <- mod %>%

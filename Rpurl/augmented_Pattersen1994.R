@@ -71,7 +71,7 @@ mod.fb %>%
           adjust = "tukey") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
 
 # blocks as random (linear mixed model)
@@ -84,7 +84,7 @@ mod.rb %>%
           lmer.df = "kenward-roger") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
 
 mod.fb %>% anova()
@@ -162,3 +162,56 @@ desplot(data = ex1dat,
         out1 = rep,   out1.gpar = list(col = "black"), # lines between reps
         out2 = block, out2.gpar = list(col = "darkgrey"), # lines between blocks
         main = "Field layout", show.key = F) # formatting
+
+## ex1dat <- ex1dat %>%
+##   mutate_at(vars(rep:genoCheck), as.factor)
+## 
+## # Draw a plot with yield per genotype
+## ggplot(data = ex1dat,
+##        aes(y = yield,
+##            x = geno,
+##            color = genoCheck)) +
+##   geom_point(size = 2) + # scatter plot with larger dots
+##   ylim(0, NA) + # force y-axis to start at 0
+##   guides(color = FALSE) + # turn off legend for colors
+##   theme_classic() + # clearer plot format
+##   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5), # rotate axis label
+##         panel.grid.major.x = element_line()) # add vertikal grid lines
+## 
+## # Set up two models: One with blocks as fixed and one with blocks as random.
+## mod.fb <- lm(yield ~ geno + rep + block,
+##              data = ex1dat)
+## 
+## mod.rb <- lmer(yield ~ geno + rep + (1 | block),
+##                data = ex1dat)
+## 
+## # Compare their average s.e.d. between genotype means.
+## # Choose the model with the smaller value.
+## 
+## mod.fb %>%
+##   emmeans(pairwise ~ "geno",
+##           adjust = "tukey") %>%
+##   pluck("contrasts") %>% # extract diffs
+##   as_tibble %>% # format to table
+##   pluck("SE") %>% # extract s.e.d. column
+##   mean() # 37.8356
+## 
+## mod.rb %>%
+##   emmeans(pairwise ~ "geno",
+##           adjust = "tukey",
+##           lmer.df = "kenward-roger") %>%
+##   pluck("contrasts") %>% # extract diffs
+##   as_tibble %>% # format to table
+##   pluck("SE") %>% # extract s.e.d. column
+##   mean() # 36.84507
+## 
+## # Compute an ANOVA for the chose model.
+## mod.rb %>% anova(ddf = "Kenward-Roger")
+## 
+## # Perform multiple (mean) comparisons based on the chosen model.
+## mod.rb %>%
+##   emmeans(pairwise ~ "geno",
+##           adjust = "tukey",
+##           lmer.df = "kenward-roger") %>%
+##   pluck("emmeans") %>%
+##   cld(details = TRUE, Letters = letters) # add letter display

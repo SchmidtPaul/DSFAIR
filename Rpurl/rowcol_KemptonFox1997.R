@@ -23,7 +23,8 @@ desplot(data = dat,
 dat %>% 
   group_by(gen) %>% 
   summarize(mean    = mean(yield, na.rm=TRUE),
-            std.dev = sd(yield, na.rm=TRUE)) %>% 
+            std.dev = sd(yield, na.rm=TRUE),
+            n_missing  = sum(is.na(yield))) %>% 
   arrange(desc(mean)) %>% # sort
   print(n=Inf) # print full table
 
@@ -51,7 +52,7 @@ mod.fb %>%
           adjust = "tukey") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
 
 # rows and cols random (linear mixed model)
@@ -66,8 +67,13 @@ mod.rb %>%
           lmer.df = "kenward-roger") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
+
+mod.rb %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
 
 mod.rb %>% anova(ddf="Kenward-Roger")
 
@@ -132,3 +138,46 @@ ggplot() +
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/RowColFromUtz.csv"
 ex1dat <- read_csv(dataURL)
+
+## # Which genotypes have missing yield observations?
+## ex1dat %>%
+##   group_by(treat) %>%
+##   summarize(n_missing = sum(is.na(yield))) %>% # count missing values
+##   arrange(desc(n_missing)) # sort
+## 
+## # Create a field trial layout using ´desplot()´ where the
+## # plots are filled according to their yield.
+## # Try to see whether some areas have lower/higher yields.
+## desplot(data = ex1dat,
+##         form = yield ~ col + row | rep,            # fill color per genotype, headers per replicate
+##         text = treat, cex = 0.7, shorten = "no",   # show genotype names per plot
+##         out1 = row, out1.gpar=list(col="black"), # lines between rows
+##         out2 = col, out2.gpar=list(col="black"), # lines between columns
+##         main = "Field layout", show.key = F)     # formatting
+## 
+## # Set up the model with random incomplete block effects.
+## ex1dat <- ex1dat %>%
+##   mutate(row_fct = as.factor(row),
+##          col_fct = as.factor(col))
+## 
+## mod.rb <- lmer(yield ~ treat + rep +
+##                  (1|rep:row_fct) +
+##                  (1|rep:col_fct),
+##                data = ex1dat)
+## 
+## # Extract the variance components.
+## mod.rb %>%
+##   VarCorr() %>%
+##   as.data.frame() %>%
+##   dplyr::select(grp, vcov)
+## 
+## # Compute an ANOVA
+## mod.rb %>% anova(ddf="Kenward-Roger")
+## 
+## # Perform multiple (mean) comparisons using the LSD test/t-test.
+## mod.rb %>%
+##   emmeans(pairwise ~ "treat",
+##           adjust = "none", # LSD test/t-test
+##           lmer.df = "kenward-roger") %>%
+##   pluck("emmeans") %>%
+##   cld(details = TRUE, Letters = letters)

@@ -59,7 +59,7 @@ mod.fb %>%
           adjust = "tukey") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
 
 # blocks as random (linear mixed model)
@@ -73,8 +73,13 @@ mod.rb %>%
           lmer.df = "kenward-roger") %>%
   pluck("contrasts") %>% # extract diffs
   as_tibble %>% # format to table
-  pluck("SE") %>% # extract s.e.d. column
+  pull("SE") %>% # extract s.e.d. column
   mean() # get arithmetic mean
+
+mod.rb %>% 
+  VarCorr() %>% 
+  as.data.frame() %>% 
+  dplyr::select(grp, vcov)
 
 mod.rb %>% anova(ddf="Kenward-Roger")
 

@@ -679,47 +679,48 @@ div.tocify {
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
-<pre><code>## # A tibble: 35 x 3
-##    gen    mean std.dev
-##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
-##  1 G19    6.07  1.84  
-##  2 G07    5.74  0.976 
-##  3 G33    5.13  0.820 
-##  4 G06    4.96  0.940 
-##  5 G09    4.94  1.68  
-##  6 G11    4.93  1.03  
-##  7 G14    4.92  0.877 
-##  8 G27    4.89  1.80  
-##  9 G03    4.78  0.0424
-## 10 G25    4.78  0.361 
-## 11 G21    4.76  1.27  
-## 12 G20    4.75  1.39  
-## 13 G05    4.72  0.686 
-## 14 G01    4.69  0.757 
-## 15 G32    4.62  1.21  
-## 16 G18    4.6   1.24  
-## 17 G12    4.59  0.559 
-## 18 G34    4.51  1.16  
-## 19 G08    4.36  0.488 
-## 20 G13    4.36  0.361 
-## 21 G17    4.22  0.580 
-## 22 G16    4.2  NA     
-## 23 G10    4.07  0.891 
-## 24 G31    3.98  1.02  
-## 25 G28    3.95  0.198 
-## 26 G02    3.88  0.389 
-## 27 G24    3.84  0.318 
-## 28 G29    3.76  1.27  
-## 29 G35    3.76  1.52  
-## 30 G30    3.75  0.679 
-## 31 G04    3.62  0.587 
-## 32 G26    3.58  1.44  
-## 33 G22    3.54  0.0778
-## 34 G23    3.26  1.42  
-## 35 G15    1.93 NA</code></pre>
+<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb6-5" title="5">            <span class="dt">n_missing  =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(yield))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
+<pre><code>## # A tibble: 35 x 4
+##    gen    mean std.dev n_missing
+##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;int&gt;
+##  1 G19    6.07  1.84           0
+##  2 G07    5.74  0.976          0
+##  3 G33    5.13  0.820          0
+##  4 G06    4.96  0.940          0
+##  5 G09    4.94  1.68           0
+##  6 G11    4.93  1.03           0
+##  7 G14    4.92  0.877          0
+##  8 G27    4.89  1.80           0
+##  9 G03    4.78  0.0424         0
+## 10 G25    4.78  0.361          0
+## 11 G21    4.76  1.27           0
+## 12 G20    4.75  1.39           0
+## 13 G05    4.72  0.686          0
+## 14 G01    4.69  0.757          0
+## 15 G32    4.62  1.21           0
+## 16 G18    4.6   1.24           0
+## 17 G12    4.59  0.559          0
+## 18 G34    4.51  1.16           0
+## 19 G08    4.36  0.488          0
+## 20 G13    4.36  0.361          0
+## 21 G17    4.22  0.580          0
+## 22 G16    4.2  NA              1
+## 23 G10    4.07  0.891          0
+## 24 G31    3.98  1.02           0
+## 25 G28    3.95  0.198          0
+## 26 G02    3.88  0.389          0
+## 27 G24    3.84  0.318          0
+## 28 G29    3.76  1.27           0
+## 29 G35    3.76  1.52           0
+## 30 G30    3.75  0.679          0
+## 31 G04    3.62  0.587          0
+## 32 G26    3.58  1.44           0
+## 33 G22    3.54  0.0778         0
+## 34 G23    3.26  1.42           0
+## 35 G15    1.93 NA              1</code></pre>
 <p>We can also create a plot to get a better feeling for the data.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat,</a>
 <a class="sourceLine" id="cb8-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen, <span class="dt">color=</span>rep)) <span class="op">+</span></a>
@@ -753,7 +754,7 @@ div.tocify {
 <a class="sourceLine" id="cb10-9" title="9">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
 <a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
 <a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.4083057</code></pre>
 </div>
@@ -770,7 +771,7 @@ div.tocify {
 <a class="sourceLine" id="cb12-10" title="10">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-11" title="11"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
 <a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
 <a class="sourceLine" id="cb12-14" title="14"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
 <pre><code>## [1] 0.4020136</code></pre>
 </div>
@@ -924,7 +925,7 @@ div.tocify {
 </ul></li>
 <li>Analyze
 <ul>
-<li>Set up the model with random incomplete block effects.</li>
+<li>Set up the model with random incomplete row and column effects.</li>
 <li>Extract the variance components.</li>
 <li>Compute an ANOVA</li>
 <li>Perform multiple (mean) comparisons using the LSD test/t-test.</li>

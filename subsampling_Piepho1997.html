@@ -688,34 +688,44 @@ div.tocify {
 <a class="sourceLine" id="cb6-9" title="9">  <span class="dt">main =</span> <span class="st">&quot;Trial layout&quot;</span>, <span class="dt">show.key =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>At this point we must realize that there is an important difference between this trial and a regular RCBD (randomized complete block design) trial (<a href="RCBD_ClewerScarisbrick2001.html">like this one</a>). It is important to reflect that trays, not pots, are the randomization units. Clearly, pots are pseudo-replications, while trays are true replications. Another way of looking at the experiment is to consider plots (or measurements taken on pots) as repeated measurements on the same experimental unit (tray).</p>
-</div>
-<div id="plot" class="section level2">
-<h2>Plot</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(treat) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(TKW, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb7-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(TKW, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb7-5" title="5">            <span class="dt">n_missing  =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(TKW))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   treat  mean std.dev n_missing
+##   &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;int&gt;
+## 1 Ctrl   33.1    4.99         1
+## 2 Top6   31.1    4.36         6
+## 3 Top1   30.6    7.90         4</code></pre>
 <p>We can also create a plot to get a better feeling for the data. We here use the <code>geom_violindot()</code> extension to <code>ggplot2</code> from the <code>see</code> package as an alternative to boxplots.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat, </a>
-<a class="sourceLine" id="cb7-2" title="2">       <span class="kw">aes</span>(<span class="dt">y=</span>TKW, <span class="dt">x=</span>treat, <span class="dt">fill=</span>treat)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size_dots =</span> <span class="dv">15</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> treat_colors) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
-<p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat, </a>
+<a class="sourceLine" id="cb9-2" title="2">       <span class="kw">aes</span>(<span class="dt">y=</span>TKW, <span class="dt">x=</span>treat, <span class="dt">fill=</span>treat)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size_dots =</span> <span class="dv">15</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> treat_colors) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
+<p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
 <p>Because of the way that 10 plants with the same treatment always stand together on a tray, our model ignores the fact that plants from the same tray will be correlated due to common environmental conditions. Clearly, if the treatments are the same on each tray, plants on the same tray are expected to be more similar than plants from different trays. The correlation of plants on the same tray can be modeled by adding a <strong>random tray effect</strong>. Notice that a tray is always all plant pots from one treatment (=<code>treat</code>) on one of the four tables (=<code>block</code>):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(TKW <span class="op">~</span><span class="st"> </span>treat <span class="op">+</span><span class="st"> </span>block <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>block<span class="op">:</span>treat),</a>
-<a class="sourceLine" id="cb8-2" title="2">            <span class="dt">data=</span>dat)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(TKW <span class="op">~</span><span class="st"> </span>treat <span class="op">+</span><span class="st"> </span>block <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>block<span class="op">:</span>treat),</a>
+<a class="sourceLine" id="cb10-2" title="2">            <span class="dt">data=</span>dat)</a></code></pre></div>
 <blockquote>
 <p><strong>Why can’t I just get the mean value per tray and then use these in a regular RCBD analysis? There are four tray means per treatment (one for each block), so the means data has a total of twelve observations.</strong> Ideally, the means would have been computed from ten plants on each tray. However, some observations are missing, so some means are based on only nine or eight observations. It is known the the standard error of a mean decreases with the number of observations, so some means will be more accurate than others. This difference in acuracy cannot be accounted for by a simple analysis of means. In fact, the analysis of means is not strictly valid because heterogeneity of variance is ignored. We will see later how a mixed model can be used for a more refined analysis.</p>
 </blockquote>
 <div id="variance-component-estimates" class="section level2">
 <h2>Variance component estimates</h2>
 <p>We can extract the variance component estimates for our mixed model as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">VarCorr</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(grp, vcov)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">VarCorr</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(grp, vcov)</a></code></pre></div>
 <pre><code>##           grp     vcov
 ## 1 block:treat  1.28148
 ## 2    Residual 34.34461</code></pre>
@@ -723,7 +733,7 @@ div.tocify {
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
 <p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) does not find the <code>treat</code> effects to be statistically significant (p = 0.31 &gt; 0.05).</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>(<span class="dt">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>(<span class="dt">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</a></code></pre></div>
 <pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##        Sum Sq Mean Sq NumDF  DenDF F value Pr(&gt;F)
 ## treat  97.997  48.999     2 5.9920  1.4265 0.3114
@@ -732,14 +742,14 @@ div.tocify {
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
 <p>Analogous to the result from the F-test in the ANOVA, the comparing the means does not find any significant differences between the treatment means either:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;treat&quot;</span>,</a>
-<a class="sourceLine" id="cb13-3" title="3">          <span class="dt">adjust  =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb13-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
-<a class="sourceLine" id="cb13-7" title="7"></a>
-<a class="sourceLine" id="cb13-8" title="8">mean_comparisons<span class="op">$</span>emmeans</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;treat&quot;</span>,</a>
+<a class="sourceLine" id="cb15-3" title="3">          <span class="dt">adjust  =</span> <span class="st">&quot;tukey&quot;</span>,</a>
+<a class="sourceLine" id="cb15-4" title="4">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
+<a class="sourceLine" id="cb15-7" title="7"></a>
+<a class="sourceLine" id="cb15-8" title="8">mean_comparisons<span class="op">$</span>emmeans</a></code></pre></div>
 <pre><code>##  treat emmean   SE   df lower.CL upper.CL .group
 ##  Top1    30.6 1.13 6.06     26.9     34.3  a    
 ##  Top6    31.2 1.15 6.61     27.5     34.8  a    
