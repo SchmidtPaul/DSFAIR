@@ -29,3 +29,5 @@ In terms of R syntax, I generally try to follow the approach presented on the ["
 [<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tibble.png" width="80">](https://CRAN.R-project.org/package=tibble)
 [<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyr.png" width="80">](https://CRAN.R-project.org/package=tidyr)
 [<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" width="80">](https://CRAN.R-project.org/package=tidyverse)
+
+[Here are some tips](0courseprep.html){target="_blank"} to help you prepare for an upcoming workshop!

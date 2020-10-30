@@ -11,6 +11,7 @@ rmarkdown::render_site(encoding="UTF-8") # render all files new; UTF-8 for Ã¤, Ã
 purl_files <- list.files(pattern = ".Rmd") %>% 
   tibble(Rmd = .) %>% 
   filter(Rmd %not_in% c("0contactinfo.Rmd",
+                        "0courseprep.Rmd",
                         "DesigningExperiments.Rmd",
                         "index.Rmd")) %>% 
   mutate(R = paste0("Rpurl/",str_sub(Rmd, 1, -3)))

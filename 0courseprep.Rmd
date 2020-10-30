@@ -1,0 +1,59 @@
+---
+title: "Before the workshop"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# formatting tables for html output
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
+options(knitr.kable.NA = '')
+pacman::p_load(kableExtra, formattable ,htmltools)
+```
+
+Hi there! If you are reading this, you will most likely soon participate in an R-workshop given by me. Thank you - I am already looking forward to it! Here I would briefly like to give you some help and tips with the preparation for this course.
+
+# For any workshop
+
+Online workshop or not - here are some tips that are always helpful.
+
+## Installing R and RStudio
+
+In order to use R, it may be necessary to install it first. Notice that when I say "use R", I am actually talking about two different softwares: **R** and **RStudio**. These two work together so well, that they are almost inseparable to me. R is the actual software that does the computing and statistics, while RStudio is basically a user interface that makes using R much more intuitive and better. 
+
+Therefore, you need to install both! It is not that complicated and there are many tutorials on how to do it - for example [this one from RStudio](https://rstudio-education.github.io/hopr/starting.html){target="_blank"}.
+
+If you already have R on your computer, but it has been a long time since you have used it, you may just try to update it. [Here is a tutorial](url){target="_blank"} on how to do just that.
+
+# For online workshops
+
+If our upcoming workshop will happen via zoom, then there are a few more helps I would like to give you.
+
+## Do I need to install zoom?
+
+Not necessarily. It is not required to install the zoom software in order to participate in a zoom meeting, because you can also [join from your browser](https://support.zoom.us/hc/en-us/articles/115005666383-Show-a-Join-from-your-browser-Link){target="_blank"}. Basically, there will be a link that says "Join from your browser" and that's it.
+
+However, having the zoom software installed may give you some additional functions during the meeting.
+
+## Do you have a second screen?
+
+Here are the three main scenarios and what I think about them. They are ranked from worst to best:
+
+**3. No, I only have a single screen attached to my laptop/computer** No worries - you can still participate and will have no problem following me during the course. What may become difficult, however, is if you want to both look at my slides/shared screen and also write your own R code simulatenously. If you only have a single screen then that means switching between zoom and R and you may become overwhelmed. Nevertheless, I usually have multiple times during a course where everone has time to do an assignment so that during those time you will definitely get some undivided R time.
+
+**2. Kind of, I have a computer with one screen and an extra laptop/tablet.** This is a bit better! Sometimes you may have two screens that cannot be connected to the same computer/laptop, but can both run simultaenously. In such a scenario you may open R on one computer/laptop and zoom on the other device. This allows for much better focussing on both my and your R code simultaneously. 
+
+**1. Yes, I can connect a second screen to my laptop/computer.** This is the perfect solution! Just like for the option above, you may easily follow my screen while at the same time working on yours. In addition, this option allows you (1) to copy something that was posted in the zoom chat to your R code or (2) share your screen with us via zoom so that we can have a look at your R code!
+
+## What else can I do?
+
+ * **Check you microphone.** Everyone can make free zoom calls (for max. 40 min.), so you could call a friend and figure out whether your microphone works well. If you are simply using your laptop's or camera's microphone that's fine, but notice that you mave have a full functioning headset lying around: the headphones delivered with smartphones often have microphones in them!
+ 
+ * **Check your camera.** This is optional of course, but I do like it when I see as many people as possible looking back at me during the course. It also improves the course as I see your reactions to individual topics.
+ 
+ * **Check out the options in zoom.** 
+   * Know how to use the "mute my microphone" button. It is crucial in an online conference that only those who speak actually turn their microphone on.
+   * Zoom actually has several functions that are rarely used but could be nice if everyone knew how to use them. A simple one is the chat function which is always on during the course. But you may also share your screen with us if you have a problem or simply give a "thumbs up" directly next to you face. You can also play around with the video settings to hide your background etc. Try to click yourself through the options or watch a youtube tutorial on this!
