@@ -146,4 +146,4 @@ ex1dat <- read_csv(dataURL)
 ## mod %>%
 ##   emmeans(pairwise ~ "soil", adjust="none") %>% # adjust="none" for t-test
 ##   pluck("emmeans") %>%
-##   cld(details=TRUE, Letters=letters)
+##   cld(details=TRUE, Letters=letters, adjust="none")
