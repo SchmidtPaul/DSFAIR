@@ -719,6 +719,108 @@ div.tocify {
 <div id="descriptive-plot" class="section level3">
 <h3>descriptive plot</h3>
 <p>We can also create a plot to get a better feeling for the data. Note that here we could even decide to extend the ggplot to become an animated gif as follows:</p>
+<pre><code>## 
+Frame 1 (1%)
+Frame 2 (2%)
+Frame 3 (3%)
+Frame 4 (4%)
+Frame 5 (5%)
+Frame 6 (6%)
+Frame 7 (7%)
+Frame 8 (8%)
+Frame 9 (9%)
+Frame 10 (10%)
+Frame 11 (11%)
+Frame 12 (12%)
+Frame 13 (13%)
+Frame 14 (14%)
+Frame 15 (15%)
+Frame 16 (16%)
+Frame 17 (17%)
+Frame 18 (18%)
+Frame 19 (19%)
+Frame 20 (20%)
+Frame 21 (21%)
+Frame 22 (22%)
+Frame 23 (23%)
+Frame 24 (24%)
+Frame 25 (25%)
+Frame 26 (26%)
+Frame 27 (27%)
+Frame 28 (28%)
+Frame 29 (29%)
+Frame 30 (30%)
+Frame 31 (31%)
+Frame 32 (32%)
+Frame 33 (33%)
+Frame 34 (34%)
+Frame 35 (35%)
+Frame 36 (36%)
+Frame 37 (37%)
+Frame 38 (38%)
+Frame 39 (39%)
+Frame 40 (40%)
+Frame 41 (41%)
+Frame 42 (42%)
+Frame 43 (43%)
+Frame 44 (44%)
+Frame 45 (45%)
+Frame 46 (46%)
+Frame 47 (47%)
+Frame 48 (48%)
+Frame 49 (49%)
+Frame 50 (50%)
+Frame 51 (51%)
+Frame 52 (52%)
+Frame 53 (53%)
+Frame 54 (54%)
+Frame 55 (55%)
+Frame 56 (56%)
+Frame 57 (57%)
+Frame 58 (58%)
+Frame 59 (59%)
+Frame 60 (60%)
+Frame 61 (61%)
+Frame 62 (62%)
+Frame 63 (63%)
+Frame 64 (64%)
+Frame 65 (65%)
+Frame 66 (66%)
+Frame 67 (67%)
+Frame 68 (68%)
+Frame 69 (69%)
+Frame 70 (70%)
+Frame 71 (71%)
+Frame 72 (72%)
+Frame 73 (73%)
+Frame 74 (74%)
+Frame 75 (75%)
+Frame 76 (76%)
+Frame 77 (77%)
+Frame 78 (78%)
+Frame 79 (79%)
+Frame 80 (80%)
+Frame 81 (81%)
+Frame 82 (82%)
+Frame 83 (83%)
+Frame 84 (84%)
+Frame 85 (85%)
+Frame 86 (86%)
+Frame 87 (87%)
+Frame 88 (88%)
+Frame 89 (89%)
+Frame 90 (90%)
+Frame 91 (91%)
+Frame 92 (92%)
+Frame 93 (93%)
+Frame 94 (94%)
+Frame 95 (95%)
+Frame 96 (96%)
+Frame 97 (97%)
+Frame 98 (98%)
+Frame 99 (99%)
+Frame 100 (100%)
+## Finalizing encoding... done!</code></pre>
 <p><img src="Repeated_RCBD_PiephoEdmondson2018_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
 </div>
 </div>
@@ -729,10 +831,10 @@ div.tocify {
 <div id="sinlge-week" class="section level2">
 <h2>Sinlge week</h2>
 <p>When looking at data from a single time point (<em>e.g.</em> the first week), we merely have 20 observations from a randomized complete block design with a single treatment factor. It can therefore be analyzed with a simple one-way ANOVA (fixed <code>variety</code> effect) for randomized complete block designs (fixed <code>block</code> effect):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">dat.wk1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(weekF <span class="op">==</span><span class="st"> &quot;week1&quot;</span>) <span class="co"># subset data from first week only</span></a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3">mod.wk1 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>variety <span class="op">+</span><span class="st"> </span>block,</a>
-<a class="sourceLine" id="cb8-4" title="4">              <span class="dt">data =</span> dat.wk1)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">dat.wk1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(weekF <span class="op">==</span><span class="st"> &quot;week1&quot;</span>) <span class="co"># subset data from first week only</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">mod.wk1 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>variety <span class="op">+</span><span class="st"> </span>block,</a>
+<a class="sourceLine" id="cb9-4" title="4">              <span class="dt">data =</span> dat.wk1)</a></code></pre></div>
 <p>We could now go on and look at the ANOVA via <code>anova(mod.wk1)</code> and it would indeed not be <em>wrong</em> to simply repeat this for each week. Yet, one may not be satisfied with obtaining multiple ANOVA results - namely one per week. This is especially likeliy in case the results contradict each other, because <em>e.g.</em> the variety effects are found to be significant in only two out of five weeks. Therefore, one may want to analyze the entire dataset <em>i.e.</em> the multiple weeks jointly.</p>
 </div>
 <div id="multiple-weeks-mw" class="section level2">
@@ -753,15 +855,15 @@ div.tocify {
 <li>mimic the error (variance) as a random effect (variance) via the <code>unit</code> column with different entries for each data point.</li>
 </ol>
 <p>While this may not be necessary for this model with the default homoscedastic, independent error variance structure, using it here will allow for an intuitve comparison to the following model with more sophisticated variance structures.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">mod.iid &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) </a>
-<a class="sourceLine" id="cb9-2" title="2">                        <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>unit),      <span class="co"># add random unit term to mimic error variance</span></a>
-<a class="sourceLine" id="cb9-3" title="3">                        <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
-<a class="sourceLine" id="cb9-4" title="4">                        <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
-<a class="sourceLine" id="cb9-5" title="5">                        <span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co"># Extract variance component estimates</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># alternative: mod.iid %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
-<a class="sourceLine" id="cb9-9" title="9">mod.iid <span class="op">%&gt;%</span><span class="st"> </span>mixedup<span class="op">::</span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">mod.iid &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) </a>
+<a class="sourceLine" id="cb10-2" title="2">                        <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>unit),      <span class="co"># add random unit term to mimic error variance</span></a>
+<a class="sourceLine" id="cb10-3" title="3">                        <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
+<a class="sourceLine" id="cb10-4" title="4">                        <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
+<a class="sourceLine" id="cb10-5" title="5">                        <span class="dt">data =</span> dat) </a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co"># Extract variance component estimates</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co"># alternative: mod.iid %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
+<a class="sourceLine" id="cb10-9" title="9">mod.iid <span class="op">%&gt;%</span><span class="st"> </span>mixedup<span class="op">::</span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>) </a></code></pre></div>
 <pre><code>##      group    effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     unit Intercept    0.023 0.152   0.016    0.033        1
 ## 2 Residual              0.000 0.000      NA       NA        0</code></pre>
@@ -770,14 +872,14 @@ div.tocify {
 <div id="nlme" class="section level3">
 <h3>nlme</h3>
 <p>Since the models in this chapter do not contain any random effects, we make use of <code>gls()</code> instead of <code>lme()</code>. Furthermore, we specifically write out the <code>correlation = NULL</code> argument to get a homoscedastic, independent error variance structure. While this may not be necessary because it is the default, using it here will allow for an intuitve comparison to the following models with more sophisticated variance structures.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">mod.iid.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety), </a>
-<a class="sourceLine" id="cb11-2" title="2">                    <span class="dt">correlation =</span> <span class="ot">NULL</span>, <span class="co"># default, i.e. homoscedastic, independent errors</span></a>
-<a class="sourceLine" id="cb11-3" title="3">                    <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb11-4" title="4"></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co"># Extract variance component estimates</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;iid&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.iid.nlme<span class="op">$</span>sigma) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod.iid.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety), </a>
+<a class="sourceLine" id="cb12-2" title="2">                    <span class="dt">correlation =</span> <span class="ot">NULL</span>, <span class="co"># default, i.e. homoscedastic, independent errors</span></a>
+<a class="sourceLine" id="cb12-3" title="3">                    <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb12-4" title="4"></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co"># Extract variance component estimates</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;iid&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.iid.nlme<span class="op">$</span>sigma) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##   varstruct sigma Variance
 ##   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -800,15 +902,15 @@ div.tocify {
 <h4>glmmTMB</h4>
 <p>To model the variance structure of our mimiced error term as first order autoregressive, we replace the <code>(1 | unit)</code> from the <code>iid</code> model with <code>ar1(weekF + 0 | plot)</code>. As can be seen, subjects are identified after the <code>|</code> and the variance structure in this syntax.</p>
 <p>Note that by adding the <code>show_cor = TRUE</code> argument to the <code>extract_vc</code> function, we obtain two outputs: The variance component estimates, as seen above for the <code>iid</code> model, as well as the correlation matrix / variance structure for a single plot.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">mod.AR1 &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="st">                     </span><span class="kw">ar1</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># ar1 structure as random term to mimic error var</span></a>
-<a class="sourceLine" id="cb13-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
-<a class="sourceLine" id="cb13-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
-<a class="sourceLine" id="cb13-5" title="5">                   <span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb13-6" title="6"></a>
-<a class="sourceLine" id="cb13-7" title="7"><span class="co"># Extract variance component estimates</span></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="co"># alternative: mod.ar1 %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
-<a class="sourceLine" id="cb13-9" title="9">mod.AR1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod.AR1 &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">                     </span><span class="kw">ar1</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># ar1 structure as random term to mimic error var</span></a>
+<a class="sourceLine" id="cb14-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
+<a class="sourceLine" id="cb14-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
+<a class="sourceLine" id="cb14-5" title="5">                   <span class="dt">data =</span> dat) </a>
+<a class="sourceLine" id="cb14-6" title="6"></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="co"># Extract variance component estimates</span></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="co"># alternative: mod.ar1 %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
+<a class="sourceLine" id="cb14-9" title="9">mod.AR1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <pre><code>## $`Variance Components`
 ##      group     effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     plot weekFweek1    0.022 0.149   0.013    0.038      0.2
@@ -831,19 +933,19 @@ div.tocify {
 <div id="nlme-1" class="section level4">
 <h4>nlme</h4>
 <p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corAR1</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. In its syntax, subjects are identified after the <code>|</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.AR1.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
-<a class="sourceLine" id="cb15-2" title="2">                    <span class="dt">correlation =</span> <span class="kw">corAR1</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
-<a class="sourceLine" id="cb15-3" title="3">                    <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb15-4" title="4"></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="co"># Extract variance component estimates</span></a>
-<a class="sourceLine" id="cb15-6" title="6"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1)&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1.nlme<span class="op">$</span>sigma,</a>
-<a class="sourceLine" id="cb15-8" title="8">         <span class="dt">rho      =</span> <span class="kw">coef</span>(mod.AR1.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb15-10" title="10">         <span class="dt">Corr1wk  =</span> rho,</a>
-<a class="sourceLine" id="cb15-11" title="11">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb15-12" title="12">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb15-13" title="13">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">mod.AR1.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
+<a class="sourceLine" id="cb16-2" title="2">                    <span class="dt">correlation =</span> <span class="kw">corAR1</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
+<a class="sourceLine" id="cb16-3" title="3">                    <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb16-4" title="4"></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="co"># Extract variance component estimates</span></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1)&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1.nlme<span class="op">$</span>sigma,</a>
+<a class="sourceLine" id="cb16-8" title="8">         <span class="dt">rho      =</span> <span class="kw">coef</span>(mod.AR1.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb16-10" title="10">         <span class="dt">Corr1wk  =</span> rho,</a>
+<a class="sourceLine" id="cb16-11" title="11">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb16-12" title="12">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb16-13" title="13">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -854,19 +956,19 @@ div.tocify {
 <h4>nlme V2</h4>
 <p>For completeness, I want to show that the same model can also be fit in <code>nlme</code> via the <code>corExp</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. Note that this was actually done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a> and <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots."</p>
 <p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">mod.AR1.nlme.V2 &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block),</a>
-<a class="sourceLine" id="cb17-2" title="2">                       <span class="dt">correlation =</span> <span class="kw">corExp</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
-<a class="sourceLine" id="cb17-3" title="3">                       <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb17-4" title="4"></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1)&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1.nlme.V2<span class="op">$</span>sigma,</a>
-<a class="sourceLine" id="cb17-7" title="7">         <span class="dt">rho      =</span> <span class="kw">exp</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="kw">coef</span>(mod.AR1.nlme.V2<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
-<a class="sourceLine" id="cb17-8" title="8">                                <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb17-10" title="10">         <span class="dt">Corr1wk  =</span> rho,</a>
-<a class="sourceLine" id="cb17-11" title="11">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb17-12" title="12">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb17-13" title="13">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">mod.AR1.nlme.V2 &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block),</a>
+<a class="sourceLine" id="cb18-2" title="2">                       <span class="dt">correlation =</span> <span class="kw">corExp</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
+<a class="sourceLine" id="cb18-3" title="3">                       <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1)&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1.nlme.V2<span class="op">$</span>sigma,</a>
+<a class="sourceLine" id="cb18-7" title="7">         <span class="dt">rho      =</span> <span class="kw">exp</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="kw">coef</span>(mod.AR1.nlme.V2<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
+<a class="sourceLine" id="cb18-8" title="8">                                <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb18-10" title="10">         <span class="dt">Corr1wk  =</span> rho,</a>
+<a class="sourceLine" id="cb18-11" title="11">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb18-12" title="12">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb18-13" title="13">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -886,23 +988,23 @@ div.tocify {
 <h4>nlme</h4>
 <p>As pointed out by <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots." This was also done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>.</p>
 <p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">mod.AR1nugget.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
-<a class="sourceLine" id="cb19-2" title="2">                          <span class="dt">correlation =</span> <span class="kw">corExp</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot, <span class="dt">nugget =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb19-3" title="3">                          <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb19-4" title="4"></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1) + nugget&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1nugget.nlme<span class="op">$</span>sigma,</a>
-<a class="sourceLine" id="cb19-7" title="7">         <span class="dt">nugget   =</span> <span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
-<a class="sourceLine" id="cb19-8" title="8">                         <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb19-9" title="9">         <span class="dt">rho      =</span> (<span class="dv">1</span><span class="op">-</span><span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
-<a class="sourceLine" id="cb19-10" title="10">                            <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">2</span>])<span class="op">*</span></a>
-<a class="sourceLine" id="cb19-11" title="11"><span class="st">                    </span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
-<a class="sourceLine" id="cb19-12" title="12">                                <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">1</span>])) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-13" title="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb19-14" title="14">         <span class="dt">Corr1wk  =</span> rho,</a>
-<a class="sourceLine" id="cb19-15" title="15">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb19-16" title="16">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb19-17" title="17">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">mod.AR1nugget.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(<span class="dt">model =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
+<a class="sourceLine" id="cb20-2" title="2">                          <span class="dt">correlation =</span> <span class="kw">corExp</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot, <span class="dt">nugget =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb20-3" title="3">                          <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;ar(1) + nugget&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.AR1nugget.nlme<span class="op">$</span>sigma,</a>
+<a class="sourceLine" id="cb20-7" title="7">         <span class="dt">nugget   =</span> <span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
+<a class="sourceLine" id="cb20-8" title="8">                         <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb20-9" title="9">         <span class="dt">rho      =</span> (<span class="dv">1</span><span class="op">-</span><span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
+<a class="sourceLine" id="cb20-10" title="10">                            <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">2</span>])<span class="op">*</span></a>
+<a class="sourceLine" id="cb20-11" title="11"><span class="st">                    </span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="kw">coef</span>(mod.AR1nugget.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, </a>
+<a class="sourceLine" id="cb20-12" title="12">                                <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)[<span class="dv">1</span>])) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-13" title="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb20-14" title="14">         <span class="dt">Corr1wk  =</span> rho,</a>
+<a class="sourceLine" id="cb20-15" title="15">         <span class="dt">Corr2wks =</span> rho<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb20-16" title="16">         <span class="dt">Corr3wks =</span> rho<span class="op">^</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb20-17" title="17">         <span class="dt">Corr4wks =</span> rho<span class="op">^</span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 9
 ##   varstruct      sigma nugget   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -916,15 +1018,15 @@ div.tocify {
 <h4>glmmTMB (hCS!)</h4>
 <p><strong>Note that <code>glmmTMB()</code> only allows for heterogengeous compound symmetry and not standard compound symmetry!</strong></p>
 <p>To model the variance structure of our mimiced error term as a heterogeneous compound symmetry structure, we use <code>cs(weekF + 0 | plot)</code>. Notice that this is not the simple compound symmetry structure that <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> applied, because <code>glmmTMB()</code> only allows for heterogeneous compound symmetry at the moment.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">mod.hCS &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">                     </span><span class="kw">cs</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># hcs structure as random term to mimic error var</span></a>
-<a class="sourceLine" id="cb21-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
-<a class="sourceLine" id="cb21-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
-<a class="sourceLine" id="cb21-5" title="5">                   <span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb21-6" title="6"></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="co"># show variance components</span></a>
-<a class="sourceLine" id="cb21-8" title="8"><span class="co"># alternative: mod.hCS %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
-<a class="sourceLine" id="cb21-9" title="9">mod.hCS <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">mod.hCS &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="st">                     </span><span class="kw">cs</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># hcs structure as random term to mimic error var</span></a>
+<a class="sourceLine" id="cb22-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
+<a class="sourceLine" id="cb22-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
+<a class="sourceLine" id="cb22-5" title="5">                   <span class="dt">data =</span> dat) </a>
+<a class="sourceLine" id="cb22-6" title="6"></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co"># show variance components</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="co"># alternative: mod.hCS %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
+<a class="sourceLine" id="cb22-9" title="9">mod.hCS <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <pre><code>## $`Variance Components`
 ##      group     effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     plot weekFweek1    0.021 0.144   0.009    0.046    0.181
@@ -947,18 +1049,18 @@ div.tocify {
 <div id="nlme-3" class="section level4">
 <h4>nlme</h4>
 <p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corCompSymm</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. In its syntax, subjects are identified after the <code>|</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">mod.CS.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
-<a class="sourceLine" id="cb23-2" title="2">                   <span class="dt">corr =</span> <span class="kw">corCompSymm</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
-<a class="sourceLine" id="cb23-3" title="3">                   <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb23-4" title="4"></a>
-<a class="sourceLine" id="cb23-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;cs&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.CS.nlme<span class="op">$</span>sigma,</a>
-<a class="sourceLine" id="cb23-7" title="7">         <span class="dt">rho      =</span> <span class="kw">coef</span>(mod.CS.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb23-9" title="9">         <span class="dt">Corr1wk  =</span> rho,</a>
-<a class="sourceLine" id="cb23-10" title="10">         <span class="dt">Corr2wks =</span> rho,</a>
-<a class="sourceLine" id="cb23-11" title="11">         <span class="dt">Corr3wks =</span> rho,</a>
-<a class="sourceLine" id="cb23-12" title="12">         <span class="dt">Corr4wks =</span> rho)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">mod.CS.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety),</a>
+<a class="sourceLine" id="cb24-2" title="2">                   <span class="dt">corr =</span> <span class="kw">corCompSymm</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span>weekN <span class="op">|</span><span class="st"> </span>plot),</a>
+<a class="sourceLine" id="cb24-3" title="3">                   <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb24-4" title="4"></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="kw">tibble</span>(<span class="dt">varstruct =</span> <span class="st">&quot;cs&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma    =</span> mod.CS.nlme<span class="op">$</span>sigma,</a>
+<a class="sourceLine" id="cb24-7" title="7">         <span class="dt">rho      =</span> <span class="kw">coef</span>(mod.CS.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct, <span class="dt">unconstrained =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance =</span> sigma<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb24-9" title="9">         <span class="dt">Corr1wk  =</span> rho,</a>
+<a class="sourceLine" id="cb24-10" title="10">         <span class="dt">Corr2wks =</span> rho,</a>
+<a class="sourceLine" id="cb24-11" title="11">         <span class="dt">Corr3wks =</span> rho,</a>
+<a class="sourceLine" id="cb24-12" title="12">         <span class="dt">Corr4wks =</span> rho)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -971,15 +1073,15 @@ div.tocify {
 <div id="glmmtmb-3" class="section level4">
 <h4>glmmTMB</h4>
 <p>To model the variance structure of our mimiced error term as a toeplitz structure, we use <code>toep(weekF + 0 | plot)</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">mod.Toep &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="st">                     </span><span class="kw">toep</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># teop structure as random term to mimic err var</span></a>
-<a class="sourceLine" id="cb25-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
-<a class="sourceLine" id="cb25-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
-<a class="sourceLine" id="cb25-5" title="5">                   <span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb25-6" title="6"></a>
-<a class="sourceLine" id="cb25-7" title="7"><span class="co"># show variance components</span></a>
-<a class="sourceLine" id="cb25-8" title="8"><span class="co"># alternative: mod.Toep %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
-<a class="sourceLine" id="cb25-9" title="9">mod.Toep <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">mod.Toep &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="st">                     </span><span class="kw">toep</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># teop structure as random term to mimic err var</span></a>
+<a class="sourceLine" id="cb26-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
+<a class="sourceLine" id="cb26-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
+<a class="sourceLine" id="cb26-5" title="5">                   <span class="dt">data =</span> dat) </a>
+<a class="sourceLine" id="cb26-6" title="6"></a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="co"># show variance components</span></a>
+<a class="sourceLine" id="cb26-8" title="8"><span class="co"># alternative: mod.Toep %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
+<a class="sourceLine" id="cb26-9" title="9">mod.Toep <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <pre><code>## $`Variance Components`
 ##      group     effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     plot weekFweek1    0.021 0.144   0.009    0.046    0.182
@@ -1011,15 +1113,15 @@ div.tocify {
 <div id="glmmtmb-4" class="section level4">
 <h4>glmmTMB</h4>
 <p>To model the variance structure of our mimiced error term as a completely unstrucutred variance structure, we use <code>us(weekF + 0 | plot)</code>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">mod.UN &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="st">                     </span><span class="kw">us</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># us structure as random term to mimic error var</span></a>
-<a class="sourceLine" id="cb27-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
-<a class="sourceLine" id="cb27-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
-<a class="sourceLine" id="cb27-5" title="5">                   <span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb27-6" title="6"></a>
-<a class="sourceLine" id="cb27-7" title="7"><span class="co"># show variance components</span></a>
-<a class="sourceLine" id="cb27-8" title="8"><span class="co"># alternative: mod.UN %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
-<a class="sourceLine" id="cb27-9" title="9">mod.UN <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">mod.UN &lt;-<span class="st"> </span><span class="kw">glmmTMB</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(variety <span class="op">+</span><span class="st"> </span>block) <span class="op">+</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="st">                     </span><span class="kw">us</span>(weekF <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>plot), <span class="co"># us structure as random term to mimic error var</span></a>
+<a class="sourceLine" id="cb28-3" title="3">                   <span class="dt">dispformula =</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></a>
+<a class="sourceLine" id="cb28-4" title="4">                   <span class="dt">REML =</span> <span class="ot">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></a>
+<a class="sourceLine" id="cb28-5" title="5">                   <span class="dt">data =</span> dat) </a>
+<a class="sourceLine" id="cb28-6" title="6"></a>
+<a class="sourceLine" id="cb28-7" title="7"><span class="co"># show variance components</span></a>
+<a class="sourceLine" id="cb28-8" title="8"><span class="co"># alternative: mod.UN %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></a>
+<a class="sourceLine" id="cb28-9" title="9">mod.UN <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_vc</span>(<span class="dt">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">show_cor =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <pre><code>## $`Variance Components`
 ##      group     effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     plot weekFweek1    0.020 0.141   0.009    0.044    0.170
@@ -1042,18 +1144,18 @@ div.tocify {
 <div id="nlme-5" class="section level4">
 <h4>nlme</h4>
 <p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corSymm</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a> in combination with the <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.varIdent.1" target="_blank"><code>varIdent()</code></a> in the <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.lme.1" target="_blank"><code>weights=</code></a> argument, which is <em>used to allow for different variances according to the levels of a classification factor</em>. In its syntax, subjects are identified after the <code>|</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">mod.UN.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety), </a>
-<a class="sourceLine" id="cb29-2" title="2">                   <span class="dt">corr =</span> <span class="kw">corSymm</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>plot), </a>
-<a class="sourceLine" id="cb29-3" title="3">                   <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>weekF), </a>
-<a class="sourceLine" id="cb29-4" title="4">                   <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb29-5" title="5"></a>
-<a class="sourceLine" id="cb29-6" title="6"><span class="co"># Extract variance component estimates: variances</span></a>
-<a class="sourceLine" id="cb29-7" title="7">mod.UN.nlme<span class="op">$</span>modelStruct<span class="op">$</span>varStruct <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-8" title="8"><span class="st">  </span><span class="kw">coef</span>(<span class="dt">unconstrained =</span> <span class="ot">FALSE</span>, <span class="dt">allCoef =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-9" title="9"><span class="st">  </span><span class="kw">enframe</span>(<span class="dt">name =</span> <span class="st">&quot;grp&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;varStruct&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma         =</span> mod.UN.nlme<span class="op">$</span>sigma) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-11" title="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">StandardError =</span> sigma <span class="op">*</span><span class="st"> </span>varStruct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-12" title="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance      =</span> StandardError <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">mod.UN.nlme &lt;-<span class="st"> </span><span class="kw">gls</span>(y <span class="op">~</span><span class="st"> </span>weekF <span class="op">*</span><span class="st"> </span>(block <span class="op">+</span><span class="st"> </span>variety), </a>
+<a class="sourceLine" id="cb30-2" title="2">                   <span class="dt">corr =</span> <span class="kw">corSymm</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>plot), </a>
+<a class="sourceLine" id="cb30-3" title="3">                   <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>weekF), </a>
+<a class="sourceLine" id="cb30-4" title="4">                   <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb30-5" title="5"></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="co"># Extract variance component estimates: variances</span></a>
+<a class="sourceLine" id="cb30-7" title="7">mod.UN.nlme<span class="op">$</span>modelStruct<span class="op">$</span>varStruct <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-8" title="8"><span class="st">  </span><span class="kw">coef</span>(<span class="dt">unconstrained =</span> <span class="ot">FALSE</span>, <span class="dt">allCoef =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-9" title="9"><span class="st">  </span><span class="kw">enframe</span>(<span class="dt">name =</span> <span class="st">&quot;grp&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;varStruct&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sigma         =</span> mod.UN.nlme<span class="op">$</span>sigma) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-11" title="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">StandardError =</span> sigma <span class="op">*</span><span class="st"> </span>varStruct) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-12" title="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Variance      =</span> StandardError <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   grp   varStruct sigma StandardError Variance
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;
@@ -1062,8 +1164,8 @@ div.tocify {
 ## 3 week3      1.06 0.141         0.149   0.0223
 ## 4 week4      1.29 0.141         0.181   0.0327
 ## 5 week5      1.02 0.141         0.143   0.0206</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># Extract variance component estimates: correlations</span></a>
-<a class="sourceLine" id="cb31-2" title="2">mod.UN.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># Extract variance component estimates: correlations</span></a>
+<a class="sourceLine" id="cb32-2" title="2">mod.UN.nlme<span class="op">$</span>modelStruct<span class="op">$</span>corStruct</a></code></pre></div>
 <pre><code>## Correlation structure of class corSymm representing
 ##  Correlation: 
 ##   1     2     3     4    
@@ -1083,10 +1185,10 @@ div.tocify {
 <div id="glmmtmb-5" class="section level3">
 <h3>glmmTMB</h3>
 <p>In order to select the best model here, we can simply compare their AIC values, since all models are identical regarding their fixed effects part. The smaller the value of AIC, the better is the fit:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">AICcmodavg<span class="op">::</span><span class="kw">aictab</span>(</a>
-<a class="sourceLine" id="cb33-2" title="2">  <span class="dt">cand.set =</span> <span class="kw">list</span>(mod.iid, mod.hCS, mod.AR1, mod.Toep, mod.UN), </a>
-<a class="sourceLine" id="cb33-3" title="3">  <span class="dt">modnames =</span> <span class="kw">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;hCS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;Toeplitz&quot;</span>, <span class="st">&quot;UN&quot;</span>),</a>
-<a class="sourceLine" id="cb33-4" title="4">  <span class="dt">second.ord =</span> <span class="ot">FALSE</span>) <span class="co"># get AIC instead of AICc</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">AICcmodavg<span class="op">::</span><span class="kw">aictab</span>(</a>
+<a class="sourceLine" id="cb34-2" title="2">  <span class="dt">cand.set =</span> <span class="kw">list</span>(mod.iid, mod.hCS, mod.AR1, mod.Toep, mod.UN), </a>
+<a class="sourceLine" id="cb34-3" title="3">  <span class="dt">modnames =</span> <span class="kw">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;hCS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;Toeplitz&quot;</span>, <span class="st">&quot;UN&quot;</span>),</a>
+<a class="sourceLine" id="cb34-4" title="4">  <span class="dt">second.ord =</span> <span class="ot">FALSE</span>) <span class="co"># get AIC instead of AICc</span></a></code></pre></div>
 <pre><code>## 
 ## Model selection based on AIC:
 ## 
@@ -1101,10 +1203,10 @@ div.tocify {
 <div id="nlme-6" class="section level3">
 <h3>nlme</h3>
 <p>In order to select the best model here, we can simply compare their AIC values, since all models are identical regarding their fixed effects part. The smaller the value of AIC, the better is the fit:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">AICcmodavg<span class="op">::</span><span class="kw">aictab</span>(</a>
-<a class="sourceLine" id="cb35-2" title="2">  <span class="dt">cand.set =</span> <span class="kw">list</span>(mod.iid.nlme, mod.CS.nlme, mod.AR1.nlme, mod.AR1nugget.nlme, mod.UN.nlme), </a>
-<a class="sourceLine" id="cb35-3" title="3">  <span class="dt">modnames =</span> <span class="kw">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;CS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;AR1 + nugget&quot;</span>, <span class="st">&quot;UN&quot;</span>),</a>
-<a class="sourceLine" id="cb35-4" title="4">  <span class="dt">second.ord =</span> <span class="ot">FALSE</span>) <span class="co"># get AIC instead of AICc</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">AICcmodavg<span class="op">::</span><span class="kw">aictab</span>(</a>
+<a class="sourceLine" id="cb36-2" title="2">  <span class="dt">cand.set =</span> <span class="kw">list</span>(mod.iid.nlme, mod.CS.nlme, mod.AR1.nlme, mod.AR1nugget.nlme, mod.UN.nlme), </a>
+<a class="sourceLine" id="cb36-3" title="3">  <span class="dt">modnames =</span> <span class="kw">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;CS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;AR1 + nugget&quot;</span>, <span class="st">&quot;UN&quot;</span>),</a>
+<a class="sourceLine" id="cb36-4" title="4">  <span class="dt">second.ord =</span> <span class="ot">FALSE</span>) <span class="co"># get AIC instead of AICc</span></a></code></pre></div>
 <pre><code>## 
 ## Model selection based on AIC:
 ## 
@@ -1120,21 +1222,21 @@ div.tocify {
 <div id="time-trend-as-polynomial-regression-model" class="section level2">
 <h2>time trend as (polynomial) regression model</h2>
 <p>So far, we have focussed on dealing with potentially correlated error terms for our repeated measures data. Now that we dealt with this and found an optimal solution, we are now ready to select a regression model for time trend. As a reminder, this is the data we are dealing with (this time not animated):</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat, </a>
-<a class="sourceLine" id="cb37-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> weekF,</a>
-<a class="sourceLine" id="cb37-3" title="3">           <span class="dt">group =</span> variety,</a>
-<a class="sourceLine" id="cb37-4" title="4">           <span class="dt">color =</span> variety)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-6" title="6"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun=</span>mean, <span class="dt">geom=</span><span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># lines between means</span></a>
-<a class="sourceLine" id="cb37-7" title="7"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
-<a class="sourceLine" id="cb37-8" title="8">    <span class="dt">name =</span> <span class="st">&quot;Leaf area index&quot;</span>,</a>
-<a class="sourceLine" id="cb37-9" title="9">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">6.5</span>),</a>
-<a class="sourceLine" id="cb37-10" title="10">    <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb37-11" title="11">    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-12" title="12"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> var_colors) <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-13" title="13"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, </a>
-<a class="sourceLine" id="cb37-15" title="15">        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat, </a>
+<a class="sourceLine" id="cb38-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> weekF,</a>
+<a class="sourceLine" id="cb38-3" title="3">           <span class="dt">group =</span> variety,</a>
+<a class="sourceLine" id="cb38-4" title="4">           <span class="dt">color =</span> variety)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-6" title="6"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun=</span>mean, <span class="dt">geom=</span><span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># lines between means</span></a>
+<a class="sourceLine" id="cb38-7" title="7"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
+<a class="sourceLine" id="cb38-8" title="8">    <span class="dt">name =</span> <span class="st">&quot;Leaf area index&quot;</span>,</a>
+<a class="sourceLine" id="cb38-9" title="9">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">6.5</span>),</a>
+<a class="sourceLine" id="cb38-10" title="10">    <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb38-11" title="11">    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">6</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-12" title="12"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> var_colors) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-13" title="13"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, </a>
+<a class="sourceLine" id="cb38-15" title="15">        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
 <p><img src="Repeated_RCBD_PiephoEdmondson2018_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>It can now be asked whether the trend over time is simply linear (in the sense of <code>y = a + bx</code>) or can better be modelled as with a polynomial regression (<em>i.e.</em> <code>y = a + bx + cx²</code> or <code>y = a + bx + cx² + dx³</code> and so on). Very roughly put, we are asking whether a straight line fits the data well enough or if we should instead use a model that results in some sort of curved line.</p>
 <p>In order to answer this question, we use the <em>lack-of-fit</em> method to determine which degree of a polynomial regression we should go with. We start with the linear regression model.</p>

@@ -6,7 +6,6 @@ pacman::p_load(tidyverse, rmarkdown)
 rmarkdown::clean_site()  # delete old files
 rmarkdown::render_site(encoding="UTF-8") # render all files new; UTF-8 for ä, ö, ü, ß
 
-
 ### create purled R files ###
 purl_files <- list.files(pattern = ".Rmd") %>% 
   tibble(Rmd = .) %>% 
