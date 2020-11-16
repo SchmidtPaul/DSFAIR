@@ -23,6 +23,10 @@ navbar:
         href: rowcol_KemptonFox1997.html
       - text: "splitplot_GomezGomez1984"
         href: splitplot_GomezGomez1984.html
+      - text: "repeated measures"
+        menu:
+        - text: "RCBD_PiephoEdmondson2018"
+          href: Repeated_RCBD_PiephoEdmondson2018.html
     - text: "Summaries"
       menu:
       - text: "Designing experiments"
