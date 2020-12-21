@@ -16,10 +16,10 @@ pacman::p_load(kableExtra, formattable ,htmltools)
 
 ```{r}
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot,          # plots
-               report, equatiomatic)      # automated analysis summaries
+pacman::p_load(tidyverse,        # data import and handling
+               conflicted,       # handling function conflicts
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot) # plots
 ```
 
 # Data
@@ -49,20 +49,10 @@ dat <- dat %>%
 In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
 
 ```{r, fig.height = 3, fig.align = "center"}
-desplot(data = dat,
-        form = variety ~ col + row,              # fill color per genotype, headers per replicate
+desplot(data = dat, flip = TRUE,
+        form = variety ~ col + row,              # fill color per genotype
         text = variety, cex = 1, shorten = "no", # show genotype names per plot
         main = "Field layout", show.key = F)     # formatting
-```
-
-While not necessary for the analysis below, it may be convenient to look at the data per variety and sorted by yield:
-
-```{r}
-dat %>% 
-  arrange(variety, yield) %>% 
-  dplyr::select(variety, yield) %>% 
-  pivot_wider(names_from = variety, values_from = yield) %>% 
-  unnest()
 ```
 
 We could also have a look at the arithmetic means and standard deviations per `variety`:
@@ -106,9 +96,13 @@ Following a significant F-test, one will want to compare genotype means.
 
 ```{r}
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "variety", adjust="tukey") %>% # adjust="none" for t-test
+  emmeans(pairwise ~ "variety", adjust="tukey") %>% 
   pluck("emmeans") %>% 
   cld(details=TRUE, Letters=letters) # add letter display
+
+# If cld() does not work, try CLD() instead.
+# Add 'adjust="none"' to the emmeans() and cld() statement
+# in order to obtain t-test instead of Tukey!
 
 mean_comparisons$emmeans # adjusted variety means
 
@@ -157,30 +151,6 @@ ggplot() +
        Red dots and error bars represent adjusted mean with 95% confidence limits per variety
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
-```
-
-## dataset
-
-```{r results='asis'}
-dat %>% 
-  dplyr::select(-row, -col) %>% 
-  report() %>% text_short()
-```
-
-## model
-
-```{r results='asis'}
-mod %>% extract_eq()
-
-mod %>% report() %>% text_short()
-```
-
-## anova
-
-```{r results='asis'}
-mod %>% 
-  anova %>% 
-  report() %>% text_short()
 ```
 
 # Exercises

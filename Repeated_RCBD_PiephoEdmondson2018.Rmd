@@ -88,7 +88,7 @@ dat %>%
 
 We can also create a plot to get a better feeling for the data. Note that here we could even decide to extend the ggplot to become an animated gif as follows:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, purl=FALSE}
 var_colors <- c("#8cb369", "#f4a259", "#5b8e7d", "#bc4b51")
 names(var_colors) <- dat$variety %>% levels()
 
@@ -487,7 +487,7 @@ In order to answer this question, we use the *lack-of-fit* method to determine w
 
 </br></br></br>
 
-<span style="color:red"> under construction </span>
+<span style="color:red"> work in progress </span>
 
 </br></br></br>
 

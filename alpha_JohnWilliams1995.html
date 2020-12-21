@@ -637,10 +637,15 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(readr, tidyverse, forcats, <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               lme4, lmerTest,            <span class="co"># linear mixed model </span></a>
-<a class="sourceLine" id="cb1-4" title="4">               emmeans, multcomp,         <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-5" title="5">               ggplot2, desplot)          <span class="co"># plots</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse,         <span class="co"># data import and handling</span></a>
+<a class="sourceLine" id="cb1-3" title="3">               conflicted,        <span class="co"># handling function conflicts</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               lme4, lmerTest,    <span class="co"># linear mixed model </span></a>
+<a class="sourceLine" id="cb1-5" title="5">               emmeans, multcomp, multcompView, <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-6" title="6">               ggplot2, desplot)  <span class="co"># plots</span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># conflicts: identical function names from different packages</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from Chapter <em>“3.8 Analysis of an <span class="math inline">\(\alpha\)</span>-design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/bimj.4710380703" target="_blank">John and Williams (1995)</a> from a yield (t/ha) trial laid out as an alpha design. The trial had 24 genotypes (<code>gen</code>), 3 complete replicates (<code>rep</code>) and 6 incomplete blocks (<code>inc.block</code>) within each replicate. The block size was 4.</p>
@@ -675,7 +680,7 @@ div.tocify {
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
 <p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb5-2" title="2">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row <span class="op">|</span><span class="st"> </span>rep,          <span class="co"># fill color per genotype, headers per replicate</span></a>
 <a class="sourceLine" id="cb5-3" title="3">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
 <a class="sourceLine" id="cb5-4" title="4">        <span class="dt">out1 =</span> rep,                            <span class="co"># lines between complete blocks/replicates</span></a>
@@ -812,7 +817,7 @@ div.tocify {
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.rb <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">VarCorr</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(grp, vcov)</a></code></pre></div>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw">select</span>(grp, vcov)</a></code></pre></div>
 <pre><code>##             grp       vcov
 ## 1 rep:inc.block 0.06194388
 ## 2      Residual 0.08522511</code></pre>

@@ -237,3 +237,36 @@ ggplot(data = dat,
   theme_bw() +
   theme(legend.position = "bottom", 
         axis.title.x = element_blank())
+
+mod.AR1 %>% 
+ggeffects::ggemmeans(terms = c("weekF", "variety"),
+                     ci.lvl = 0.95)
+
+glmmTMB(formula = y ~ 0 + 
+          variety + variety:weekN +
+          weekF*block +
+          ar1(weekF + 0 | plot), # ar1 structure as random term to mimic error var
+        dispformula = ~ 0, # fix original error variance to 0
+        REML = TRUE,       # needs to be stated since default = ML
+        data = dat) %>% 
+  ggeffects::ggemmeans(terms = c("weekN", "variety"),
+                       ci.lvl = 0.95) %>% 
+  ggplot(., aes(x=x, 
+                y=predicted)) +
+  scale_color_manual(values = var_colors) +
+  scale_fill_manual(values = var_colors) +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        axis.title.x = element_blank()) +
+  scale_y_continuous(
+    name = "Leaf area index",
+    limits = c(0, 6.5),
+    expand = c(0, 0),
+    breaks = c(0:6)) +
+  geom_line(aes(colour = group), 
+            size = 1.5) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), 
+              alpha = 0.2)
+

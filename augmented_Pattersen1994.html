@@ -637,10 +637,14 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(janitor, readr, tidyverse, <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               lme4, lmerTest,            <span class="co"># linear mixed model </span></a>
-<a class="sourceLine" id="cb1-4" title="4">               emmeans, multcomp,         <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-5" title="5">               ggplot2, desplot)          <span class="co"># plots </span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse,        <span class="co"># data import and handling</span></a>
+<a class="sourceLine" id="cb1-3" title="3">               conflicted,       <span class="co"># handling function conflicts</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               lme4, lmerTest,   <span class="co"># linear mixed model </span></a>
+<a class="sourceLine" id="cb1-5" title="5">               emmeans, multcomp, multcompView, <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-6" title="6">               ggplot2, desplot) <span class="co"># plots </span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># conflicts: identical function names from different packages</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from Chapter <em>“3.7 Analysis of a non-resolvable augmented design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.taylorfrancis.com/books/9780429078491" target="_blank">Peterson (1994)</a> from a yield trial laid out as an augmented design. The genotypes (<code>gen</code>) include 3 standards (<code>st</code>, <code>ci</code>, <code>wa</code>) and 30 new cultivars of interest. The trial was laid out in 6 blocks (<code>block</code>). The 3 standards are tested in each block, while each entry is tested in only one of the blocks. Therefore, the blocks are <em>“incomplete blocks”</em>.</p>
@@ -685,7 +689,7 @@ div.tocify {
 <a class="sourceLine" id="cb5-8" title="8"><span class="kw">names</span>(blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>) &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">pull</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.character</span>() <span class="op">%&gt;%</span><span class="st"> </span>sort <span class="op">%&gt;%</span><span class="st"> </span>unique</a>
 <a class="sourceLine" id="cb5-10" title="10"></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="kw">desplot</span>(<span class="dt">data =</span> dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb5-12" title="12">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row, <span class="co"># fill color per genotype, headers per replicate</span></a>
 <a class="sourceLine" id="cb5-13" title="13">        <span class="dt">col.regions =</span> blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>,  <span class="co"># custom colors</span></a>
 <a class="sourceLine" id="cb5-14" title="14">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
@@ -952,7 +956,7 @@ div.tocify {
 <a class="sourceLine" id="cb21-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/PiephoAugmentedLattice.csv&quot;</span></a>
 <a class="sourceLine" id="cb21-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
 <a class="sourceLine" id="cb21-4" title="4"></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="kw">desplot</span>(<span class="dt">data =</span> ex1dat,</a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="kw">desplot</span>(<span class="dt">data =</span> ex1dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb21-6" title="6">        <span class="dt">form =</span> block <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row <span class="op">|</span><span class="st"> </span>rep, <span class="co"># fill color per block, headers per replicate</span></a>
 <a class="sourceLine" id="cb21-7" title="7">        <span class="dt">text =</span> geno, <span class="dt">cex =</span> <span class="fl">0.75</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
 <a class="sourceLine" id="cb21-8" title="8">        <span class="dt">col  =</span> genoCheck, <span class="co"># different color for check genotypes</span></a>

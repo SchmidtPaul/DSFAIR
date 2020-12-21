@@ -638,9 +638,13 @@ div.tocify {
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
 <a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(agridat, tidyverse, <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               emmeans, multcomp,  <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot,   <span class="co"># plots</span></a>
-<a class="sourceLine" id="cb1-5" title="5">               report)             <span class="co"># automated analysis summaries</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-3" title="3">               conflicted,         <span class="co"># handling function conflicts</span></a>
+<a class="sourceLine" id="cb1-4" title="4">               emmeans, multcomp,  <span class="co"># mean comparisons</span></a>
+<a class="sourceLine" id="cb1-5" title="5">               ggplot2, desplot)   <span class="co"># plots</span></a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># conflicts: identical function names from different packages</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from the <code>agridat</code><em>: Agricultural Datasets</em> package. It considers data published in <a href="https://rdrr.io/github/kwstat/agridat/man/bridges.cucumber.html" target="_blank">Bridges (1989)</a> from a cucumber yield trial set up as a latin square design. Notice that the original dataset considers two trials (at two locations), but we will focus on only a single trial here.</p>
@@ -649,7 +653,7 @@ div.tocify {
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (from agridat package)</span></a>
 <a class="sourceLine" id="cb2-2" title="2">dat &lt;-<span class="st"> </span>agridat<span class="op">::</span>bridges.cucumber <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">filter</span>(loc <span class="op">==</span><span class="st"> &quot;Clemson&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># subset data from only one location</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>loc) <span class="co"># remove loc column which is now unnecessary</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>loc) <span class="co"># remove loc column which is now unnecessary</span></a>
 <a class="sourceLine" id="cb2-5" title="5"></a>
 <a class="sourceLine" id="cb2-6" title="6">dat</a></code></pre></div>
 <pre><code>##         gen row col yield
@@ -681,8 +685,8 @@ div.tocify {
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
 <p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb5-2" title="2">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>row <span class="op">+</span><span class="st"> </span>col, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">desplot</span>(<span class="dt">data =</span> dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-2" title="2">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>row <span class="op">+</span><span class="st"> </span>col, </a>
 <a class="sourceLine" id="cb5-3" title="3">        <span class="dt">out1 =</span> row, <span class="dt">out1.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>),</a>
 <a class="sourceLine" id="cb5-4" title="4">        <span class="dt">out2 =</span> col, <span class="dt">out2.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>),</a>
 <a class="sourceLine" id="cb5-5" title="5">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
@@ -832,25 +836,6 @@ div.tocify {
 <a class="sourceLine" id="cb20-34" title="34"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb20-35" title="35"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
 <p><img src="latsquare_Bridges1989_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-</div>
-<div id="dataset" class="section level2">
-<h2>dataset</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
-<p>The data contains 16 observations of the following variables: - gen: 4 levels: Dasher, n = 4; Guardian, n = 4; Poinsett, n = 4 and Sprint, n = 4 - yield: Mean = 31.14, SD = 13.01, range = [11.50, 54.10], 0 missing - rowF: 4 levels: 1, n = 4; 2, n = 4; 3, n = 4 and 4, n = 4 - colF: 4 levels: 1, n = 4; 2, n = 4; 3, n = 4 and 4, n = 4</p>
-</div>
-<div id="anova-1" class="section level2">
-<h2>anova</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">mod <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">report</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">text_short</span>()</a></code></pre></div>
-<p>The ANOVA suggests that:</p>
-<ul>
-<li>The main effect of gen is significant (F(3, 6) = 9.37, p = 0.011) and can be considered as large (partial omega squared = 0.72).</li>
-<li>The main effect of rowF is not significant (F(3, 6) = 3.76, p = 0.079) and can be considered as large (partial omega squared = 0.45).</li>
-<li>The main effect of colF is not significant (F(3, 6) = 2.93, p = 0.122) and can be considered as large (partial omega squared = 0.37).</li>
-</ul>
 <p><strong>R-Code and exercise solutions</strong></p>
 <p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
 <ul>

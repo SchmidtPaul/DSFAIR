@@ -16,10 +16,15 @@ pacman::p_load(kableExtra, formattable ,htmltools)
 
 ```{r}
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots
+pacman::p_load(tidyverse,         # data import and handling
+               conflicted,        # handling function conflicts
+               lme4, lmerTest,    # linear mixed model 
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot)  # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 ```
 
 # Data
@@ -49,7 +54,7 @@ dat <- dat %>%
 In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
 
 ```{r, fig.height = 3, fig.align = "center"}
-desplot(data = dat,
+desplot(data = dat, flip = TRUE,
         form = gen ~ col + row | rep,          # fill color per genotype, headers per replicate
         text = gen, cex = 0.7, shorten = "no", # show genotype names per plot
         out1 = rep,                            # lines between complete blocks/replicates
@@ -147,7 +152,7 @@ We can extract the variance component estimates for our mixed model as follows:
 mod.rb %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 ```
 
 ## ANOVA
@@ -167,6 +172,10 @@ mean_comparisons <- mod.rb %>%
           lmer.df = "kenward-roger") %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
+
+# If cld() does not work, try CLD() instead.
+# Add 'adjust="none"' to the emmeans() and cld() statement
+# in order to obtain t-test instead of Tukey!
 
 mean_comparisons$emmeans # adjusted genotype means
 ```

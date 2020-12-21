@@ -1,0 +1,117 @@
+---
+title: "Model diagnostics"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# formatting tables for html output
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE, echo = FALSE)
+options(knitr.kable.NA = '')
+pacman::p_load(kableExtra, formattable ,htmltools)
+```
+
+```{r}
+# packages
+pacman::p_load(conflicted, tidyverse)
+```
+
+# What are residuals?
+
+A residual is the difference between the actually observed value ($y$) for a datapoint and the model's prediction ($\hat{y}$) for that datapoint:
+
+$$ Residual = Observed - Predicted $$
+
+$$ r_i = \hat{e}_i = y_i - \hat{y}_i $$
+
+Basically, whenever you fit a statistical model to a dataset, you can obtain the respective residuals. 
+
+
+## Example
+
+### Observed
+
+Take this as a very simplified example, starting with a dataset with 5 datapoints for variables `x` and `y`.
+
+<div class = "row"> <div class = "col-md-6">
+
+```{r}
+dat <- mtcars %>% 
+  rename(y = mpg, x = wt) %>% 
+  select(x, y) %>% 
+  filter(x < 4.5) %>% 
+  mutate(x = -1*x+4.5) %>% 
+  as_tibble()
+
+dat
+```
+</div> <div class = "col-md-6">
+```{r}
+ggplot(data=dat, aes(x=x, y=y)) +
+  geom_point(size = 4) +
+  ylim(0,NA) + xlim(0,NA) +
+  theme_bw()
+```
+</div> </div>
+
+### Predicted
+
+We here fit a simple model, *i.e.* a simple linear regression to the dataset. Once we have the model's estimated coefficients, we can use the model to make predictions via the `predict()` function. For this simple linear regression, the blue line represents the model prediction for every possible x-value.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, echo = TRUE}
+mod <- lm(y ~ x, data = dat)
+
+dat %>% 
+  mutate(y_hat = predict(mod)) %>% head()
+```
+
+</div> <div class = "col-md-6">
+```{r}
+ggplot(data=dat, aes(x=x, y=y)) +
+  geom_point(size = 4) +
+  ylim(0,NA) + xlim(0,NA) +
+  stat_smooth(method = "lm", formula = 'y ~ x', se = FALSE) +
+  theme_bw()
+
+coefficients(mod)
+```
+</div> </div>
+
+### Residuals
+
+We here calculate residuals once via the `resid()` function and once via manually subtracting `y - y_hat` just to show that it really gives us the same result.
+
+<div class = "row"> <div class = "col-md-6">
+```{r, eval=FALSE, echo=TRUE}
+dat %>% 
+  mutate(resid_opt1 = y - y_hat,
+         resid_opt2 = resid(mod)) %>% head()
+```
+
+```{r}
+dat <- dat %>% 
+  mutate(y_hat = predict(mod)) %>% 
+  mutate(resid_opt1 = y - y_hat,
+         resid_opt2 = resid(mod)) 
+
+dat %>% head()
+```
+</div> <div class = "col-md-6">
+```{r}
+ggplot(data=dat, aes(x=x, y=y)) +
+  geom_segment(aes(xend=x, yend = y_hat), size = 1, color = "red") +
+  geom_point(size = 4) +
+  geom_point(aes(y = y_hat), shape = 1, size = 2, color = "blue") +
+  ylim(0,NA) + xlim(0,NA) +
+  stat_smooth(method = "lm", formula = 'y ~ x', se = FALSE) +
+  theme_bw()
+```
+</div> </div>
+
+# Ok, but why do I care?
+
+
