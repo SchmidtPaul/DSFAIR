@@ -11,7 +11,7 @@
 
 
 
-<title>Diagnostics</title>
+<title>Model diagnostics</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -631,7 +631,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Diagnostics</h1>
+<h1 class="title toc-ignore">Model diagnostics</h1>
 
 </div>
 
@@ -646,7 +646,7 @@ div.tocify {
 <h2>Example</h2>
 <div id="observed" class="section level3">
 <h3>Observed</h3>
-<p>Take this as a very simplified example, starting with a dataset with 5 datapoints for variables <code>x</code> and <code>y</code>.</p>
+<p>Take this example dataset with variables <code>x</code> and <code>y</code> and 29 observations.</p>
 <div class="row">
 <div class="col-md-6">
 <pre><code>## # A tibble: 29 x 2
@@ -677,7 +677,8 @@ div.tocify {
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> dat)</a>
 <a class="sourceLine" id="cb2-2" title="2"></a>
 <a class="sourceLine" id="cb2-3" title="3">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y_hat =</span> <span class="kw">predict</span>(mod)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y_hat =</span> <span class="kw">predict</span>(mod)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##       x     y y_hat
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -701,8 +702,9 @@ div.tocify {
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">resid_opt1 =</span> y <span class="op">-</span><span class="st"> </span>y_hat,</a>
-<a class="sourceLine" id="cb5-3" title="3">         <span class="dt">resid_opt2 =</span> <span class="kw">resid</span>(mod)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">resid_1 =</span> y <span class="op">-</span><span class="st"> </span>y_hat,</a>
+<a class="sourceLine" id="cb5-3" title="3">         <span class="dt">resid_2 =</span> <span class="kw">resid</span>(mod)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##       x     y y_hat resid_opt1 resid_opt2
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;

@@ -16,7 +16,7 @@ pacman::p_load(kableExtra, formattable ,htmltools)
 
 ```{r}
 # packages
-pacman::p_load(conflicted, tidyverse)
+pacman::p_load(conflicted, tidyverse, see)
 ```
 
 # What are residuals?
@@ -34,7 +34,7 @@ Basically, whenever you fit a statistical model to a dataset, you can obtain the
 
 ### Observed
 
-Take this as a very simplified example, starting with a dataset with 5 datapoints for variables `x` and `y`.
+Take this example dataset with variables `x` and `y` and 29 observations.
 
 <div class = "row"> <div class = "col-md-6">
 
@@ -53,7 +53,7 @@ dat
 ggplot(data=dat, aes(x=x, y=y)) +
   geom_point(size = 4) +
   ylim(0,NA) + xlim(0,NA) +
-  theme_bw()
+  theme_modern()
 ```
 </div> </div>
 
@@ -66,16 +66,21 @@ We here fit a simple model, *i.e.* a simple linear regression to the dataset. On
 mod <- lm(y ~ x, data = dat)
 
 dat %>% 
-  mutate(y_hat = predict(mod)) %>% head()
+  mutate(y_hat = predict(mod)) %>% 
+  head()
 ```
 
 </div> <div class = "col-md-6">
 ```{r}
+dat <- dat %>% 
+  mutate(y_hat = predict(mod))
+
 ggplot(data=dat, aes(x=x, y=y)) +
   geom_point(size = 4) +
+  geom_point(aes(y = y_hat), shape = 1, size = 4, color = "blue") +
   ylim(0,NA) + xlim(0,NA) +
   stat_smooth(method = "lm", formula = 'y ~ x', se = FALSE) +
-  theme_bw()
+  theme_modern()
 
 coefficients(mod)
 ```
@@ -88,8 +93,9 @@ We here calculate residuals once via the `resid()` function and once via manuall
 <div class = "row"> <div class = "col-md-6">
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
-  mutate(resid_opt1 = y - y_hat,
-         resid_opt2 = resid(mod)) %>% head()
+  mutate(resid_1 = y - y_hat,
+         resid_2 = resid(mod)) %>% 
+  head()
 ```
 
 ```{r}
@@ -105,13 +111,17 @@ dat %>% head()
 ggplot(data=dat, aes(x=x, y=y)) +
   geom_segment(aes(xend=x, yend = y_hat), size = 1, color = "red") +
   geom_point(size = 4) +
-  geom_point(aes(y = y_hat), shape = 1, size = 2, color = "blue") +
+  geom_point(aes(y = y_hat), shape = 1, size = 4, color = "blue") +
   ylim(0,NA) + xlim(0,NA) +
   stat_smooth(method = "lm", formula = 'y ~ x', se = FALSE) +
-  theme_bw()
+  theme_modern()
 ```
 </div> </div>
 
 # Ok, but why do I care?
 
+You care because residuals can tell you whether your model is valid or not. Very simply put: If they are "bad" your model's results may be wrong.
 
+When fitting a general linear model certain things are assumed to be true 
+
+---> By the ANOVA?
