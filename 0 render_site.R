@@ -3,7 +3,7 @@ pacman::p_load(tidyverse, rmarkdown)
 `%not_in%` = Negate(`%in%`)
 
 ### create html files ###
-rmarkdown::clean_site()  # delete old files
+rmarkdown::clean_site(preview = FALSE)  # delete old files
 rmarkdown::render_site(encoding="UTF-8") # render all files new; UTF-8 for ä, ö, ü, ß
 
 ### create purled R files ###

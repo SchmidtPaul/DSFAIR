@@ -1,8 +1,7 @@
 # packages
-pacman::p_load(readr, tidyverse,     # data import and handling
-               emmeans, multcomp,    # mean comparisons
-               ggplot2, desplot,     # plots
-               report, equatiomatic) # automated analysis summaries
+pacman::p_load(tidyverse, # data import and handling
+               emmeans, multcomp, # mean comparisons
+               desplot)   # plots
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv"
@@ -88,18 +87,6 @@ ggplot() +
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
 
-dat %>% 
-  dplyr::select(-row, -col) %>% 
-  report() %>% text_short()
-
-mod %>% extract_eq()
-
-mod %>% report() %>% text_short()
-
-mod %>% 
-  anova %>% 
-  report() %>% text_short()
-
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984b.csv"
 ex1dat <- read_csv(dataURL)
@@ -135,6 +122,6 @@ ex1dat <- read_csv(dataURL)
 ## 
 ## # Perform multiple (mean) comparisons
 ## mean_comparisons <- mod %>%
-##   emmeans(pairwise ~ "density", adjust="tukey") %>% # adjust="none" for t-test
+##   emmeans(pairwise ~ "density", adjust = "tukey") %>% # adjust="none" for t-test
 ##   pluck("emmeans") %>%
 ##   cld(details=TRUE, Letters=letters)

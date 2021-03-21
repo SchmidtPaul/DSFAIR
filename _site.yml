@@ -35,8 +35,6 @@ navbar:
       menu:
       - text: "Designing experiments"
         href: DesigningExperiments.html
-      - text: "Model diagnostics"
-        href: Diagnotstics.html
     - text: "Contact"
       href: 0contactinfo.html
 output:
