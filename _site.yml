@@ -21,8 +21,12 @@ navbar:
         href: alpha_JohnWilliams1995.html
       - text: "rowcol_KemptonFox1997"
         href: rowcol_KemptonFox1997.html
+      - text: "subsampling_Piepho1997"
+        href: subsampling_Piepho1997.html
       - text: "splitplot_GomezGomez1984"
         href: splitplot_GomezGomez1984.html
+      - text: "splitplot_StreetFruit"
+        href: splitplot_StreetFruit.html
       - text: "repeated measures"
         menu:
         - text: "RCBD_PiephoEdmondson2018"
@@ -31,6 +35,8 @@ navbar:
       menu:
       - text: "Designing experiments"
         href: DesigningExperiments.html
+      - text: "Model diagnostics"
+        href: Diagnotstics.html
     - text: "Contact"
       href: 0contactinfo.html
 output:

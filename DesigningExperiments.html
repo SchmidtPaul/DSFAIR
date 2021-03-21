@@ -13,12 +13,22 @@
 
 <title>Designing experiments</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -77,6 +87,7 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
 <style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
@@ -84,91 +95,40 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      a.sourceLine { display: inline-block; line-height: 1.25; }
-  a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-  a.sourceLine:empty { height: 1.2em; }
-  .sourceCode { overflow: visible; }
-  code.sourceCode { white-space: pre; position: relative; }
-  div.sourceCode { margin: 1em 0; }
-  pre.sourceCode { margin: 0; }
-  @media screen {
-  div.sourceCode { overflow: auto; }
-  }
-  @media print {
-  code.sourceCode { white-space: pre-wrap; }
-  a.sourceLine { text-indent: -1em; padding-left: 1em; }
-  }
-  pre.numberSource a.sourceLine
-    { position: relative; left: -4em; }
-  pre.numberSource a.sourceLine::before
-    { content: attr(title);
-      position: relative; left: -1em; text-align: right; vertical-align: baseline;
-      border: none; pointer-events: all; display: inline-block;
-      -webkit-touch-callout: none; -webkit-user-select: none;
-      -khtml-user-select: none; -moz-user-select: none;
-      -ms-user-select: none; user-select: none;
-      padding: 0 4px; width: 4em;
-      color: #aaaaaa;
-    }
-  pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-  div.sourceCode
-    { background-color: #f8f8f8; }
-  @media screen {
-  a.sourceLine::before { text-decoration: underline; }
-  }
-  code span.al { color: #ef2929; } /* Alert */
-  code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-  code span.at { color: #c4a000; } /* Attribute */
-  code span.bn { color: #0000cf; } /* BaseN */
-  code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-  code span.ch { color: #4e9a06; } /* Char */
-  code span.cn { color: #000000; } /* Constant */
-  code span.co { color: #8f5902; font-style: italic; } /* Comment */
-  code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-  code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-  code span.dt { color: #204a87; } /* DataType */
-  code span.dv { color: #0000cf; } /* DecVal */
-  code span.er { color: #a40000; font-weight: bold; } /* Error */
-  code span.ex { } /* Extension */
-  code span.fl { color: #0000cf; } /* Float */
-  code span.fu { color: #000000; } /* Function */
-  code span.im { } /* Import */
-  code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-  code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-  code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-  code span.ot { color: #8f5902; } /* Other */
-  code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-  code span.sc { color: #000000; } /* SpecialChar */
-  code span.ss { color: #4e9a06; } /* SpecialString */
-  code span.st { color: #4e9a06; } /* String */
-  code span.va { color: #000000; } /* Variable */
-  code span.vs { color: #4e9a06; } /* VerbatimString */
-  code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -177,9 +137,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -241,39 +201,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -284,10 +214,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -304,40 +230,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 54px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h2 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h3 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h4 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h5 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h6 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -365,7 +264,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -377,7 +276,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -388,10 +287,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -403,7 +315,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -532,13 +443,13 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -584,7 +495,13 @@ div.tocify {
       <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
     </li>
     <li>
+      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+    </li>
+    <li>
       <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+    </li>
+    <li>
+      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
     </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
@@ -606,6 +523,9 @@ div.tocify {
     <li>
       <a href="DesigningExperiments.html">Designing experiments</a>
     </li>
+    <li>
+      <a href="Diagnotstics.html">Model diagnostics</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -619,11 +539,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -636,141 +556,141 @@ div.tocify {
 </div>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse,        <span class="co"># data handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               agricolae,        <span class="co"># experimental design</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               ggplot2, desplot) <span class="co"># plots</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,        <span class="co"># data handling</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               agricolae,        <span class="co"># experimental design</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               ggplot2, desplot) <span class="co"># plots</span></span></code></pre></div>
 <div id="example-setup" class="section level1">
 <h1>Example Setup</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># 2 pesiticides</span></a>
-<a class="sourceLine" id="cb2-2" title="2">TrtPest   &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;P&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)    <span class="co"># P1 &amp; P2</span></a>
-<a class="sourceLine" id="cb2-3" title="3">n_TrtPest &lt;-<span class="st"> </span><span class="kw">n_distinct</span>(TrtPest) <span class="co"># 2</span></a>
-<a class="sourceLine" id="cb2-4" title="4"></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co"># 4 soil treatments</span></a>
-<a class="sourceLine" id="cb2-6" title="6">TrtSoil   &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;S&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)    <span class="co"># S1 - S4</span></a>
-<a class="sourceLine" id="cb2-7" title="7">n_TrtSoil &lt;-<span class="st"> </span><span class="kw">n_distinct</span>(TrtSoil) <span class="co"># 4</span></a>
-<a class="sourceLine" id="cb2-8" title="8"></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co"># 6 fertilizer</span></a>
-<a class="sourceLine" id="cb2-10" title="10">TrtFert   &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;N&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)    <span class="co"># N1 - N6</span></a>
-<a class="sourceLine" id="cb2-11" title="11">n_TrtFert &lt;-<span class="st"> </span><span class="kw">n_distinct</span>(TrtFert) <span class="co"># 6</span></a>
-<a class="sourceLine" id="cb2-12" title="12"></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="co"># 15 genotpyes</span></a>
-<a class="sourceLine" id="cb2-14" title="14">TrtGen    &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;G&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>)   <span class="co"># G1 - G15</span></a>
-<a class="sourceLine" id="cb2-15" title="15">n_TrtGen  &lt;-<span class="st"> </span><span class="kw">n_distinct</span>(TrtGen)  <span class="co"># 15</span></a>
-<a class="sourceLine" id="cb2-16" title="16"></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co"># 2 check varieties</span></a>
-<a class="sourceLine" id="cb2-18" title="18">Checks    &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Std_A&quot;</span>, <span class="st">&quot;Std_B&quot;</span>)</a>
-<a class="sourceLine" id="cb2-19" title="19"></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co"># number of replicates</span></a>
-<a class="sourceLine" id="cb2-21" title="21">n_Reps    &lt;-<span class="st"> </span><span class="dv">3</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 pesiticides</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>TrtPest   <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;P&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)    <span class="co"># P1 &amp; P2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n_TrtPest <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(TrtPest) <span class="co"># 2</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 4 soil treatments</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>TrtSoil   <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;S&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)    <span class="co"># S1 - S4</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>n_TrtSoil <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(TrtSoil) <span class="co"># 4</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 fertilizer</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>TrtFert   <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;N&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)    <span class="co"># N1 - N6</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>n_TrtFert <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(TrtFert) <span class="co"># 6</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 15 genotpyes</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>TrtGen    <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;G&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)   <span class="co"># G1 - G15</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>n_TrtGen  <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(TrtGen)  <span class="co"># 15</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 check varieties</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>Checks    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Std_A&quot;</span>, <span class="st">&quot;Std_B&quot;</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># number of replicates</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>n_Reps    <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div>
 </div>
 <div id="one-treatment-factor" class="section level1">
 <h1>One treatment factor</h1>
 <div id="crd" class="section level2">
 <h2>CRD</h2>
 <p>completely randomized design</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">crd_out &lt;-<span class="st"> </span><span class="kw">design.crd</span>(<span class="dt">trt =</span> TrtSoil,</a>
-<a class="sourceLine" id="cb3-2" title="2">                      <span class="dt">r =</span> n_Reps,</a>
-<a class="sourceLine" id="cb3-3" title="3">                      <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Add Row and Col </span></a>
-<a class="sourceLine" id="cb3-6" title="6">crd_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>crd_out<span class="op">$</span>book <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">bind_cols</span>(<span class="kw">expand.grid</span>(<span class="dt">Row =</span> <span class="dv">1</span><span class="op">:</span>n_Reps,</a>
-<a class="sourceLine" id="cb3-8" title="8">                        <span class="dt">Col =</span> <span class="dv">1</span><span class="op">:</span>n_TrtSoil))</a>
-<a class="sourceLine" id="cb3-9" title="9"></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="kw">desplot</span>(TrtSoil <span class="op">~</span><span class="st"> </span>Row <span class="op">+</span><span class="st"> </span>Col, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-12" title="12">        <span class="dt">text =</span> TrtSoil, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
-<a class="sourceLine" id="cb3-13" title="13">        <span class="dt">data =</span> crd_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb3-14" title="14">        <span class="dt">main =</span> <span class="st">&quot;completely randomized design&quot;</span>, </a>
-<a class="sourceLine" id="cb3-15" title="15">        <span class="dt">show.key =</span> F)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>crd_out <span class="ot">&lt;-</span> <span class="fu">design.crd</span>(<span class="at">trt =</span> TrtSoil,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">r =</span> n_Reps,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>crd_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> crd_out<span class="sc">$</span>book <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">expand.grid</span>(<span class="at">Row =</span> <span class="dv">1</span><span class="sc">:</span>n_Reps,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Col =</span> <span class="dv">1</span><span class="sc">:</span>n_TrtSoil))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(TrtSoil <span class="sc">~</span> Row <span class="sc">+</span> Col, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtSoil, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> crd_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;completely randomized design&quot;</span>, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> F)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="rcbd" class="section level2">
 <h2>RCBD</h2>
 <p>randomized complete block design</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">rcbd_out &lt;-<span class="st"> </span><span class="kw">design.rcbd</span>(<span class="dt">trt =</span> TrtSoil,</a>
-<a class="sourceLine" id="cb4-2" title="2">                        <span class="dt">r =</span> n_Reps,</a>
-<a class="sourceLine" id="cb4-3" title="3">                        <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># Add Row and Col </span></a>
-<a class="sourceLine" id="cb4-6" title="6">rcbd_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>rcbd_out<span class="op">$</span>book <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Row =</span> block <span class="op">%&gt;%</span><span class="st"> </span>as.integer) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw">group_by</span>(Row) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw">ungroup</span>()</a>
-<a class="sourceLine" id="cb4-11" title="11"></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="kw">desplot</span>(TrtSoil <span class="op">~</span><span class="st"> </span>Row <span class="op">+</span><span class="st"> </span>Col, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb4-14" title="14">        <span class="dt">text =</span> TrtSoil, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
-<a class="sourceLine" id="cb4-15" title="15">        <span class="dt">out1 =</span> block,</a>
-<a class="sourceLine" id="cb4-16" title="16">        <span class="dt">data =</span> rcbd_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb4-17" title="17">        <span class="dt">main =</span> <span class="st">&quot;randomized complete block design&quot;</span>, </a>
-<a class="sourceLine" id="cb4-18" title="18">        <span class="dt">show.key =</span> T, <span class="dt">key.cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rcbd_out <span class="ot">&lt;-</span> <span class="fu">design.rcbd</span>(<span class="at">trt =</span> TrtSoil,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">r =</span> n_Reps,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rcbd_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> rcbd_out<span class="sc">$</span>book <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row =</span> block <span class="sc">%&gt;%</span> as.integer) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Row) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(TrtSoil <span class="sc">~</span> Row <span class="sc">+</span> Col, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtSoil, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> block,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> rcbd_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;randomized complete block design&quot;</span>, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> T, <span class="at">key.cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="latin-square-design" class="section level2">
 <h2>latin square design</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">latsquare_out &lt;-<span class="st"> </span><span class="kw">design.lsd</span>(<span class="dt">trt =</span> TrtSoil, </a>
-<a class="sourceLine" id="cb5-2" title="2">                            <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co"># Add Row and Col</span></a>
-<a class="sourceLine" id="cb5-5" title="5">latsquare_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>latsquare_out<span class="op">$</span>book <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Row =</span> row <span class="op">%&gt;%</span><span class="st"> </span>as.integer,</a>
-<a class="sourceLine" id="cb5-7" title="7">         <span class="dt">Col =</span> col <span class="op">%&gt;%</span><span class="st"> </span>as.integer)</a>
-<a class="sourceLine" id="cb5-8" title="8"></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="kw">desplot</span>(TrtSoil <span class="op">~</span><span class="st"> </span>Row <span class="op">+</span><span class="st"> </span>Col, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb5-11" title="11">        <span class="dt">out1 =</span> Row, <span class="dt">out1.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb5-12" title="12">        <span class="dt">out2 =</span> Col, <span class="dt">out2.gpar=</span><span class="kw">list</span>(<span class="dt">col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb5-13" title="13">        <span class="dt">text =</span> TrtSoil, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
-<a class="sourceLine" id="cb5-14" title="14">        <span class="dt">data =</span> latsquare_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb5-15" title="15">        <span class="dt">main =</span> <span class="st">&quot;latin square design&quot;</span>, </a>
-<a class="sourceLine" id="cb5-16" title="16">        <span class="dt">show.key =</span> T, <span class="dt">key.cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>latsquare_out <span class="ot">&lt;-</span> <span class="fu">design.lsd</span>(<span class="at">trt =</span> TrtSoil, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>latsquare_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> latsquare_out<span class="sc">$</span>book <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row =</span> row <span class="sc">%&gt;%</span> as.integer,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Col =</span> col <span class="sc">%&gt;%</span> as.integer)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(TrtSoil <span class="sc">~</span> Row <span class="sc">+</span> Col, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> Row, <span class="at">out1.gpar=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> Col, <span class="at">out2.gpar=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtSoil, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> latsquare_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;latin square design&quot;</span>, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> T, <span class="at">key.cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="alpha-design" class="section level2">
 <h2>alpha design</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">alpha_out &lt;-<span class="st"> </span><span class="kw">design.alpha</span>(<span class="dt">trt =</span> TrtGen,</a>
-<a class="sourceLine" id="cb6-2" title="2">                          <span class="dt">k =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb6-3" title="3">                          <span class="dt">r =</span> n_Reps,</a>
-<a class="sourceLine" id="cb6-4" title="4">                          <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb6-5" title="5"></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co"># Add Row and Col</span></a>
-<a class="sourceLine" id="cb6-7" title="7">alpha_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>alpha_out<span class="op">$</span>book <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">replication =</span> <span class="kw">paste0</span>(<span class="st">&quot;Rep&quot;</span>, replication),</a>
-<a class="sourceLine" id="cb6-9" title="9">         <span class="dt">Row =</span> block <span class="op">%&gt;%</span><span class="st"> </span>as.integer,</a>
-<a class="sourceLine" id="cb6-10" title="10">         <span class="dt">Col =</span> cols  <span class="op">%&gt;%</span><span class="st"> </span>as.integer)</a>
-<a class="sourceLine" id="cb6-11" title="11"></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="kw">desplot</span>(TrtGen <span class="op">~</span><span class="st"> </span>Row <span class="op">+</span><span class="st"> </span>Col <span class="op">|</span><span class="st"> </span>replication, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb6-14" title="14">        <span class="dt">out1 =</span> replication,</a>
-<a class="sourceLine" id="cb6-15" title="15">        <span class="dt">out2 =</span> block, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lty =</span> <span class="dv">3</span>), </a>
-<a class="sourceLine" id="cb6-16" title="16">        <span class="dt">text =</span> TrtGen, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
-<a class="sourceLine" id="cb6-17" title="17">        <span class="dt">data =</span> alpha_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb6-18" title="18">        <span class="dt">main =</span> <span class="st">&quot;alpha design&quot;</span>, </a>
-<a class="sourceLine" id="cb6-19" title="19">        <span class="dt">show.key =</span> F)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alpha_out <span class="ot">&lt;-</span> <span class="fu">design.alpha</span>(<span class="at">trt =</span> TrtGen,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">k =</span> <span class="dv">3</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">r =</span> n_Reps,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>alpha_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> alpha_out<span class="sc">$</span>book <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">replication =</span> <span class="fu">paste0</span>(<span class="st">&quot;Rep&quot;</span>, replication),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Row =</span> block <span class="sc">%&gt;%</span> as.integer,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Col =</span> cols  <span class="sc">%&gt;%</span> as.integer)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(TrtGen <span class="sc">~</span> Row <span class="sc">+</span> Col <span class="sc">|</span> replication, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> replication,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> block, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>), </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtGen, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> alpha_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;alpha design&quot;</span>, </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> F)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="augmented-design" class="section level2">
 <h2>augmented design</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">augmented_out &lt;-<span class="st"> </span><span class="kw">design.dau</span>(<span class="dt">trt1 =</span> Checks,</a>
-<a class="sourceLine" id="cb7-2" title="2">                            <span class="dt">trt2 =</span> TrtGen,</a>
-<a class="sourceLine" id="cb7-3" title="3">                            <span class="dt">r =</span> n_Reps,</a>
-<a class="sourceLine" id="cb7-4" title="4">                            <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb7-5" title="5"></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co"># Add Row and Col</span></a>
-<a class="sourceLine" id="cb7-7" title="7">augmented_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>augmented_out<span class="op">$</span>book <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Col =</span> block <span class="op">%&gt;%</span><span class="st"> </span>as.integer,</a>
-<a class="sourceLine" id="cb7-9" title="9">         <span class="dt">Row =</span> plots <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">3</span>,<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>as.integer)</a>
-<a class="sourceLine" id="cb7-10" title="10"></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="kw">desplot</span>(trt <span class="op">~</span><span class="st"> </span>Row <span class="op">+</span><span class="st"> </span>Col, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb7-13" title="13">        <span class="dt">out1 =</span> block, <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb7-14" title="14">        <span class="dt">text =</span> trt, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>,</a>
-<a class="sourceLine" id="cb7-15" title="15">        <span class="dt">data =</span> augmented_out<span class="op">$</span>bookRowCol ,</a>
-<a class="sourceLine" id="cb7-16" title="16">        <span class="dt">main =</span> <span class="st">&quot;augmented design&quot;</span>, </a>
-<a class="sourceLine" id="cb7-17" title="17">        <span class="dt">show.key =</span> F)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>augmented_out <span class="ot">&lt;-</span> <span class="fu">design.dau</span>(<span class="at">trt1 =</span> Checks,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">trt2 =</span> TrtGen,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">r =</span> n_Reps,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>augmented_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> augmented_out<span class="sc">$</span>book <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Col =</span> block <span class="sc">%&gt;%</span> as.integer,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Row =</span> plots <span class="sc">%&gt;%</span> <span class="fu">str_sub</span>(<span class="dv">3</span>,<span class="dv">3</span>) <span class="sc">%&gt;%</span> as.integer)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(trt <span class="sc">~</span> Row <span class="sc">+</span> Col, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> block, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> trt, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> augmented_out<span class="sc">$</span>bookRowCol ,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;augmented design&quot;</span>, </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> F)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
@@ -779,49 +699,49 @@ div.tocify {
 <p><strong>Factorial:</strong> You have at least two treatment factors, and all levels of each factor are used in combination with all other factor levels. These factors are said to be cross-classified, as opposed to nested. Additionally, each of the resulting treatment combinations is applied to the same type of experimental unit.</p>
 <div id="rcbd-factorial" class="section level2">
 <h2>RCBD (factorial)</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">fac2rcbd_out &lt;-<span class="st"> </span><span class="kw">design.ab</span>(<span class="dt">trt =</span> <span class="kw">c</span>(n_TrtFert, n_TrtSoil), </a>
-<a class="sourceLine" id="cb8-2" title="2">                          <span class="dt">design =</span> <span class="st">&quot;rcbd&quot;</span>,</a>
-<a class="sourceLine" id="cb8-3" title="3">                          <span class="dt">r =</span> n_Reps, </a>
-<a class="sourceLine" id="cb8-4" title="4">                          <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co"># Add Row and Col </span></a>
-<a class="sourceLine" id="cb8-7" title="7">fac2rcbd_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>fac2rcbd_out<span class="op">$</span>book <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="st">  </span><span class="kw">bind_cols</span>(<span class="kw">expand.grid</span>(<span class="dt">Row =</span> <span class="dv">1</span><span class="op">:</span>n_TrtFert,</a>
-<a class="sourceLine" id="cb8-9" title="9">                        <span class="dt">Col =</span> <span class="dv">1</span><span class="op">:</span>(n_TrtSoil<span class="op">*</span>n_Reps))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">TrtFert =</span> <span class="kw">paste0</span>(<span class="st">&quot;N&quot;</span>, A),</a>
-<a class="sourceLine" id="cb8-11" title="11">         <span class="dt">TrtSoil =</span> <span class="kw">paste0</span>(<span class="st">&quot;S&quot;</span>, B))</a>
-<a class="sourceLine" id="cb8-12" title="12"></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="kw">desplot</span>(block <span class="op">~</span><span class="st"> </span>Col <span class="op">+</span><span class="st"> </span>Row <span class="op">|</span><span class="st"> </span>block, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb8-15" title="15">        <span class="dt">out1 =</span> Row, <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb8-16" title="16">        <span class="dt">out2 =</span> Col, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb8-17" title="17">        <span class="dt">text =</span> TrtFert, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">col=</span>TrtSoil,</a>
-<a class="sourceLine" id="cb8-18" title="18">        <span class="dt">data =</span> fac2rcbd_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb8-19" title="19">        <span class="dt">main =</span> <span class="st">&quot;RCBD&quot;</span>, </a>
-<a class="sourceLine" id="cb8-20" title="20">        <span class="dt">show.key =</span> T, <span class="dt">key.cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fac2rcbd_out <span class="ot">&lt;-</span> <span class="fu">design.ab</span>(<span class="at">trt =</span> <span class="fu">c</span>(n_TrtFert, n_TrtSoil), </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">design =</span> <span class="st">&quot;rcbd&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">r =</span> n_Reps, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>fac2rcbd_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> fac2rcbd_out<span class="sc">$</span>book <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">expand.grid</span>(<span class="at">Row =</span> <span class="dv">1</span><span class="sc">:</span>n_TrtFert,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Col =</span> <span class="dv">1</span><span class="sc">:</span>(n_TrtSoil<span class="sc">*</span>n_Reps))) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TrtFert =</span> <span class="fu">paste0</span>(<span class="st">&quot;N&quot;</span>, A),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">TrtSoil =</span> <span class="fu">paste0</span>(<span class="st">&quot;S&quot;</span>, B))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(block <span class="sc">~</span> Col <span class="sc">+</span> Row <span class="sc">|</span> block, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> Row, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> Col, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>), </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtFert, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="at">col=</span>TrtSoil,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> fac2rcbd_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;RCBD&quot;</span>, </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> T, <span class="at">key.cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="split-plot-design" class="section level2">
 <h2>split plot design</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">splitplot_out &lt;-<span class="st"> </span><span class="kw">design.split</span>(<span class="dt">trt1 =</span> TrtSoil,</a>
-<a class="sourceLine" id="cb9-2" title="2">                              <span class="dt">trt2 =</span> TrtFert,</a>
-<a class="sourceLine" id="cb9-3" title="3">                              <span class="dt">r =</span> n_Reps,</a>
-<a class="sourceLine" id="cb9-4" title="4">                              <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb9-5" title="5"></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># Add Row and Col</span></a>
-<a class="sourceLine" id="cb9-7" title="7">splitplot_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>splitplot_out<span class="op">$</span>book <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">block =</span> <span class="kw">paste0</span>(<span class="st">&quot;Block&quot;</span>, block),</a>
-<a class="sourceLine" id="cb9-9" title="9">         <span class="dt">Col   =</span> plots <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">2</span>,<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>as.integer,</a>
-<a class="sourceLine" id="cb9-10" title="10">         <span class="dt">Row   =</span> splots <span class="op">%&gt;%</span><span class="st"> </span>as.integer)</a>
-<a class="sourceLine" id="cb9-11" title="11"></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="kw">desplot</span>(block <span class="op">~</span><span class="st"> </span>Col <span class="op">+</span><span class="st"> </span>Row <span class="op">|</span><span class="st"> </span>block, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb9-14" title="14">        <span class="dt">out1 =</span> Row, <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb9-15" title="15">        <span class="dt">out2 =</span> Col, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb9-16" title="16">        <span class="dt">text =</span> TrtFert, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">col=</span>TrtSoil,</a>
-<a class="sourceLine" id="cb9-17" title="17">        <span class="dt">data =</span> splitplot_out<span class="op">$</span>bookRowCol ,</a>
-<a class="sourceLine" id="cb9-18" title="18">        <span class="dt">main =</span> <span class="st">&quot;split plot design&quot;</span>,</a>
-<a class="sourceLine" id="cb9-19" title="19">        <span class="dt">show.key =</span> T, <span class="dt">key.cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>splitplot_out <span class="ot">&lt;-</span> <span class="fu">design.split</span>(<span class="at">trt1 =</span> TrtSoil,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">trt2 =</span> TrtFert,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">r =</span> n_Reps,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>splitplot_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> splitplot_out<span class="sc">$</span>book <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="fu">paste0</span>(<span class="st">&quot;Block&quot;</span>, block),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Col   =</span> plots <span class="sc">%&gt;%</span> <span class="fu">str_sub</span>(<span class="dv">2</span>,<span class="dv">3</span>) <span class="sc">%&gt;%</span> as.integer,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Row   =</span> splots <span class="sc">%&gt;%</span> as.integer)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(block <span class="sc">~</span> Col <span class="sc">+</span> Row <span class="sc">|</span> block, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> Row, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> Col, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>), </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtFert, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="at">col=</span>TrtSoil,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> splitplot_out<span class="sc">$</span>bookRowCol ,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;split plot design&quot;</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> T, <span class="at">key.cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 </div>
@@ -829,28 +749,28 @@ div.tocify {
 <h1>Three treatment factors</h1>
 <div id="rcbd-factorial-1" class="section level2">
 <h2>RCBD (factorial)</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">fac3rcbd_out &lt;-<span class="st"> </span><span class="kw">design.ab</span>(<span class="dt">trt =</span> <span class="kw">c</span>(n_TrtPest, n_TrtFert, n_TrtSoil), </a>
-<a class="sourceLine" id="cb10-2" title="2">                          <span class="dt">design =</span> <span class="st">&quot;rcbd&quot;</span>,</a>
-<a class="sourceLine" id="cb10-3" title="3">                          <span class="dt">r =</span> n_Reps, </a>
-<a class="sourceLine" id="cb10-4" title="4">                          <span class="dt">seed =</span> <span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb10-5" title="5"></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co"># Add Row and Col </span></a>
-<a class="sourceLine" id="cb10-7" title="7">fac3rcbd_out<span class="op">$</span>bookRowCol &lt;-<span class="st"> </span>fac3rcbd_out<span class="op">$</span>book <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw">bind_cols</span>(<span class="kw">expand.grid</span>(<span class="dt">Row =</span> <span class="dv">1</span><span class="op">:</span>(n_TrtFert<span class="op">*</span>n_TrtPest),</a>
-<a class="sourceLine" id="cb10-9" title="9">                        <span class="dt">Col =</span> <span class="dv">1</span><span class="op">:</span>(n_TrtSoil<span class="op">*</span>n_Reps))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">block   =</span> <span class="kw">paste0</span>(<span class="st">&quot;Block&quot;</span>, block),</a>
-<a class="sourceLine" id="cb10-11" title="11">         <span class="dt">TrtPest =</span> <span class="kw">paste0</span>(<span class="st">&quot;P&quot;</span>, A),</a>
-<a class="sourceLine" id="cb10-12" title="12">         <span class="dt">TrtFert =</span> <span class="kw">paste0</span>(<span class="st">&quot;N&quot;</span>, B),</a>
-<a class="sourceLine" id="cb10-13" title="13">         <span class="dt">TrtSoil =</span> <span class="kw">paste0</span>(<span class="st">&quot;S&quot;</span>, C))</a>
-<a class="sourceLine" id="cb10-14" title="14"></a>
-<a class="sourceLine" id="cb10-15" title="15"><span class="co"># Plot field layout</span></a>
-<a class="sourceLine" id="cb10-16" title="16"><span class="kw">desplot</span>(TrtPest <span class="op">~</span><span class="st"> </span>Col <span class="op">+</span><span class="st"> </span>Row <span class="op">|</span><span class="st"> </span>block, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb10-17" title="17">        <span class="dt">out1 =</span> Row, <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb10-18" title="18">        <span class="dt">out2 =</span> Col, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb10-19" title="19">        <span class="dt">text =</span> TrtFert, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">col =</span> TrtSoil, </a>
-<a class="sourceLine" id="cb10-20" title="20">        <span class="dt">data =</span> fac3rcbd_out<span class="op">$</span>bookRowCol,</a>
-<a class="sourceLine" id="cb10-21" title="21">        <span class="dt">main =</span> <span class="st">&quot;RCBD&quot;</span>,</a>
-<a class="sourceLine" id="cb10-22" title="22">        <span class="dt">show.key =</span> T, <span class="dt">key.cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fac3rcbd_out <span class="ot">&lt;-</span> <span class="fu">design.ab</span>(<span class="at">trt =</span> <span class="fu">c</span>(n_TrtPest, n_TrtFert, n_TrtSoil), </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">design =</span> <span class="st">&quot;rcbd&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">r =</span> n_Reps, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seed =</span> <span class="dv">42</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Row and Col </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>fac3rcbd_out<span class="sc">$</span>bookRowCol <span class="ot">&lt;-</span> fac3rcbd_out<span class="sc">$</span>book <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">expand.grid</span>(<span class="at">Row =</span> <span class="dv">1</span><span class="sc">:</span>(n_TrtFert<span class="sc">*</span>n_TrtPest),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Col =</span> <span class="dv">1</span><span class="sc">:</span>(n_TrtSoil<span class="sc">*</span>n_Reps))) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block   =</span> <span class="fu">paste0</span>(<span class="st">&quot;Block&quot;</span>, block),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">TrtPest =</span> <span class="fu">paste0</span>(<span class="st">&quot;P&quot;</span>, A),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">TrtFert =</span> <span class="fu">paste0</span>(<span class="st">&quot;N&quot;</span>, B),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">TrtSoil =</span> <span class="fu">paste0</span>(<span class="st">&quot;S&quot;</span>, C))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot field layout</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(TrtPest <span class="sc">~</span> Col <span class="sc">+</span> Row <span class="sc">|</span> block, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> Row, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> Col, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>), </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> TrtFert, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="at">col =</span> TrtSoil, </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> fac3rcbd_out<span class="sc">$</span>bookRowCol,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;RCBD&quot;</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> T, <span class="at">key.cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="DesigningExperiments_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 </div>
@@ -885,7 +805,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -903,7 +823,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

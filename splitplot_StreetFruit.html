@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>A peculiar split-plot design</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<!--All these are favicons-->
+<link rel="apple-touch-icon" sizes="180x180" href="img/logo/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/logo/favicon-16x16.png">
+<link rel="manifest" href="img/logo/site.webmanifest">
+<link rel="mask-icon" href="img/logo/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="img/logo/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="img/logo/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!--Github Corner-->
+<a href="https://github.com/SchmidtPaul/DSFAIR" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#003f75ff; color:#fff; position: absolute; top: 50; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+<!--SAS syntax highlighting-->
+<!--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.js"></script>
+<style>
+  .CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+  }
+</style>
+-->
+
+<!--Metatags = preview image when linking to social media-->
+
+<!-- Primary Meta Tags -->
+<!-- <title>Mixed Models for Agriculture in R</title> -->
+<!-- <meta name="title" content="Mixed Models for Agriculture in R">  -->
+<!--
+<meta name="description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+-->
+
+<!-- Open Graph / Facebook -->
+<!--
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://schmidtpaul.github.io/MMFAIR/index.html">
+<meta property="og:title" content="Mixed Models for Agriculture in R">
+<meta property="og:description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+<meta property="og:image" content="img/logo/ScreenshotIndex.PNG">
+-->
+
+<!-- Twitter -->
+<!--
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://schmidtpaul.github.io/MMFAIR/index.html">
+<meta property="twitter:title" content="Mixed Models for Agriculture in R">
+<meta property="twitter:description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+<meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
+-->
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSFAIR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CRD_Mead1993.html">CRD_Mead1993</a>
+    </li>
+    <li>
+      <a href="RCBD_ClewerScarisbrick2001.html">RCBD_ClewerScarisbrick2001</a>
+    </li>
+    <li>
+      <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+    </li>
+    <li>
+      <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
+    </li>
+    <li>
+      <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
+    </li>
+    <li>
+      <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+    </li>
+    <li>
+      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+    </li>
+    <li>
+      <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+    </li>
+    <li>
+      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Repeated_RCBD_PiephoEdmondson2018.html">RCBD_PiephoEdmondson2018</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Summaries
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DesigningExperiments.html">Designing experiments</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="0contactinfo.html">Contact</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">A peculiar split-plot design</h1>
+
+</div>
+
+
+<blockquote>
+<p>This is an example with an experimental design that may seem unproblematic at first glance, but is actually a not-so-standard experimental design. During consulting, I have come across multiple poeple who had versions of this “issue”. As a result, this chapter focusses a lot more on the experimental design discussion.</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(conflicted, <span class="co"># handle conflicting functions</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               tidyverse,  <span class="co"># data import and handling</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               glmmTMB,    <span class="co"># linear mixed model </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               broom.mixed, car, DHARMa, <span class="co"># linear mixed model evaluation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               emmeans, modelbased,      <span class="co"># mean comparisons</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               desplot, scales, see)     <span class="co"># plots</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># function conflicts</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="co"># set select() from dplyr as default</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="co"># set filter() from dplyr as default</span></span></code></pre></div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>This example considers a ficticious series of yield trials. There are 2 treatment factors:</p>
+<ul>
+<li><code>Str</code> with levels <code>Control</code> and <code>Street</code> and</li>
+<li><code>Fru</code> with levels <code>Apple</code>, <code>Banana</code> and <code>Strawberry</code>.</li>
+</ul>
+<p>The trials were conducted</p>
+<ul>
+<li>at 2 locations (<code>Loc</code> with levels <code>Berlin</code> and <code>Paris</code>). Moreover, the these trials were repeated</li>
+<li>across 2 years (<code>Yea</code> with levels <code>1989</code> and <code>1990</code>).</li>
+</ul>
+<p>Thus, there are 2 trials with repeated measures across 2 years, respectively. Similar experimental designs (with different randomizations) were used at each location and in each year.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/StreetFruit.csv&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
+<pre><code>## # A tibble: 144 x 9
+##      Yea Loc    Str     Fru        Blo     Yie   row   col Plot 
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+##  1  1989 Berlin Control Apple      B1     47.9     1     1 B1   
+##  2  1989 Berlin Control Strawberry B1     45.3     1     2 B2   
+##  3  1989 Berlin Control Banana     B1     44.7     1     3 B3   
+##  4  1989 Berlin Control Strawberry B2     45.6     1     4 B4   
+##  5  1989 Berlin Control Apple      B2     47.3     1     5 B5   
+##  6  1989 Berlin Control Banana     B2     45.0     1     6 B6   
+##  7  1989 Berlin Control Banana     B3     44.5     1     7 B7   
+##  8  1989 Berlin Control Apple      B3     47.2     1     8 B8   
+##  9  1989 Berlin Control Strawberry B3     45.8     1     9 B9   
+## 10  1989 Berlin Control Strawberry B4     47.1     1    10 B10  
+## # ... with 134 more rows</code></pre>
+<div id="formatting" class="section level2">
+<h2>Formatting</h2>
+<p>Before anything, the columns <code>Yea</code>, <code>Loc</code>, <code>Str</code>, <code>Fru</code>, <code>Blo</code> and <code>Plot</code> should be encoded as factors, since R by default encoded them as character.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(Yea<span class="sc">:</span>Blo, Plot), as.factor)</span></code></pre></div>
+</div>
+<div id="preparations" class="section level2">
+<h2>Preparations</h2>
+<p>In this example we will put some extra effort into the created outputs (graphs and tables). Therefore, we now set up some things before we continue.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors for Fru levels</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Fru_color <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Apple =</span> <span class="st">&quot;#9bc53d&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Banana =</span> <span class="st">&quot;#fde74c&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">Strawberry =</span> <span class="st">&quot;#f25f5c&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors for Str levels</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Str_color <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Control =</span> <span class="st">&quot;#C3B299&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Street =</span> <span class="st">&quot;#313E50&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exploring" class="section level2">
+<h2>Exploring</h2>
+<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial. Moreover, we need to use a subset of the data, since we have 2 trials with repeated measurements per plot, respectively.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Yea_i <span class="ot">&lt;-</span> <span class="st">&quot;1990&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Loc_j <span class="ot">&lt;-</span> <span class="st">&quot;Paris&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Fru <span class="sc">~</span> col <span class="sc">+</span> row, <span class="co"># fill color per Fru</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.regions =</span> Fru_color, <span class="co"># use predefined colors</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Str, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>, <span class="co"># show genotype names per plot</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Blo,  <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>), <span class="co"># lines between blocks</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">out2 =</span> Plot, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>), <span class="co"># lines betwen plots</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Field layout:&quot;</span>, Loc_j, Yea_i), <span class="co"># dynamic title</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.7</span>) <span class="co"># formatting</span></span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>After playing around with <code>Yea_i</code> and <code>Loc_j</code> we can see how all trials are designed similarly and have different randomizations. However, what is peculiar about this trial design is that all plots that received the <code>Street</code> (or <code>Control</code>) treatment appear side-by-side in the same row. Moreover, it remains the same row across the two years. Note that per location the trials were laid out on exactly the same plots across the two years. Thus, the same 18 plots received the same <code>Street</code> (or <code>Control</code>) treatment in both years in <code>Berlin</code> and <code>Paris</code>, respectively.</p>
+</div>
+</div>
+<div id="this-experimental-design" class="section level1">
+<h1>This experimental design…</h1>
+<div id="why-is-it" class="section level2">
+<h2>Why is it?</h2>
+<p>The goal of this trial was to find out if crops grown on soil where recently a street had been removed would perform differently compared to those grown on “normal” agricultural soil. Thus, multiple crops were chosen and aimed to grown on the two soil types under investigation.</p>
+<p>The reason for this layout lies in the nature of the <code>Str</code> treatment. These trials were laid out on agricultural fields where there used to be a street that was removed and turned into agricultural field again. Therefore, the plots with the <code>Street</code> treatment could obviously not be randomized.</p>
+</div>
+<div id="what-is-it" class="section level2">
+<h2>What is it?</h2>
+<p>Notice that there apparently are 6 blocks (<code>Blo</code>) and they are actually complete blocks, too, because all 6 factor level combinations appear in each one. However, this is not a <em>randomized complete block design</em> because of the restricted limitation of the <code>Str</code> treatment radnomization (inside each block).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Blo <span class="sc">~</span> col <span class="sc">+</span> row, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.regions =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">12</span>, <span class="st">&quot;Paired&quot;</span>)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>)],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Str, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col  =</span> Fru, <span class="at">col.text =</span> Fru_color,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Blo,  <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>), </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">out2 =</span> Plot, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>), </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Ok, so our next guess could be that this is a split-plot design. We could argue that in split-plot designs, one of the treatment factors is harder to randomize than the other(s) and therefore grouped together in main plots. This does indeed seem to fit the setting here: In each of the 6 blocks, we have two main plots - one for each <code>Str</code> level and inside these 12 main plots we have three subplots respectively - one for each <code>Fru</code> level. So far, so good. What should also be done in a split-plot design is that first the main plots should be randomized and second the subplots within each main plot should be randomized. Again, the first step here did not occur. No randomization took place for the <code>Str</code> main plots, because it was simply not possible.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">interaction</span>(Str, Blo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> <span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span> <span class="sc">~</span> col <span class="sc">+</span> row, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.regions =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">12</span>, <span class="st">&quot;Paired&quot;</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Str, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col  =</span> Fru, <span class="at">col.text =</span> Fru_color,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Blo, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">out2 =</span> Plot, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>So is this a split-plot design with a certain lack of randomization? Can we simply acknowledge this minor inconvenience and go ahead with a model for a split-plot design at a single location with subplots nested inside mainplots nested inside 6 complete replicates in order to test both treatment main effects <code>Str</code> and <code>Fru</code> and compare their levels?</p>
+<p><strong>Strictly speaking: No, we should not!</strong></p>
+<p>The crucial and unfortunate detail here is that we do not really have <em>true replicates</em> for the <code>Str</code> treatment levels. Instead, we have a single large area/plot with <code>Street</code> and second one with <code>Control</code>. To make this as clear as possible, we could ignore the <code>Fru</code> factor for now, look at the trial layout via the following desplot and ask ourselves: <em>How is this different from having just 2 large plots where 18 measurements per plot from 2 large plots were taken?</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Str <span class="sc">~</span> col <span class="sc">+</span> row, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.regions =</span> Str_color,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Plot, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The answer is: There is no difference. As a result of the nature of the <code>Str</code> treatment, its levels could not be randomized at all and we really only have 1 former street whose effect on the yield performance of our fruits could be investigated. Measuring this effect at different positions does not change the fact, that it was still the exact same street. Therefore, there is no true replicate of <code>Street</code> (or <code>Control</code>) at this trial. Regarding the <code>Str</code> factor, the number of true/independent replicates is 1 and when ignoring the second treatment factor <code>Fru</code>, the number of pseudo-replicates (<em>i.e.</em> replicated measurements on the same unit) is 18. In other words, we <strong>do</strong> have a sort of split-plot design, but it only has a single replicate and a total of 2 main plots.</p>
+</div>
+<div id="what-does-this-mean-for-the-analysis" class="section level2">
+<h2>What does this mean for the analysis?</h2>
+<p>Having established that this is not a “standard split-plot” in the sense that we cannot conduct the same statistical analysis as in <a href="splitplot_GomezGomez1984.html">the previous GomezGomez1984 split-plot example</a>, we should clarify what we can and cannot do to analyze this data properly.</p>
+<p>What we can do is a descriptive statistical analysis i.e. calculate arithmetic means, standard deviations etc. and plot these values and/or the raw data. In other words: We can take analogous steps to those in the <a href="splitplot_GomezGomez1984.html#Exploring"><em>Exploring</em> section of the GomezGomez1984 example</a> (but note that the interpretation of these results should ultimately also be put in context of the limitations described below).</p>
+<p>What we cannot do is to apply the same model and/or tests (i.e. statistical inference) as in the <a href="splitplot_GomezGomez1984.html#Modelling"><em>Modelling</em> section of the GomezGomez1984 example</a>. This is because in that example we did have a trial with multiple independent replicates for both our treatments, whereas here we do not.</p>
+<p>Thus, we will take a step-by-step approach to investigate our options in terms of modelling the data.</p>
+<div id="a-single-location-1-year" class="section level3">
+<h3>A single location (1 year)</h3>
+<p>First, let us keep the focus on a single location in a single year - just like all the <code>desplot</code> graphs from above. Generally, one cannot make statistical inferences if only a single replicate is present.</p>
+<p>Yet, we only have a single replicate for our 2 <code>Str</code> levels (<code>Street</code> and <code>Control</code>). Again: Yes, we have multiple measurements for both of them, but these are not true (i.e. independent) replicates, but pseudo-replicates just like in the <a href="subsampling_Piepho1997.html">subsampling Piepho1997 example</a>. As a consequence, we must not set up a model with a <code>Str</code> main effect, which means that we can neither test its significance in an ANOVA, nor can we compare its adjusted means.</p>
+<p>We do, however, have multiple true replicates for the <code>Fru</code> treatment levels - that is <strong>within</strong> the 2 <code>Str</code> levels. In other words, we have 6 replicates per fruit in the <code>Street</code> row and the <code>Control</code>, respectively. Accordingly, per fruit we have a total of 12 replicates (arranged in blocks) split up evenly between the two rows. This in turn would mean, that we could set up a model with a <code>Fru</code> main effect, which can be tested in an ANOVA and its adjusted means compared.</p>
+<p>Accordingly, we would get the following model:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glmmTMB</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  Yie <span class="sc">~</span> Fru <span class="sc">+</span> Str<span class="sc">:</span>Fru <span class="sc">+</span> Str<span class="sc">:</span>Blo,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>So our two treatment effects are affected differently, which makes sense as only the randomization for the <code>Str</code> treatment was limited. Unfortunately, we are actually much more interested in the <code>Str</code> treatment than we are in the <code>Fru</code> treatment: Nobody really wants to compare apple yields to banana yields (on <code>Street</code> plots and then again on <code>Control</code> plots). What we do want to compare is whether apple/banana/strawberry yields are different on <code>Street</code> plots than they are on <code>Control</code> plots.</p>
+<p>Further notice that the model is similar to a model for one-factorial rcbd trials at two multiple locations if you replace <code>Str</code> with <code>Trial</code>. We would in a way treat the two rows as two separate trials. The difference is, however, that we also assume a <code>Str:Fru</code> interactione effect, which we would usually not do for design effects. Ultimately, this is beceause <code>Str</code> is neither just the effect of the street, nor just the effect of the row, but the <code>Str</code> effects and row effects are completely confounded.</p>
+<p>In conclusion, analyzing a single location will not allow us to make the statistical inferences we want on our main treatment effect <code>Str</code>.</p>
+</div>
+<div id="both-locations-1-year" class="section level3">
+<h3>Both locations (1 year)</h3>
+<p>At this point it becomes clear our problem is mainly the lack of true replicates for <code>Str</code>. However, we actually do have an additional replicate for <code>Str</code> - it is simply not on the same location!</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">interaction</span>(Str, Blo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Str <span class="sc">~</span> col <span class="sc">+</span> row<span class="sc">|</span>Loc,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.regions =</span> Str_color,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Fru, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col  =</span> Fru, <span class="at">col.text =</span> Fru_color,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> <span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span>, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">out2 =</span> Plot, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Both locations in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>This is the game changer here. While everything that was said is indeed true for a single location, jointly modelling data from more than one location finally allows us to make desired statistical inferences about <code>Str</code>. Looking at the <code>desplot</code> above, it can be seen how we can take a step back and view the location as a true replicate, because the <code>Street</code> plots in Berlin are independent of those in Paris. Thus, we have 2 complete and true replicates for <code>Street</code> and <code>Control</code>, respectively. It is still true that those 4 rows (i.e. <code>Loc:Str</code> combinations) are grouped together and only within each one we have 6 true replicates for <code>Fru</code> arranged as blocks. Therefore, as design effects we have <strong>plots nested in blocks nested in rows nested in locations</strong>.</p>
+<p>In order to avoid confusion in this complex model, we should create an additional factor variable in the dataset that denotes a trial’s row, so that we do not actually write <code>Loc:Str</code> in the model. Furthermore, and albeit not strictly being necessary, we could reformat the block levels correctly:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row =</span> <span class="fu">as.factor</span>(row)) <span class="sc">%&gt;%</span>    </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Blo =</span> <span class="fu">interaction</span>(Row, Blo)) </span></code></pre></div>
+<p>As treatment effects, we can now have both main effects and their interaction effect. Again, this is possible since we now also have true replicates for <code>Str</code> (and not only for <code>Fru</code>). Notice further that across multiple locations <code>Row</code> is no longer confunded with <code>Str</code>. Here is a summary table with all the effects:</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Label</th>
+<th>Model term</th>
+<th>Number of levels</th>
+<th>Fixed/Random</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Design</td>
+<td>Location</td>
+<td><code>Loc</code></td>
+<td>2</td>
+<td>fixed (complete replicates)</td>
+</tr>
+<tr class="even">
+<td>Design</td>
+<td>Row</td>
+<td><code>Loc:Row</code></td>
+<td>4</td>
+<td>random (main plot randomization units)</td>
+</tr>
+<tr class="odd">
+<td>Design</td>
+<td>Block</td>
+<td><code>Loc:Row:Blo</code></td>
+<td>24</td>
+<td>random (sub plot randomization units)</td>
+</tr>
+<tr class="even">
+<td>Design</td>
+<td>Plot</td>
+<td><code>Loc:Row:Blo:Plot</code></td>
+<td>72</td>
+<td>random (sub sub plot randomization units / error)</td>
+</tr>
+<tr class="odd">
+<td>Treatment</td>
+<td>Street</td>
+<td><code>Str</code></td>
+<td>2</td>
+<td>fixed (levels of interest)</td>
+</tr>
+<tr class="even">
+<td>Treatment</td>
+<td>Fruit</td>
+<td><code>Fru</code></td>
+<td>3</td>
+<td>fixed (levels of interest)</td>
+</tr>
+<tr class="odd">
+<td>Treatment</td>
+<td>Street-Fruit-interaction</td>
+<td><code>Str:Fru</code></td>
+<td>6</td>
+<td>fixed (levels of interest)</td>
+</tr>
+</tbody>
+</table>
+<p>Accordingly, we could set up this model for a single year:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glmmTMB</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  Yie <span class="sc">~</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    Str <span class="sc">+</span> Fru <span class="sc">+</span> Str<span class="sc">:</span>Fru <span class="sc">+</span>                    <span class="co"># Treatment</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    Loc <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Loc<span class="sc">:</span>Row) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Loc<span class="sc">:</span>Row<span class="sc">:</span>Blo), <span class="co"># Design</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="descriptive-statistics" class="section level1">
+<h1>Descriptive Statistics</h1>
+<p>Having established a general approach for modelling, we should probably first get a feeling for our data. Therefore, we explore it with several descriptive measures and plots.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Fru, Str) <span class="sc">%&gt;%</span> <span class="co"># or go all the way to group_by(Yea, Loc, Fru, Str)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanYield =</span> <span class="fu">mean</span>(Yie),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">medYield  =</span> <span class="fu">median</span>(Yie),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">maxYield  =</span> <span class="fu">max</span>(Yie),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">minYield  =</span> <span class="fu">min</span>(Yie),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">stddevYield =</span> <span class="fu">sd</span>(Yie))</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+## # Groups:   Fru [3]
+##   Fru        Str     meanYield medYield maxYield minYield stddevYield
+##   &lt;fct&gt;      &lt;fct&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Apple      Control      47.9     48.1     52.0     43.2        2.39
+## 2 Apple      Street       46.6     46.7     51.0     42.3        2.40
+## 3 Banana     Control      44.2     44.4     46.9     41.9        1.33
+## 4 Banana     Street       42.8     43.0     44.8     41.2        1.05
+## 5 Strawberry Control      44.5     44.6     47.7     40.0        1.86
+## 6 Strawberry Street       43.5     43.4     46.5     40.7        1.58</code></pre>
+<p>A <code>ggplot</code> packed with information could look like this:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Yie, <span class="at">x =</span> Loc)) <span class="sc">+</span>    <span class="co"># y-axis: yield, x-axis: year</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(Fru)) <span class="sc">+</span> <span class="co"># one facette per fruit</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># boxplot </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> Str),                 <span class="co"># box color</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.66</span>), <span class="co"># box distance</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>                      <span class="co"># box width</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="co"># scatter-plot</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> Fru,  <span class="co"># point color</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape =</span> Yea, <span class="co"># point shape</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">group =</span> Str  <span class="co"># point grouping</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.66</span>), <span class="co"># distance between groups</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,                        <span class="co"># dot size</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.75</span>                     <span class="co"># dot transparency</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>( <span class="co"># add mean as red point</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">group =</span> Str), <span class="co"># per Str</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="co"># as scatter point</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">23</span>,     <span class="co"># point shape</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,       <span class="co"># point size</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,   <span class="co"># point color</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="co"># hide legend for this</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.66</span>) <span class="co"># distance between groups</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="co">#limits = c(0, NA),        # y-axis must start at 0</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">pretty_breaks</span>(),</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="st">&quot;Yield [ficticious unit]&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Location&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape</span>(<span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> Str_color, <span class="at">name =</span> <span class="st">&quot;Street&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> Fru_color, <span class="at">name =</span> <span class="st">&quot;Fruit&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Additionally, it may also be informative to visualize the data using desplot. Obviously, we could simply create a desplot and fill the plots according to the raw data:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Yie <span class="sc">~</span> col <span class="sc">+</span> row<span class="sc">|</span>Loc,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Str, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col  =</span> Fru, <span class="at">col.text =</span> Fru_color,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Blo, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># out2 = Plot, out2.gpar = list(col = &quot;black&quot;, lty = 3),</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Absolute yield for both locations in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>However, this is not very helpful as the values vary too much for the different <code>Loc</code> and <code>Fru</code>. We can, however, express the raw data per plot as the deviation from the average value per Location and Fruit:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Loc, Fru) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">meanYield        =</span> <span class="fu">mean</span>(Yie),       </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ratioToMeanYield =</span> Yie <span class="sc">/</span> <span class="fu">mean</span>(Yie)  </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> ratioToMeanYield <span class="sc">~</span> col <span class="sc">+</span> row<span class="sc">|</span>Loc,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> Str, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">shorten =</span> <span class="st">&quot;abb&quot;</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col  =</span> Fru, <span class="at">col.text =</span> Fru_color,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">out1 =</span> Blo, <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>),</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># out2 = Plot, out2.gpar = list(col = &quot;black&quot;, lty = 3),</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Relative yield ratio to fruit-location-mean for both locations in&quot;</span>, Yea_i))</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Roughly summarizing, we can say that yield measurements on <code>Street</code> plots have generally been lower than thos on <code>Control</code> plots.</p>
+</div>
+<div id="inferential-statistics-modelling" class="section level1">
+<h1>Inferential Statistics (Modelling)</h1>
+<div id="year" class="section level2">
+<h2>1 Year</h2>
+<p>Finally, we can fit the model we suggested above. As a reminder: This is only a model for data from a single year. We will explicitely go with 1989 for now.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  Yie <span class="sc">~</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    Str <span class="sc">+</span> Fru <span class="sc">+</span> Str<span class="sc">:</span>Fru <span class="sc">+</span>                    <span class="co"># Treatment</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    Loc <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Loc<span class="sc">:</span>Row) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Loc<span class="sc">:</span>Row<span class="sc">:</span>Blo), <span class="co"># Design</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Yea <span class="sc">==</span> <span class="st">&quot;1989&quot;</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div id="check-model-assumptions" class="section level3">
+<h3>Check model assumptions</h3>
+<p>We can very efficiently check the residual plots using the <code>DHARMa</code> package. No problem is suggested.</p>
+<div class="row">
+<div class="col-md-6">
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>DHARMa<span class="sc">::</span><span class="fu">plotResiduals</span>(mod1989)</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div class="col-md-6">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>DHARMa<span class="sc">::</span><span class="fu">plotQQunif</span>(mod1989)</span></code></pre></div>
+<p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="variance-components" class="section level3">
+<h3>Variance components</h3>
+<p>We can check the variance components and see that as expected a considerably large portion of the variance is attributed to the blocks.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">effects =</span> <span class="st">&quot;ran_pars&quot;</span>, <span class="at">scales =</span> <span class="st">&quot;vcov&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(group, estimate)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   group            estimate
+##   &lt;chr&gt;               &lt;dbl&gt;
+## 1 Loc:Row     0.00000000723
+## 2 Loc:Row:Blo 0.866        
+## 3 Residual    0.466</code></pre>
+</div>
+<div id="anova" class="section level3">
+<h3>ANOVA</h3>
+<p>Looking at the ANOVA, we see that both treatment main effects, but not their interaction effects are statistically significant.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod1989)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: Yie
+##           Chisq Df Pr(&gt;Chisq)    
+## Str     10.7919  1   0.001019 ** 
+## Fru     92.9458  2  &lt; 2.2e-16 ***
+## Loc     32.3506  1  1.287e-08 ***
+## Str:Fru  2.1421  2   0.342650    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="mean-comparisons" class="section level3">
+<h3>Mean comparisons</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># emmeans:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> Str <span class="sc">|</span> Fru,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="at">details =</span> <span class="cn">TRUE</span>, <span class="at">Letters =</span> letters)</span></code></pre></div>
+<pre><code>## $emmeans
+## Fru = Apple:
+##  Str     emmean    SE df lower.CL upper.CL .group
+##  Street    45.1 0.333 69     44.4     45.7  a    
+##  Control   46.6 0.333 69     45.9     47.3   b   
+## 
+## Fru = Banana:
+##  Str     emmean    SE df lower.CL upper.CL .group
+##  Street    43.2 0.333 69     42.5     43.8  a    
+##  Control   44.7 0.333 69     44.0     45.4   b   
+## 
+## Fru = Strawberry:
+##  Str     emmean    SE df lower.CL upper.CL .group
+##  Street    44.4 0.333 69     43.7     45.0  a    
+##  Control   45.4 0.333 69     44.7     46.0   b   
+## 
+## Results are averaged over the levels of: Loc 
+## Confidence level used: 0.95 
+## significance level used: alpha = 0.05 
+## 
+## $comparisons
+## Fru = Apple:
+##  contrast         estimate    SE df t.ratio p.value
+##  Control - Street     1.53 0.471 69 3.246   0.0018 
+## 
+## Fru = Banana:
+##  contrast         estimate    SE df t.ratio p.value
+##  Control - Street     1.51 0.471 69 3.214   0.0020 
+## 
+## Fru = Strawberry:
+##  contrast         estimate    SE df t.ratio p.value
+##  Control - Street     1.02 0.471 69 2.170   0.0334 
+## 
+## Results are averaged over the levels of: Loc</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modelbased:</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">estimate_means</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels   =</span> <span class="st">&quot;Str&quot;</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">modulate =</span> <span class="st">&quot;Fru&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lmer.df  =</span> <span class="st">&quot;kenward-roger&quot;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Str     |        Fru |  Mean |   SE |         95% CI
+## ----------------------------------------------------
+## Control |      Apple | 46.60 | 0.33 | [45.94, 47.27]
+## Street  |      Apple | 45.07 | 0.33 | [44.41, 45.74]
+## Control |     Banana | 44.70 | 0.33 | [44.03, 45.36]
+## Street  |     Banana | 43.18 | 0.33 | [42.52, 43.85]
+## Control | Strawberry | 45.38 | 0.33 | [44.71, 46.04]
+## Street  | Strawberry | 44.36 | 0.33 | [43.69, 45.02]
+## 
+## p-values are uncorrected.</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">estimate_contrasts</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels   =</span> <span class="st">&quot;Str&quot;</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">modulate =</span> <span class="st">&quot;Fru&quot;</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lmer.df  =</span> <span class="st">&quot;kenward-roger&quot;</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">standardize =</span> <span class="cn">FALSE</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Level1  | Level2 |        Fru | Difference |   SE |       95% CI | t(69) |     p
+## --------------------------------------------------------------------------------
+## Control | Street |      Apple |       1.53 | 0.47 | [0.59, 2.47] |  3.25 | 0.002
+## Control | Street |     Banana |       1.51 | 0.47 | [0.57, 2.45] |  3.21 | 0.002
+## Control | Street | Strawberry |       1.02 | 0.47 | [0.08, 1.96] |  2.17 | 0.033
+## 
+## p-value adjustment method: holm</code></pre>
+</div>
+</div>
+</div>
+
+&nbsp;
+<hr />
+<p style="text-align: center;">Please feel free to contact me about any of this!</p>
+<p style="text-align: center;"><span style="color: #003f75ff;"><em>schmidtpaul1989@outlook.com</em></span></p>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://www.researchgate.net/profile/Paul_Schmidt17" class="fa fa-pencil" style="color: #003f75ff;"></a>
+    <a href="https://www.linkedin.com/in/schmidtpaul1989/" class="fa fa-linkedin" style="color: #003f75ff;"></a>
+    <a href="https://www.xing.com/profile/Paul_Schmidt393/cv" class="fa fa-xing" style="color: #003f75ff;"></a>
+    <a href="https://github.com/SchmidtPaul/" class="fa fa-github" style="color: #003f75ff;"></a>
+</p>
+
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fschmidtpaul.github.io%2FDSFAIR%2F&count_bg=%23003F75&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" class="center"/></a>
+
+&nbsp;
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -13,12 +13,22 @@
 
 <title>Augmented design</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -77,6 +87,7 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
 <style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
@@ -84,91 +95,40 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      a.sourceLine { display: inline-block; line-height: 1.25; }
-  a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-  a.sourceLine:empty { height: 1.2em; }
-  .sourceCode { overflow: visible; }
-  code.sourceCode { white-space: pre; position: relative; }
-  div.sourceCode { margin: 1em 0; }
-  pre.sourceCode { margin: 0; }
-  @media screen {
-  div.sourceCode { overflow: auto; }
-  }
-  @media print {
-  code.sourceCode { white-space: pre-wrap; }
-  a.sourceLine { text-indent: -1em; padding-left: 1em; }
-  }
-  pre.numberSource a.sourceLine
-    { position: relative; left: -4em; }
-  pre.numberSource a.sourceLine::before
-    { content: attr(title);
-      position: relative; left: -1em; text-align: right; vertical-align: baseline;
-      border: none; pointer-events: all; display: inline-block;
-      -webkit-touch-callout: none; -webkit-user-select: none;
-      -khtml-user-select: none; -moz-user-select: none;
-      -ms-user-select: none; user-select: none;
-      padding: 0 4px; width: 4em;
-      color: #aaaaaa;
-    }
-  pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-  div.sourceCode
-    { background-color: #f8f8f8; }
-  @media screen {
-  a.sourceLine::before { text-decoration: underline; }
-  }
-  code span.al { color: #ef2929; } /* Alert */
-  code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-  code span.at { color: #c4a000; } /* Attribute */
-  code span.bn { color: #0000cf; } /* BaseN */
-  code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-  code span.ch { color: #4e9a06; } /* Char */
-  code span.cn { color: #000000; } /* Constant */
-  code span.co { color: #8f5902; font-style: italic; } /* Comment */
-  code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-  code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-  code span.dt { color: #204a87; } /* DataType */
-  code span.dv { color: #0000cf; } /* DecVal */
-  code span.er { color: #a40000; font-weight: bold; } /* Error */
-  code span.ex { } /* Extension */
-  code span.fl { color: #0000cf; } /* Float */
-  code span.fu { color: #000000; } /* Function */
-  code span.im { } /* Import */
-  code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-  code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-  code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-  code span.ot { color: #8f5902; } /* Other */
-  code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-  code span.sc { color: #000000; } /* SpecialChar */
-  code span.ss { color: #4e9a06; } /* SpecialString */
-  code span.st { color: #4e9a06; } /* String */
-  code span.va { color: #000000; } /* Variable */
-  code span.vs { color: #4e9a06; } /* VerbatimString */
-  code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -177,9 +137,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -241,39 +201,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -284,10 +214,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -304,40 +230,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 54px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h2 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h3 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h4 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h5 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h6 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -365,7 +264,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -377,7 +276,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -388,10 +287,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -403,7 +315,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -532,13 +443,13 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -584,7 +495,13 @@ div.tocify {
       <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
     </li>
     <li>
+      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+    </li>
+    <li>
       <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+    </li>
+    <li>
+      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
     </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
@@ -606,6 +523,9 @@ div.tocify {
     <li>
       <a href="DesigningExperiments.html">Designing experiments</a>
     </li>
+    <li>
+      <a href="Diagnotstics.html">Model diagnostics</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -619,11 +539,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -636,25 +556,25 @@ div.tocify {
 </div>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># packages</span></a>
-<a class="sourceLine" id="cb1-2" title="2">pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse,        <span class="co"># data import and handling</span></a>
-<a class="sourceLine" id="cb1-3" title="3">               conflicted,       <span class="co"># handling function conflicts</span></a>
-<a class="sourceLine" id="cb1-4" title="4">               lme4, lmerTest,   <span class="co"># linear mixed model </span></a>
-<a class="sourceLine" id="cb1-5" title="5">               emmeans, multcomp, multcompView, <span class="co"># mean comparisons</span></a>
-<a class="sourceLine" id="cb1-6" title="6">               ggplot2, desplot) <span class="co"># plots </span></a>
-<a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co"># conflicts: identical function names from different packages</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="kw">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,        <span class="co"># data import and handling</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               conflicted,       <span class="co"># handling function conflicts</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               lme4, lmerTest,   <span class="co"># linear mixed model </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               emmeans, multcomp, multcompView, <span class="co"># mean comparisons</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               ggplot2, desplot) <span class="co"># plots </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># conflicts: identical function names from different packages</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>This example is taken from Chapter <em>“3.7 Analysis of a non-resolvable augmented design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.taylorfrancis.com/books/9780429078491" target="_blank">Peterson (1994)</a> from a yield trial laid out as an augmented design. The genotypes (<code>gen</code>) include 3 standards (<code>st</code>, <code>ci</code>, <code>wa</code>) and 30 new cultivars of interest. The trial was laid out in 6 blocks (<code>block</code>). The 3 standards are tested in each block, while each entry is tested in only one of the blocks. Therefore, the blocks are <em>“incomplete blocks”</em>.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data (import via URL)</span></a>
-<a class="sourceLine" id="cb2-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Pattersen1994.csv&quot;</span></a>
-<a class="sourceLine" id="cb2-3" title="3">dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
-<a class="sourceLine" id="cb2-4" title="4"></a>
-<a class="sourceLine" id="cb2-5" title="5">dat</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Pattersen1994.csv&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
 <pre><code>## # A tibble: 48 x 5
 ##    gen   yield block   row   col
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -673,38 +593,38 @@ div.tocify {
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
 <p>Before anything, the columns <code>gen</code> and <code>block</code> should be encoded as factors, since R by default encoded them as character.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(gen, block), as.factor)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(gen, block), as.factor)</span></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
 <p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial. Notice that for this example it makes sense to put in some extra effort to explicitly assign colors to the genotypes in a way that differentiates the standards (<code>st</code>, <code>ci</code>, <code>wa</code>) from all other genotypes.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># create a color-generating function</span></a>
-<a class="sourceLine" id="cb5-2" title="2">get_shades_of_blue &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="dt">colors=</span><span class="kw">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>))</a>
-<a class="sourceLine" id="cb5-3" title="3">blue_<span class="dv">30</span>  &lt;-<span class="st"> </span><span class="kw">get_shades_of_blue</span>(<span class="dv">30</span>) <span class="co"># 30 shades of blue</span></a>
-<a class="sourceLine" id="cb5-4" title="4">orange_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;darkorange2&quot;</span>, <span class="st">&quot;darkorange3&quot;</span>) <span class="co"># 3 shades of orange</span></a>
-<a class="sourceLine" id="cb5-5" title="5">blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">c</span>(blue_<span class="dv">30</span>, orange_<span class="dv">3</span>) <span class="co"># combine into single vector   </span></a>
-<a class="sourceLine" id="cb5-6" title="6"></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co"># name this vector of colors with genotype names</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="kw">names</span>(blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>) &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">pull</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.character</span>() <span class="op">%&gt;%</span><span class="st"> </span>sort <span class="op">%&gt;%</span><span class="st"> </span>unique</a>
-<a class="sourceLine" id="cb5-10" title="10"></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="kw">desplot</span>(<span class="dt">data =</span> dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb5-12" title="12">        <span class="dt">form =</span> gen <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row, <span class="co"># fill color per genotype, headers per replicate</span></a>
-<a class="sourceLine" id="cb5-13" title="13">        <span class="dt">col.regions =</span> blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>,  <span class="co"># custom colors</span></a>
-<a class="sourceLine" id="cb5-14" title="14">        <span class="dt">text =</span> gen, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
-<a class="sourceLine" id="cb5-15" title="15">        <span class="dt">out1 =</span> block,                        <span class="co"># lines between complete blocks/replicates</span></a>
-<a class="sourceLine" id="cb5-16" title="16">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a color-generating function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>get_shades_of_blue <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="at">colors=</span><span class="fu">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>blue_30  <span class="ot">&lt;-</span> <span class="fu">get_shades_of_blue</span>(<span class="dv">30</span>) <span class="co"># 30 shades of blue</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>orange_3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;darkorange2&quot;</span>, <span class="st">&quot;darkorange3&quot;</span>) <span class="co"># 3 shades of orange</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>blue_30_and_orange_3 <span class="ot">&lt;-</span> <span class="fu">c</span>(blue_30, orange_3) <span class="co"># combine into single vector   </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># name this vector of colors with genotype names</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(blue_30_and_orange_3) <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(gen) <span class="sc">%&gt;%</span> <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> sort <span class="sc">%&gt;%</span> unique</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">form =</span> gen <span class="sc">~</span> col <span class="sc">+</span> row, <span class="co"># fill color per genotype, headers per replicate</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.regions =</span> blue_30_and_orange_3,  <span class="co"># custom colors</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> gen, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> block,                        <span class="co"># lines between complete blocks/replicates</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> F) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-5-1.png" width="288" style="display: block; margin: auto;" /></p>
 <p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (gen) or block (inc.block). It must be clear, however, that except for the standards (<code>st</code>, <code>ci</code>, <code>wa</code>), there is always only a single value per genotype, so that the mean simply is that value and a standard error cannot be calculated at all.</p>
 <div class="row">
 <div class="col-md-6">
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
-<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(std.dev, <span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(yield),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(yield)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(std.dev, <span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
 <pre><code>## # A tibble: 33 x 3
 ##    gen    mean std.dev
 ##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -743,12 +663,12 @@ div.tocify {
 ## 33 02    1055      NA</code></pre>
 </div>
 <div class="col-md-6">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(block) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean    =</span> <span class="kw">mean</span>(yield),</a>
-<a class="sourceLine" id="cb8-4" title="4">            <span class="dt">std.dev =</span> <span class="kw">sd</span>(yield))  <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sort</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="ot">Inf</span>) <span class="co"># print full table</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(block) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(yield),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(yield))  <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   block  mean std.dev
 ##   &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -760,17 +680,17 @@ div.tocify {
 ## 6 V     1390.    207.</code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> dat, </a>
-<a class="sourceLine" id="cb10-2" title="2">       <span class="kw">aes</span>(<span class="dt">y =</span> yield,</a>
-<a class="sourceLine" id="cb10-3" title="3">           <span class="dt">x =</span> gen,</a>
-<a class="sourceLine" id="cb10-4" title="4">           <span class="dt">color =</span> gen,</a>
-<a class="sourceLine" id="cb10-5" title="5">           <span class="dt">shape =</span> block)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="co"># scatter plot with larger dots</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co"># force y-axis to start at 0</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="co"># custom colors</span></a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="co"># turn off legend for colors</span></a>
-<a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co"># clearer plot format</span></a>
-<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="co"># legend on top</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> yield,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> gen,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> gen,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> block)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># scatter plot with larger dots</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># force y-axis to start at 0</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> blue_30_and_orange_3) <span class="sc">+</span> <span class="co"># custom colors</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co"># clearer plot format</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="co"># legend on top</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
@@ -779,32 +699,32 @@ div.tocify {
 <p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and <code>gen</code> as fixed effects, since our goal is to compare them to each other. Since the trial was laid out in blocks, we also need <code>block</code> effects in the model, but these can be taken either as a fixed or as random effects. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.</p>
 <div class="row">
 <div class="col-md-6">
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># blocks as fixed (linear model)</span></a>
-<a class="sourceLine" id="cb11-2" title="2">mod.fb &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>gen <span class="op">+</span><span class="st"> </span>block,</a>
-<a class="sourceLine" id="cb11-3" title="3">             <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb11-4" title="4"></a>
-<a class="sourceLine" id="cb11-5" title="5">mod.fb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb11-7" title="7">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span><span class="kw">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blocks as fixed (linear model)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mod.fb <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> gen <span class="sc">+</span> block,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> dat)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>mod.fb <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> <span class="st">&quot;gen&quot;</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># extract diffs</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  as_tibble <span class="sc">%&gt;%</span> <span class="co"># format to table</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># extract s.e.d. column</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>() <span class="co"># get arithmetic mean</span></span></code></pre></div>
 <pre><code>## [1] 461.3938</code></pre>
 </div>
 <div class="col-md-6">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># blocks as random (linear mixed model)</span></a>
-<a class="sourceLine" id="cb13-2" title="2">mod.rb &lt;-<span class="st"> </span><span class="kw">lmer</span>(yield <span class="op">~</span><span class="st"> </span>gen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>block),</a>
-<a class="sourceLine" id="cb13-3" title="3">               <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb13-4" title="4"></a>
-<a class="sourceLine" id="cb13-5" title="5">mod.rb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-6" title="6"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb13-7" title="7">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</a>
-<a class="sourceLine" id="cb13-8" title="8">          <span class="dt">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-9" title="9"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract diffs</span></a>
-<a class="sourceLine" id="cb13-10" title="10"><span class="st">  </span>as_tibble <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># format to table</span></a>
-<a class="sourceLine" id="cb13-11" title="11"><span class="st">  </span><span class="kw">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract s.e.d. column</span></a>
-<a class="sourceLine" id="cb13-12" title="12"><span class="st">  </span><span class="kw">mean</span>() <span class="co"># get arithmetic mean</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blocks as random (linear mixed model)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod.rb <span class="ot">&lt;-</span> <span class="fu">lmer</span>(yield <span class="sc">~</span> gen <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> block),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> dat)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>mod.rb <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> <span class="st">&quot;gen&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># extract diffs</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  as_tibble <span class="sc">%&gt;%</span> <span class="co"># format to table</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">&quot;SE&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># extract s.e.d. column</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>() <span class="co"># get arithmetic mean</span></span></code></pre></div>
 <pre><code>## [1] 462.0431</code></pre>
 </div>
 </div>
@@ -812,7 +732,7 @@ div.tocify {
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
 <p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the <code>gen</code> effects to be statistically significant (p = 0.0091 &lt; 0.05).</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mod.fb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anova</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod.fb <span class="sc">%&gt;%</span> <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -826,51 +746,54 @@ div.tocify {
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
 <p>It can be seen that while some genotypes have a higher yield than others, no differences are found to be statistically significant here. Accordingly, notice that <em>e.g.</em> for <code>gen 11</code>, which is the genotype with the highest adjusted yield mean (=3055), its lower confidence limit (=1587) includes <code>gen 12</code>, which is the genotype with the lowest adjusted yield mean (=1632).</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">mean_comparisons &lt;-<span class="st"> </span>mod.fb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">emmeans</span>(pairwise <span class="op">~</span><span class="st"> &quot;gen&quot;</span>,</a>
-<a class="sourceLine" id="cb17-3" title="3">          <span class="dt">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">cld</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>, <span class="dt">Letters =</span> letters) <span class="co"># add letter display</span></a>
-<a class="sourceLine" id="cb17-6" title="6"></a>
-<a class="sourceLine" id="cb17-7" title="7">mean_comparisons<span class="op">$</span>emmeans <span class="co"># adjusted genotype means</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mod.fb <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> <span class="st">&quot;gen&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cld</span>(<span class="at">details =</span> <span class="cn">TRUE</span>, <span class="at">Letters =</span> letters) <span class="co"># add letter display</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># If cld() does not work, try CLD() instead.</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add &#39;adjust=&quot;none&quot;&#39; to the emmeans() and cld() statement</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># in order to obtain t-test instead of Tukey!</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>mean_comparisons<span class="sc">$</span>emmeans <span class="co"># adjusted genotype means</span></span></code></pre></div>
 <pre><code>##  gen emmean  SE df lower.CL upper.CL .group
-##  12    1632 341 10      164     3100  a    
-##  06    1823 341 10      355     3291  a    
-##  28    1862 341 10      394     3330  a    
-##  09    1943 341 10      475     3411  a    
-##  05    2024 341 10      556     3492  a    
-##  29    2162 341 10      694     3630  a    
-##  01    2260 341 10      792     3728  a    
-##  15    2324 341 10      856     3792  a    
-##  02    2330 341 10      862     3798  a    
-##  20    2345 341 10      877     3813  a    
-##  13    2388 341 10      920     3856  a    
-##  14    2402 341 10      934     3870  a    
-##  23    2445 341 10      977     3913  a    
-##  07    2512 341 10     1044     3980  a    
-##  08    2528 341 10     1060     3996  a    
-##  18    2562 341 10     1094     4030  a    
-##  10    2568 341 10     1100     4036  a    
-##  17    2569 341 10     1101     4037  a    
-##  24    2630 341 10     1162     4098  a    
-##  wa    2678 123 10     2148     3208  a    
-##  22    2702 341 10     1234     4170  a    
-##  ci    2726 123 10     2195     3256  a    
-##  st    2759 123 10     2229     3289  a    
-##  16    2770 341 10     1302     4238  a    
-##  25    2784 341 10     1316     4252  a    
-##  30    2802 341 10     1334     4270  a    
-##  27    2816 341 10     1348     4284  a    
-##  26    2852 341 10     1384     4320  a    
-##  04    2865 341 10     1397     4333  a    
-##  19    2890 341 10     1422     4358  a    
-##  03    2902 341 10     1434     4370  a    
-##  21    2963 341 10     1495     4431  a    
-##  11    3055 341 10     1587     4523  a    
+##  12    1632 341 10      872     2392  a    
+##  06    1823 341 10     1063     2583  a    
+##  28    1862 341 10     1102     2622  a    
+##  09    1943 341 10     1183     2703  a    
+##  05    2024 341 10     1264     2784  a    
+##  29    2162 341 10     1402     2922  a    
+##  01    2260 341 10     1500     3020  a    
+##  15    2324 341 10     1564     3084  a    
+##  02    2330 341 10     1570     3090  a    
+##  20    2345 341 10     1585     3105  a    
+##  13    2388 341 10     1628     3148  a    
+##  14    2402 341 10     1642     3162  a    
+##  23    2445 341 10     1685     3205  a    
+##  07    2512 341 10     1752     3272  a    
+##  08    2528 341 10     1768     3288  a    
+##  18    2562 341 10     1802     3322  a    
+##  10    2568 341 10     1808     3328  a    
+##  17    2569 341 10     1809     3329  a    
+##  24    2630 341 10     1870     3390  a    
+##  wa    2678 123 10     2403     2952  a    
+##  22    2702 341 10     1942     3462  a    
+##  ci    2726 123 10     2451     3000  a    
+##  st    2759 123 10     2485     3034  a    
+##  16    2770 341 10     2010     3530  a    
+##  25    2784 341 10     2024     3544  a    
+##  30    2802 341 10     2042     3562  a    
+##  27    2816 341 10     2056     3576  a    
+##  26    2852 341 10     2092     3612  a    
+##  04    2865 341 10     2105     3625  a    
+##  19    2890 341 10     2130     3650  a    
+##  03    2902 341 10     2142     3662  a    
+##  21    2963 341 10     2203     3723  a    
+##  11    3055 341 10     2295     3815  a    
 ## 
 ## Results are averaged over the levels of: block 
 ## Confidence level used: 0.95 
-## Conf-level adjustment: sidak method for 33 estimates 
 ## P value adjustment: tukey method for comparing a family of 33 estimates 
 ## significance level used: alpha = 0.05</code></pre>
 </div>
@@ -880,58 +803,58 @@ div.tocify {
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
 <p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># genotypes ordered by mean yield</span></a>
-<a class="sourceLine" id="cb19-2" title="2">gen_order_emmean &lt;-<span class="st"> </span>mean_comparisons<span class="op">$</span>emmeans <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">arrange</span>(emmean) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">pull</span>(gen) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="st">  </span><span class="kw">as.character</span>()</a>
-<a class="sourceLine" id="cb19-6" title="6"></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="co"># assign this order to emmeans object</span></a>
-<a class="sourceLine" id="cb19-8" title="8">mean_comparisons<span class="op">$</span>emmeans &lt;-<span class="st"> </span>mean_comparisons<span class="op">$</span>emmeans <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gen =</span> <span class="kw">fct_relevel</span>(gen, gen_order_emmean))</a>
-<a class="sourceLine" id="cb19-10" title="10"></a>
-<a class="sourceLine" id="cb19-11" title="11"><span class="co"># assign this order to dat object</span></a>
-<a class="sourceLine" id="cb19-12" title="12">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-13" title="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gen =</span> <span class="kw">fct_relevel</span>(gen, gen_order_emmean))</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="co"># blue/orange dots representing the raw data</span></a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(</a>
-<a class="sourceLine" id="cb20-4" title="4">    <span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb20-5" title="5">    <span class="kw">aes</span>(<span class="dt">y =</span> yield, <span class="dt">x =</span> gen, <span class="dt">color =</span> gen)</a>
-<a class="sourceLine" id="cb20-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> blue_<span class="dv">30</span>_and_orange_<span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="co"># custom colors</span></a>
-<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="co"># turn off legend for colors</span></a>
-<a class="sourceLine" id="cb20-9" title="9"><span class="st">  </span><span class="co"># red dots representing the adjusted means</span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>(</a>
-<a class="sourceLine" id="cb20-11" title="11">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb20-12" title="12">    <span class="kw">aes</span>(<span class="dt">y =</span> emmean, <span class="dt">x =</span> gen),</a>
-<a class="sourceLine" id="cb20-13" title="13">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb20-14" title="14">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb20-15" title="15">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-16" title="16"><span class="st">  </span><span class="co"># red error bars representing the confidence limits of the adjusted means</span></a>
-<a class="sourceLine" id="cb20-17" title="17"><span class="st">  </span><span class="kw">geom_errorbar</span>(</a>
-<a class="sourceLine" id="cb20-18" title="18">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb20-19" title="19">    <span class="kw">aes</span>(<span class="dt">ymin =</span> lower.CL, <span class="dt">ymax =</span> upper.CL, <span class="dt">x =</span> gen),</a>
-<a class="sourceLine" id="cb20-20" title="20">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb20-21" title="21">    <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb20-22" title="22">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb20-23" title="23">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-24" title="24"><span class="st">  </span><span class="co"># red letters </span></a>
-<a class="sourceLine" id="cb20-25" title="25"><span class="st">  </span><span class="kw">geom_text</span>(</a>
-<a class="sourceLine" id="cb20-26" title="26">    <span class="dt">data =</span> mean_comparisons<span class="op">$</span>emmeans,</a>
-<a class="sourceLine" id="cb20-27" title="27">    <span class="kw">aes</span>(<span class="dt">y =</span> lower.CL, <span class="dt">x =</span> gen, <span class="dt">label =</span> .group),</a>
-<a class="sourceLine" id="cb20-28" title="28">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</a>
-<a class="sourceLine" id="cb20-29" title="29">    <span class="dt">angle =</span> <span class="dv">90</span>,</a>
-<a class="sourceLine" id="cb20-30" title="30">    <span class="dt">hjust =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb20-31" title="31">    <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">y =</span> <span class="op">-</span><span class="st"> </span><span class="dv">25</span>)</a>
-<a class="sourceLine" id="cb20-32" title="32">  ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-33" title="33"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co"># force y-axis to start at 0</span></a>
-<a class="sourceLine" id="cb20-34" title="34"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Yield in t/ha&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># label y-axis</span></a>
-<a class="sourceLine" id="cb20-35" title="35"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="op">+</span><span class="st">      </span><span class="co"># label x-axis</span></a>
-<a class="sourceLine" id="cb20-36" title="36"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Blue/orange dots represent raw data</span></a>
-<a class="sourceLine" id="cb20-37" title="37"><span class="st">       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype</span></a>
-<a class="sourceLine" id="cb20-38" title="38"><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-39" title="39"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="co"># clearer plot format </span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># genotypes ordered by mean yield</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>gen_order_emmean <span class="ot">&lt;-</span> mean_comparisons<span class="sc">$</span>emmeans <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(emmean) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(gen) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># assign this order to emmeans object</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>mean_comparisons<span class="sc">$</span>emmeans <span class="ot">&lt;-</span> mean_comparisons<span class="sc">$</span>emmeans <span class="sc">%&gt;%</span> </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gen =</span> <span class="fu">fct_relevel</span>(gen, gen_order_emmean))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># assign this order to dat object</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gen =</span> <span class="fu">fct_relevel</span>(gen, gen_order_emmean))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># blue/orange dots representing the raw data</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> dat,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> yield, <span class="at">x =</span> gen, <span class="at">color =</span> gen)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> blue_30_and_orange_3) <span class="sc">+</span> <span class="co"># custom colors</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># red dots representing the adjusted means</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mean_comparisons<span class="sc">$</span>emmeans,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> emmean, <span class="at">x =</span> gen),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">x =</span> <span class="fl">0.2</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># red error bars representing the confidence limits of the adjusted means</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mean_comparisons<span class="sc">$</span>emmeans,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL, <span class="at">x =</span> gen),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">x =</span> <span class="fl">0.2</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># red letters </span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mean_comparisons<span class="sc">$</span>emmeans,</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> lower.CL, <span class="at">x =</span> gen, <span class="at">label =</span> .group),</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">angle =</span> <span class="dv">90</span>,</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">y =</span> <span class="sc">-</span> <span class="dv">25</span>)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># force y-axis to start at 0</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Yield in t/ha&quot;</span>) <span class="sc">+</span> <span class="co"># label y-axis</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="sc">+</span>      <span class="co"># label x-axis</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&quot;Blue/orange dots represent raw data</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="st">       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="st">       Means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># clearer plot format </span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 </div>
@@ -952,17 +875,17 @@ div.tocify {
 <li>Perform multiple (mean) comparisons based on the chosen model.</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># data (import via URL)</span></a>
-<a class="sourceLine" id="cb21-2" title="2">dataURL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/PiephoAugmentedLattice.csv&quot;</span></a>
-<a class="sourceLine" id="cb21-3" title="3">ex1dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(dataURL)</a>
-<a class="sourceLine" id="cb21-4" title="4"></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="kw">desplot</span>(<span class="dt">data =</span> ex1dat, <span class="dt">flip =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb21-6" title="6">        <span class="dt">form =</span> block <span class="op">~</span><span class="st"> </span>col <span class="op">+</span><span class="st"> </span>row <span class="op">|</span><span class="st"> </span>rep, <span class="co"># fill color per block, headers per replicate</span></a>
-<a class="sourceLine" id="cb21-7" title="7">        <span class="dt">text =</span> geno, <span class="dt">cex =</span> <span class="fl">0.75</span>, <span class="dt">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></a>
-<a class="sourceLine" id="cb21-8" title="8">        <span class="dt">col  =</span> genoCheck, <span class="co"># different color for check genotypes</span></a>
-<a class="sourceLine" id="cb21-9" title="9">        <span class="dt">out1 =</span> rep,   <span class="dt">out1.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>), <span class="co"># lines between reps</span></a>
-<a class="sourceLine" id="cb21-10" title="10">        <span class="dt">out2 =</span> block, <span class="dt">out2.gpar =</span> <span class="kw">list</span>(<span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>), <span class="co"># lines between blocks</span></a>
-<a class="sourceLine" id="cb21-11" title="11">        <span class="dt">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="dt">show.key =</span> F) <span class="co"># formatting</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/PiephoAugmentedLattice.csv&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ex1dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> ex1dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">form =</span> block <span class="sc">~</span> col <span class="sc">+</span> row <span class="sc">|</span> rep, <span class="co"># fill color per block, headers per replicate</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> geno, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">col  =</span> genoCheck, <span class="co"># different color for check genotypes</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> rep,   <span class="at">out1.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>), <span class="co"># lines between reps</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> block, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>), <span class="co"># lines between blocks</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> F) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
 <p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
@@ -1003,7 +926,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -1021,7 +944,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

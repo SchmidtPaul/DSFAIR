@@ -1,13 +1,17 @@
 # packages
 pacman::p_load(agridat, tidyverse, # data import and handling
+               conflicted,         # handling function conflicts
                emmeans, multcomp,  # mean comparisons
-               ggplot2, desplot,   # plots
-               report)             # automated analysis summaries
+               ggplot2, desplot)   # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("filter", "dplyr")
+conflict_prefer("select", "dplyr")
 
 # data (from agridat package)
 dat <- agridat::bridges.cucumber %>% 
   filter(loc == "Clemson") %>% # subset data from only one location
-  dplyr::select(-loc) # remove loc column which is now unnecessary
+  select(-loc) # remove loc column which is now unnecessary
 
 dat
 
@@ -16,8 +20,8 @@ dat <- dat %>%
   mutate(rowF = row %>% as.factor,
          colF = col %>% as.factor)
 
-desplot(data = dat,
-        form = gen ~ row + col, flip = TRUE,
+desplot(data = dat, flip = TRUE,
+        form = gen ~ row + col, 
         out1 = row, out1.gpar=list(col="black", lwd=3),
         out2 = col, out2.gpar=list(col="black", lwd=3),
         text = gen, cex = 1, shorten = "no",
@@ -94,11 +98,3 @@ ggplot() +
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
-
-dat %>% 
-  dplyr::select(-row, -col) %>% 
-  report() %>% text_short()
-
-mod %>% 
-  anova %>% 
-  report() %>% text_short()

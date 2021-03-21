@@ -1,8 +1,13 @@
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots
+pacman::p_load(tidyverse,         # data import and handling
+               conflicted,        # handling function conflicts
+               lme4, lmerTest,    # linear mixed model 
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot)  # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/John%26Williams1995.csv"
@@ -13,7 +18,7 @@ dat
 dat <- dat %>% 
   mutate_at(vars(plot:gen), as.factor)
 
-desplot(data = dat,
+desplot(data = dat, flip = TRUE,
         form = gen ~ col + row | rep,          # fill color per genotype, headers per replicate
         text = gen, cex = 0.7, shorten = "no", # show genotype names per plot
         out1 = rep,                            # lines between complete blocks/replicates
@@ -79,7 +84,7 @@ mod.rb %>%
 mod.rb %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 
 mod.rb %>% anova(ddf="Kenward-Roger")
 
@@ -89,6 +94,10 @@ mean_comparisons <- mod.rb %>%
           lmer.df = "kenward-roger") %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
+
+# If cld() does not work, try CLD() instead.
+# Add 'adjust="none"' to the emmeans() and cld() statement
+# in order to obtain t-test instead of Tukey!
 
 mean_comparisons$emmeans # adjusted genotype means
 

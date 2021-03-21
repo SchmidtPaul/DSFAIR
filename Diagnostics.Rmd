@@ -37,7 +37,6 @@ Basically, whenever you fit a statistical model to a dataset, you can obtain the
 Take this example dataset with variables `x` and `y` and 29 observations.
 
 <div class = "row"> <div class = "col-md-6">
-
 ```{r}
 dat <- mtcars %>% 
   rename(y = mpg, x = wt) %>% 

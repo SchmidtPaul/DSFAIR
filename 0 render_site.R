@@ -12,6 +12,7 @@ purl_files <- list.files(pattern = ".Rmd") %>%
   filter(Rmd %not_in% c("0contactinfo.Rmd",
                         "0courseprep.Rmd",
                         "DesigningExperiments.Rmd",
+                        "Diagnostics.Rmd",
                         "index.Rmd")) %>% 
   mutate(R = paste0("Rpurl/",str_sub(Rmd, 1, -3)))
 

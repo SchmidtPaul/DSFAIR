@@ -1,5 +1,5 @@
 ---
-title: "Split-plot design"
+title: "Subsampling"
 output: 
   html_document:
     includes:
@@ -16,10 +16,10 @@ pacman::p_load(kableExtra, formattable, htmltools)
 
 ```{r}
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot, see)     # plots
+pacman::p_load(tidyverse,         # data import and handling
+               lme4, lmerTest,    # linear mixed model 
+               emmeans, multcomp, # mean comparisons
+               desplot, see)      # plots
 ```
 
 # Data

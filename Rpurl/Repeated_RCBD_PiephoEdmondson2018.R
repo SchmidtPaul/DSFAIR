@@ -37,29 +37,7 @@ dat %>%
   summarize(mean = mean(y, na.rm=TRUE)) %>% 
   pivot_wider(names_from = weekF, values_from = mean)  
 
-var_colors <- c("#8cb369", "#f4a259", "#5b8e7d", "#bc4b51")
-names(var_colors) <- dat$variety %>% levels()
 
-gganimate_plot <- ggplot(
-  data = dat, aes(y = y, x = weekF,
-                  group = variety,
-                  color = variety)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_point(alpha = 0.5, size = 3) +
-  scale_y_continuous(
-    name = "Leaf area index",
-    limits = c(0, 6.5),
-    expand = c(0, 0),
-    breaks = c(0:6)
-  ) +
-  scale_color_manual(values = var_colors) +
-  theme_bw() +
-  theme(legend.position = "bottom", 
-        axis.title.x = element_blank()) +
-  transition_time(weekN) +
-  shadow_mark(exclude_layer = 2) 
-
-animate(gganimate_plot, renderer = gifski_renderer()) # render gif
 
 dat.wk1 <- dat %>% filter(weekF == "week1") # subset data from first week only
 
@@ -237,36 +215,3 @@ ggplot(data = dat,
   theme_bw() +
   theme(legend.position = "bottom", 
         axis.title.x = element_blank())
-
-mod.AR1 %>% 
-ggeffects::ggemmeans(terms = c("weekF", "variety"),
-                     ci.lvl = 0.95)
-
-glmmTMB(formula = y ~ 0 + 
-          variety + variety:weekN +
-          weekF*block +
-          ar1(weekF + 0 | plot), # ar1 structure as random term to mimic error var
-        dispformula = ~ 0, # fix original error variance to 0
-        REML = TRUE,       # needs to be stated since default = ML
-        data = dat) %>% 
-  ggeffects::ggemmeans(terms = c("weekN", "variety"),
-                       ci.lvl = 0.95) %>% 
-  ggplot(., aes(x=x, 
-                y=predicted)) +
-  scale_color_manual(values = var_colors) +
-  scale_fill_manual(values = var_colors) +
-  theme_bw() +
-  theme(legend.position = "bottom", 
-        axis.title.x = element_blank()) +
-  scale_y_continuous(
-    name = "Leaf area index",
-    limits = c(0, 6.5),
-    expand = c(0, 0),
-    breaks = c(0:6)) +
-  geom_line(aes(colour = group), 
-            size = 1.5) +
-  geom_ribbon(aes(ymin = conf.low, 
-                  ymax = conf.high, 
-                  fill = group), 
-              alpha = 0.2)
-

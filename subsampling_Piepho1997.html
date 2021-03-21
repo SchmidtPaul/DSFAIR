@@ -11,7 +11,7 @@
 
 
 
-<title>Model diagnostics</title>
+<title>Subsampling</title>
 
 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -495,13 +495,7 @@ div.tocify {
       <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
     </li>
     <li>
-      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
-    </li>
-    <li>
       <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
-    </li>
-    <li>
-      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
     </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
@@ -522,9 +516,6 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="DesigningExperiments.html">Designing experiments</a>
-    </li>
-    <li>
-      <a href="Diagnotstics.html">Model diagnostics</a>
     </li>
   </ul>
 </li>
@@ -551,102 +542,150 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Model diagnostics</h1>
+<h1 class="title toc-ignore">Subsampling</h1>
 
 </div>
 
 
-<div id="what-are-residuals" class="section level1">
-<h1>What are residuals?</h1>
-<p>A residual is the difference between the actually observed value (<span class="math inline">\(y\)</span>) for a datapoint and the model’s prediction (<span class="math inline">\(\hat{y}\)</span>) for that datapoint:</p>
-<p><span class="math display">\[ Residual = Observed - Predicted \]</span></p>
-<p><span class="math display">\[ r_i = \hat{e}_i = y_i - \hat{y}_i \]</span></p>
-<p>Basically, whenever you fit a statistical model to a dataset, you can obtain the respective residuals.</p>
-<div id="example" class="section level2">
-<h2>Example</h2>
-<div id="observed" class="section level3">
-<h3>Observed</h3>
-<p>Take this example dataset with variables <code>x</code> and <code>y</code> and 29 observations.</p>
-<div class="row">
-<div class="col-md-6">
-<pre><code>## # A tibble: 29 x 2
-##        x     y
-##    &lt;dbl&gt; &lt;dbl&gt;
-##  1  1.88  21  
-##  2  1.62  21  
-##  3  2.18  22.8
-##  4  1.28  21.4
-##  5  1.06  18.7
-##  6  1.04  18.1
-##  7  0.93  14.3
-##  8  1.31  24.4
-##  9  1.35  22.8
-## 10  1.06  19.2
-## # ... with 19 more rows</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,         <span class="co"># data import and handling</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               lme4, lmerTest,    <span class="co"># linear mixed model </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               emmeans, multcomp, <span class="co"># mean comparisons</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               desplot, see)      <span class="co"># plots</span></span></code></pre></div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>This example is taken from Chapter <em>“4.1 The sorghum experiment”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://acsess.onlinelibrary.wiley.com/doi/abs/10.2134/agronj1997.00021962008900050002x" target="_blank">Piepho (1997)</a> from a greenhouse experiment with sorghum, three intensities of double use of grain and leaves were tested: (1) control (grain only) <code>Ctrl</code>; (2) removal of all leaves except top leaf <code>Top1</code>; (3) removal of all leaves except top six leaves <code>Top6</code>.</p>
+<div id="import" class="section level2">
+<h2>Import</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Piepho1997.csv&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
+<pre><code>## # A tibble: 120 x 6
+##    treat block plant   TKW   row   col
+##    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Ctrl  I         1  41.9     1     5
+##  2 Ctrl  I         2  30.0     2     5
+##  3 Ctrl  I         3  27.8     3     5
+##  4 Ctrl  I         4  29.7     4     5
+##  5 Ctrl  I         5  27.8     5     5
+##  6 Ctrl  I         6  33.9     1     6
+##  7 Ctrl  I         7  34.8     2     6
+##  8 Ctrl  I         8  30       3     6
+##  9 Ctrl  I         9  27.7     4     6
+## 10 Ctrl  I        10  32.7     5     6
+## # ... with 110 more rows</code></pre>
 </div>
-<div class="col-md-6">
-<p><img src="Diagnostics_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div id="formatting" class="section level2">
+<h2>Formatting</h2>
+<p>Before anything, the columns <code>treat</code>, <code>block</code> and <code>plant</code> should be encoded as factors, since R by default encoded them as character. Furthermore, I would like to arrange the factors in a specific order that is different from the default alphabetical order:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(treat, block, plant), as.factor) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treat =</span> <span class="fu">fct_relevel</span>(treat, <span class="fu">c</span>(<span class="st">&quot;Ctrl&quot;</span>, <span class="st">&quot;Top6&quot;</span>, <span class="st">&quot;Top1&quot;</span>)))</span></code></pre></div>
 </div>
-</div>
-</div>
-<div id="predicted" class="section level3">
-<h3>Predicted</h3>
-<p>We here fit a simple model, <em>i.e.</em> a simple linear regression to the dataset. Once we have the model’s estimated coefficients, we can use the model to make predictions via the <code>predict()</code> function. For this simple linear regression, the blue line represents the model prediction for every possible x-value.</p>
-<div class="row">
-<div class="col-md-6">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> dat)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y_hat =</span> <span class="fu">predict</span>(mod)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 3
-##       x     y y_hat
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1.88  21    23.5
-## 2  1.62  21    21.8
-## 3  2.18  22.8  25.6
-## 4  1.28  21.4  19.5
-## 5  1.06  18.7  17.9
-## 6  1.04  18.1  17.8</code></pre>
-</div>
-<div class="col-md-6">
-<p><img src="Diagnostics_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<pre><code>## (Intercept)           x 
-##   10.697137    6.821287</code></pre>
-</div>
-</div>
-</div>
-<div id="residuals" class="section level3">
-<h3>Residuals</h3>
-<p>We here calculate residuals once via the <code>resid()</code> function and once via manually subtracting <code>y - y_hat</code> just to show that it really gives us the same result.</p>
-<div class="row">
-<div class="col-md-6">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resid_1 =</span> y <span class="sc">-</span> y_hat,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">resid_2 =</span> <span class="fu">resid</span>(mod)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
-##       x     y y_hat resid_opt1 resid_opt2
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1  1.88  21    23.5     -2.52      -2.52 
-## 2  1.62  21    21.8     -0.782     -0.782
-## 3  2.18  22.8  25.6     -2.77      -2.77 
-## 4  1.28  21.4  19.5      1.94       1.94 
-## 5  1.06  18.7  17.9      0.772      0.772
-## 6  1.04  18.1  17.8      0.309      0.309</code></pre>
-</div>
-<div class="col-md-6">
-<p><img src="Diagnostics_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-</div>
-</div>
+<div id="exploring" class="section level2">
+<h2>Exploring</h2>
+<p>In order to obtain a layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial. In addition, we I would like to manually choose colors for the three treatments here and stick to them throughout the example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>treat_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ctrl=</span><span class="st">&quot;seagreen&quot;</span>, <span class="at">Top6=</span><span class="st">&quot;seagreen3&quot;</span> , <span class="at">Top1=</span><span class="st">&quot;seagreen2&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> treat <span class="sc">~</span> col <span class="sc">+</span> row <span class="sc">|</span> block,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.regions =</span> treat_colors,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Trial layout&quot;</span>, <span class="at">show.key =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Looking at this, it seems like the trial was laid out as a randomized complete block design with 4 complete blocks. This, however, would mean that we have 3x4=12 observations in our dataset. Yet, our dataset has 120 observations.</p>
+<p>This is because what we are looking at in the plot above are only the 12 trays laid on the 4 tables that stood in the greenhouse. On top of each tray were 10 separate sorghum plant pots, respectively. To make this clear, we can plot this trial again as:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>treat_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ctrl=</span><span class="st">&quot;seagreen&quot;</span>, <span class="at">Top6=</span><span class="st">&quot;seagreen3&quot;</span> , <span class="at">Top1=</span><span class="st">&quot;seagreen2&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> treat <span class="sc">~</span> col <span class="sc">+</span> row <span class="sc">|</span> block,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> plant, <span class="at">cex =</span> <span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">out1 =</span> treat, </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">out2 =</span> plant, <span class="at">out2.gpar=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">&quot;darkgrey&quot;</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.regions =</span> treat_colors,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Trial layout&quot;</span>, <span class="at">show.key =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>At this point we must realize that there is an important difference between this trial and a regular RCBD (randomized complete block design) trial (<a href="RCBD_ClewerScarisbrick2001.html">like this one</a>). It is important to reflect that trays, not pots, are the randomization units. Clearly, pots are pseudo-replications, while trays are true replications. Another way of looking at the experiment is to consider plots (or measurements taken on pots) as repeated measurements on the same experimental unit (tray).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treat) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(TKW, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(TKW, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_missing  =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(TKW))) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   treat  mean std.dev n_missing
+##   &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;int&gt;
+## 1 Ctrl   33.1    4.99         1
+## 2 Top6   31.1    4.36         6
+## 3 Top1   30.6    7.90         4</code></pre>
+<p>We can also create a plot to get a better feeling for the data. We here use the <code>geom_violindot()</code> extension to <code>ggplot2</code> from the <code>see</code> package as an alternative to boxplots.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y=</span>TKW, <span class="at">x=</span>treat, <span class="at">fill=</span>treat)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violindot</span>(<span class="at">fill_dots =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size_dots =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> treat_colors) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
+<div id="modelling" class="section level1">
+<h1>Modelling</h1>
+<p>Because of the way that 10 plants with the same treatment always stand together on a tray, our model ignores the fact that plants from the same tray will be correlated due to common environmental conditions. Clearly, if the treatments are the same on each tray, plants on the same tray are expected to be more similar than plants from different trays. The correlation of plants on the same tray can be modeled by adding a <strong>random tray effect</strong>. Notice that a tray is always all plant pots from one treatment (=<code>treat</code>) on one of the four tables (=<code>block</code>):</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(TKW <span class="sc">~</span> treat <span class="sc">+</span> block <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>block<span class="sc">:</span>treat),</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span>dat)</span></code></pre></div>
+<blockquote>
+<p><strong>Why can’t I just get the mean value per tray and then use these in a regular RCBD analysis? There are four tray means per treatment (one for each block), so the means data has a total of twelve observations.</strong> Ideally, the means would have been computed from ten plants on each tray. However, some observations are missing, so some means are based on only nine or eight observations. It is known the the standard error of a mean decreases with the number of observations, so some means will be more accurate than others. This difference in acuracy cannot be accounted for by a simple analysis of means. In fact, the analysis of means is not strictly valid because heterogeneity of variance is ignored. We will see later how a mixed model can be used for a more refined analysis.</p>
+</blockquote>
+<div id="variance-component-estimates" class="section level2">
+<h2>Variance component estimates</h2>
+<p>We can extract the variance component estimates for our mixed model as follows:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">VarCorr</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(grp, vcov)</span></code></pre></div>
+<pre><code>##           grp     vcov
+## 1 block:treat  1.28148
+## 2    Residual 34.34461</code></pre>
 </div>
-<div id="ok-but-why-do-i-care" class="section level1">
-<h1>Ok, but why do I care?</h1>
-<p>You care because residuals can tell you whether your model is valid or not. Very simply put: If they are “bad” your model’s results may be wrong.</p>
-<p>When fitting a general linear model certain things are assumed to be true</p>
-<p>—&gt; By the ANOVA?</p>
+<div id="anova" class="section level2">
+<h2>ANOVA</h2>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) does not find the <code>treat</code> effects to be statistically significant (p = 0.31 &gt; 0.05).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">anova</span>(<span class="at">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</span></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
+##        Sum Sq Mean Sq NumDF  DenDF F value Pr(&gt;F)
+## treat  97.997  48.999     2 5.9920  1.4265 0.3114
+## block 114.613  38.204     3 5.9689  1.1123 0.4153</code></pre>
+</div>
+<div id="mean-comparisons" class="section level2">
+<h2>Mean comparisons</h2>
+<p>Analogous to the result from the F-test in the ANOVA, the comparing the means does not find any significant differences between the treatment means either:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mod <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> <span class="st">&quot;treat&quot;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust  =</span> <span class="st">&quot;tukey&quot;</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;emmeans&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cld</span>(<span class="at">details =</span> <span class="cn">TRUE</span>, <span class="at">Letters =</span> letters) <span class="co"># add letter display</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>mean_comparisons<span class="sc">$</span>emmeans</span></code></pre></div>
+<pre><code>##  treat emmean   SE   df lower.CL upper.CL .group
+##  Top1    30.6 1.13 6.06     27.9     33.4  a    
+##  Top6    31.2 1.15 6.61     28.4     33.9  a    
+##  Ctrl    33.1 1.10 5.39     30.4     35.9  a    
+## 
+## Results are averaged over the levels of: block 
+## Degrees-of-freedom method: kenward-roger 
+## Confidence level used: 0.95 
+## P value adjustment: tukey method for comparing a family of 3 estimates 
+## significance level used: alpha = 0.05</code></pre>
+<p><strong>R-Code and exercise solutions</strong></p>
+<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<ul>
+<li>the entire R-code of each example combined, including</li>
+<li>solutions to the respective exercise(s).</li>
+</ul>
+</div>
 </div>
 
 &nbsp;

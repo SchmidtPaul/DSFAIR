@@ -13,12 +13,22 @@
 
 <title>Before the workshop</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -77,6 +87,7 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
 <style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
@@ -84,37 +95,12 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      </style>
+    </style>
 
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -125,10 +111,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -145,40 +127,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 54px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h2 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h3 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h4 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h5 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
-.section h6 {
-  padding-top: 59px;
-  margin-top: -59px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -206,7 +161,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -218,7 +173,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -229,10 +184,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -244,7 +212,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -373,13 +340,13 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -425,7 +392,13 @@ div.tocify {
       <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
     </li>
     <li>
+      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+    </li>
+    <li>
       <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+    </li>
+    <li>
+      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
     </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
@@ -447,6 +420,9 @@ div.tocify {
     <li>
       <a href="DesigningExperiments.html">Designing experiments</a>
     </li>
+    <li>
+      <a href="Diagnotstics.html">Model diagnostics</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -460,11 +436,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -508,7 +484,7 @@ div.tocify {
 <ul>
 <li><p><strong>Check you microphone.</strong> Everyone can make free zoom calls (for max. 40 min.), so you could call a friend and figure out whether your microphone works well. If you are simply using your laptop’s or camera’s microphone that’s fine, but notice that you mave have a full functioning headset lying around: the headphones delivered with smartphones often have microphones in them!</p></li>
 <li><p><strong>Check your camera.</strong> This is optional of course, but I do like it when I see as many people as possible looking back at me during the course. It also improves the course as I see your reactions to individual topics.</p></li>
-<li><strong>Check out the options in zoom.</strong>
+<li><p><strong>Check out the options in zoom.</strong></p>
 <ul>
 <li>Know how to use the “mute my microphone” button. It is crucial in an online conference that only those who speak actually turn their microphone on.</li>
 <li>Zoom actually has several functions that are rarely used but could be nice if everyone knew how to use them. A simple one is the chat function which is always on during the course. But you may also share your screen with us if you have a problem or simply give a “thumbs up” directly next to you face. You can also play around with the video settings to hide your background etc. Try to click yourself through the options or watch a youtube tutorial on this!</li>
@@ -547,7 +523,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -565,7 +541,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

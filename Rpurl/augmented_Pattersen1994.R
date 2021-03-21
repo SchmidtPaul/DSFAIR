@@ -5,10 +5,14 @@ pacman::p_load(kableExtra, formattable ,htmltools)
 pacman::p_load(purrr)
 
 # packages
-pacman::p_load(janitor, readr, tidyverse, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots 
+pacman::p_load(tidyverse,        # data import and handling
+               conflicted,       # handling function conflicts
+               lme4, lmerTest,   # linear mixed model 
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot) # plots 
+
+# conflicts: identical function names from different packages
+conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Pattersen1994.csv"
@@ -29,7 +33,7 @@ blue_30_and_orange_3 <- c(blue_30, orange_3) # combine into single vector
 names(blue_30_and_orange_3) <- dat %>% 
   pull(gen) %>% as.character() %>% sort %>% unique
 
-desplot(data = dat,
+desplot(data = dat, flip = TRUE,
         form = gen ~ col + row, # fill color per genotype, headers per replicate
         col.regions = blue_30_and_orange_3,  # custom colors
         text = gen, cex = 1, shorten = "no", # show genotype names per plot
@@ -95,6 +99,10 @@ mean_comparisons <- mod.fb %>%
   pluck("emmeans") %>%
   cld(details = TRUE, Letters = letters) # add letter display
 
+# If cld() does not work, try CLD() instead.
+# Add 'adjust="none"' to the emmeans() and cld() statement
+# in order to obtain t-test instead of Tukey!
+
 mean_comparisons$emmeans # adjusted genotype means
 
 # genotypes ordered by mean yield
@@ -155,7 +163,7 @@ ggplot() +
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/PiephoAugmentedLattice.csv"
 ex1dat <- read_csv(dataURL)
 
-desplot(data = ex1dat,
+desplot(data = ex1dat, flip = TRUE,
         form = block ~ col + row | rep, # fill color per block, headers per replicate
         text = geno, cex = 0.75, shorten = "no", # show genotype names per plot
         col  = genoCheck, # different color for check genotypes

@@ -1,8 +1,8 @@
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot,          # plots
-               report, equatiomatic)      # automated analysis summaries
+pacman::p_load(tidyverse,        # data import and handling
+               conflicted,       # handling function conflicts
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot) # plots
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993.csv"
@@ -13,16 +13,10 @@ dat
 dat <- dat %>% 
   mutate_at(vars(variety), as.factor)
 
-desplot(data = dat,
-        form = variety ~ col + row,              # fill color per genotype, headers per replicate
+desplot(data = dat, flip = TRUE,
+        form = variety ~ col + row,              # fill color per genotype
         text = variety, cex = 1, shorten = "no", # show genotype names per plot
         main = "Field layout", show.key = F)     # formatting
-
-dat %>% 
-  arrange(variety, yield) %>% 
-  dplyr::select(variety, yield) %>% 
-  pivot_wider(names_from = variety, values_from = yield) %>% 
-  unnest()
 
 dat %>% 
   group_by(variety) %>% 
@@ -40,9 +34,13 @@ mod <- lm(yield ~ variety, data = dat)
 mod %>% anova()
 
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "variety", adjust="tukey") %>% # adjust="none" for t-test
+  emmeans(pairwise ~ "variety", adjust="tukey") %>% 
   pluck("emmeans") %>% 
   cld(details=TRUE, Letters=letters) # add letter display
+
+# If cld() does not work, try CLD() instead.
+# Add 'adjust="none"' to the emmeans() and cld() statement
+# in order to obtain t-test instead of Tukey!
 
 mean_comparisons$emmeans # adjusted variety means
 
@@ -83,18 +81,6 @@ ggplot() +
        Red dots and error bars represent adjusted mean with 95% confidence limits per variety
        Means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_classic() # clearer plot format 
-
-dat %>% 
-  dplyr::select(-row, -col) %>% 
-  report() %>% text_short()
-
-mod %>% extract_eq()
-
-mod %>% report() %>% text_short()
-
-mod %>% 
-  anova %>% 
-  report() %>% text_short()
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993b.csv"

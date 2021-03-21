@@ -1,8 +1,8 @@
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot, see)     # plots
+pacman::p_load(tidyverse,         # data import and handling
+               lme4, lmerTest,    # linear mixed model 
+               emmeans, multcomp, # mean comparisons
+               desplot, see)      # plots
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Piepho1997.csv"
