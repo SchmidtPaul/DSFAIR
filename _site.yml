@@ -33,6 +33,8 @@ navbar:
           href: Repeated_RCBD_PiephoEdmondson2018.html
     - text: "Summaries"
       menu:
+      - text: "Compact Letter Display"
+        href: compactletterdisplay.html
       - text: "Designing experiments"
         href: DesigningExperiments.html
     - text: "Contact"

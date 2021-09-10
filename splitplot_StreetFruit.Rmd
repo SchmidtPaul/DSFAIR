@@ -1,10 +1,11 @@
 ---
 title: "A peculiar split-plot design"
-output: 
+output:
+  pdf_document: default
   html_document:
     includes:
+      after_body: footer.html
       in_header: header.html
-      after_body: footer.html		
 ---
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}

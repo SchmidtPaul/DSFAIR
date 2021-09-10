@@ -7,7 +7,7 @@ output:
       after_body: footer.html		
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 # formatting tables for html output
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 options(knitr.kable.NA = '')
