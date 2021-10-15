@@ -2,11 +2,12 @@
 pacman::p_load(tidyverse,         # data import and handling
                conflicted,        # handling function conflicts
                lme4, lmerTest,    # linear mixed model 
-               emmeans, multcomp, multcompView, # mean comparisons
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
                ggplot2, desplot)  # plots
 
 # conflicts: identical function names from different packages
 conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
 conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
@@ -47,8 +48,8 @@ plotdata <- dat %>%
 
 ggplot(data = plotdata, 
        aes(x = gen)) +
+  geom_point(aes(y = mean_yield), color = "cornflowerblue", size = 2) + # scatter plot mean
   geom_point(aes(y = yield, shape = rep)) +  # scatter plot observed
-  geom_point(aes(y = mean_yield), color = "cornflowerblue") + # scatter plot mean
   ylim(0, NA) +   # force y-axis to start at 0
   labs(caption = "Blue dots represent arithmetic mean per genotype") +
   theme_classic() + # clearer plot format 
@@ -60,26 +61,21 @@ mod.fb <- lm(yield ~ gen + rep +
              data = dat)
 
 mod.fb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey") %>%
-  pluck("contrasts") %>% # extract diffs
-  as_tibble %>% # format to table
-  pull("SE") %>% # extract s.e.d. column
-  mean() # get arithmetic mean
+  emmeans(specs = "gen") %>% # get adjusted means
+  contrast(method = "pairwise") %>% # get differences between adjusted means
+  as_tibble() %>% # format to table
+  summarise(mean(SE)) # mean of SE (=Standard Error) column
 
 # blocks as random (linear mixed model)
 mod.rb <- lmer(yield ~ gen + rep +
                  (1 | rep:inc.block),
                data = dat)
-
 mod.rb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("contrasts") %>% # extract diffs
-  as_tibble %>% # format to table
-  pull("SE") %>% # extract s.e.d. column
-  mean() # get arithmetic mean
+  emmeans(specs = "gen", 
+          lmer.df = "kenward-roger") %>% # get adjusted means
+  contrast(method = "pairwise") %>% # get differences between adjusted means
+  as_tibble() %>% # format to table
+  summarise(mean(SE)) # mean of SE (=Standard Error) column
 
 mod.rb %>% 
   VarCorr() %>% 
@@ -89,34 +85,35 @@ mod.rb %>%
 mod.rb %>% anova(ddf="Kenward-Roger")
 
 mean_comparisons <- mod.rb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = "gen",
+          lmer.df = "kenward-roger") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-# If cld() does not work, try CLD() instead.
-# Add 'adjust="none"' to the emmeans() and cld() statement
-# in order to obtain t-test instead of Tukey!
+mean_comparisons
 
-mean_comparisons$emmeans # adjusted genotype means
+# resort gen factor according to adjusted mean
+mean_comparisons <- mean_comparisons %>% 
+  mutate(gen = fct_reorder(gen, emmean))
+
+plotdata2 <- dat %>% 
+  mutate(gen = fct_relevel(gen, levels(mean_comparisons$gen)))
 
 ggplot() +
   # black dots representing the raw data
   geom_point(
-    data = plotdata,
+    data = plotdata2,
     aes(y = yield, x = gen)
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = gen),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = gen),
     color = "red",
     width = 0.1,
@@ -124,8 +121,8 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = mean_comparisons$emmeans,
-    aes(y = lower.CL, x = gen, label = .group),
+    data = mean_comparisons,
+    aes(y = lower.CL, x = gen, label = str_trim(.group)),
     color = "red",
     angle = 90,
     hjust = 1,

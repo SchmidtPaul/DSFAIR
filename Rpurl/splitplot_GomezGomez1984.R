@@ -1,8 +1,14 @@
 # packages
-pacman::p_load(readr, tidyverse, forcats, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots
+pacman::p_load(readr, tidyverse, # data import and handling
+               conflicted,       # handling function conflicts
+               lme4, lmerTest,   # linear mixed model 
+               emmeans, multcomp, multcompView, # mean comparisons
+               ggplot2, desplot) # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Gomez%26Gomez1984.csv"
@@ -16,7 +22,7 @@ dat <- dat %>%
 desplot(data = dat,
         form = rep ~ col + row | rep, # fill color per rep, headers per rep
         text = G, cex = 1, shorten = "no", # show genotype names per plot
-        col = N, # color of genotype names for each N-level
+        col  = N, # color of genotype names for each N-level
         out1 = mainplot, out1.gpar = list(col = "black"), # lines between mainplots
         out2 = row, out2.gpar = list(col = "darkgrey"), # lines between rows
         main = "Field layout", show.key = TRUE, key.cex = 0.7) # formatting
@@ -51,30 +57,26 @@ mod <- lmer(yield ~ G + N + G:N +
 mod %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 
 mod %>% anova(ddf="Kenward-Roger")
 
 all_mean_comparisons <- mod %>%
-  emmeans(pairwise ~ N:G,
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = ~ N * G, 
+          lmer.df = "kenward-roger") %>% 
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-all_mean_comparisons$emmeans # adjusted means
+all_mean_comparisons # adjusted means
 
 withinG_mean_comparisons <- mod %>%
-  emmeans(pairwise ~ N | G,
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = ~ N | G,
+          lmer.df = "kenward-roger") %>% 
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-withinG_mean_comparisons$emmeans # adjusted means
+withinG_mean_comparisons # adjusted means
 
-formatted_emmeans <- withinG_mean_comparisons$emmeans %>% 
-  as_tibble()
+# reformatting needed for ggplot
+withinG_mean_comparisons <- as_tibble(withinG_mean_comparisons)
 
 ggplot() +
   facet_grid(~G) +
@@ -85,14 +87,14 @@ ggplot() +
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = formatted_emmeans,
+    data = withinG_mean_comparisons,
     aes(y = emmean, x = N),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = formatted_emmeans,
+    data = withinG_mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = N),
     color = "red",
     width = 0.1,
@@ -100,7 +102,7 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = formatted_emmeans,
+    data = withinG_mean_comparisons,
     aes(y = lower.CL, x = N, label = .group),
     color = "red",
     angle = 90,
@@ -113,6 +115,6 @@ ggplot() +
   labs(caption = "The four facettes represent genotypes A, B, C and D
        Black dots represent raw data
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype-nitrogen level combination
-       Per genotype, means followed by a common letter are not significantly different according to the Tukey-test and within") +
+       Separaetly per genotype, means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_bw() + # clearer plot format 
   theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis label

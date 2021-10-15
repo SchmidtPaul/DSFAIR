@@ -1,8 +1,14 @@
 # packages
-pacman::p_load(janitor, readr, tidyverse, # data import and handling
-               lme4, lmerTest,            # linear mixed model 
-               emmeans, multcomp,         # mean comparisons
-               ggplot2, desplot)          # plots 
+pacman::p_load(janitor, tidyverse, # data import and handling
+               conflicted,         # handling function conflicts
+               lme4, lmerTest,     # linear mixed model 
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
+               ggplot2, desplot)   # plots 
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Kempton%26Fox1997.csv"
@@ -48,12 +54,10 @@ mod.fb <- lm(yield ~ gen + rep +
              data = dat)
 
 mod.fb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey") %>%
-  pluck("contrasts") %>% # extract diffs
-  as_tibble %>% # format to table
-  pull("SE") %>% # extract s.e.d. column
-  mean() # get arithmetic mean
+  emmeans(specs = "gen") %>% # get adjusted means
+  contrast(method = "pairwise") %>% # get differences between adjusted means
+  as_tibble() %>% # format to table
+  summarise(mean(SE)) # mean of SE (=Standard Error) column
 
 # rows and cols random (linear mixed model)
 mod.rb <- lmer(yield ~ gen + rep +
@@ -62,56 +66,50 @@ mod.rb <- lmer(yield ~ gen + rep +
                data = dat)
 
 mod.rb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("contrasts") %>% # extract diffs
-  as_tibble %>% # format to table
-  pull("SE") %>% # extract s.e.d. column
-  mean() # get arithmetic mean
+  emmeans(specs = "gen", 
+          lmer.df = "kenward-roger") %>% # get adjusted means
+  contrast(method = "pairwise") %>% # get differences between adjusted means
+  as_tibble() %>% # format to table
+  summarise(mean(SE)) # mean of SE (=Standard Error) column
 
 mod.rb %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 
 mod.rb %>% anova(ddf="Kenward-Roger")
 
 mean_comparisons <- mod.rb %>%
-  emmeans(pairwise ~ "gen",
-          adjust = "tukey",
-          lmer.df = "kenward-roger") %>%
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = "gen",
+          lmer.df = "kenward-roger") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-mean_comparisons$emmeans # adjusted genotype means
+mean_comparisons
 
-# sort gen factors according to emmean
-# for adjusted means
-mean_comparisons$emmeans <- mean_comparisons$emmeans %>% 
-  mutate(gen = fct_reorder(.f = gen, .x = emmean))
+# resort gen factor according to adjusted mean
+mean_comparisons <- mean_comparisons %>% 
+  mutate(gen = fct_reorder(gen, emmean))
 
 # for raw data
-dat <- dat %>% 
-  mutate(gen = fct_relevel(.f = gen, 
-                           as.character(mean_comparisons$emmeans$gen)))
+plotdata <- dat %>% 
+  mutate(gen = fct_relevel(gen, levels(mean_comparisons$gen)))
 
 ggplot() +
   # black dots representing the raw data
   geom_point(
-    data = dat,
+    data = plotdata,
     aes(y = yield, x = gen)
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = gen),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = gen),
     color = "red",
     width = 0.1,
@@ -119,7 +117,7 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = lower.CL, x = gen, label = .group),
     color = "red",
     angle = 90,
@@ -169,7 +167,7 @@ ex1dat <- read_csv(dataURL)
 ## mod.rb %>%
 ##   VarCorr() %>%
 ##   as.data.frame() %>%
-##   dplyr::select(grp, vcov)
+##   select(grp, vcov)
 ## 
 ## # Compute an ANOVA
 ## mod.rb %>% anova(ddf="Kenward-Roger")

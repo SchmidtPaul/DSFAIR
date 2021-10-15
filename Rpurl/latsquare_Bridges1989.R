@@ -1,8 +1,8 @@
 # packages
 pacman::p_load(agridat, tidyverse, # data import and handling
-               conflicted,         # handling function conflicts
-               emmeans, multcomp,  # mean comparisons
-               ggplot2, desplot)   # plots
+               conflicted, # handling function conflicts
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
+               ggplot2, desplot) # plots
 
 # conflicts: identical function names from different packages
 conflict_prefer("filter", "dplyr")
@@ -55,13 +55,10 @@ mod <- lm(yield ~ gen + rowF + colF, data = dat)
 mod %>% anova()
 
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "gen", adjust="tukey") %>% # adjust="none" for t-test
-  pluck("emmeans") %>% 
-  cld(details=TRUE, Letters=letters) # add letter display
+  emmeans(specs = "gen") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-mean_comparisons$emmeans # adjusted genotype means
-
-mean_comparisons$comparisons # differences between adjusted genotype means 
+mean_comparisons
 
 ggplot() +
   # black dots representing the raw data
@@ -71,14 +68,14 @@ ggplot() +
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = gen),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = gen),
     color = "red",
     width = 0.1,
@@ -86,7 +83,7 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = gen, label = .group),
     color = "red",
     position = position_nudge(x = 0.2)

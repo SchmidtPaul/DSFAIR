@@ -1,8 +1,14 @@
 # packages
 pacman::p_load(tidyverse,         # data import and handling
+               conflicted,        # handling function conflicts
                lme4, lmerTest,    # linear mixed model 
-               emmeans, multcomp, # mean comparisons
-               desplot, see)      # plots
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
+               ggplot2, desplot, see) # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Piepho1997.csv"
@@ -42,7 +48,7 @@ dat %>%
 ggplot(data = dat, 
        aes(y=TKW, x=treat, fill=treat)) +
   geom_violindot(fill_dots = "black", size_dots = 15) +
-  scale_fill_manual(values = treat_colors) +
+  scale_fill_manual(name = "Treatment", values = treat_colors) +
   ylim(0, NA) +
   theme_modern()
 
@@ -52,15 +58,54 @@ mod <- lmer(TKW ~ treat + block + (1|block:treat),
 mod %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 
 mod %>% anova(ddf="Kenward-Roger")
 
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "treat",
-          adjust  = "tukey",
-          lmer.df = "kenward-roger") %>% 
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = "treat",
+          lmer.df = "kenward-roger") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-mean_comparisons$emmeans
+mean_comparisons
+
+ggplot() +
+  # black dots representing the raw data
+  geom_violindot(
+    data = dat,
+    aes(y = TKW, x = treat, fill = treat),
+    fill_dots = "black",
+    size_dots = 15
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons,
+    aes(y = emmean, x = treat),
+    color = "red",
+    position = position_nudge(x = - 0.2)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons,
+    aes(ymin = lower.CL, ymax = upper.CL, x = treat),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = - 0.2)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons,
+    aes(y = emmean, x = treat, label = str_trim(.group)),
+    color = "red",
+    hjust = 1,
+    position = position_nudge(x = -0.3)
+  ) + 
+  scale_fill_manual(name = "Treatment", values = treat_colors) +
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Treatment") +      # label x-axis
+  labs(caption = "Black dots represent raw data
+       Red dots and error bars represent adjusted mean with 95% confidence limits per treatment
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() + # clearer plot format 
+  theme(plot.caption.position = "plot")

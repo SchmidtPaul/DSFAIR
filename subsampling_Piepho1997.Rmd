@@ -17,9 +17,15 @@ pacman::p_load(kableExtra, formattable, htmltools)
 ```{r}
 # packages
 pacman::p_load(tidyverse,         # data import and handling
+               conflicted,        # handling function conflicts
                lme4, lmerTest,    # linear mixed model 
-               emmeans, multcomp, # mean comparisons
-               desplot, see)      # plots
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
+               ggplot2, desplot, see) # plots
+
+# conflicts: identical function names from different packages
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lmer", "lmerTest")
 ```
 
 # Data
@@ -95,7 +101,7 @@ We can also create a plot to get a better feeling for the data. We here use the 
 ggplot(data = dat, 
        aes(y=TKW, x=treat, fill=treat)) +
   geom_violindot(fill_dots = "black", size_dots = 15) +
-  scale_fill_manual(values = treat_colors) +
+  scale_fill_manual(name = "Treatment", values = treat_colors) +
   ylim(0, NA) +
   theme_modern()
 ```
@@ -120,7 +126,7 @@ We can extract the variance component estimates for our mixed model as follows:
 mod %>% 
   VarCorr() %>% 
   as.data.frame() %>% 
-  dplyr::select(grp, vcov)
+  select(grp, vcov)
 ```
 
 ## ANOVA
@@ -137,13 +143,62 @@ Analogous to the result from the F-test in the ANOVA, the comparing the means do
 
 ```{r}
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "treat",
-          adjust  = "tukey",
-          lmer.df = "kenward-roger") %>% 
-  pluck("emmeans") %>%
-  cld(details = TRUE, Letters = letters) # add letter display
+  emmeans(specs = "treat",
+          lmer.df = "kenward-roger") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-mean_comparisons$emmeans
+mean_comparisons
+```
+
+Note that if you would like to see the underyling individual contrasts/differences between adjusted means, simply add `details = TRUE` to the `cld()` statement. Also, find more information on mean comparisons and the Compact Letter Display in the separate [Compact Letter Display Chapter](compactletterdisplay.html)
+
+# Present results
+
+## Mean comparisons
+
+For this example we can create a plot that displays both the raw data and the results, *i.e.* the comparisons of the adjusted means that are based on the linear model. If you would rather have e.g. a bar plot to show these results, check out the separate [Compact Letter Display Chapter](compactletterdisplay.html)
+
+```{r, fig.width=5, fig.height=4, fig.align = "center", class.source = 'fold-hide'}
+ggplot() +
+  # black dots representing the raw data
+  geom_violindot(
+    data = dat,
+    aes(y = TKW, x = treat, fill = treat),
+    fill_dots = "black",
+    size_dots = 15
+  ) +
+  # red dots representing the adjusted means
+  geom_point(
+    data = mean_comparisons,
+    aes(y = emmean, x = treat),
+    color = "red",
+    position = position_nudge(x = - 0.2)
+  ) +
+  # red error bars representing the confidence limits of the adjusted means
+  geom_errorbar(
+    data = mean_comparisons,
+    aes(ymin = lower.CL, ymax = upper.CL, x = treat),
+    color = "red",
+    width = 0.1,
+    position = position_nudge(x = - 0.2)
+  ) +
+  # red letters 
+  geom_text(
+    data = mean_comparisons,
+    aes(y = emmean, x = treat, label = str_trim(.group)),
+    color = "red",
+    hjust = 1,
+    position = position_nudge(x = -0.3)
+  ) + 
+  scale_fill_manual(name = "Treatment", values = treat_colors) +
+  ylim(0, NA) + # force y-axis to start at 0
+  ylab("Yield in t/ha") + # label y-axis
+  xlab("Treatment") +      # label x-axis
+  labs(caption = "Black dots represent raw data
+       Red dots and error bars represent adjusted mean with 95% confidence limits per treatment
+       Means followed by a common letter are not significantly different according to the Tukey-test") +
+  theme_classic() + # clearer plot format 
+  theme(plot.caption.position = "plot")
 ```
 
 **R-Code and exercise solutions**

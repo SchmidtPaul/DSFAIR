@@ -13,8 +13,8 @@
 
 <title>Repeated Measures RCBD</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -444,12 +444,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -521,6 +521,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="compactletterdisplay.html">Compact Letter Display</a>
+    </li>
+    <li>
       <a href="DesigningExperiments.html">Designing experiments</a>
     </li>
   </ul>
@@ -554,15 +557,22 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(conflicted, <span class="co"># handle conflicting functions</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               agriTutorial, tidyverse,  <span class="co"># data import and handling</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               nlme, glmmTMB, <span class="co"># linear mixed modelling</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               mixedup, AICcmodavg, car, <span class="co"># linear mixed model processing</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               emmeans, multcomp, <span class="co"># mean comparisons</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               ggplot2, gganimate, gifski)  <span class="co"># (animated) plots </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the package &quot;mixedup&quot; is not on CRAN, so that you must install</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># it once with the following code:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_envvar</span>(<span class="fu">c</span>(<span class="at">R_REMOTES_NO_ERRORS_FROM_WARNINGS =</span> <span class="st">&quot;true&quot;</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&#39;m-clark/mixedup&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) <span class="co"># set select() from dplyr as default</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) <span class="co"># set filter() from dplyr as default</span></span></code></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(agriTutorial, tidyverse,  <span class="co"># data import and handling</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>               conflicted, <span class="co"># handle conflicting functions</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>               nlme, glmmTMB, <span class="co"># linear mixed modelling</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>               mixedup, AICcmodavg, car, <span class="co"># linear mixed model processing</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>               emmeans, multcomp, multcompView, <span class="co"># mean comparisons</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>               ggplot2, gganimate, gifski)  <span class="co"># (animated) plots </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) <span class="co"># set select() from dplyr as default</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) <span class="co"># set filter() from dplyr as default</span></span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>The example in this chapter is taken from <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank"><em>Example 4</em> in Piepho &amp; Edmondson (2018)</a> (see also the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>). It considers data from a sorghum trial laid out as a randomized complete <code>block</code> design (5 blocks) with <code>variety</code> (4 sorghum varities) being the only treatment factor. Thus, we have a total of 20 <code>plot</code>s. It is important to note that our response variable (<code>y</code>), <strong>the leaf area index, was assessed in five consecutive weeks on each plot</strong> starting 2 weeks after emergence. Therefore, the dataset contains a total of 100 values and what we have here is longitudinal data, <em>a.k.a.</em> repeated measurements over time, <em>a.k.a.</em> a time series analysis.</p>
@@ -571,7 +581,7 @@ div.tocify {
 <div id="import-formatting" class="section level2">
 <h2>Import &amp; Formatting</h2>
 <p>Note that I here decided to give more intuitive names and labels, but this is optional. We also create a column <code>unit</code> with one factor level per observation, which will be needed later when using <code>glmmTMB()</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data - reformatting agriTutorial::sorghum</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> agriTutorial<span class="sc">::</span>sorghum <span class="sc">%&gt;%</span> <span class="co"># data from agriTutorial package</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">block =</span> Replicate, </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">weekF =</span> factweek,  <span class="co"># week as factor</span></span>
@@ -702,9 +712,9 @@ div.tocify {
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract variance component estimates</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.iid %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>mod.iid <span class="sc">%&gt;%</span> mixedup<span class="sc">::</span><span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>) </span></code></pre></div>
-<pre><code>##         group    effect variance    sd var_2.5 var_97.5 var_prop
-## unit     unit Intercept    0.023 0.152   0.016    0.033        1
-## 1    Residual              0.000 0.000      NA       NA        0</code></pre>
+<pre><code>##      group    effect variance    sd var_2.5 var_97.5 var_prop
+## 1     unit Intercept    0.023 0.152   0.016    0.033        1
+## 2 Residual              0.000 0.000      NA       NA        0</code></pre>
 <p>As expected, we find the residual variance to be 0 and instead we have the mimiced homoscedastic, independent error variance for the random <code>(1 | unit)</code> effect estimated as 0.023.</p>
 </div>
 <div id="nlme" class="section level3">
@@ -1157,6 +1167,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

@@ -1,9 +1,3 @@
-# formatting tables for html output
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-options(knitr.kable.NA = '')
-pacman::p_load(kableExtra, formattable ,htmltools)
-pacman::p_load(purrr)
-
 # packages
 pacman::p_load(tidyverse,        # data import and handling
                conflicted,       # handling function conflicts

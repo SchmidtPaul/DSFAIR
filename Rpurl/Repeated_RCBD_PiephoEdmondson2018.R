@@ -1,15 +1,22 @@
 # packages
-pacman::p_load(conflicted, # handle conflicting functions
-               agriTutorial, tidyverse,  # data import and handling
+
+# the package "mixedup" is not on CRAN, so that you must install
+# it once with the following code:
+withr::with_envvar(c(R_REMOTES_NO_ERRORS_FROM_WARNINGS = "true"),
+  remotes::install_github('m-clark/mixedup')
+)
+
+pacman::p_load(agriTutorial, tidyverse,  # data import and handling
+               conflicted, # handle conflicting functions
                nlme, glmmTMB, # linear mixed modelling
                mixedup, AICcmodavg, car, # linear mixed model processing
-               emmeans, multcomp, # mean comparisons
+               emmeans, multcomp, multcompView, # mean comparisons
                ggplot2, gganimate, gifski)  # (animated) plots 
 
 conflict_prefer("select", "dplyr") # set select() from dplyr as default
 conflict_prefer("filter", "dplyr") # set filter() from dplyr as default
 
-# data (import via URL)
+# data - reformatting agriTutorial::sorghum
 dat <- agriTutorial::sorghum %>% # data from agriTutorial package
   rename(block = Replicate, 
          weekF = factweek,  # week as factor

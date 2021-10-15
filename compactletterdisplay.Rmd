@@ -16,11 +16,11 @@ library(kableExtra)
 
 # What is it?
 
-Compact letter displays are often used to report results of all pairwise comparisons among treatment means in comparative experiments. See [Piepho (2018)](https://www.researchgate.net/publication/322054734_Letters_in_Mean_Comparisons_What_They_Do_and_Don't_Mean) for more details and scroll down for a coding example.
+Compact letter displays are often used to report results of all pairwise comparisons among treatment means in comparative experiments. See [Piepho (2004)](https://doi.org/10.1198/1061860043515) and [Piepho (2018)](https://www.researchgate.net/publication/322054734_Letters_in_Mean_Comparisons_What_They_Do_and_Don't_Mean) for more details and find a coding example below.
 
 ```{r, echo=FALSE, results='asis'}
 pacman::p_load(emmeans, multcomp, multcompView,
-               scales, flextable,
+               scales,
                tidyverse)
 
 model <- lm(weight ~ group, data = PlantGrowth)
@@ -45,7 +45,7 @@ model_means_cld %>%
     )
   ) %>%
   kbl(escape = F) %>% 
-  kable_paper("hover", position = "left", full_width = FALSE)
+  kable_classic_2("hover", position = "left", full_width = FALSE)
 
 ```
 
@@ -87,7 +87,7 @@ model_means_cld %>%
 
 You will need to install the packages `{emmeans}`, `{multcomp}` and `{multcompView}`. The example given here is based on the `PlantGrowth` data, which is included in R. 
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 library(emmeans)
 library(multcomp)
 library(multcompView)
@@ -95,13 +95,13 @@ library(multcompView)
 # set up model
 model <- lm(weight ~ group, data = PlantGrowth)
 
-# get weight means per group
+# get (adjusted) weight means per group
 model_means <- emmeans(object = model,
-                       pairwise ~ "group",
-                       adjust = "tukey")
+                       specs = "group")
 
 # add letters to each mean
-model_means_cld <- cld(object = model_means$emmeans,
+model_means_cld <- cld(object = model_means,
+                       adjust = "Tukey",
                        Letters = letters,
                        alpha = 0.05)
 
@@ -111,18 +111,20 @@ model_means_cld
 
 As you can see, 
 
-  1. We set up a model using `lm()`
-     * This is a very simple example. You may use much more complex models and [many other model classes](https://cran.r-project.org/web/packages/emmeans/vignettes/models.html).
-  2. [`emmeans()`](https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/emmeans) estimates means per group
-     * It allows for [different multiplicity adjustments](https://cran.r-project.org/web/packages/emmeans/vignettes/confidence-intervals.html#adjust). Go to the "P-value adjustments" heading within the ["summary.emmGrid" section in the emmeans documentation](https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/summary.emmGrid) for more details on e.g. t-test, Tukey-test, Bonferroni adjustment etc.
+  1. We set up a model
+     * This is a very simple example using `lm()`. You may use much more complex models and [many other model classes](https://cran.r-project.org/web/packages/emmeans/vignettes/models.html).
+  2. [`emmeans()`](https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/emmeans) estimates adjusted means per group. 
+     * Note that when doing this for mixed models, one should use the Kenward-Roger method adjusting the denominator degrees of freedom. One may add the `lmer.df = "kenward-roger"` argument, yet this is the default in {emmeans} ([Details here](https://cran.r-project.org/web/packages/emmeans/vignettes/sophisticated.html#lmerOpts))! Also note that you cannot go wrong with this adjustment - even if there is nothing to adjust.
   3. [`cld()`](https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld) adds the letters in a new column named `.group`.
      * The `alpha =` argument lets you choose the significance level for the comparisons.
+     * It allows for [different multiplicity adjustments](https://cran.r-project.org/web/packages/emmeans/vignettes/confidence-intervals.html#adjust). Go to the "P-value adjustments" heading within the ["summary.emmGrid" section in the emmeans documentation](https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/summary.emmGrid) for more details on e.g. t-test, Tukey-test, Bonferroni adjustment etc.
+        + If you are confused about the `Note: adjust = "tukey" was changed to "sidak"` combined with the two lines `Conf-level adjustment: sidak method for 3 estimates.` `P value adjustment: tukey method for comparing a family of 3 estimates` in the result, [here](https://stats.stackexchange.com/questions/508055/unclear-why-adjust-tukey-was-changed-to-sidak) is an answer explaining why this happens and that it is not a problem. It is not a problem in the sense that the p-values of the pairwise comparisons were indeed adjusted with the Tukey-method, while the Sidak adjustment was applied to the confidence intervals of the means (*i.e.* columns `lower.CL` and `upper.CL`). 
      
 ## interpret the letters
 
-By default, the `NOTE:` seen in the output above warns of how the CLD can be misleading. The author and maintainer of the `{emmeans}` package, [Russell V. Lenth](http://homepage.divms.uiowa.edu/~rlenth/) makes the argument that CLDs convey information in a way that may be misleading to the reader. This is because they "display non-findings rather than findings - they group together means based on NOT being able to show they are different" (personal communication). Furthermore, "[the CLD approach] works, but it is very black-and-white: with alpha = .05, P values slightly above or below .05 make a difference, but there's no difference between a P value of .051 and one of .987, or between .049 and .00001" ([posted here](https://github.com/rvlenth/emmeans/issues/93#issuecomment-468877941)). Furthermore, the `NOTE:` suggests using alternative plots, which are also created below.
+By default, the `NOTE:` seen in the output above warns of how the CLD can be misleading. The author and maintainer of the `{emmeans}` package, [Russell V. Lenth](http://homepage.divms.uiowa.edu/~rlenth/) makes the argument that CLDs convey information in a way that may be misleading to the reader. This is because they "display non-findings rather than findings - they group together means based on NOT being able to show they are different" (personal communication). Furthermore, "[the CLD approach] works, but it is very black-and-white: with alpha = .05, P values slightly above or below .05 make a difference, but there's no difference between a P value of .051 and one of .987, or between .049 and .00001" ([posted here](https://github.com/rvlenth/emmeans/issues/93#issuecomment-468877941)). He even [wrote here](https://stats.stackexchange.com/a/508092/192956) that "Providing for CLDs at all remains one of my biggest regrets in developing this package". Finally, the `NOTE:` suggests using alternative plots, which are also created below.
 
-On the other hand, it must be clear that the information conveyed by CLDs is not *wrong* as long as it is interpreted correctly. The [documentation of the `cld()` function](https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld) refers to [Piepho (2004)](https://doi.org/10.1198/1061860043515), but even more on point in this context is
+On the other hand, it must be clear that the information conveyed by CLDs is not *wrong* as long as it is interpreted correctly. The [documentation of the `cld()` function](https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld) refers to [Piepho (2004)](https://doi.org/10.1198/1061860043515), but even more on point in this context is the following publication:
 
 > <br>
 >
@@ -292,12 +294,16 @@ ggplot() +
   )
 ```
 
+## Alternative plots
+
+Note that I simply collect alternative ways of plotting adjusted mean comparisons here - this does not mean I fully grasp their concept.
+
 ### alt 1: Pairwise P-value plot
 
 This is the Pairwise P-value plot suggested in the NOTE we received above as an alternative. The documentation reads: *Factor levels (or combinations thereof) are plotted on the vertical scale, and P values are plotted on the horizontal scale. Each P value is plotted twice – at vertical positions corresponding to the levels being compared – and connected by a line segment. Thus, it is easy to visualize which P values are small and large, and which levels are compared.*
 
 ```{r, fig.width=5, fig.height=4, class.source = 'fold-hide'}
-pwpp(model_means$emmeans) + theme_bw()
+pwpp(model_means) + theme_bw()
 ```
 
 ### alt 2: Lighthouse plot {easystats}

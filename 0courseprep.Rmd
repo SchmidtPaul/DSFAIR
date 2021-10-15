@@ -1,5 +1,5 @@
 ---
-title: "Before the workshop"
+title: "Before a workshop"
 output: 
   html_document:
     includes:
@@ -14,7 +14,7 @@ options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable ,htmltools)
 ```
 
-Hi there! If you are reading this, you will most likely soon participate in an R-workshop given by me. Thank you - I am already looking forward to it! Here I would briefly like to give you some help and tips with the preparation for this course.
+Hi there! If you are reading this, you will most likely soon participate in a R-workshop given by me. Thank you - I am already looking forward to it! Here I would briefly like to give you some help and tips with the preparation for this course.
 
 # For any workshop
 
@@ -26,7 +26,7 @@ In order to use R, it may be necessary to install it first. Notice that when I s
 
 Therefore, you need to install both! It is not that complicated and there are many tutorials on how to do it - for example [this one from RStudio](https://rstudio-education.github.io/hopr/starting.html){target="_blank"}.
 
-If you already have R on your computer, but it has been a long time since you have used it, you may just try to update it. [Here is a tutorial](url){target="_blank"} on how to do just that.
+If you already have R on your computer, but it has been a long time since you have used it, you may just try to update it. [Here is a tutorial](https://www.r-statistics.com/2013/03/updating-r-from-r-on-windows-using-the-installr-package/){target="_blank"} on how to do just that.
 
 # For online workshops
 

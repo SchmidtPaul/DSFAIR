@@ -11,7 +11,7 @@
 
 
 
-<title>Before a workshop</title>
+<title>StdDev or StdErr or ConfInt?</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -98,6 +98,109 @@
     </style>
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -448,49 +551,74 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Before a workshop</h1>
+<h1 class="title toc-ignore">StdDev or StdErr or ConfInt?</h1>
 
 </div>
 
 
-<p>Hi there! If you are reading this, you will most likely soon participate in a R-workshop given by me. Thank you - I am already looking forward to it! Here I would briefly like to give you some help and tips with the preparation for this course.</p>
-<div id="for-any-workshop" class="section level1">
-<h1>For any workshop</h1>
-<p>Online workshop or not - here are some tips that are always helpful.</p>
-<div id="installing-r-and-rstudio" class="section level2">
-<h2>Installing R and RStudio</h2>
-<p>In order to use R, it may be necessary to install it first. Notice that when I say “use R”, I am actually talking about two different softwares: <strong>R</strong> and <strong>RStudio</strong>. These two work together so well, that they are almost inseparable to me. R is the actual software that does the computing and statistics, while RStudio is basically a user interface that makes using R much more intuitive and better.</p>
-<p>Therefore, you need to install both! It is not that complicated and there are many tutorials on how to do it - for example <a href="https://rstudio-education.github.io/hopr/starting.html" target="_blank">this one from RStudio</a>.</p>
-<p>If you already have R on your computer, but it has been a long time since you have used it, you may just try to update it. <a href="https://www.r-statistics.com/2013/03/updating-r-from-r-on-windows-using-the-installr-package/" target="_blank">Here is a tutorial</a> on how to do just that.</p>
+<!-- It is not so simple: databased, modelbased - but how phrase it? -->
+<!-- No Bayesian included here -->
+<div id="which-measure-of-precision-should-we-use" class="section level1">
+<h1>Which measure of precision should we use?</h1>
+<p>In the context of analyzing designed experiments (in agronomy or related fields) we often want to compare treatment means. Often the question comes up which measure of precision one should use (as error bars in a plot) for the estimated treatment means: standard deviation, standard error or confidence interval. While the detailed answer can be found in <a href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">Kozak &amp; Piepho (2020)</a>, a brief summary including R code is shown below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(emmeans, modelbased,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               scales,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># data from Kozak &amp; Piepho (2020)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Kozak%26Piepho2020.csv&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate SD using raw data</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>rawSDs <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">rawSD =</span> <span class="fu">sd</span>(value))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># set up model</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(value <span class="sc">~</span> treatment <span class="sc">+</span> block, <span class="at">data =</span> dat)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># get CIs</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (this_ci <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.95</span>, <span class="fl">0.99</span>)) {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  model <span class="sc">%&gt;%</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">estimate_means</span>(<span class="at">levels =</span> <span class="st">&quot;treatment&quot;</span>, <span class="at">ci =</span> this_ci) <span class="sc">%&gt;%</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_at</span>(</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">.vars =</span> <span class="fu">vars</span>(CI_low, CI_high),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">.funs =</span> <span class="cf">function</span>(x)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_replace</span>(x, <span class="st">&quot;_&quot;</span>, <span class="fu">paste0</span>(this_ci <span class="sc">*</span> <span class="dv">100</span>, <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    ) <span class="ot">-&gt;</span> CIs[[<span class="fu">paste</span>(this_ci)]]</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># join results</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> plyr<span class="sc">::</span><span class="fu">join_all</span>(CIs) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(rawSDs)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose results for plot</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>result_transposed <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">SE_low =</span> Mean <span class="sc">-</span> SE,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">SE_high =</span> Mean <span class="sc">+</span> SE,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">rawSD_low =</span> Mean <span class="sc">-</span> rawSD,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">rawSD_high =</span> Mean <span class="sc">+</span> rawSD</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SE,<span class="sc">-</span>rawSD) <span class="sc">%&gt;%</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(treatment, Mean),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;type&quot;</span>, <span class="st">&quot;lowhigh&quot;</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(.*)_(.*)&quot;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">values_from =</span> value,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> lowhigh) <span class="sc">%&gt;%</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">fct_reorder</span>(type, low, median))</span></code></pre></div>
+<p>First of all, we should explicitly state which measure we ultimately used. As [Altman &amp; Bland (2005)] write “<em>The terms “standard error” and “standard deviation” are often confused (Nagele, 2003). […] In many publications a ± sign is used to join the standard deviation (SD) or standard error (SE) to an observed mean — for example, 69.4±9.3 kg. That notation gives no indication whether the second figure is the standard deviation or the standard error (or indeed something else). A review of 88 articles published in 2002 found that 12 (14%) failed to identify which measure of dispersion was reported (and three failed to report any measure of variability) (Olsten, 2003).</em>”.</p>
+<p>You can read more on this topic in general in this <a href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Visualizing the uncertainty of point estimates</a> chapter, which also includes the <em>Bayesian credible interval</em>.</p>
 </div>
-</div>
-<div id="for-online-workshops" class="section level1">
-<h1>For online workshops</h1>
-<p>If our upcoming workshop will happen via zoom, then there are a few more helps I would like to give you.</p>
-<div id="do-i-need-to-install-zoom" class="section level2">
-<h2>Do I need to install zoom?</h2>
-<p>Not necessarily. It is not required to install the zoom software in order to participate in a zoom meeting, because you can also <a href="https://support.zoom.us/hc/en-us/articles/115005666383-Show-a-Join-from-your-browser-Link" target="_blank">join from your browser</a>. Basically, there will be a link that says “Join from your browser” and that’s it.</p>
-<p>However, having the zoom software installed may give you some additional functions during the meeting.</p>
-</div>
-<div id="do-you-have-a-second-screen" class="section level2">
-<h2>Do you have a second screen?</h2>
-<p>Here are the three main scenarios and what I think about them. They are ranked from worst to best:</p>
-<p><strong>3. No, I only have a single screen attached to my laptop/computer</strong> No worries - you can still participate and will have no problem following me during the course. What may become difficult, however, is if you want to both look at my slides/shared screen and also write your own R code simulatenously. If you only have a single screen then that means switching between zoom and R and you may become overwhelmed. Nevertheless, I usually have multiple times during a course where everone has time to do an assignment so that during those time you will definitely get some undivided R time.</p>
-<p><strong>2. Kind of, I have a computer with one screen and an extra laptop/tablet.</strong> This is a bit better! Sometimes you may have two screens that cannot be connected to the same computer/laptop, but can both run simultaenously. In such a scenario you may open R on one computer/laptop and zoom on the other device. This allows for much better focussing on both my and your R code simultaneously.</p>
-<p><strong>1. Yes, I can connect a second screen to my laptop/computer.</strong> This is the perfect solution! Just like for the option above, you may easily follow my screen while at the same time working on yours. In addition, this option allows you (1) to copy something that was posted in the zoom chat to your R code or (2) share your screen with us via zoom so that we can have a look at your R code!</p>
-</div>
-<div id="what-else-can-i-do" class="section level2">
-<h2>What else can I do?</h2>
-<ul>
-<li><p><strong>Check you microphone.</strong> Everyone can make free zoom calls (for max. 40 min.), so you could call a friend and figure out whether your microphone works well. If you are simply using your laptop’s or camera’s microphone that’s fine, but notice that you mave have a full functioning headset lying around: the headphones delivered with smartphones often have microphones in them!</p></li>
-<li><p><strong>Check your camera.</strong> This is optional of course, but I do like it when I see as many people as possible looking back at me during the course. It also improves the course as I see your reactions to individual topics.</p></li>
-<li><p><strong>Check out the options in zoom.</strong></p>
-<ul>
-<li>Know how to use the “mute my microphone” button. It is crucial in an online conference that only those who speak actually turn their microphone on.</li>
-<li>Zoom actually has several functions that are rarely used but could be nice if everyone knew how to use them. A simple one is the chat function which is always on during the course. But you may also share your screen with us if you have a problem or simply give a “thumbs up” directly next to you face. You can also play around with the video settings to hide your background etc. Try to click yourself through the options or watch a youtube tutorial on this!</li>
-</ul></li>
-</ul>
-</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Kozak, Marcin; Piepho, Hans-Peter (2020): <strong>Analyzing designed experiments: Should we report standard deviations or standard errors of the mean or standard errors of the difference or what?</strong> In: Ex. Agric. 56 (2), S. 312–319. DOI: <a href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">10.1017/S0014479719000401.</a></p>
+<p>Wilke, Claus O.: <strong>Fundamentals of Data Visualization</strong> <a href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Chapter 16.2</a> Visualizing the uncertainty of point estimates. ISBN: 978-1492031086</p>
 </div>
 
 &nbsp;

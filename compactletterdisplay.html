@@ -13,8 +13,8 @@
 
 <title>Compact Letter Display (CLD)</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -560,8 +560,8 @@ div.tocify {
 
 <div id="what-is-it" class="section level1">
 <h1>What is it?</h1>
-<p>Compact letter displays are often used to report results of all pairwise comparisons among treatment means in comparative experiments. See <a href="https://www.researchgate.net/publication/322054734_Letters_in_Mean_Comparisons_What_They_Do_and_Don&#39;t_Mean">Piepho (2018)</a> for more details and scroll down for a coding example.</p>
-<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; ">
+<p>Compact letter displays are often used to report results of all pairwise comparisons among treatment means in comparative experiments. See <a href="https://doi.org/10.1198/1061860043515">Piepho (2004)</a> and <a href="https://www.researchgate.net/publication/322054734_Letters_in_Mean_Comparisons_What_They_Do_and_Don&#39;t_Mean">Piepho (2018)</a> for more details and find a coding example below.</p>
+<table class=" lightable-classic-2 lightable-hover" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -614,24 +614,25 @@ Trt2
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set up model</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> PlantGrowth)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get weight means per group</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get (adjusted) weight means per group</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>model_means <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="at">object =</span> model,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                       pairwise <span class="sc">~</span> <span class="st">&quot;group&quot;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># add letters to each mean</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>model_means_cld <span class="ot">&lt;-</span> <span class="fu">cld</span>(<span class="at">object =</span> model_means<span class="sc">$</span>emmeans,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">specs =</span> <span class="st">&quot;group&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># add letters to each mean</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>model_means_cld <span class="ot">&lt;-</span> <span class="fu">cld</span>(<span class="at">object =</span> model_means,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">adjust =</span> <span class="st">&quot;Tukey&quot;</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Letters =</span> letters,</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># show output</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>model_means_cld</span></code></pre></div>
 <pre><code>##  group emmean    SE df lower.CL upper.CL .group
-##  trt1    4.66 0.197 27     4.26     5.07  a    
-##  ctrl    5.03 0.197 27     4.63     5.44  ab   
-##  trt2    5.53 0.197 27     5.12     5.93   b   
+##  trt1    4.66 0.197 27     4.16     5.16  a    
+##  ctrl    5.03 0.197 27     4.53     5.53  ab   
+##  trt2    5.53 0.197 27     5.02     6.03   b   
 ## 
 ## Confidence level used: 0.95 
+## Conf-level adjustment: sidak method for 3 estimates 
 ## P value adjustment: tukey method for comparing a family of 3 estimates 
 ## significance level used: alpha = 0.05 
 ## NOTE: Compact letter displays can be misleading
@@ -639,24 +640,28 @@ Trt2
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
 <p>As you can see,</p>
 <ol style="list-style-type: decimal">
-<li>We set up a model using <code>lm()</code>
+<li>We set up a model
 <ul>
-<li>This is a very simple example. You may use much more complex models and <a href="https://cran.r-project.org/web/packages/emmeans/vignettes/models.html">many other model classes</a>.</li>
+<li>This is a very simple example using <code>lm()</code>. You may use much more complex models and <a href="https://cran.r-project.org/web/packages/emmeans/vignettes/models.html">many other model classes</a>.</li>
 </ul></li>
-<li><a href="https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/emmeans"><code>emmeans()</code></a> estimates means per group
+<li><a href="https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/emmeans"><code>emmeans()</code></a> estimates adjusted means per group.
 <ul>
-<li>It allows for <a href="https://cran.r-project.org/web/packages/emmeans/vignettes/confidence-intervals.html#adjust">different multiplicity adjustments</a>. Go to the “P-value adjustments” heading within the <a href="https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/summary.emmGrid">“summary.emmGrid” section in the emmeans documentation</a> for more details on e.g. t-test, Tukey-test, Bonferroni adjustment etc.</li>
+<li>Note that when doing this for mixed models, one should use the Kenward-Roger method adjusting the denominator degrees of freedom. One may add the <code>lmer.df = "kenward-roger"</code> argument, yet this is the default in {emmeans} (<a href="https://cran.r-project.org/web/packages/emmeans/vignettes/sophisticated.html#lmerOpts">Details here</a>)! Also note that you cannot go wrong with this adjustment - even if there is nothing to adjust.</li>
 </ul></li>
 <li><a href="https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld"><code>cld()</code></a> adds the letters in a new column named <code>.group</code>.
 <ul>
 <li>The <code>alpha =</code> argument lets you choose the significance level for the comparisons.</li>
+<li>It allows for <a href="https://cran.r-project.org/web/packages/emmeans/vignettes/confidence-intervals.html#adjust">different multiplicity adjustments</a>. Go to the “P-value adjustments” heading within the <a href="https://www.rdocumentation.org/packages/emmeans/versions/1.6.2-1/topics/summary.emmGrid">“summary.emmGrid” section in the emmeans documentation</a> for more details on e.g. t-test, Tukey-test, Bonferroni adjustment etc.
+<ul>
+<li>If you are confused about the <code>Note: adjust = "tukey" was changed to "sidak"</code> combined with the two lines <code>Conf-level adjustment: sidak method for 3 estimates.</code> <code>P value adjustment: tukey method for comparing a family of 3 estimates</code> in the result, <a href="https://stats.stackexchange.com/questions/508055/unclear-why-adjust-tukey-was-changed-to-sidak">here</a> is an answer explaining why this happens and that it is not a problem. It is not a problem in the sense that the p-values of the pairwise comparisons were indeed adjusted with the Tukey-method, while the Sidak adjustment was applied to the confidence intervals of the means (<em>i.e.</em> columns <code>lower.CL</code> and <code>upper.CL</code>).</li>
+</ul></li>
 </ul></li>
 </ol>
 </div>
 <div id="interpret-the-letters" class="section level2">
 <h2>interpret the letters</h2>
-<p>By default, the <code>NOTE:</code> seen in the output above warns of how the CLD can be misleading. The author and maintainer of the <code>{emmeans}</code> package, <a href="http://homepage.divms.uiowa.edu/~rlenth/">Russell V. Lenth</a> makes the argument that CLDs convey information in a way that may be misleading to the reader. This is because they “display non-findings rather than findings - they group together means based on NOT being able to show they are different” (personal communication). Furthermore, “[the CLD approach] works, but it is very black-and-white: with alpha = .05, P values slightly above or below .05 make a difference, but there’s no difference between a P value of .051 and one of .987, or between .049 and .00001” (<a href="https://github.com/rvlenth/emmeans/issues/93#issuecomment-468877941">posted here</a>). Furthermore, the <code>NOTE:</code> suggests using alternative plots, which are also created below.</p>
-<p>On the other hand, it must be clear that the information conveyed by CLDs is not <em>wrong</em> as long as it is interpreted correctly. The <a href="https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld">documentation of the <code>cld()</code> function</a> refers to <a href="https://doi.org/10.1198/1061860043515">Piepho (2004)</a>, but even more on point in this context is</p>
+<p>By default, the <code>NOTE:</code> seen in the output above warns of how the CLD can be misleading. The author and maintainer of the <code>{emmeans}</code> package, <a href="http://homepage.divms.uiowa.edu/~rlenth/">Russell V. Lenth</a> makes the argument that CLDs convey information in a way that may be misleading to the reader. This is because they “display non-findings rather than findings - they group together means based on NOT being able to show they are different” (personal communication). Furthermore, “[the CLD approach] works, but it is very black-and-white: with alpha = .05, P values slightly above or below .05 make a difference, but there’s no difference between a P value of .051 and one of .987, or between .049 and .00001” (<a href="https://github.com/rvlenth/emmeans/issues/93#issuecomment-468877941">posted here</a>). He even <a href="https://stats.stackexchange.com/a/508092/192956">wrote here</a> that “Providing for CLDs at all remains one of my biggest regrets in developing this package”. Finally, the <code>NOTE:</code> suggests using alternative plots, which are also created below.</p>
+<p>On the other hand, it must be clear that the information conveyed by CLDs is not <em>wrong</em> as long as it is interpreted correctly. The <a href="https://www.rdocumentation.org/packages/multcomp/versions/1.4-17/topics/cld">documentation of the <code>cld()</code> function</a> refers to <a href="https://doi.org/10.1198/1061860043515">Piepho (2004)</a>, but even more on point in this context is the following publication:</p>
 <blockquote>
 <p><br></p>
 <p><strong><a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257&amp;L=1">Piepho, Hans-Peter</a> (2018) Letters in Mean Comparisons: What They Do and Don’t Mean</strong>, <br> Agronomy Journal, 110(2), 431-434. DOI: <a href="https://doi.org/10.2134/agronj2017.10.0580">10.2134/agronj2017.10.0580</a> <a href="https://www.researchgate.net/publication/322054734_Letters_in_Mean_Comparisons_What_They_Do_and_Don&#39;t_Mean">(ResearchGate)</a></p>
@@ -815,10 +820,14 @@ Trt2
 <span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
 </div>
+</div>
+<div id="alternative-plots" class="section level2">
+<h2>Alternative plots</h2>
+<p>Note that I simply collect alternative ways of plotting adjusted mean comparisons here - this does not mean I fully grasp their concept.</p>
 <div id="alt-1-pairwise-p-value-plot" class="section level3">
 <h3>alt 1: Pairwise P-value plot</h3>
 <p>This is the Pairwise P-value plot suggested in the NOTE we received above as an alternative. The documentation reads: <em>Factor levels (or combinations thereof) are plotted on the vertical scale, and P values are plotted on the horizontal scale. Each P value is plotted twice – at vertical positions corresponding to the levels being compared – and connected by a line segment. Thus, it is easy to visualize which P values are small and large, and which levels are compared.</em></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwpp</span>(model_means<span class="sc">$</span>emmeans) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwpp</span>(model_means) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
 </div>
 <div id="alt-2-lighthouse-plot-easystats" class="section level3">

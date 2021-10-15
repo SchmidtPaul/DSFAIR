@@ -1,0 +1,86 @@
+---
+title: "StdDev or StdErr or ConfInt?"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+library(kableExtra)
+```
+
+<!-- It is not so simple: databased, modelbased - but how phrase it? -->
+<!-- No Bayesian included here -->
+
+# Which measure of precision should we use?
+
+In the context of analyzing designed experiments (in agronomy or related fields) we often want to compare treatment means. Often the question comes up which measure of precision one should use (as error bars in a plot) for the estimated treatment means: standard deviation, standard error or confidence interval. While the detailed answer can be found in [Kozak & Piepho (2020)](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#), a brief summary including R code is shown below.
+
+```{r, class.source = 'fold-hide'}
+pacman::p_load(emmeans, modelbased,
+               scales,
+               tidyverse)
+
+# data from Kozak & Piepho (2020)
+dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Kozak%26Piepho2020.csv"
+dat <- read_csv(dataURL)
+
+# estimate SD using raw data
+rawSDs <- dat %>% 
+  group_by(treatment) %>% 
+  summarise(rawSD = sd(value))
+
+# set up model
+model <- lm(value ~ treatment + block, data = dat)
+
+# get CIs
+CIs <- list()
+
+for (this_ci in c(0.8, 0.95, 0.99)) {
+  model %>%
+    estimate_means(levels = "treatment", ci = this_ci) %>%
+    as_tibble() %>%
+    rename_at(
+      .vars = vars(CI_low, CI_high),
+      .funs = function(x)
+        str_replace(x, "_", paste0(this_ci * 100, "_"))
+    ) -> CIs[[paste(this_ci)]]
+  
+}
+
+# join results
+result <- plyr::join_all(CIs) %>% left_join(rawSDs)
+
+# transpose results for plot
+result_transposed <- result %>%
+  mutate(
+    SE_low = Mean - SE,
+    SE_high = Mean + SE,
+    rawSD_low = Mean - rawSD,
+    rawSD_high = Mean + rawSD
+  ) %>%
+  select(-SE,-rawSD) %>%
+  pivot_longer(
+    cols = -c(treatment, Mean),
+    names_to = c("type", "lowhigh"),
+    names_pattern = "(.*)_(.*)"
+  ) %>%
+  pivot_wider(values_from = value,
+              names_from = lowhigh) %>%
+  mutate(type = fct_reorder(type, low, median))
+```
+
+First of all, we should explicitly state which measure we ultimately used. As [Altman & Bland (2005)] write "*The terms “standard error” and “standard deviation” are often confused (Nagele, 2003). [...] In many publications a ± sign is used to join the standard deviation (SD) or standard error (SE) to an observed mean — for example, 69.4±9.3 kg. That notation gives no indication whether the second figure is the standard deviation or the standard error (or indeed something else). A review of 88 articles published in 2002 found that 12 (14%) failed to identify which measure of dispersion was reported (and three failed to report any measure of variability) (Olsten, 2003).*".
+
+You can read more on this topic in general in this [Visualizing the uncertainty of point estimates](https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates) chapter, which also includes the *Bayesian credible interval*.
+
+# References
+
+Kozak, Marcin; Piepho, Hans-Peter (2020): **Analyzing designed experiments: Should we report standard deviations or standard errors of the mean or standard errors of the difference or what?** In: Ex. Agric. 56 (2), S. 312–319. DOI: [10.1017/S0014479719000401.](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#)
+
+Wilke, Claus O.: **Fundamentals of Data Visualization** [Chapter 16.2](https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates) Visualizing the uncertainty of point estimates. ISBN: 978-1492031086

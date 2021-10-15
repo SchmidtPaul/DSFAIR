@@ -16,18 +16,16 @@ pacman::p_load(tidyverse)
 
 # Hi there!{.tabset .tabset-fade .tabset-pills}
 
-[DSFAIR - Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/){target="_blank"} provides a cookbook with statistical analyses of typical examples in life sciences (focus on agriculture/biology). It can be seen as the smaller brother of [MMFAIR - Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/){target="_blank"}, because it deals with more basic analyses. Where possible, I try to use example data/analyses that have been published in university lecture notes or peer-reviewed journals. Note that [CrashcouRse - R für Bio- und Agrarwissenschaftler](https://schmidtpaul.github.io/crashcouRse){target="_blank"} is the German predecessor of this website.
+[DSFAIR - Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/){target="_blank"} provides a cookbook with statistical analyses of typical examples in life sciences (focus on experimental agriculture/biology/ecology). It can be seen as the younger brother of [MMFAIR - Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/){target="_blank"}, because it deals with more basic analyses. Where possible, I try to use example data/analyses that have been published in university lecture notes or peer-reviewed journals. Note that [CrashcouRse - R für Bio- und Agrarwissenschaftler](https://schmidtpaul.github.io/crashcouRse){target="_blank"} is the German predecessor of this website.
 
-In terms of R syntax, I generally try to follow the approach presented on the ["R for Data Science" website](https://r4ds.had.co.nz/){target="_blank"}, making use of[:](temp.html)
+In terms of R syntax, I generally try to follow the approach presented on the ["R for Data Science" website](https://r4ds.had.co.nz/){target="_blank"}, often making use of the following packages:
 
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" width="80">](https://CRAN.R-project.org/package=dplyr)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80">](https://CRAN.R-project.org/package=ggplot2)
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" width="80">](https://tidyverse.tidyverse.org/)
 [<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/pipe.png" width="80">](https://r4ds.had.co.nz/pipes.html)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/purrr.png" width="80">](https://CRAN.R-project.org/package=purrr)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/scales.png" width="80">](https://CRAN.R-project.org/package=scales)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/stringr.png" width="80">](https://CRAN.R-project.org/package=stringr)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tibble.png" width="80">](https://CRAN.R-project.org/package=tibble)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyr.png" width="80">](https://CRAN.R-project.org/package=tidyr)
-[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" width="80">](https://CRAN.R-project.org/package=tidyverse)
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80">](https://ggplot2.tidyverse.org/)
+[<img src="https://raw.githubusercontent.com/kwstat/desplot/master/man/figures/logo.png" width="80">](https://kwstat.github.io/desplot/)
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/scales.png" width="80">](https://scales.r-lib.org/)
+[<img src="https://raw.githubusercontent.com/sfirke/janitor/main/man/figures/logo_small.png" width="80">](http://sfirke.github.io/janitor/)
+
 
 [Here are some tips](0courseprep.html){target="_blank"} to help you prepare for an upcoming workshop!

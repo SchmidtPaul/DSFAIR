@@ -1,6 +1,6 @@
 name: "DSFAIR-website"
 #share-img: "img/logo/hexagonMMFAIR.png"
-output_dir: "."    # in GitHub master folder instead of default "_site" so that GitHub Pages works
+output_dir: "." # in GitHub master folder instead of default "_site" so that GitHub Pages works
 
 navbar:
   title: "DSFAIR"

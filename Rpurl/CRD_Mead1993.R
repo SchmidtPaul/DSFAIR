@@ -1,8 +1,12 @@
 # packages
-pacman::p_load(tidyverse,        # data import and handling
-               conflicted,       # handling function conflicts
-               emmeans, multcomp, multcompView, # mean comparisons
+pacman::p_load(tidyverse, # data import and handling
+               conflicted, # handling function conflicts
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
                ggplot2, desplot) # plots
+
+# conflicts between functions with the same name
+conflict_prefer("filter", "dplyr") 
+conflict_prefer("select", "dplyr")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Mead1993.csv"
@@ -14,8 +18,8 @@ dat <- dat %>%
   mutate_at(vars(variety), as.factor)
 
 desplot(data = dat, flip = TRUE,
-        form = variety ~ col + row,              # fill color per genotype
-        text = variety, cex = 1, shorten = "no", # show genotype names per plot
+        form = variety ~ col + row,              # fill color per variety
+        text = variety, cex = 1, shorten = "no", # show variety names per plot
         main = "Field layout", show.key = F)     # formatting
 
 dat %>% 
@@ -34,17 +38,10 @@ mod <- lm(yield ~ variety, data = dat)
 mod %>% anova()
 
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "variety", adjust="tukey") %>% 
-  pluck("emmeans") %>% 
-  cld(details=TRUE, Letters=letters) # add letter display
+  emmeans(specs = "variety") %>% # get adjusted means for varieties
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-# If cld() does not work, try CLD() instead.
-# Add 'adjust="none"' to the emmeans() and cld() statement
-# in order to obtain t-test instead of Tukey!
-
-mean_comparisons$emmeans # adjusted variety means
-
-mean_comparisons$comparisons # differences between adjusted variety means 
+mean_comparisons
 
 ggplot() +
   # black dots representing the raw data
@@ -54,14 +51,14 @@ ggplot() +
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = variety),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = variety),
     color = "red",
     width = 0.1,
@@ -69,10 +66,11 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = mean_comparisons$emmeans,
-    aes(y = emmean, x = variety, label = .group),
+    data = mean_comparisons,
+    aes(y = emmean, x = variety, label = str_trim(.group)),
     color = "red",
-    position = position_nudge(x = 0.2)
+    position = position_nudge(x = 0.2),
+    hjust = 0
   ) + 
   ylim(0, NA) + # force y-axis to start at 0
   ylab("Yield in t/ha") + # label y-axis

@@ -1,7 +1,12 @@
 # packages
 pacman::p_load(tidyverse, # data import and handling
-               emmeans, multcomp, # mean comparisons
-               desplot)   # plots
+               conflicted, # handling function conflicts
+               emmeans, multcomp, multcompView, # adjusted mean comparisons
+               ggplot2, desplot) # plots
+
+# conflicts between functions with the same name
+conflict_prefer("filter", "dplyr") 
+conflict_prefer("select", "dplyr")
 
 # data (import via URL)
 dataURL <- "https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/Clewer%26Scarisbrick2001.csv"
@@ -17,10 +22,6 @@ desplot(data = dat,
   out1 = block,                       # bold lines between blocks
   text = yield, cex = 1, shorten = F, # show yield for each plot
   main = "Field layout", show.key = F) # formatting
-
-dat %>% 
-  dplyr::select(block, cultivar, yield) %>% 
-  pivot_wider(names_from = cultivar, values_from = yield)
 
 dat %>% 
   group_by(cultivar) %>% 
@@ -43,13 +44,10 @@ mod <- lm(yield ~ cultivar + block, data = dat)
 mod %>% anova()
 
 mean_comparisons <- mod %>% 
-  emmeans(pairwise ~ "cultivar", adjust="tukey") %>% # adjust="none" for t-test
-  pluck("emmeans") %>% 
-  cld(details=TRUE, Letters=letters) # add letter display
+  emmeans(specs = "cultivar") %>% # get adjusted means for cultivars
+  cld(adjust="tukey", Letters=letters) # add compact letter display
 
-mean_comparisons$emmeans # adjusted cultivar means
-
-mean_comparisons$comparisons # differences between adjusted cultivar means 
+mean_comparisons
 
 ggplot() +
   # black dots representing the raw data
@@ -59,14 +57,14 @@ ggplot() +
   ) +
   # red dots representing the adjusted means
   geom_point(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(y = emmean, x = cultivar),
     color = "red",
     position = position_nudge(x = 0.1)
   ) +
   # red error bars representing the confidence limits of the adjusted means
   geom_errorbar(
-    data = mean_comparisons$emmeans,
+    data = mean_comparisons,
     aes(ymin = lower.CL, ymax = upper.CL, x = cultivar),
     color = "red",
     width = 0.1,
@@ -74,10 +72,11 @@ ggplot() +
   ) +
   # red letters 
   geom_text(
-    data = mean_comparisons$emmeans,
-    aes(y = emmean, x = cultivar, label = .group),
+    data = mean_comparisons,
+    aes(y = emmean, x = cultivar, label = str_trim(.group)),
     color = "red",
-    position = position_nudge(x = 0.2)
+    position = position_nudge(x = 0.2),
+    hjust = 0
   ) + 
   ylim(0, NA) + # force y-axis to start at 0
   ylab("Yield in t/ha") + # label y-axis
