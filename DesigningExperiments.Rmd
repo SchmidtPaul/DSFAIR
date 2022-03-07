@@ -14,11 +14,13 @@ options(knitr.kable.NA = '')
 pacman::p_load(kableExtra, formattable, htmltools)
 ```
 
+In this summary [{agricolae}](https://myaseen208.github.io/agricolae/articles/ExperimentalDesign.html) is used to generate a few common experimental designs based on a given number of treatment factor levels and a number of desired replicates (see "Example Setup" below). Additionally, each experimental design that was generated is also plotted using [{desplot}](https://kwstat.github.io/desplot/) so that different designs can be compared easily.
+
 ```{r}
 # packages
-pacman::p_load(tidyverse,        # data handling
-               agricolae,        # experimental design
-               ggplot2, desplot) # plots
+pacman::p_load(tidyverse, # data handling
+               agricolae, # experimental design
+               desplot)   # plots
 ```
 
 # Example Setup

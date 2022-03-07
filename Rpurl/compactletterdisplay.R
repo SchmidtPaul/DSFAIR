@@ -1,8 +1,3 @@
-knitr::opts_chunk$set(echo = TRUE,
-                      warning = FALSE,
-                      message = FALSE)
-library(kableExtra)
-
 pacman::p_load(emmeans, multcomp, multcompView,
                scales,
                tidyverse)

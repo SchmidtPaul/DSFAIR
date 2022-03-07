@@ -1,0 +1,329 @@
+---
+title: "R Basics"
+output: 
+  html_document:
+    code_folding: "none"
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      purl = FALSE)
+```
+
+This chapter is mostly aimed at people who are very new to R. However, people who do know R may still find useful insights from the sections where I emphasize how I use R. This is certainly not the best tutorial you'll ever find, so if you want other tutorials, 
+
+* check out this curated list of R Tutorials [here](https://github.com/ujjwalkarn/DataScienceR)
+
+Furthermore, this tutorial teaches R the way I use it, which means you can do (and may have done) almost everything I do here with other code/functions/approaches. "The way I use it" mostly refers to me using the [*tidyverse*](https://www.tidyverse.org/), 
+which _"is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures"_ and has become quite popular over the last years. [Here](https://dplyr.tidyverse.org/articles/base.html) is a direct comparison of how to do things in R with _base R_ and via the tidyverse.
+
+# Let's go
+
+You can use R like a basic calculator. It does not matter whether you put spaces in or not as shown here:
+
+```{r}
+2+3
+2 *   6
+```
+
+Similar to what you may know from Excel, you can use functions like e.g. `sqrt()` to obtain the square root of a number:
+
+```{r}
+sqrt(9)
+```
+
+You can find out about what a function does by running it with a question mark before it: `?str()`.
+
+Besides built-in functions, R also knows certain things like $\pi$ or the alphabet, which are stored in the [built-in constants](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) named `pi` and `letters`:
+
+```{r}
+pi
+letters
+```
+
+Importantly, you may also define your own variables via `=` or `<-`:
+
+```{r}
+x = 3
+x
+x = 20
+x
+a_long_variable_name <- 2 + 4
+a_long_variable_name
+x + a_long_variable_name
+mytext <- "This is my text"
+mytext
+```
+
+Note that the variable `x` was overwritten - at first it was 3, but then it was 20. Also, as can be seen when the variable `a_long_variable_name` is defined, you may put more than just a simple number on the right side of the `<-` or `=`.
+
+# data types
+
+As you can see above, R can deal with both numbers and text. We can check the data type via the `typeof()` function:
+
+```{r}
+typeof(x)
+typeof(mytext)
+```
+
+Here is a simplified overview over some of R's data types you may see more often:
+
+ * Numbers
+   * `integer`/`int`: whole number, e.g. _42_, _-1504_
+   * `numeric`/`num` & `double`/`dbl`: real number, e.g. _3.14_, _0.051795_
+ * Text
+   * `character`/`chr`: string values, e.g. _"hello"_, _"Two words"_
+ * Factor
+   * `factor`/`fct`: categorical variable that stores both string and integer data values as "levels", e.g. _Control_, _Treatment_
+ * TRUE/FALSE
+   * `logical`/`logi`: logical value, either _TRUE_ or _FALSE_
+   
+# vectors
+
+Instead of dealing with single numbers, we obviously want to deal with entire datasets. Before we get to an entire table with multiple rows and columns, the first step is to understand what a _vector_ is in R: It is _a sequence of elements that share the same data type_. I often think about them as a single column in my dataset. Above, we actually already looked at a vector: `letters` is a built-in vector with 26 elements of the data type `character`. We could check this via the `length()` or `str()` functions:
+
+```{r}
+length(letters)
+str(letters)
+```
+
+Note how the built-in constant `pi` is not a vector, because it is a only a single number (*a.k.a.* a scalar).
+
+```{r}
+str(pi)
+length(pi)
+```
+
+If you want to create your own vector from scratch, you must put all the elements together in the `c()` function and separate them with commas:
+
+```{r}
+mynumbers <- c(1, 4, 9, 12, 12, 12, 16)
+mynumbers
+mywords <- c("Hakuna", "Matata", "Simba")
+mywords
+```
+
+Interestingly, we can still apply the `sqrt()` function we used above to a vector with numbers and it will simply take the square-root of every element:
+
+```{r}
+sqrt(mynumbers)
+```
+
+However, there are also functions like `mean()` which return the mean of all numbers in a vector as a single output element:
+
+```{r}
+mean(mynumbers)
+```
+
+# function arguments
+
+So far, the functions we used had in common that they required only one input. The really good stuff in R happens with more complex functions which need multiple inputs. Let us use `seq()` as an example, which seems simple enough, because it generates a sequence of numbers:
+
+```{r}
+seq(1, 10)
+```
+
+As you can see, putting in `1` and `10` separated by a comma generates a numeric vector with numbers from 1 to 10. However, I would like you to fully understand what is going on here, because it will help a lot with more complex functions. 
+
+See, we could switch the numbers and the function will work as expected:
+
+```{r}
+seq(10, 1)
+```
+
+So this means that the first input is always the starting point and the second one is always the end point of the sequence, right? Well, yes by default, but you can have it your way if you specifically use the names of the arguments. 
+
+Looking at `?seq()` it says `seq(from = 1, to = 1, by = ...)` so this `seq(10, 1)` is more explicitly this: `seq(from = 1, to = 10, by = 1)`. Here is proof:
+
+```{r}
+seq(from = 1, to = 10, by = 1)
+```
+
+Again, if you do not write out the arguments like this, it will simply assume the default order: The first number supplied is `from =` the second is `to =` and the third is `by =`. However, if we write out the arguments, we can use any order we like:
+
+```{r}
+seq(1, 9, 2)
+seq(from = 1, to = 9, by = 2)
+seq(from = 1, by = 2, to = 9)
+seq(1, 2, 9)
+```
+
+In short: If you understand why the first three lines of the code above produce the same result, but the last one does not, you are good to go!
+
+# R packages
+
+Any function is always part of an R package. 
+
+## base R
+
+After installing R there are many functions etc. you can use right away - which is what we did above. For example, when running `?mean`, the help page will tell you that this function is part of the [`{base}`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) package. As the name suggests, this package is built-in and its functions are ready to use the moment you have installed R. You can verify this by going to the "Packages" tab in RStudio - you will find the *base* package and it will have a checked box next to it. 
+
+## loading packages
+
+When looking at the "Packages" tab in RStudio you may notice that some packages are listed, but do not have a check mark in the box next to them. These are packages that are installed, but not loaded. When a package is not loaded, its functions cannot be used. In order to load a package, the default command is `library(package_name)`. This command must be run once every time you open a new R session.
+
+## installing additional packages
+
+R really shines because of the ability to install additional packages from external sources. Basically, anyone can create a function, put it in a package and make it available online. Some packages are very sophisticated and popular - *e.g.* the package `{ggplot2}`, which is not built-in, has been downloaded [75 million](https://cranlogs.r-pkg.org/badges/grand-total/ggplot2) times. In order to install a package, the default command is `install.packages(package_name)`. Alternatively, you can also click on the "Install" button in the top left of the "Packages" tab and type in the *package_name* there. A package only needs to be installed once, but in order to use it, it must be loaded every time you open a new R session as described above. 
+
+[Here](https://github.com/qinwf/awesome-R) is a curated list of R packages and tools for different areas.
+
+## `p_load()` vs. `library()`
+
+[<img src="https://github.com/trinker/pacman/blob/master/inst/pacman_logo/r_pacman.png?raw=true" width="100">](https://tidyverse.tidyverse.org/)
+
+Above, I mentioned how to install and load R packages the standard way. However, over the years I switched to using the function `p_load()` of the [{pacman}](http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html) package instead of `library()` and `install.packages()`. The reason is simple: Usually R-scripts start with multiple lines of `library()` statements that load the necessary packages. However, when this code is run on a different computer, the user may not have all these packages installed and will therefore get an error message. This can be avoided by using the `p_load()`, because it 
+
+ * loads all packages that are installed and 
+ * installs and loads all packages that are not installed.
+ 
+Obviously, {pacman} itself must first be installed (the standard way). Moreover, you may now think that in order to use `p_load()` we do need a single `library(pacman)` first. However, we can avoid this by writing `pacman::p_load()` instead. Simply put, writing `package_name::function_name()` [makes sure](https://stat.ethz.ch/R-manual/R-devel/library/base/html/ns-dblcolon.html) that this explicit function from this explicit package is being used. Additionally, you do not need to spearately to load the respective package if you write it like this. Thus, we now arrived at the way I handle packages at the beginning of all my R-scripts:
+
+```{r, eval=FALSE}
+pacman::p_load(
+  package_name_1,
+  package_name_2,
+  package_name_3
+)
+```
+
+## loading the tidyverse
+
+In this
+
+# tables
+
+Finally, we can talk about data tables with rows and columns. In terms of R, I like to think of a table as multiple vectors side by side, so that each column is a vector.
+
+## `data.frame`
+
+The standard format for a data table is called `data.frame`. Here is an example table that built-in, just like `pi` is  - it is called `PlantGrowth`:
+
+```{r}
+PlantGrowth
+```
+
+Let us create a copy of this table called `df` and then use some helpful functions to get a first impression of this data:
+
+```{r}
+df <- PlantGrowth
+str(df)
+summary(df)
+```
+
+We can see that this dataset has 30 observations (=rows) and 2 variables (=columns) and is of the type "data.frame". Furthermore, the first variable is called `weight` and contains numeric values for which we get some measures of central tendency like the minimum, maximum, mean and median. The second variable is called `group` and is of the type factor containing a total of three different levels, which each appear 10 times.
+
+If you want to extract/use values of only one column of such a data.frame, you write the name of the data.frame, then a `$` and finally the name of the respective column. It returns the values of that column as vectors:
+
+```{r}
+df$weight
+df$group
+```
+
+## `tibble` vs. `data.frame`
+
+[<img src="https://github.com/rstudio/hex-stickers/blob/master/PNG/tibble.png?raw=true" width="80">](https://tibble.tidyverse.org/)
+
+One major aspect of the above-mentioned tidyverse I am making use of is formatting tables as **tibble**s instead of **data.frame**s. A tibble *"is a modern reimagining of the data.frame, keeping what time has proven to be effective, and throwing out what is not."* It is super simple to convert a data.frame into a tibble, but you must have the tidyverse R package [`{tibble}`](https://tibble.tidyverse.org/index.html) installed and loaded.
+
+```{r}
+library(tibble)
+
+tbl <- as_tibble(df)
+tbl
+```
+
+Of course, the data itself does not change - only its format in R. If you compare the output we get from printing the tibble-formatted data `tbl` here to that of printing the data.frame-formatted data `df` above, I would like to point out some things I find extremely convenient when looking at tibble-formatted data:
+
+ 1. There is an extra first line telling us about the number of rows and columns.
+ 2. There is an extra line below the column names telling us about the data type of each column.
+ 3. Only the first ten rows of data are printed and a "... with 20 more rows" is added below.
+ 4. It can't be seen here, but this would analogously happen if there were too many columns.
+ 5. Missing values `NA` and negative numbers are printed in red.
+ 
+Finally, note that in its heart, a tibble is still a data.frame and in most cases you can do everything with a tibble that you can do with a data.frame. Therefore, I almost always format my datasets as tibbles. 
+
+# quick plots
+
+Note that R has a `plot()` function which is good at getting some first data visualizations with very little code. It guesses what type of plot you would like to see via the data type of the respective data to be plotted:
+
+```{r, fig.width=4, fig.height=3.5, fig.align='center'}
+plot(df$weight) # scatter plot of values in the order they appear
+plot(df$group) # bar plot of frequency of each level
+plot(x = df$group, y = df$weight) # boxplot for values of each level
+```
+
+However, I really just use `plot()` to get a quick first glance at data. In order to get professional visualizations I always use [`{ggplot2}`](https://ggplot2.tidyverse.org/), which is also a tidyverse R package, and [its extensions](https://exts.ggplot2.tidyverse.org/gallery/).
+
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80">](https://ggplot2.tidyverse.org/)
+
+# the `%>%` pipe
+
+```{r}
+library(dplyr) # make %>% available 
+```
+
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/pipe.png" width="80">](https://r4ds.had.co.nz/pipes.html)
+[<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" width="80">]((https://dplyr.tidyverse.org/))
+
+So far, we have only used functions individually. Yet, in real life you will often find yourself having to combine multiple functions. As a fictional example, let's say that from the `PlantGrowth` data, we want to extract a sorted vector of the square root of all weight-values that belong to the `ctrl` group. Just like in MS Excel, it is possible to write functions inside of functions so that this code would do the job:
+
+```{r}
+sort(round(sqrt(pull(filter(PlantGrowth, group == "ctrl"), weight)), 1))
+```
+ 
+Here is what is going on:
+
+ 1. `filter(data.frame, condition)` is used to subset the data `PlantGrowth` with the condition that `group == "ctrl"`.
+ 2. `pull(data.frame, column_name)` extracts the weight column (just like `$weight` would)
+ 3. `sqrt(values)` computes the square root of all values
+ 4. `round(values, digits)` round to certain digits after the comma
+ 5. `sort(values)` sorts the values
+ 
+This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like `filter()`, `pull()` and `round()`` in this example, make it even less intuitive to read and more prone to typos. 
+
+One way of improving the readability is to run the functions separately and create new objects for every intermediate step:
+
+```{r}
+a <- filter(PlantGrowth, group == "ctrl")
+b <- pull(a, weight)
+c <- sqrt(b)
+d <- round(c, 1)
+sort(d)
+```
+
+In my opinion, however, using the [`%>%` operator](https://magrittr.tidyverse.org/reference/pipe.html) is an even better way of dealing with such cases. It allows you to write functions "from left to right" and thus in the order they are executed and the way you think about them. 
+
+```{r}
+PlantGrowth %>% 
+  filter(group == "ctrl") %>% 
+  pull(weight) %>% 
+  sqrt() %>% 
+  round(1) %>% 
+  sort()
+```
+
+You can think about it like this: Something (in this case the `PlantGrowth` data.frame) goes into the pipe and is directed to the next function `filter()`. By default, this function takes what came out of the pipe and puts it as its first argument. This happens with every pipe. You'll notice that all the functions who required two arguments above, now only need one argument, *i.e.* the additional argument, because the main argument stating which data is to be used is by default simply what came out of the previous pipe. Accordingly, the functions `sqrt()` and `sort()` appear empty, because they only need one piece of information and that is which data they should work with. Note also that you can easily highlight only some of the lines up until one of the pipes to see the intermediate results.
+
+The pipe operator originally comes from [{magrittr}](https://magrittr.tidyverse.org/index.html), but is also loaded when loading the tidyverse R package [{dplyr}](https://dplyr.tidyverse.org/), which we did above. Basically, the functions from {dplyr} (e.g. `filter()`, `pull()`, `mutate()`) [work really well together with the pipe](https://dplyr.tidyverse.org/articles/dplyr.html). The hotkey for writing `%>%` in RStudio is **CTRL+SHIFT+M**.
+
+# keyboard shortcuts
+
+Here are shortcuts I actually use regularly in RStudio:
+
+Shortcut | Description
+-|-
+CTRL+ENTER | Run selected lines of code
+CTRL+SHIFT+M | Insert %>%
+CTRL+SHIFT+R | Insert code section header
+CTRL+LEFT/RIGHT | Jump to Word
+CTRL+SHIFT+LEFT/RIGHT | Select Word
+ALT+LEFT/RIGHT | Jump to Line Start/End
+ALT+SHIFT+LEFT/RIGHT | Select to Line Start/End
+CTRL+A | Highlight everything (to run the entire code)
+CTRL+Z | Undo

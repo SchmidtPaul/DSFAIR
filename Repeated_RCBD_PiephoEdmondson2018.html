@@ -476,38 +476,51 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="CRD_Mead1993.html">CRD_Mead1993</a>
-    </li>
-    <li>
-      <a href="RCBD_ClewerScarisbrick2001.html">RCBD_ClewerScarisbrick2001</a>
-    </li>
-    <li>
-      <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
-    </li>
-    <li>
-      <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
-    </li>
-    <li>
-      <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
-    </li>
-    <li>
-      <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
-    </li>
-    <li>
-      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
-    </li>
-    <li>
-      <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
-    </li>
-    <li>
-      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="Repeated_RCBD_PiephoEdmondson2018.html">RCBD_PiephoEdmondson2018</a>
+          <a href="rbasics.html">R Basics</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="CRD_Mead1993.html">crd_Mead1993</a>
+        </li>
+        <li>
+          <a href="RCBD_ClewerScarisbrick2001.html">rcbd_ClewerScarisbrick2001</a>
+        </li>
+        <li>
+          <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
+        </li>
+        <li>
+          <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
+        </li>
+        <li>
+          <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+        </li>
+        <li>
+          <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+        </li>
+        <li>
+          <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
+        </li>
+        <li>
+          <a href="Repeated_RCBD_PiephoEdmondson2018.html">rcbd_PiephoEdmondson2018</a>
         </li>
       </ul>
     </li>
@@ -802,7 +815,7 @@ div.tocify {
 </div>
 <div id="nlme-v2" class="section level4">
 <h4>nlme V2</h4>
-<p>For completeness, I want to show that the same model can also be fit in <code>nlme</code> via the <code>corExp</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. Note that this was actually done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a> and <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots."</p>
+<p>For completeness, I want to show that the same model can also be fit in <code>nlme</code> via the <code>corExp</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. Note that this was actually done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a> and <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots.”</p>
 <p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mod.AR1.nlme.V2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block),</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">correlation =</span> <span class="fu">corExp</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot),</span>
@@ -845,7 +858,7 @@ div.tocify {
 </div>
 <div id="nlme-2" class="section level4">
 <h4>nlme</h4>
-<p>As pointed out by <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots." This was also done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>.</p>
+<p>As pointed out by <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots.” This was also done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>.</p>
 <p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mod.AR1nugget.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety),</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">correlation =</span> <span class="fu">corExp</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot, <span class="at">nugget =</span> <span class="cn">TRUE</span>),</span>

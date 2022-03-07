@@ -1,6 +1,6 @@
-setwd("D:/Coding/DSFAIR")
+#setwd("D:/Coding/DSFAIR")
 pacman::p_load(tidyverse, rmarkdown)
-`%not_in%` = Negate(`%in%`)
+`%not_in%` <- Negate(`%in%`)
 
 ### create html files ###
 rmarkdown::clean_site(preview = FALSE)  # delete old files

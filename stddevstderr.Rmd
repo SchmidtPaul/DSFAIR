@@ -81,6 +81,6 @@ You can read more on this topic in general in this [Visualizing the uncertainty 
 
 # References
 
-Kozak, Marcin; Piepho, Hans-Peter (2020): **Analyzing designed experiments: Should we report standard deviations or standard errors of the mean or standard errors of the difference or what?** In: Ex. Agric. 56 (2), S. 312–319. DOI: [10.1017/S0014479719000401.](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#)
+Kozak, Marcin; Piepho, Hans-Peter (2020): Analyzing designed experiments: Should we report standard deviations or standard errors of the mean or standard errors of the difference or what? In: Ex. Agric. 56 (2), S. 312–319. DOI: [10.1017/S0014479719000401.](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#)
 
-Wilke, Claus O.: **Fundamentals of Data Visualization** [Chapter 16.2](https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates) Visualizing the uncertainty of point estimates. ISBN: 978-1492031086
+Wilke, Claus O.: Fundamentals of Data Visualization [Chapter 16.2](https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates) Visualizing the uncertainty of point estimates. ISBN: 978-1492031086

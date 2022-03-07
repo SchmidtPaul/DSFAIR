@@ -7,11 +7,12 @@ output:
       after_body: footer.html		
 ---
 
-```{r setup, include=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
-                      message = FALSE)
-library(kableExtra)
+                      message = FALSE,
+                      purl = FALSE)
+pacman::p_load(kableExtra, formattable, htmltools)
 ```
 
 # What is it?

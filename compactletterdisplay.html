@@ -478,38 +478,51 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="CRD_Mead1993.html">CRD_Mead1993</a>
-    </li>
-    <li>
-      <a href="RCBD_ClewerScarisbrick2001.html">RCBD_ClewerScarisbrick2001</a>
-    </li>
-    <li>
-      <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
-    </li>
-    <li>
-      <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
-    </li>
-    <li>
-      <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
-    </li>
-    <li>
-      <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
-    </li>
-    <li>
-      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
-    </li>
-    <li>
-      <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
-    </li>
-    <li>
-      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="Repeated_RCBD_PiephoEdmondson2018.html">RCBD_PiephoEdmondson2018</a>
+          <a href="rbasics.html">R Basics</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="CRD_Mead1993.html">crd_Mead1993</a>
+        </li>
+        <li>
+          <a href="RCBD_ClewerScarisbrick2001.html">rcbd_ClewerScarisbrick2001</a>
+        </li>
+        <li>
+          <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
+        </li>
+        <li>
+          <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
+        </li>
+        <li>
+          <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+        </li>
+        <li>
+          <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+        </li>
+        <li>
+          <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
+        </li>
+        <li>
+          <a href="Repeated_RCBD_PiephoEdmondson2018.html">rcbd_PiephoEdmondson2018</a>
         </li>
       </ul>
     </li>
@@ -600,7 +613,7 @@ Trt2
 </tbody>
 </table>
 <p><sup> *Means not sharing any letter are significantly different by the Tukey-test at the 5% level of significance. </sup></p>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-2-1.png" width="384" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-3-1.png" width="384" /></p>
 </div>
 <div id="how-to" class="section level1">
 <h1>How to</h1>
@@ -758,7 +771,7 @@ Trt2
 <span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">str_wrap</span>(<span class="st">&quot;Black dots represent raw data. Red dots and error bars represent (estimated marginal) means ± 95% confidence interval per group. Means not sharing any letter are significantly different by the Tukey-test at the 5% level of significance.&quot;</span>, <span class="at">width =</span> <span class="dv">70</span>)</span>
 <span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
 </div>
 <div id="plot-2-well-known" class="section level3">
 <h3>plot 2: well-known</h3>
@@ -818,7 +831,7 @@ Trt2
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">str_wrap</span>(<span class="st">&quot;Bars with errorbars represent (estimated marginal) means ± standard error. Means not sharing any letter are significantly different by the Tukey-test at the 5% level of significance.&quot;</span>, <span class="at">width =</span> <span class="dv">70</span>)</span>
 <span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
 </div>
 </div>
 <div id="alternative-plots" class="section level2">
@@ -828,7 +841,7 @@ Trt2
 <h3>alt 1: Pairwise P-value plot</h3>
 <p>This is the Pairwise P-value plot suggested in the NOTE we received above as an alternative. The documentation reads: <em>Factor levels (or combinations thereof) are plotted on the vertical scale, and P values are plotted on the horizontal scale. Each P value is plotted twice – at vertical positions corresponding to the levels being compared – and connected by a line segment. Thus, it is easy to visualize which P values are small and large, and which levels are compared.</em></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwpp</span>(model_means) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-7-1.png" width="480" /></p>
 </div>
 <div id="alt-2-lighthouse-plot-easystats" class="section level3">
 <h3>alt 2: Lighthouse plot {easystats}</h3>
@@ -838,7 +851,7 @@ Trt2
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">estimate_contrasts</span>(model, <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>),</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">estimate_means</span>(model)) <span class="sc">+</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-7-1.png" width="480" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-8-1.png" width="480" /></p>
 </div>
 <div id="alt-3-the-ggbetweenstats-plot" class="section level3">
 <h3>alt 3: The {ggbetweenstats} plot</h3>
@@ -855,7 +868,7 @@ Trt2
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">&quot;all&quot;</span>,</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">&quot;none&quot;</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-8-1.png" width="480" /></p>
+<p><img src="compactletterdisplay_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
 </div>
 </div>
 </div>

@@ -11,7 +11,7 @@ output:
 # formatting tables for html output
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, purl = TRUE)
 options(knitr.kable.NA = '')
-pacman::p_load(kableExtra, formattable ,htmltools)
+pacman::p_load(kableExtra, formattable, htmltools)
 ```
 
 ```{r}

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>R Basics</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<!--All these are favicons-->
+<link rel="apple-touch-icon" sizes="180x180" href="img/logo/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/logo/favicon-16x16.png">
+<link rel="manifest" href="img/logo/site.webmanifest">
+<link rel="mask-icon" href="img/logo/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="img/logo/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="img/logo/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!--Github Corner-->
+<a href="https://github.com/SchmidtPaul/DSFAIR" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#003f75ff; color:#fff; position: absolute; top: 50; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+<!--SAS syntax highlighting-->
+<!--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.js"></script>
+<style>
+  .CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+  }
+</style>
+-->
+
+<!--Metatags = preview image when linking to social media-->
+
+<!-- Primary Meta Tags -->
+<!-- <title>Mixed Models for Agriculture in R</title> -->
+<!-- <meta name="title" content="Mixed Models for Agriculture in R">  -->
+<!--
+<meta name="description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+-->
+
+<!-- Open Graph / Facebook -->
+<!--
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://schmidtpaul.github.io/MMFAIR/index.html">
+<meta property="og:title" content="Mixed Models for Agriculture in R">
+<meta property="og:description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+<meta property="og:image" content="img/logo/ScreenshotIndex.PNG">
+-->
+
+<!-- Twitter -->
+<!--
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://schmidtpaul.github.io/MMFAIR/index.html">
+<meta property="twitter:title" content="Mixed Models for Agriculture in R">
+<meta property="twitter:description" content="Our aim is to provide a cookbook with mixed model analyses of typical examples in life sciences (focus on agriculture/biology) and compare the possibilities or rather limitations of the R-packages nlme, lme4, glmmTMB and sommer to each other, but also to SAS’ PROC MIXED.">
+<meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
+-->
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSFAIR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="rbasics.html">R Basics</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="CRD_Mead1993.html">crd_Mead1993</a>
+        </li>
+        <li>
+          <a href="RCBD_ClewerScarisbrick2001.html">rcbd_ClewerScarisbrick2001</a>
+        </li>
+        <li>
+          <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
+        </li>
+        <li>
+          <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
+        </li>
+        <li>
+          <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+        </li>
+        <li>
+          <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+        </li>
+        <li>
+          <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
+        </li>
+        <li>
+          <a href="Repeated_RCBD_PiephoEdmondson2018.html">rcbd_PiephoEdmondson2018</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Summaries
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="compactletterdisplay.html">Compact Letter Display</a>
+    </li>
+    <li>
+      <a href="DesigningExperiments.html">Designing experiments</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="0contactinfo.html">Contact</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">R Basics</h1>
+
+</div>
+
+
+<p>This chapter is mostly aimed at people who are very new to R. However, people who do know R may still find useful insights from the sections where I emphasize how I use R. This is certainly not the best tutorial you’ll ever find, so if you want other tutorials,</p>
+<ul>
+<li>check out this curated list of R Tutorials <a href="https://github.com/ujjwalkarn/DataScienceR">here</a></li>
+</ul>
+<p>Furthermore, this tutorial teaches R the way I use it, which means you can do (and may have done) almost everything I do here with other code/functions/approaches. “The way I use it” mostly refers to me using the <a href="https://www.tidyverse.org/"><em>tidyverse</em></a>, which <em>“is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures”</em> and has become quite popular over the last years. <a href="https://dplyr.tidyverse.org/articles/base.html">Here</a> is a direct comparison of how to do things in R with <em>base R</em> and via the tidyverse.</p>
+<div id="lets-go" class="section level1">
+<h1>Let’s go</h1>
+<p>You can use R like a basic calculator. It does not matter whether you put spaces in or not as shown here:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">+</span><span class="dv">3</span></span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span>   <span class="dv">6</span></span></code></pre></div>
+<pre><code>## [1] 12</code></pre>
+<p>Similar to what you may know from Excel, you can use functions like e.g. <code>sqrt()</code> to obtain the square root of a number:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>You can find out about what a function does by running it with a question mark before it: <code>?str()</code>.</p>
+<p>Besides built-in functions, R also knows certain things like <span class="math inline">\(\pi\)</span> or the alphabet, which are stored in the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">built-in constants</a> named <code>pi</code> and <code>letters</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pi</span></code></pre></div>
+<pre><code>## [1] 3.141593</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>letters</span></code></pre></div>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot;
+## [24] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<p>Importantly, you may also define your own variables via <code>=</code> or <code>&lt;-</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">20</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 20</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>a_long_variable_name <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>a_long_variable_name</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> a_long_variable_name</span></code></pre></div>
+<pre><code>## [1] 26</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mytext <span class="ot">&lt;-</span> <span class="st">&quot;This is my text&quot;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mytext</span></code></pre></div>
+<pre><code>## [1] &quot;This is my text&quot;</code></pre>
+<p>Note that the variable <code>x</code> was overwritten - at first it was 3, but then it was 20. Also, as can be seen when the variable <code>a_long_variable_name</code> is defined, you may put more than just a simple number on the right side of the <code>&lt;-</code> or <code>=</code>.</p>
+</div>
+<div id="data-types" class="section level1">
+<h1>data types</h1>
+<p>As you can see above, R can deal with both numbers and text. We can check the data type via the <code>typeof()</code> function:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(x)</span></code></pre></div>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mytext)</span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>Here is a simplified overview over some of R’s data types you may see more often:</p>
+<ul>
+<li>Numbers
+<ul>
+<li><code>integer</code>/<code>int</code>: whole number, e.g. <em>42</em>, <em>-1504</em></li>
+<li><code>numeric</code>/<code>num</code> &amp; <code>double</code>/<code>dbl</code>: real number, e.g. <em>3.14</em>, <em>0.051795</em></li>
+</ul></li>
+<li>Text
+<ul>
+<li><code>character</code>/<code>chr</code>: string values, e.g. <em>“hello”</em>, <em>“Two words”</em></li>
+</ul></li>
+<li>Factor
+<ul>
+<li><code>factor</code>/<code>fct</code>: categorical variable that stores both string and integer data values as “levels”, e.g. <em>Control</em>, <em>Treatment</em></li>
+</ul></li>
+<li>TRUE/FALSE
+<ul>
+<li><code>logical</code>/<code>logi</code>: logical value, either <em>TRUE</em> or <em>FALSE</em></li>
+</ul></li>
+</ul>
+</div>
+<div id="vectors" class="section level1">
+<h1>vectors</h1>
+<p>Instead of dealing with single numbers, we obviously want to deal with entire datasets. Before we get to an entire table with multiple rows and columns, the first step is to understand what a <em>vector</em> is in R: It is <em>a sequence of elements that share the same data type</em>. I often think about them as a single column in my dataset. Above, we actually already looked at a vector: <code>letters</code> is a built-in vector with 26 elements of the data type <code>character</code>. We could check this via the <code>length()</code> or <code>str()</code> functions:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span></code></pre></div>
+<pre><code>## [1] 26</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(letters)</span></code></pre></div>
+<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; ...</code></pre>
+<p>Note how the built-in constant <code>pi</code> is not a vector, because it is a only a single number (<em>a.k.a.</em> a scalar).</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pi)</span></code></pre></div>
+<pre><code>##  num 3.14</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(pi)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>If you want to create your own vector from scratch, you must put all the elements together in the <code>c()</code> function and separate them with commas:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mynumbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">16</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>mynumbers</span></code></pre></div>
+<pre><code>## [1]  1  4  9 12 12 12 16</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mywords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hakuna&quot;</span>, <span class="st">&quot;Matata&quot;</span>, <span class="st">&quot;Simba&quot;</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mywords</span></code></pre></div>
+<pre><code>## [1] &quot;Hakuna&quot; &quot;Matata&quot; &quot;Simba&quot;</code></pre>
+<p>Interestingly, we can still apply the <code>sqrt()</code> function we used above to a vector with numbers and it will simply take the square-root of every element:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(mynumbers)</span></code></pre></div>
+<pre><code>## [1] 1.000000 2.000000 3.000000 3.464102 3.464102 3.464102 4.000000</code></pre>
+<p>However, there are also functions like <code>mean()</code> which return the mean of all numbers in a vector as a single output element:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mynumbers)</span></code></pre></div>
+<pre><code>## [1] 9.428571</code></pre>
+</div>
+<div id="function-arguments" class="section level1">
+<h1>function arguments</h1>
+<p>So far, the functions we used had in common that they required only one input. The really good stuff in R happens with more complex functions which need multiple inputs. Let us use <code>seq()</code> as an example, which seems simple enough, because it generates a sequence of numbers:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>As you can see, putting in <code>1</code> and <code>10</code> separated by a comma generates a numeric vector with numbers from 1 to 10. However, I would like you to fully understand what is going on here, because it will help a lot with more complex functions.</p>
+<p>See, we could switch the numbers and the function will work as expected:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
+<p>So this means that the first input is always the starting point and the second one is always the end point of the sequence, right? Well, yes by default, but you can have it your way if you specifically use the names of the arguments.</p>
+<p>Looking at <code>?seq()</code> it says <code>seq(from = 1, to = 1, by = ...)</code> so this <code>seq(10, 1)</code> is more explicitly this: <code>seq(from = 1, to = 10, by = 1)</code>. Here is proof:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>Again, if you do not write out the arguments like this, it will simply assume the default order: The first number supplied is <code>from =</code> the second is <code>to =</code> and the third is <code>by =</code>. However, if we write out the arguments, we can use any order we like:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 1 3 5 7 9</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">9</span>, <span class="at">by =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 1 3 5 7 9</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 1 3 5 7 9</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>In short: If you understand why the first three lines of the code above produce the same result, but the last one does not, you are good to go!</p>
+</div>
+<div id="r-packages" class="section level1">
+<h1>R packages</h1>
+<p>Any function is always part of an R package.</p>
+<div id="base-r" class="section level2">
+<h2>base R</h2>
+<p>After installing R there are many functions etc. you can use right away - which is what we did above. For example, when running <code>?mean</code>, the help page will tell you that this function is part of the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html"><code>{base}</code></a> package. As the name suggests, this package is built-in and its functions are ready to use the moment you have installed R. You can verify this by going to the “Packages” tab in RStudio - you will find the <em>base</em> package and it will have a checked box next to it.</p>
+</div>
+<div id="loading-packages" class="section level2">
+<h2>loading packages</h2>
+<p>When looking at the “Packages” tab in RStudio you may notice that some packages are listed, but do not have a check mark in the box next to them. These are packages that are installed, but not loaded. When a package is not loaded, its functions cannot be used. In order to load a package, the default command is <code>library(package_name)</code>. This command must be run once every time you open a new R session.</p>
+</div>
+<div id="installing-additional-packages" class="section level2">
+<h2>installing additional packages</h2>
+<p>R really shines because of the ability to install additional packages from external sources. Basically, anyone can create a function, put it in a package and make it available online. Some packages are very sophisticated and popular - <em>e.g.</em> the package <code>{ggplot2}</code>, which is not built-in, has been downloaded <a href="https://cranlogs.r-pkg.org/badges/grand-total/ggplot2">75 million</a> times. In order to install a package, the default command is <code>install.packages(package_name)</code>. Alternatively, you can also click on the “Install” button in the top left of the “Packages” tab and type in the <em>package_name</em> there. A package only needs to be installed once, but in order to use it, it must be loaded every time you open a new R session as described above.</p>
+<p><a href="https://github.com/qinwf/awesome-R">Here</a> is a curated list of R packages and tools for different areas.</p>
+</div>
+<div id="p_load-vs.-library" class="section level2">
+<h2><code>p_load()</code> vs. <code>library()</code></h2>
+<p><a href="https://tidyverse.tidyverse.org/"><img src="https://github.com/trinker/pacman/blob/master/inst/pacman_logo/r_pacman.png?raw=true" width="100"></a></p>
+<p>Above, I mentioned how to install and load R packages the standard way. However, over the years I switched to using the function <code>p_load()</code> of the <a href="http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html">{pacman}</a> package instead of <code>library()</code> and <code>install.packages()</code>. The reason is simple: Usually R-scripts start with multiple lines of <code>library()</code> statements that load the necessary packages. However, when this code is run on a different computer, the user may not have all these packages installed and will therefore get an error message. This can be avoided by using the <code>p_load()</code>, because it</p>
+<ul>
+<li>loads all packages that are installed and</li>
+<li>installs and loads all packages that are not installed.</li>
+</ul>
+<p>Obviously, {pacman} itself must first be installed (the standard way). Moreover, you may now think that in order to use <code>p_load()</code> we do need a single <code>library(pacman)</code> first. However, we can avoid this by writing <code>pacman::p_load()</code> instead. Simply put, writing <code>package_name::function_name()</code> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/ns-dblcolon.html">makes sure</a> that this explicit function from this explicit package is being used. Additionally, you do not need to spearately to load the respective package if you write it like this. Thus, we now arrived at the way I handle packages at the beginning of all my R-scripts:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  package_name_1,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  package_name_2,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  package_name_3</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="loading-the-tidyverse" class="section level2">
+<h2>loading the tidyverse</h2>
+<p>In this</p>
+</div>
+</div>
+<div id="tables" class="section level1">
+<h1>tables</h1>
+<p>Finally, we can talk about data tables with rows and columns. In terms of R, I like to think of a table as multiple vectors side by side, so that each column is a vector.</p>
+<div id="data.frame" class="section level2">
+<h2><code>data.frame</code></h2>
+<p>The standard format for a data table is called <code>data.frame</code>. Here is an example table that built-in, just like <code>pi</code> is - it is called <code>PlantGrowth</code>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth</span></code></pre></div>
+<pre><code>##    weight group
+## 1    4.17  ctrl
+## 2    5.58  ctrl
+## 3    5.18  ctrl
+## 4    6.11  ctrl
+## 5    4.50  ctrl
+## 6    4.61  ctrl
+## 7    5.17  ctrl
+## 8    4.53  ctrl
+## 9    5.33  ctrl
+## 10   5.14  ctrl
+## 11   4.81  trt1
+## 12   4.17  trt1
+## 13   4.41  trt1
+## 14   3.59  trt1
+## 15   5.87  trt1
+## 16   3.83  trt1
+## 17   6.03  trt1
+## 18   4.89  trt1
+## 19   4.32  trt1
+## 20   4.69  trt1
+## 21   6.31  trt2
+## 22   5.12  trt2
+## 23   5.54  trt2
+## 24   5.50  trt2
+## 25   5.37  trt2
+## 26   5.29  trt2
+## 27   4.92  trt2
+## 28   6.15  trt2
+## 29   5.80  trt2
+## 30   5.26  trt2</code></pre>
+<p>Let us create a copy of this table called <code>df</code> and then use some helpful functions to get a first impression of this data:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> PlantGrowth</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    30 obs. of  2 variables:
+##  $ weight: num  4.17 5.58 5.18 6.11 4.5 4.61 5.17 4.53 5.33 5.14 ...
+##  $ group : Factor w/ 3 levels &quot;trt1&quot;,&quot;ctrl&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
+<pre><code>##      weight       group   
+##  Min.   :3.590   trt1:10  
+##  1st Qu.:4.550   ctrl:10  
+##  Median :5.155   trt2:10  
+##  Mean   :5.073            
+##  3rd Qu.:5.530            
+##  Max.   :6.310</code></pre>
+<p>We can see that this dataset has 30 observations (=rows) and 2 variables (=columns) and is of the type “data.frame”. Furthermore, the first variable is called <code>weight</code> and contains numeric values for which we get some measures of central tendency like the minimum, maximum, mean and median. The second variable is called <code>group</code> and is of the type factor containing a total of three different levels, which each appear 10 times.</p>
+<p>If you want to extract/use values of only one column of such a data.frame, you write the name of the data.frame, then a <code>$</code> and finally the name of the respective column. It returns the values of that column as vectors:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>weight</span></code></pre></div>
+<pre><code>##  [1] 4.17 5.58 5.18 6.11 4.50 4.61 5.17 4.53 5.33 5.14 4.81 4.17 4.41 3.59 5.87 3.83 6.03 4.89
+## [19] 4.32 4.69 6.31 5.12 5.54 5.50 5.37 5.29 4.92 6.15 5.80 5.26</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>group</span></code></pre></div>
+<pre><code>##  [1] ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl trt1 trt1 trt1 trt1 trt1 trt1 trt1 trt1
+## [19] trt1 trt1 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2
+## Levels: trt1 ctrl trt2</code></pre>
+</div>
+<div id="tibble-vs.-data.frame" class="section level2">
+<h2><code>tibble</code> vs. <code>data.frame</code></h2>
+<p><a href="https://tibble.tidyverse.org/"><img src="https://github.com/rstudio/hex-stickers/blob/master/PNG/tibble.png?raw=true" width="80"></a></p>
+<p>One major aspect of the above-mentioned tidyverse I am making use of is formatting tables as <strong>tibble</strong>s instead of <strong>data.frame</strong>s. A tibble <em>“is a modern reimagining of the data.frame, keeping what time has proven to be effective, and throwing out what is not.”</em> It is super simple to convert a data.frame into a tibble, but you must have the tidyverse R package <a href="https://tibble.tidyverse.org/index.html"><code>{tibble}</code></a> installed and loaded.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>tbl</span></code></pre></div>
+<pre><code>## # A tibble: 30 x 2
+##    weight group
+##     &lt;dbl&gt; &lt;fct&gt;
+##  1   4.17 ctrl 
+##  2   5.58 ctrl 
+##  3   5.18 ctrl 
+##  4   6.11 ctrl 
+##  5   4.5  ctrl 
+##  6   4.61 ctrl 
+##  7   5.17 ctrl 
+##  8   4.53 ctrl 
+##  9   5.33 ctrl 
+## 10   5.14 ctrl 
+## # ... with 20 more rows</code></pre>
+<p>Of course, the data itself does not change - only its format in R. If you compare the output we get from printing the tibble-formatted data <code>tbl</code> here to that of printing the data.frame-formatted data <code>df</code> above, I would like to point out some things I find extremely convenient when looking at tibble-formatted data:</p>
+<ol style="list-style-type: decimal">
+<li>There is an extra first line telling us about the number of rows and columns.</li>
+<li>There is an extra line below the column names telling us about the data type of each column.</li>
+<li>Only the first ten rows of data are printed and a “… with 20 more rows” is added below.</li>
+<li>It can’t be seen here, but this would analogously happen if there were too many columns.</li>
+<li>Missing values <code>NA</code> and negative numbers are printed in red.</li>
+</ol>
+<p>Finally, note that in its heart, a tibble is still a data.frame and in most cases you can do everything with a tibble that you can do with a data.frame. Therefore, I almost always format my datasets as tibbles.</p>
+</div>
+</div>
+<div id="quick-plots" class="section level1">
+<h1>quick plots</h1>
+<p>Note that R has a <code>plot()</code> function which is good at getting some first data visualizations with very little code. It guesses what type of plot you would like to see via the data type of the respective data to be plotted:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>weight) <span class="co"># scatter plot of values in the order they appear</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-21-1.png" width="384" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>group) <span class="co"># bar plot of frequency of each level</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-21-2.png" width="384" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> df<span class="sc">$</span>group, <span class="at">y =</span> df<span class="sc">$</span>weight) <span class="co"># boxplot for values of each level</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-21-3.png" width="384" style="display: block; margin: auto;" /></p>
+<p>However, I really just use <code>plot()</code> to get a quick first glance at data. In order to get professional visualizations I always use <a href="https://ggplot2.tidyverse.org/"><code>{ggplot2}</code></a>, which is also a tidyverse R package, and <a href="https://exts.ggplot2.tidyverse.org/gallery/">its extensions</a>.</p>
+<p><a href="https://ggplot2.tidyverse.org/"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80"></a></p>
+</div>
+<div id="the-pipe" class="section level1">
+<h1>the <code>%&gt;%</code> pipe</h1>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># make %&gt;% available </span></span></code></pre></div>
+<p><a href="https://r4ds.had.co.nz/pipes.html"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/pipe.png" width="80"></a> <a href="(https://dplyr.tidyverse.org/)"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" width="80"></a></p>
+<p>So far, we have only used functions individually. Yet, in real life you will often find yourself having to combine multiple functions. As a fictional example, let’s say that from the <code>PlantGrowth</code> data, we want to extract a sorted vector of the square root of all weight-values that belong to the <code>ctrl</code> group. Just like in MS Excel, it is possible to write functions inside of functions so that this code would do the job:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">pull</span>(<span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>), weight)), <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
+<p>Here is what is going on:</p>
+<ol style="list-style-type: decimal">
+<li><code>filter(data.frame, condition)</code> is used to subset the data <code>PlantGrowth</code> with the condition that <code>group == "ctrl"</code>.</li>
+<li><code>pull(data.frame, column_name)</code> extracts the weight column (just like <code>$weight</code> would)</li>
+<li><code>sqrt(values)</code> computes the square root of all values</li>
+<li><code>round(values, digits)</code> round to certain digits after the comma</li>
+<li><code>sort(values)</code> sorts the values</li>
+</ol>
+<p>This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like <code>filter()</code>, <code>pull()</code> and `round()`` in this example, make it even less intuitive to read and more prone to typos.</p>
+<p>One way of improving the readability is to run the functions separately and create new objects for every intermediate step:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">pull</span>(a, weight)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(b)</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">round</span>(c, <span class="dv">1</span>)</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(d)</span></code></pre></div>
+<pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
+<p>In my opinion, however, using the <a href="https://magrittr.tidyverse.org/reference/pipe.html"><code>%&gt;%</code> operator</a> is an even better way of dealing with such cases. It allows you to write functions “from left to right” and thus in the order they are executed and the way you think about them.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth <span class="sc">%&gt;%</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(weight) <span class="sc">%&gt;%</span> </span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div>
+<pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
+<p>You can think about it like this: Something (in this case the <code>PlantGrowth</code> data.frame) goes into the pipe and is directed to the next function <code>filter()</code>. By default, this function takes what came out of the pipe and puts it as its first argument. This happens with every pipe. You’ll notice that all the functions who required two arguments above, now only need one argument, <em>i.e.</em> the additional argument, because the main argument stating which data is to be used is by default simply what came out of the previous pipe. Accordingly, the functions <code>sqrt()</code> and <code>sort()</code> appear empty, because they only need one piece of information and that is which data they should work with. Note also that you can easily highlight only some of the lines up until one of the pipes to see the intermediate results.</p>
+<p>The pipe operator originally comes from <a href="https://magrittr.tidyverse.org/index.html">{magrittr}</a>, but is also loaded when loading the tidyverse R package <a href="https://dplyr.tidyverse.org/">{dplyr}</a>, which we did above. Basically, the functions from {dplyr} (e.g. <code>filter()</code>, <code>pull()</code>, <code>mutate()</code>) <a href="https://dplyr.tidyverse.org/articles/dplyr.html">work really well together with the pipe</a>. The hotkey for writing <code>%&gt;%</code> in RStudio is <strong>CTRL+SHIFT+M</strong>.</p>
+</div>
+<div id="keyboard-shortcuts" class="section level1">
+<h1>keyboard shortcuts</h1>
+<p>Here are shortcuts I actually use regularly in RStudio:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CTRL+ENTER</td>
+<td>Run selected lines of code</td>
+</tr>
+<tr class="even">
+<td>CTRL+SHIFT+M</td>
+<td>Insert %&gt;%</td>
+</tr>
+<tr class="odd">
+<td>CTRL+SHIFT+R</td>
+<td>Insert code section header</td>
+</tr>
+<tr class="even">
+<td>CTRL+LEFT/RIGHT</td>
+<td>Jump to Word</td>
+</tr>
+<tr class="odd">
+<td>CTRL+SHIFT+LEFT/RIGHT</td>
+<td>Select Word</td>
+</tr>
+<tr class="even">
+<td>ALT+LEFT/RIGHT</td>
+<td>Jump to Line Start/End</td>
+</tr>
+<tr class="odd">
+<td>ALT+SHIFT+LEFT/RIGHT</td>
+<td>Select to Line Start/End</td>
+</tr>
+<tr class="even">
+<td>CTRL+A</td>
+<td>Highlight everything (to run the entire code)</td>
+</tr>
+<tr class="odd">
+<td>CTRL+Z</td>
+<td>Undo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+&nbsp;
+<hr />
+<p style="text-align: center;">Please feel free to contact me about any of this!</p>
+<p style="text-align: center;"><span style="color: #003f75ff;"><em>schmidtpaul1989@outlook.com</em></span></p>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://www.researchgate.net/profile/Paul_Schmidt17" class="fa fa-pencil" style="color: #003f75ff;"></a>
+    <a href="https://www.linkedin.com/in/schmidtpaul1989/" class="fa fa-linkedin" style="color: #003f75ff;"></a>
+    <a href="https://www.xing.com/profile/Paul_Schmidt393/cv" class="fa fa-xing" style="color: #003f75ff;"></a>
+    <a href="https://github.com/SchmidtPaul/" class="fa fa-github" style="color: #003f75ff;"></a>
+</p>
+
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fschmidtpaul.github.io%2FDSFAIR%2F&count_bg=%23003F75&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" class="center"/></a>
+
+&nbsp;
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

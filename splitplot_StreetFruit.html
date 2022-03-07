@@ -476,38 +476,51 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="CRD_Mead1993.html">CRD_Mead1993</a>
-    </li>
-    <li>
-      <a href="RCBD_ClewerScarisbrick2001.html">RCBD_ClewerScarisbrick2001</a>
-    </li>
-    <li>
-      <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
-    </li>
-    <li>
-      <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
-    </li>
-    <li>
-      <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
-    </li>
-    <li>
-      <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
-    </li>
-    <li>
-      <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
-    </li>
-    <li>
-      <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
-    </li>
-    <li>
-      <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">repeated measures</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="Repeated_RCBD_PiephoEdmondson2018.html">RCBD_PiephoEdmondson2018</a>
+          <a href="rbasics.html">R Basics</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="CRD_Mead1993.html">crd_Mead1993</a>
+        </li>
+        <li>
+          <a href="RCBD_ClewerScarisbrick2001.html">rcbd_ClewerScarisbrick2001</a>
+        </li>
+        <li>
+          <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
+        </li>
+        <li>
+          <a href="alpha_JohnWilliams1995.html">alpha_JohnWilliams1995</a>
+        </li>
+        <li>
+          <a href="rowcol_KemptonFox1997.html">rowcol_KemptonFox1997</a>
+        </li>
+        <li>
+          <a href="splitplot_GomezGomez1984.html">splitplot_GomezGomez1984</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
+        </li>
+        <li>
+          <a href="splitplot_StreetFruit.html">splitplot_StreetFruit</a>
+        </li>
+        <li>
+          <a href="Repeated_RCBD_PiephoEdmondson2018.html">rcbd_PiephoEdmondson2018</a>
         </li>
       </ul>
     </li>
@@ -1022,7 +1035,7 @@ div.tocify {
 ## Control | Strawberry | 45.38 | 0.33 | [44.47, 46.28]
 ## Street  | Strawberry | 44.36 | 0.33 | [43.45, 45.26]
 ## 
-## Marginal means estimated for Str</code></pre>
+## Marginal means estimated at Str, Fru</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">estimate_contrasts</span>(</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels   =</span> <span class="st">&quot;Str&quot;</span>,</span>
@@ -1033,13 +1046,11 @@ div.tocify {
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Marginal Contrasts Analysis
 ## 
-## Level1  | Level2 |        Fru | Difference |       95% CI |   SE | t(69) |     p
-## --------------------------------------------------------------------------------
-## Control | Street |      Apple |       1.53 | [0.59, 2.47] | 0.47 |  3.25 | 0.002
-## Control | Street |     Banana |       1.51 | [0.57, 2.45] | 0.47 |  3.21 | 0.002
-## Control | Street | Strawberry |       1.02 | [0.08, 1.96] | 0.47 |  2.17 | 0.033
+## Level1  | Level2 | Difference |       95% CI |   SE | t(69) |     p
+## -------------------------------------------------------------------
+## Control | Street |       1.36 | [0.53, 2.18] | 0.41 |  3.29 | 0.002
 ## 
-## Marginal contrasts estimated for Str
+## Marginal contrasts estimated at Str
 ## p-value adjustment method: Holm (1979)</code></pre>
 </div>
 </div>
