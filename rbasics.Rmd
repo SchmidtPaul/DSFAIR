@@ -37,7 +37,7 @@ Similar to what you may know from Excel, you can use functions like e.g. `sqrt()
 sqrt(9)
 ```
 
-You can find out about what a function does by running it with a question mark before it: `?str()`.
+You can find out about what a function does by running it with a question mark before it: `?sqrt()`.
 
 Besides built-in functions, R also knows certain things like $\pi$ or the alphabet, which are stored in the [built-in constants](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) named `pi` and `letters`:
 
@@ -194,7 +194,11 @@ pacman::p_load(
 
 ## loading the tidyverse
 
-In this
+Note that during this intro, I am already mentioning three R packages that all belong to the tidyverse and during later chapters I will use even more. To make it easier loading all the tidyverse R packages one can instead simply load [the package named {tidyverse}](https://tidyverse.tidyverse.org/) (via `library()` or `p_load()`) and instantly load all eight tidyverse core packages:
+
+```{r}
+pacman::p_load(tidyverse)
+```
 
 # tables
 
@@ -285,7 +289,7 @@ Here is what is going on:
  4. `round(values, digits)` round to certain digits after the comma
  5. `sort(values)` sorts the values
  
-This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like `filter()`, `pull()` and `round()`` in this example, make it even less intuitive to read and more prone to typos. 
+This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like `filter()`, `pull()` and `round()` in this example, make it even less intuitive to read and more prone to typos. 
 
 One way of improving the readability is to run the functions separately and create new objects for every intermediate step:
 

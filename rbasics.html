@@ -563,13 +563,13 @@ div.tocify {
 <p>Similar to what you may know from Excel, you can use functions like e.g. <code>sqrt()</code> to obtain the square root of a number:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">9</span>)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<p>You can find out about what a function does by running it with a question mark before it: <code>?str()</code>.</p>
+<p>You can find out about what a function does by running it with a question mark before it: <code>?sqrt()</code>.</p>
 <p>Besides built-in functions, R also knows certain things like <span class="math inline">\(\pi\)</span> or the alphabet, which are stored in the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">built-in constants</a> named <code>pi</code> and <code>letters</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pi</span></code></pre></div>
 <pre><code>## [1] 3.141593</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>letters</span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot;
-## [24] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
+## [20] &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <p>Importantly, you may also define your own variables via <code>=</code> or <code>&lt;-</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
@@ -621,7 +621,7 @@ div.tocify {
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span></code></pre></div>
 <pre><code>## [1] 26</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(letters)</span></code></pre></div>
-<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; ...</code></pre>
+<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; ...</code></pre>
 <p>Note how the built-in constant <code>pi</code> is not a vector, because it is a only a single number (<em>a.k.a.</em> a scalar).</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pi)</span></code></pre></div>
 <pre><code>##  num 3.14</code></pre>
@@ -698,7 +698,8 @@ div.tocify {
 </div>
 <div id="loading-the-tidyverse" class="section level2">
 <h2>loading the tidyverse</h2>
-<p>In this</p>
+<p>Note that during this intro, I am already mentioning three R packages that all belong to the tidyverse and during later chapters I will use even more. To make it easier loading all the tidyverse R packages one can instead simply load <a href="https://tidyverse.tidyverse.org/">the package named {tidyverse}</a> (via <code>library()</code> or <code>p_load()</code>) and instantly load all eight tidyverse core packages:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span></code></pre></div>
 </div>
 </div>
 <div id="tables" class="section level1">
@@ -707,7 +708,7 @@ div.tocify {
 <div id="data.frame" class="section level2">
 <h2><code>data.frame</code></h2>
 <p>The standard format for a data table is called <code>data.frame</code>. Here is an example table that built-in, just like <code>pi</code> is - it is called <code>PlantGrowth</code>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth</span></code></pre></div>
 <pre><code>##    weight group
 ## 1    4.17  ctrl
 ## 2    5.58  ctrl
@@ -740,37 +741,37 @@ div.tocify {
 ## 29   5.80  trt2
 ## 30   5.26  trt2</code></pre>
 <p>Let us create a copy of this table called <code>df</code> and then use some helpful functions to get a first impression of this data:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> PlantGrowth</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> PlantGrowth</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    30 obs. of  2 variables:
 ##  $ weight: num  4.17 5.58 5.18 6.11 4.5 4.61 5.17 4.53 5.33 5.14 ...
-##  $ group : Factor w/ 3 levels &quot;trt1&quot;,&quot;ctrl&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
+##  $ group : Factor w/ 3 levels &quot;ctrl&quot;,&quot;trt1&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
 <pre><code>##      weight       group   
-##  Min.   :3.590   trt1:10  
-##  1st Qu.:4.550   ctrl:10  
+##  Min.   :3.590   ctrl:10  
+##  1st Qu.:4.550   trt1:10  
 ##  Median :5.155   trt2:10  
 ##  Mean   :5.073            
 ##  3rd Qu.:5.530            
 ##  Max.   :6.310</code></pre>
 <p>We can see that this dataset has 30 observations (=rows) and 2 variables (=columns) and is of the type “data.frame”. Furthermore, the first variable is called <code>weight</code> and contains numeric values for which we get some measures of central tendency like the minimum, maximum, mean and median. The second variable is called <code>group</code> and is of the type factor containing a total of three different levels, which each appear 10 times.</p>
 <p>If you want to extract/use values of only one column of such a data.frame, you write the name of the data.frame, then a <code>$</code> and finally the name of the respective column. It returns the values of that column as vectors:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>weight</span></code></pre></div>
-<pre><code>##  [1] 4.17 5.58 5.18 6.11 4.50 4.61 5.17 4.53 5.33 5.14 4.81 4.17 4.41 3.59 5.87 3.83 6.03 4.89
-## [19] 4.32 4.69 6.31 5.12 5.54 5.50 5.37 5.29 4.92 6.15 5.80 5.26</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>group</span></code></pre></div>
-<pre><code>##  [1] ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl trt1 trt1 trt1 trt1 trt1 trt1 trt1 trt1
-## [19] trt1 trt1 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2
-## Levels: trt1 ctrl trt2</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>weight</span></code></pre></div>
+<pre><code>##  [1] 4.17 5.58 5.18 6.11 4.50 4.61 5.17 4.53 5.33 5.14 4.81 4.17 4.41 3.59 5.87
+## [16] 3.83 6.03 4.89 4.32 4.69 6.31 5.12 5.54 5.50 5.37 5.29 4.92 6.15 5.80 5.26</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>group</span></code></pre></div>
+<pre><code>##  [1] ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl trt1 trt1 trt1 trt1 trt1
+## [16] trt1 trt1 trt1 trt1 trt1 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2
+## Levels: ctrl trt1 trt2</code></pre>
 </div>
 <div id="tibble-vs.-data.frame" class="section level2">
 <h2><code>tibble</code> vs. <code>data.frame</code></h2>
 <p><a href="https://tibble.tidyverse.org/"><img src="https://github.com/rstudio/hex-stickers/blob/master/PNG/tibble.png?raw=true" width="80"></a></p>
 <p>One major aspect of the above-mentioned tidyverse I am making use of is formatting tables as <strong>tibble</strong>s instead of <strong>data.frame</strong>s. A tibble <em>“is a modern reimagining of the data.frame, keeping what time has proven to be effective, and throwing out what is not.”</em> It is super simple to convert a data.frame into a tibble, but you must have the tidyverse R package <a href="https://tibble.tidyverse.org/index.html"><code>{tibble}</code></a> installed and loaded.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df)</span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>tbl</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>tbl</span></code></pre></div>
 <pre><code>## # A tibble: 30 x 2
 ##    weight group
 ##     &lt;dbl&gt; &lt;fct&gt;
@@ -799,21 +800,21 @@ div.tocify {
 <div id="quick-plots" class="section level1">
 <h1>quick plots</h1>
 <p>Note that R has a <code>plot()</code> function which is good at getting some first data visualizations with very little code. It guesses what type of plot you would like to see via the data type of the respective data to be plotted:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>weight) <span class="co"># scatter plot of values in the order they appear</span></span></code></pre></div>
-<p><img src="rbasics_files/figure-html/unnamed-chunk-21-1.png" width="384" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>group) <span class="co"># bar plot of frequency of each level</span></span></code></pre></div>
-<p><img src="rbasics_files/figure-html/unnamed-chunk-21-2.png" width="384" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> df<span class="sc">$</span>group, <span class="at">y =</span> df<span class="sc">$</span>weight) <span class="co"># boxplot for values of each level</span></span></code></pre></div>
-<p><img src="rbasics_files/figure-html/unnamed-chunk-21-3.png" width="384" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>weight) <span class="co"># scatter plot of values in the order they appear</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-22-1.png" width="384" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>group) <span class="co"># bar plot of frequency of each level</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-22-2.png" width="384" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> df<span class="sc">$</span>group, <span class="at">y =</span> df<span class="sc">$</span>weight) <span class="co"># boxplot for values of each level</span></span></code></pre></div>
+<p><img src="rbasics_files/figure-html/unnamed-chunk-22-3.png" width="384" style="display: block; margin: auto;" /></p>
 <p>However, I really just use <code>plot()</code> to get a quick first glance at data. In order to get professional visualizations I always use <a href="https://ggplot2.tidyverse.org/"><code>{ggplot2}</code></a>, which is also a tidyverse R package, and <a href="https://exts.ggplot2.tidyverse.org/gallery/">its extensions</a>.</p>
 <p><a href="https://ggplot2.tidyverse.org/"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="80"></a></p>
 </div>
 <div id="the-pipe" class="section level1">
 <h1>the <code>%&gt;%</code> pipe</h1>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># make %&gt;% available </span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># make %&gt;% available </span></span></code></pre></div>
 <p><a href="https://r4ds.had.co.nz/pipes.html"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/pipe.png" width="80"></a> <a href="(https://dplyr.tidyverse.org/)"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" width="80"></a></p>
 <p>So far, we have only used functions individually. Yet, in real life you will often find yourself having to combine multiple functions. As a fictional example, let’s say that from the <code>PlantGrowth</code> data, we want to extract a sorted vector of the square root of all weight-values that belong to the <code>ctrl</code> group. Just like in MS Excel, it is possible to write functions inside of functions so that this code would do the job:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">pull</span>(<span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>), weight)), <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">pull</span>(<span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>), weight)), <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
 <p>Here is what is going on:</p>
 <ol style="list-style-type: decimal">
@@ -823,21 +824,21 @@ div.tocify {
 <li><code>round(values, digits)</code> round to certain digits after the comma</li>
 <li><code>sort(values)</code> sorts the values</li>
 </ol>
-<p>This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like <code>filter()</code>, <code>pull()</code> and `round()`` in this example, make it even less intuitive to read and more prone to typos.</p>
+<p>This works, but you have to read this code from the inside out. Especially functions that have multiple arguments separated by commas like <code>filter()</code>, <code>pull()</code> and <code>round()</code> in this example, make it even less intuitive to read and more prone to typos.</p>
 <p>One way of improving the readability is to run the functions separately and create new objects for every intermediate step:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>)</span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">pull</span>(a, weight)</span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(b)</span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">round</span>(c, <span class="dv">1</span>)</span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">filter</span>(PlantGrowth, group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">pull</span>(a, weight)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(b)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">round</span>(c, <span class="dv">1</span>)</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(d)</span></code></pre></div>
 <pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
 <p>In my opinion, however, using the <a href="https://magrittr.tidyverse.org/reference/pipe.html"><code>%&gt;%</code> operator</a> is an even better way of dealing with such cases. It allows you to write functions “from left to right” and thus in the order they are executed and the way you think about them.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth <span class="sc">%&gt;%</span> </span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(weight) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>PlantGrowth <span class="sc">%&gt;%</span> </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">&quot;ctrl&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(weight) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div>
 <pre><code>##  [1] 2.0 2.1 2.1 2.1 2.3 2.3 2.3 2.3 2.4 2.5</code></pre>
 <p>You can think about it like this: Something (in this case the <code>PlantGrowth</code> data.frame) goes into the pipe and is directed to the next function <code>filter()</code>. By default, this function takes what came out of the pipe and puts it as its first argument. This happens with every pipe. You’ll notice that all the functions who required two arguments above, now only need one argument, <em>i.e.</em> the additional argument, because the main argument stating which data is to be used is by default simply what came out of the previous pipe. Accordingly, the functions <code>sqrt()</code> and <code>sort()</code> appear empty, because they only need one piece of information and that is which data they should work with. Note also that you can easily highlight only some of the lines up until one of the pipes to see the intermediate results.</p>
 <p>The pipe operator originally comes from <a href="https://magrittr.tidyverse.org/index.html">{magrittr}</a>, but is also loaded when loading the tidyverse R package <a href="https://dplyr.tidyverse.org/">{dplyr}</a>, which we did above. Basically, the functions from {dplyr} (e.g. <code>filter()</code>, <code>pull()</code>, <code>mutate()</code>) <a href="https://dplyr.tidyverse.org/articles/dplyr.html">work really well together with the pipe</a>. The hotkey for writing <code>%&gt;%</code> in RStudio is <strong>CTRL+SHIFT+M</strong>.</p>

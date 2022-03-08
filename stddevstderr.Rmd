@@ -19,11 +19,25 @@ library(kableExtra)
 
 # Which measure of precision should we use?
 
-In the context of analyzing designed experiments (in agronomy or related fields) we often want to compare treatment means. Often the question comes up which measure of precision one should use (as error bars in a plot) for the estimated treatment means: standard deviation, standard error or confidence interval. While the detailed answer can be found in [Kozak & Piepho (2020)](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#), a brief summary including R code is shown below.
+In the context of analyzing designed experiments (in agronomy or related fields) we often want to compare treatment means. Often the question comes up which measure of precision one should use. An answer that is detailed regarding Standard Deviation vs. Standard Error can be found in [Kozak & Piepho (2020)](https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#). This summary is heavily based on their conclusions, yet also differs from it as (i) I focus specifically on measures that can be used as error bars for our treatment means in graphs and thus (ii) additionally include confidence intervals.
+
+# Example
+
+We here make use of the data used in Kozak & Piepho (2020). It is from "an artificial example of an experiment laid out in a randomized complete block design, with four treatments and five blocks. This data set reflects a
+common experimental design used in agronomy research." 
+
+The following measures can potentially be used to draw errorbars onto our estimated mean values and thus give the reader a feeling for the respective precision/dispersion:
+
+ - Standard Deviation (rawSD)
+ - Standard Error of the Mean (SEM)
+ - 99%-Confidence interval of the Mean (CI99)
+ - 95%-Confidence interval of the Mean (CI95)
+ - 80%-Confidence interval of the Mean (CI80)
+
+The following code estimates all of these measures for the given artificial example. While you can have a look at the underlying code by clicking the "show" button below, note that the way it is written may seem overwhelming. This is only because I tried to get all the different measures, while keeping the code short and efficient. In real life you will go for only one of those measures and thus your code will certainly be shorter and easier to understand. 
 
 ```{r, class.source = 'fold-hide'}
-pacman::p_load(emmeans, modelbased,
-               scales,
+pacman::p_load(modelbased,
                tidyverse)
 
 # data from Kozak & Piepho (2020)
@@ -33,7 +47,8 @@ dat <- read_csv(dataURL)
 # estimate SD using raw data
 rawSDs <- dat %>% 
   group_by(treatment) %>% 
-  summarise(rawSD = sd(value))
+  summarise(
+    rawSD = sd(value))
 
 # set up model
 model <- lm(value ~ treatment + block, data = dat)
@@ -49,7 +64,8 @@ for (this_ci in c(0.8, 0.95, 0.99)) {
       .vars = vars(CI_low, CI_high),
       .funs = function(x)
         str_replace(x, "_", paste0(this_ci * 100, "_"))
-    ) -> CIs[[paste(this_ci)]]
+    ) %>% 
+    rename(SEM = SE) -> CIs[[paste(this_ci)]]
   
 }
 
@@ -59,12 +75,12 @@ result <- plyr::join_all(CIs) %>% left_join(rawSDs)
 # transpose results for plot
 result_transposed <- result %>%
   mutate(
-    SE_low = Mean - SE,
-    SE_high = Mean + SE,
+    SEM_low = Mean - SEM,
+    SEM_high = Mean + SEM,
     rawSD_low = Mean - rawSD,
     rawSD_high = Mean + rawSD
   ) %>%
-  select(-SE,-rawSD) %>%
+  select(-SEM,-rawSD) %>%
   pivot_longer(
     cols = -c(treatment, Mean),
     names_to = c("type", "lowhigh"),
@@ -75,7 +91,61 @@ result_transposed <- result %>%
   mutate(type = fct_reorder(type, low, median))
 ```
 
-First of all, we should explicitly state which measure we ultimately used. As [Altman & Bland (2005)] write "*The terms “standard error” and “standard deviation” are often confused (Nagele, 2003). [...] In many publications a ± sign is used to join the standard deviation (SD) or standard error (SE) to an observed mean — for example, 69.4±9.3 kg. That notation gives no indication whether the second figure is the standard deviation or the standard error (or indeed something else). A review of 88 articles published in 2002 found that 12 (14%) failed to identify which measure of dispersion was reported (and three failed to report any measure of variability) (Olsten, 2003).*".
+We can now plot one graph per measure and compare them directly. Keep in mind that all of them are correct and based on the same data leading to identical means, but the reader will usually only ever see one of these graphs. 
+
+```{r, class.source = 'fold-hide', fig.height=2.5}
+ggplot(data = result_transposed,
+       aes(x = treatment, y = Mean, ymin = low, ymax = high)) +
+  facet_grid(cols = vars(type)) + 
+  geom_point() +
+  geom_errorbar(width = 0.1) +
+  labs(y = "Mean ± ...", x = NULL) +
+  theme_bw()
+```
+
+For an even closer look, we can decide to focus only on the mean for A1:
+
+```{r, class.source = 'fold-hide', fig.height=2.5}
+p1 <- ggplot(data = filter(result_transposed, treatment == "A1"),
+             aes(
+               x = type,
+               y = Mean,
+               ymin = low,
+               ymax = high
+             )) +
+  geom_point() +
+  geom_errorbar(width = 0.1) +
+  scale_y_continuous(
+    name = "A1 Mean ± ...",
+    limits = c(70, 130),
+    breaks = scales::pretty_breaks()) +
+  xlab(NULL) +
+  theme_bw()
+
+p2 <- ggplot(data = filter(dat, treatment == "A1"),
+             aes(y = value, x = treatment)) +
+  geom_point(shape = 21) +
+    scale_y_continuous(
+    name = "Raw Data",
+    limits = c(70, 130),
+    breaks = scales::pretty_breaks()) +
+  geom_boxplot(position = position_nudge(x = 0.3), width = 0.2, color = "darkgrey") +
+  xlab(NULL) +
+  theme_bw()
+
+cowplot::plot_grid(p2, p1, nrow = 1, rel_widths = c(2,5), align = "h")
+```
+
+Note that I also added the actual values/raw data and the corresponding boxplot on the left. It must be realized that in this example none of the individual values are actually very close to their mean.
+
+<!-- Some ranges dont even include a single value -->
+<!-- Min-Max-Range and IQR correspond to median and not mean. All this can be seen in the boxplot -->
+
+# State your choice!
+
+Most importantly and irrespectively of which measure you chose, you must explicitly state which measure was chosen. As [Altman & Bland (2005)] write "*The terms “standard error” and “standard deviation” are often confused (Nagele, 2003). [...] In many publications a ± sign is used to join the standard deviation (SD) or standard error (SEM) to an observed mean — for example, 69.4±9.3 kg. That notation gives no indication whether the second figure is the standard deviation or the standard error (or indeed something else). A review of 88 articles published in 2002 found that 12 (14%) failed to identify which measure of dispersion was reported (and three failed to report any measure of variability) (Olsten, 2003).*".
+
+# Further Reading
 
 You can read more on this topic in general in this [Visualizing the uncertainty of point estimates](https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates) chapter, which also includes the *Bayesian credible interval*.
 
