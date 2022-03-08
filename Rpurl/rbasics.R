@@ -51,6 +51,8 @@ seq(1, 2, 9)
 ##   package_name_3
 ## )
 
+pacman::p_load(tidyverse)
+
 PlantGrowth
 
 df <- PlantGrowth

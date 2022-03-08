@@ -1,0 +1,14 @@
+---
+title: "Bad Data & Outliers"
+output: 
+  html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html		
+---
+
+# Data
+
+In this example we will process an xls-file even before importing it in R. The file can be downloaded [here](https://github.com/SchmidtPaul/DSFAIR/blob/master/data/vision.xls).
+
+

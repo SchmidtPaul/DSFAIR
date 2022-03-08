@@ -13,6 +13,10 @@ navbar:
         menu:
         - text: "R Basics"
           href: rbasics.html
+        - text: "Correlation & Regression"
+          href: cor_reg_drinks.html
+        - text: "Bad Data & Outliers"
+          href: baddata_outliers_vision.html
       - text: "Simple Experiments"
         menu:
         - text: "crd_Mead1993"

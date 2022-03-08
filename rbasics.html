@@ -469,6 +469,12 @@ div.tocify {
         <li>
           <a href="rbasics.html">R Basics</a>
         </li>
+        <li>
+          <a href="cor_reg_drinks.html">Correlation &amp; Regression</a>
+        </li>
+        <li>
+          <a href="baddata_outliers_vision.html">Bad Data &amp; Outliers</a>
+        </li>
       </ul>
     </li>
     <li class="dropdown-submenu">
@@ -568,8 +574,8 @@ div.tocify {
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pi</span></code></pre></div>
 <pre><code>## [1] 3.141593</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>letters</span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
-## [20] &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot;
+## [24] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <p>Importantly, you may also define your own variables via <code>=</code> or <code>&lt;-</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
@@ -621,7 +627,7 @@ div.tocify {
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span></code></pre></div>
 <pre><code>## [1] 26</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(letters)</span></code></pre></div>
-<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; ...</code></pre>
+<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; ...</code></pre>
 <p>Note how the built-in constant <code>pi</code> is not a vector, because it is a only a single number (<em>a.k.a.</em> a scalar).</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pi)</span></code></pre></div>
 <pre><code>##  num 3.14</code></pre>
@@ -745,11 +751,11 @@ div.tocify {
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    30 obs. of  2 variables:
 ##  $ weight: num  4.17 5.58 5.18 6.11 4.5 4.61 5.17 4.53 5.33 5.14 ...
-##  $ group : Factor w/ 3 levels &quot;ctrl&quot;,&quot;trt1&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+##  $ group : Factor w/ 3 levels &quot;trt1&quot;,&quot;ctrl&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
 <pre><code>##      weight       group   
-##  Min.   :3.590   ctrl:10  
-##  1st Qu.:4.550   trt1:10  
+##  Min.   :3.590   trt1:10  
+##  1st Qu.:4.550   ctrl:10  
 ##  Median :5.155   trt2:10  
 ##  Mean   :5.073            
 ##  3rd Qu.:5.530            
@@ -757,12 +763,12 @@ div.tocify {
 <p>We can see that this dataset has 30 observations (=rows) and 2 variables (=columns) and is of the type “data.frame”. Furthermore, the first variable is called <code>weight</code> and contains numeric values for which we get some measures of central tendency like the minimum, maximum, mean and median. The second variable is called <code>group</code> and is of the type factor containing a total of three different levels, which each appear 10 times.</p>
 <p>If you want to extract/use values of only one column of such a data.frame, you write the name of the data.frame, then a <code>$</code> and finally the name of the respective column. It returns the values of that column as vectors:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>weight</span></code></pre></div>
-<pre><code>##  [1] 4.17 5.58 5.18 6.11 4.50 4.61 5.17 4.53 5.33 5.14 4.81 4.17 4.41 3.59 5.87
-## [16] 3.83 6.03 4.89 4.32 4.69 6.31 5.12 5.54 5.50 5.37 5.29 4.92 6.15 5.80 5.26</code></pre>
+<pre><code>##  [1] 4.17 5.58 5.18 6.11 4.50 4.61 5.17 4.53 5.33 5.14 4.81 4.17 4.41 3.59 5.87 3.83 6.03 4.89
+## [19] 4.32 4.69 6.31 5.12 5.54 5.50 5.37 5.29 4.92 6.15 5.80 5.26</code></pre>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>group</span></code></pre></div>
-<pre><code>##  [1] ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl trt1 trt1 trt1 trt1 trt1
-## [16] trt1 trt1 trt1 trt1 trt1 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2
-## Levels: ctrl trt1 trt2</code></pre>
+<pre><code>##  [1] ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl ctrl trt1 trt1 trt1 trt1 trt1 trt1 trt1 trt1
+## [19] trt1 trt1 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2 trt2
+## Levels: trt1 ctrl trt2</code></pre>
 </div>
 <div id="tibble-vs.-data.frame" class="section level2">
 <h2><code>tibble</code> vs. <code>data.frame</code></h2>
