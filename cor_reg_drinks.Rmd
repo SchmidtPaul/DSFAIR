@@ -17,7 +17,10 @@ This chapter is trying to give you a feeling for what correlation and (simple li
  
 ```{r}
 # packages
-pacman::p_load(tidyverse) # data import and handling
+pacman::p_load(
+  modelbased, # get model predictions/expectations
+  tidyverse # data import and handling
+)
 ```
 
 # Data
@@ -49,16 +52,217 @@ plot(y = dat$blood_alc, x = dat$drinks)
 
 Apparently, the number of drinks ranges from 1 to 9 with a mean of 3.85, while the measured blood alcohol levels range from 0.1 to 1.3 with a mean of 0.515. The plot shows a clear trend of increasing blood alcohol levels with a higher number of drinks - which is what we would expect.
 
+Here is the same plot created with {ggplot2}:
+
+```{r, out.width='60%', fig.align='center', class.source='fold-hide', fig.width=4, fig.height=3}
+ggplot(data = dat, aes(x = drinks, y = blood_alc)) +
+  geom_point(size = 2) +
+  scale_x_continuous(
+    name = "Number of drinks",
+    limits = c(0, 9),
+    breaks = seq(0, 9)
+  ) +
+  scale_y_continuous(
+    name = "Blood alcohol content",
+    limits = c(0, NA),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+    theme_classic()
+```
+
 # Correlation
 
 ## What is it?
 
-One way of actually putting a number on this relationship we can deduce visually in the plot is to estimate the correlation. When people talk about correlation ($\rho$ or $r$) in statistics, they usually refer to the [Pearson correlation coefficient](https://www.wikiwand.com/en/Pearson_correlation_coefficient), which is a measure of linear correlation between two numeric variables. Correlation can only have values between -1 and 1, where 0 means _no correlation_, while all other possible values are either negative or positive correlations. The farther away from 0, the stronger is the correlation. 
+One way of actually putting a number on this relationship is to estimate the correlation. When people talk about correlation ($\rho$ or $r$) in statistics, they usually refer to the [Pearson correlation coefficient](https://www.wikiwand.com/en/Pearson_correlation_coefficient), which is a measure of linear correlation between two numeric variables. Correlation can only have values between -1 and 1, where 0 means _no correlation_, while all other possible values are either negative or positive correlations. The farther away from 0, the stronger is the correlation. 
 
 ```{r pressure, echo=FALSE, out.width = '60%', fig.align='center'}
 knitr::include_graphics("img/correlation.PNG")
 ```
 
 Simply put, a positive correlation means _"if one variable gets bigger, the other also gets bigger"_ and a negative correlation means _"if one variable gets bigger, the other gets smaller"_. Therefore, it does not matter which of the two variables is the first ("x") or the second ("y") variable. Thus, a correlation estimate is not like a model and it cannot make predictions. Finally, [*"correlation does not imply causation"*](https://www.wikiwand.com/en/Correlation_does_not_imply_causation) means that just because you found a (strong) correlation between two things, you cannot conclude that there is a cause-and-effect relationship between the two, which becomes clear when looking at [these examples](https://www.tylervigen.com/spurious-correlations).
+
+## How to get it
+
+If you only want to get the actual correlation estimate, you can use the function `cor()` and provide the two numeric variables (as vectors):
+
+```{r}
+cor(dat$drinks, dat$blood_alc)
+```
+
+So the correlation between number of drinks and blood alcohol content in our sample is ca. `r round(cor(dat$drinks, dat$blood_alc),2)` and thus very strong, since it is almost 1.
+
+## How to test it
+
+If you would like additional information, such as a confidence interval and a test resulting in a p-value, you can use `cor.test()` instead of `cor()`:
+
+```{r}
+cor.test(dat$drinks, dat$blood_alc)
+```
+
+```{r, echo = FALSE}
+library(scales)
+cor <- cor.test(dat$drinks, dat$blood_alc)
+```
+
+Looking at this longer output, you can see the sample estimate at the bottom, a confidence interval above it and a p-value with the corresponding test hypothesis above that. Run `?cor.test()` and look at the "Details" section for more info. Here, our correlation estimate of `r number(cor$estimate, 0.01)` is signficantly different from 0, since the p-value is `r number(cor$p.value, 0.0000000000001)` and therefore $< 0.05$. Furthermore, the confidence interval is `r number(cor$conf.int[1], 0.001)` - `r number(cor$conf.int[2], 0.001)` meaning that we are 95% sure that the true correlation is somewhere in that range.
+
+<aside>
+You can get the results in a tidy format by using the `tidy()` function from [{broom}](https://broom.tidymodels.org/).
+</aside>
+
+> Note that correlation is a widely used statistic so that there are several R packages that deal with it. I suggest taking a look at [{correlation}](https://easystats.github.io/correlation/) and [{corrr}](https://corrr.tidymodels.org/).
+
+# Simple linear regression
+
+## What is it?
+
+When people talk about regression in statistics, they usually refer to [simple linear regression](https://www.wikiwand.com/en/Simple_linear_regression), which - simply put - finds the best straight line that goes through dots in a scatter plot of two numeric variables:
+
+```{r, echo=FALSE, out.width = '60%', fig.align='center'}
+knitr::include_graphics("img/regressionexamples.png")
+```
+
+The linear model behind such a straight line is simply:
+
+$$ y = \alpha + \beta x$$
+
+where $\alpha$ or $a$ is the intercept and $\beta$ or $b$ is the slope, while $y$ and $x$ are our data points. Fitting such a regression is really just finding the optimal estimates for $\alpha$ and $\beta$. 
+
+```{r, echo=FALSE, out.width = '60%', fig.align='center'}
+knitr::include_graphics("img/regressiontheory.png")
+```
+
+In contrast to correlation, a simple linear regression is a model and it therefore matters which variable is $y$ (dependent variable) and which is $x$ (independent), because after fitting the regression, the latter can be used to predict the former. 
+
+## How to get it
+
+In R, we can use the `lm()` function for fitting linear models so that it fits the simple linear regression equation shown above easily:
+
+```{r}
+reg <- lm(formula = blood_alc ~ drinks, data = dat)
+```
+
+As you can see, we refer to our data object `dat` in the `data =` argument so that in the `formula =` argument we only need to write the names of the respective columns in `dat`. Furthermore, we store the results in the `reg` object. When looking at this object, we get the following results:
+
+```{r}
+reg
+```
+
+First, our command is repeated and then the "Coefficients" are shown, which are indeed the estimates for $a$ and $b$. So the best straight line is:
+
+$$ bloodalc = 0.049 + 0.121 * drinks $$
+which looks like this:
+
+```{r, out.width='60%', fig.align='center', class.source='fold-hide', fig.width=4, fig.height=3}
+ggplot(data = dat, aes(x = drinks, y = blood_alc)) +
+  geom_point(size = 2) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x",
+    se = FALSE,
+    fullrange = TRUE,
+    color = "#769bbb"
+  ) +
+  scale_x_continuous(
+    name = "Number of drinks",
+    limits = c(0, 9),
+    breaks = seq(0, 9)
+  ) +
+  scale_y_continuous(
+    name = "Blood alcohol content",
+    limits = c(0, NA),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  theme_classic()
+```
+
+Here is a little more info why `formula = blood_alc ~ drinks` leads to R estimating the $a$ and $b$ we want. What makes sense is that `blood_alc` is $y$, `drinks` is $x$ and `~` would therefore be the $=$ in our equation. However, how come we never had to write anything about $a$ or $b$? The answer is that (i) when fitting a linear model, there is usually always an intercept (=$a$) by default and (ii) when writing a numeric variable (=`drinks`) as on the right side of the equation, it will automatically be assumed to have a slope (=$b$) multiplied with it. Accordingly, `blood_alc ~ drinks` automatically translates to `blood_alc = a + b*drinks` so to speak. 
+
+## Is this right?
+
+After fitting a model, you may use it to make predictions. Here is one way of obtaining the expected blood alcohol content for having 0, 1, 2, or 3 drinks is according to our simple linear regression:
+
+```{r, results='markup'}
+preddat <- data.frame(drinks = seq(0, 3))
+estimate_expectation(model = reg, data = preddat)
+```
+
+<aside>
+You may use `predict(reg, preddat)` instead of `estimate_expectation()` if you don't want to rely on [{modelbased}](https://easystats.github.io/modelbased/) as an extra package.
+</aside>
+
+You may notice that according to our model, the expected alcohol content in your blood when having 0 drinks is actually ca. 0.05 and thus larger than 0. This is obviously not true in real life. Instead, the true intercept should actually be exactly 0, so what went wrong?
+
+First of all, data will never be perfect in the sense that the when a parameter really is e.g. 42, its estimate based on measured data is also exactly 42.000000... . Instead, there are e.g. measurement errors: Peter and Max may have forgotten a drink or two or their device to measure the alcohol content is not precise enough. In fact, this would most likely be the underlying reason here - but remember that I made the data up. 
+
+So I would like you to think about the issue from two other angles:
+
+ 1. Are the results really saying the intercept is > 0?
+ 2. Did we even ask the right question or should we have fitted a different model?
+ 
+### Are the results really saying the intercept is > 0?
+ 
+No, they are not. Yes, the sample estimate for the intercept is 0.04896, but when looking at more detailed information via e.g. `summary()`,
+
+```{r}
+summary(reg)
+```
+
+you can see that the p-value for the intercept is 0.243, which is larger than 0.05 and thus not significantly different from 0. A second indication can be found when looking at the confidence interval of the expected value for having 0 drinks in the table above: `[-0.04, 0.13]`. This interval actually includes 0 which suggests that the true expected blood alcohol content for having 0 drinks may indeed be 0. 
+
+<aside>
+You can get the results in a tidy format by using the `tidy()` and `glance()` functions from [{broom}](https://broom.tidymodels.org/).
+</aside>
+
+### Should we have fitted a different model?
+
+We certainly **could** have and we will actually do it now. It must be clear that statistically speaking there was nothing wrong with our analysis. However, from a biological standpoint or in other words - because of our background knowledge and expertise as scientists, we could have indeed actively decided for a regression analysis that does **not** have an intercept and is thus forced to start 0 in terms of blood alcohol content. After all, statistics is just a tool to help us make conclusions. It is a powerful tool, but it will always be our responsibility to "ask the right questions" i.e. apply expedient methods.
+
+A simple linear regression without an intercept is strictly speaking no longer "simple", since it no longer has the typical equation:
+
+$$ y = \beta x$$
+To let `lm()` that it should not estimate the default intercept, we simply add `0 + ` right after the `~`. As expected, we only get one estimate for the slope:
+
+```{r}
+reg_noint <- lm(formula = blood_alc ~ 0 + drinks, data = dat)
+reg_noint
+```
+
+meaning that this regression with no intercept is estimated as
+
+$$ bloodalc = 0.1298 * drinks $$
+
+and must definitely predict 0 `blood_alc` when having 0 `drinks`. As a final result, we can compare both regression lines visually in a ggplot:
+
+```{r, out.width='60%', fig.align='center', class.source='fold-hide', fig.width=4, fig.height=3}
+ggplot(data = dat, aes(x = drinks, y = blood_alc)) +
+  geom_point(size = 2) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x",
+    se = FALSE,
+    fullrange = TRUE,
+    color = "#769bbb"
+  ) +
+    geom_smooth(
+    method = "lm",
+    formula = "y ~ 0 + x",
+    se = FALSE,
+    fullrange = TRUE,
+    color = "#DF9A57"
+  ) +
+  scale_x_continuous(
+    name = "Number of drinks",
+    limits = c(0, 9),
+    breaks = seq(0, 9)
+  ) +
+  scale_y_continuous(
+    name = "Blood alcohol content",
+    limits = c(0, NA),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  theme_classic()
+```
 
 
