@@ -13,7 +13,7 @@
 
 <title>Subsampling</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -588,7 +595,19 @@ div.tocify {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from Chapter <em>“4.1 The sorghum experiment”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://acsess.onlinelibrary.wiley.com/doi/abs/10.2134/agronj1997.00021962008900050002x" target="_blank">Piepho (1997)</a> from a greenhouse experiment with sorghum, three intensities of double use of grain and leaves were tested: (1) control (grain only) <code>Ctrl</code>; (2) removal of all leaves except top leaf <code>Top1</code>; (3) removal of all leaves except top six leaves <code>Top6</code>.</p>
+<p>This example is taken from Chapter <em>“4.1 The sorghum
+experiment”</em> of the course material <a
+href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451"
+target="_blank">“Mixed models for metric data (3402-451)”</a> by <a
+href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257"
+target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data
+published in <a
+href="https://acsess.onlinelibrary.wiley.com/doi/abs/10.2134/agronj1997.00021962008900050002x"
+target="_blank">Piepho (1997)</a> from a greenhouse experiment with
+sorghum, three intensities of double use of grain and leaves were
+tested: (1) control (grain only) <code>Ctrl</code>; (2) removal of all
+leaves except top leaf <code>Top1</code>; (3) removal of all leaves
+except top six leaves <code>Top6</code>.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
@@ -613,14 +632,23 @@ div.tocify {
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>treat</code>, <code>block</code> and <code>plant</code> should be encoded as factors, since R by default encoded them as character. Furthermore, I would like to arrange the factors in a specific order that is different from the default alphabetical order:</p>
+<p>Before anything, the columns <code>treat</code>, <code>block</code>
+and <code>plant</code> should be encoded as factors, since R by default
+encoded them as character. Furthermore, I would like to arrange the
+factors in a specific order that is different from the default
+alphabetical order:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(treat, block, plant), as.factor) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treat =</span> <span class="fu">fct_relevel</span>(treat, <span class="fu">c</span>(<span class="st">&quot;Ctrl&quot;</span>, <span class="st">&quot;Top6&quot;</span>, <span class="st">&quot;Top1&quot;</span>)))</span></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial. In addition, we I would like to manually choose colors for the three treatments here and stick to them throughout the example:</p>
+<p>In order to obtain a layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>column</code> of
+each plot in the trial. In addition, we I would like to manually choose
+colors for the three treatments here and stick to them throughout the
+example:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>treat_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ctrl=</span><span class="st">&quot;seagreen&quot;</span>, <span class="at">Top6=</span><span class="st">&quot;seagreen3&quot;</span> , <span class="at">Top1=</span><span class="st">&quot;seagreen2&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
@@ -628,8 +656,14 @@ div.tocify {
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.regions =</span> treat_colors,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Trial layout&quot;</span>, <span class="at">show.key =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Looking at this, it seems like the trial was laid out as a randomized complete block design with 4 complete blocks. This, however, would mean that we have 3x4=12 observations in our dataset. Yet, our dataset has 120 observations.</p>
-<p>This is because what we are looking at in the plot above are only the 12 trays laid on the 4 tables that stood in the greenhouse. On top of each tray were 10 separate sorghum plant pots, respectively. To make this clear, we can plot this trial again as:</p>
+<p>Looking at this, it seems like the trial was laid out as a randomized
+complete block design with 4 complete blocks. This, however, would mean
+that we have 3x4=12 observations in our dataset. Yet, our dataset has
+120 observations.</p>
+<p>This is because what we are looking at in the plot above are only the
+12 trays laid on the 4 tables that stood in the greenhouse. On top of
+each tray were 10 separate sorghum plant pots, respectively. To make
+this clear, we can plot this trial again as:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>treat_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ctrl=</span><span class="st">&quot;seagreen&quot;</span>, <span class="at">Top6=</span><span class="st">&quot;seagreen3&quot;</span> , <span class="at">Top1=</span><span class="st">&quot;seagreen2&quot;</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
@@ -640,7 +674,14 @@ div.tocify {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.regions =</span> treat_colors,</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Trial layout&quot;</span>, <span class="at">show.key =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>At this point we must realize that there is an important difference between this trial and a regular RCBD (randomized complete block design) trial (<a href="RCBD_ClewerScarisbrick2001.html">like this one</a>). It is important to reflect that trays, not pots, are the randomization units. Clearly, pots are pseudo-replications, while trays are true replications. Another way of looking at the experiment is to consider plots (or measurements taken on pots) as repeated measurements on the same experimental unit (tray).</p>
+<p>At this point we must realize that there is an important difference
+between this trial and a regular RCBD (randomized complete block design)
+trial (<a href="RCBD_ClewerScarisbrick2001.html">like this one</a>). It
+is important to reflect that trays, not pots, are the randomization
+units. Clearly, pots are pseudo-replications, while trays are true
+replications. Another way of looking at the experiment is to consider
+plots (or measurements taken on pots) as repeated measurements on the
+same experimental unit (tray).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treat) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(TKW, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -654,7 +695,10 @@ div.tocify {
 ## 1 Ctrl   33.1    4.99         1
 ## 2 Top6   31.1    4.36         6
 ## 3 Top1   30.6    7.90         4</code></pre>
-<p>We can also create a plot to get a better feeling for the data. We here use the <code>geom_violindot()</code> extension to <code>ggplot2</code> from the <code>see</code> package as an alternative to boxplots.</p>
+<p>We can also create a plot to get a better feeling for the data. We
+here use the <code>geom_violindot()</code> extension to
+<code>ggplot2</code> from the <code>see</code> package as an alternative
+to boxplots.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y=</span>TKW, <span class="at">x=</span>treat, <span class="at">fill=</span>treat)) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violindot</span>(<span class="at">fill_dots =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size_dots =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
@@ -666,15 +710,35 @@ div.tocify {
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
-<p>Because of the way that 10 plants with the same treatment always stand together on a tray, our model ignores the fact that plants from the same tray will be correlated due to common environmental conditions. Clearly, if the treatments are the same on each tray, plants on the same tray are expected to be more similar than plants from different trays. The correlation of plants on the same tray can be modeled by adding a <strong>random tray effect</strong>. Notice that a tray is always all plant pots from one treatment (=<code>treat</code>) on one of the four tables (=<code>block</code>):</p>
+<p>Because of the way that 10 plants with the same treatment always
+stand together on a tray, our model ignores the fact that plants from
+the same tray will be correlated due to common environmental conditions.
+Clearly, if the treatments are the same on each tray, plants on the same
+tray are expected to be more similar than plants from different trays.
+The correlation of plants on the same tray can be modeled by adding a
+<strong>random tray effect</strong>. Notice that a tray is always all
+plant pots from one treatment (=<code>treat</code>) on one of the four
+tables (=<code>block</code>):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(TKW <span class="sc">~</span> treat <span class="sc">+</span> block <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>block<span class="sc">:</span>treat),</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span>dat)</span></code></pre></div>
 <blockquote>
-<p><strong>Why can’t I just get the mean value per tray and then use these in a regular RCBD analysis? There are four tray means per treatment (one for each block), so the means data has a total of twelve observations.</strong> Ideally, the means would have been computed from ten plants on each tray. However, some observations are missing, so some means are based on only nine or eight observations. It is known the the standard error of a mean decreases with the number of observations, so some means will be more accurate than others. This difference in acuracy cannot be accounted for by a simple analysis of means. In fact, the analysis of means is not strictly valid because heterogeneity of variance is ignored. We will see later how a mixed model can be used for a more refined analysis.</p>
+<p><strong>Why can’t I just get the mean value per tray and then use
+these in a regular RCBD analysis? There are four tray means per
+treatment (one for each block), so the means data has a total of twelve
+observations.</strong> Ideally, the means would have been computed from
+ten plants on each tray. However, some observations are missing, so some
+means are based on only nine or eight observations. It is known the the
+standard error of a mean decreases with the number of observations, so
+some means will be more accurate than others. This difference in acuracy
+cannot be accounted for by a simple analysis of means. In fact, the
+analysis of means is not strictly valid because heterogeneity of
+variance is ignored. We will see later how a mixed model can be used for
+a more refined analysis.</p>
 </blockquote>
 <div id="variance-component-estimates" class="section level2">
 <h2>Variance component estimates</h2>
-<p>We can extract the variance component estimates for our mixed model as follows:</p>
+<p>We can extract the variance component estimates for our mixed model
+as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">VarCorr</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
@@ -685,7 +749,10 @@ div.tocify {
 </div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) does not find the <code>treat</code> effects to be statistically significant (p = 0.31 &gt; 0.05).</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the
+F-test of the ANOVA (using Kenward-Roger’s method for denominator
+degrees-of-freedom and F-statistic) does not find the <code>treat</code>
+effects to be statistically significant (p = 0.31 &gt; 0.05).</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">anova</span>(<span class="at">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</span></code></pre></div>
 <pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##        Sum Sq Mean Sq NumDF  DenDF F value Pr(&gt;F)
@@ -694,7 +761,9 @@ div.tocify {
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
-<p>Analogous to the result from the F-test in the ANOVA, the comparing the means does not find any significant differences between the treatment means either:</p>
+<p>Analogous to the result from the F-test in the ANOVA, the comparing
+the means does not find any significant differences between the
+treatment means either:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mod <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="st">&quot;treat&quot;</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">lmer.df =</span> <span class="st">&quot;kenward-roger&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># get adjusted means for cultivars</span></span>
@@ -715,15 +784,25 @@ div.tocify {
 ## NOTE: Compact letter displays can be misleading
 ##       because they show NON-findings rather than findings.
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
-<p>Note that if you would like to see the underyling individual contrasts/differences between adjusted means, simply add <code>details = TRUE</code> to the <code>cld()</code> statement. Also, find more information on mean comparisons and the Compact Letter Display in the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<p>Note that if you would like to see the underyling individual
+contrasts/differences between adjusted means, simply add
+<code>details = TRUE</code> to the <code>cld()</code> statement. Also,
+find more information on mean comparisons and the Compact Letter Display
+in the separate <a href="compactletterdisplay.html">Compact Letter
+Display Chapter</a></p>
 </div>
 </div>
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
-<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model. If you would rather have e.g. a bar plot to show these results, check out the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<p>For this example we can create a plot that displays both the raw data
+and the results, <em>i.e.</em> the comparisons of the adjusted means
+that are based on the linear model. If you would rather have e.g. a bar
+plot to show these results, check out the separate <a
+href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># black dots representing the raw data</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violindot</span>(</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> dat,</span>
@@ -765,7 +844,10 @@ div.tocify {
 <span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption.position =</span> <span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
 <p><img src="subsampling_Piepho1997_files/figure-html/unnamed-chunk-13-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
-<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
 <ul>
 <li>the entire R-code of each example combined, including</li>
 <li>solutions to the respective exercise(s).</li>

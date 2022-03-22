@@ -11,7 +11,7 @@
 
 
 
-<title>Before a workshop</title>
+<title>Using {reprex} &amp; {datapasta}</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -33,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <!--All these are favicons-->
 <link rel="apple-touch-icon" sizes="180x180" href="img/logo/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/logo/favicon-32x32.png">
@@ -99,6 +98,100 @@
 
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -265,9 +358,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -464,115 +554,100 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+
+
+<h1 class="title toc-ignore">Using {reprex} &amp; {datapasta}</h1>
+
+</div>
+
+
+<div id="how-to-make-it-easier-for-people-that-want-to-help-you"
+class="section level1">
+<h1>How to make it easier for people that want to help you</h1>
+<p>Sometimes people have a problem in R and want to ask others for help.
+If they do this via the internet, they often</p>
+<ul>
+<li>do not provide all of the relevant information</li>
+<li>do provide too much of irrelevant information</li>
 </ul>
+<p>so that they do not get the help they need. This chapter tries to
+help people to ask for help in a better way.</p>
 </div>
-
-
-
-<h1 class="title toc-ignore">Before a workshop</h1>
-
-</div>
-
-
-<p>Hi there! If you are reading this, you will most likely soon
-participate in a R-workshop given by me. Thank you - I am already
-looking forward to it! Here I would briefly like to give you some help
-and tips with the preparation for this course.</p>
-<div id="for-any-workshop" class="section level1">
-<h1>For any workshop</h1>
-<p>Online workshop or not - here are some tips that are always
-helpful.</p>
-<div id="installing-r-and-rstudio" class="section level2">
-<h2>Installing R and RStudio</h2>
-<p>In order to use R, it may be necessary to install it first. Notice
-that when I say “use R”, I am actually talking about two different
-softwares: <strong>R</strong> and <strong>RStudio</strong>. These two
-work together so well, that they are almost inseparable to me. R is the
-actual software that does the computing and statistics, while RStudio is
-basically a user interface that makes using R much more intuitive and
-better.</p>
-<p>Therefore, you need to install both! It is not that complicated and
-there are many tutorials on how to do it - for example <a
-href="https://rstudio-education.github.io/hopr/starting.html"
-target="_blank">this one from RStudio</a>.</p>
-<p>If you already have R on your computer, but it has been a long time
-since you have used it, you may just try to update it. <a
-href="https://www.r-statistics.com/2013/03/updating-r-from-r-on-windows-using-the-installr-package/"
-target="_blank">Here is a tutorial</a> on how to do just that.</p>
-</div>
-</div>
-<div id="for-online-workshops" class="section level1">
-<h1>For online workshops</h1>
-<p>If our upcoming workshop will happen via zoom, then there are a few
-more helps I would like to give you.</p>
-<div id="do-i-need-to-install-zoom" class="section level2">
-<h2>Do I need to install zoom?</h2>
-<p>Not necessarily. It is not required to install the zoom software in
-order to participate in a zoom meeting, because you can also <a
-href="https://support.zoom.us/hc/en-us/articles/115005666383-Show-a-Join-from-your-browser-Link"
-target="_blank">join from your browser</a>. Basically, there will be a
-link that says “Join from your browser” and that’s it.</p>
-<p>However, having the zoom software installed may give you some
-additional functions during the meeting.</p>
-</div>
-<div id="do-you-have-a-second-screen" class="section level2">
-<h2>Do you have a second screen?</h2>
-<p>Here are the three main scenarios and what I think about them. They
-are ranked from worst to best:</p>
-<p><strong>3. No, I only have a single screen attached to my
-laptop/computer</strong> No worries - you can still participate and will
-have no problem following me during the course. What may become
-difficult, however, is if you want to both look at my slides/shared
-screen and also write your own R code simulatenously. If you only have a
-single screen then that means switching between zoom and R and you may
-become overwhelmed. Nevertheless, I usually have multiple times during a
-course where everone has time to do an assignment so that during those
-time you will definitely get some undivided R time.</p>
-<p><strong>2. Kind of, I have a computer with one screen and an extra
-laptop/tablet.</strong> This is a bit better! Sometimes you may have two
-screens that cannot be connected to the same computer/laptop, but can
-both run simultaenously. In such a scenario you may open R on one
-computer/laptop and zoom on the other device. This allows for much
-better focussing on both my and your R code simultaneously.</p>
-<p><strong>1. Yes, I can connect a second screen to my
-laptop/computer.</strong> This is the perfect solution! Just like for
-the option above, you may easily follow my screen while at the same time
-working on yours. In addition, this option allows you (1) to copy
-something that was posted in the zoom chat to your R code or (2) share
-your screen with us via zoom so that we can have a look at your R
-code!</p>
-</div>
-<div id="what-else-can-i-do" class="section level2">
-<h2>What else can I do?</h2>
+<div id="an-example-problem" class="section level1">
+<h1>An example problem</h1>
+<p>Let’s say this is our code</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>PlantGrowth <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(weight))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">weight =</span> group, <span class="at">data =</span> PlantGrowth)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model)</span></code></pre></div>
+<p>and when running it, it throws errors, but we don’t understand
+why.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> PlantGrowth</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   group  mean
+##   &lt;fct&gt; &lt;dbl&gt;
+## 1 trt1   4.66
+## 2 ctrl   5.03
+## 3 trt2   5.53</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">weight =</span> group, <span class="at">data =</span> mydata)</span></code></pre></div>
+<pre><code>## Error in lm(weight = group, data = mydata): &#39;weights&#39; must be a numeric vector</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: value
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## treatment  3 4803.7 1601.23  46.028 7.395e-07 ***
+## block      4 2666.8  666.70  19.164 3.805e-05 ***
+## Residuals 12  417.5   34.79                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div id="step-1-find-the-first-error-and-reduce-the-code"
+class="section level2">
+<h2>Step 1: find the first error and reduce the code</h2>
+<p>Looking closely, the first error appears after the running
+<code>lm()</code> function, which means that we can focus on it and</p>
 <ul>
-<li><p><strong>Check you microphone.</strong> Everyone can make free
-zoom calls (for max. 40 min.), so you could call a friend and figure out
-whether your microphone works well. If you are simply using your
-laptop’s or camera’s microphone that’s fine, but notice that you mave
-have a full functioning headset lying around: the headphones delivered
-with smartphones often have microphones in them!</p></li>
-<li><p><strong>Check your camera.</strong> This is optional of course,
-but I do like it when I see as many people as possible looking back at
-me during the course. It also improves the course as I see your
-reactions to individual topics.</p></li>
-<li><p><strong>Check out the options in zoom.</strong></p>
+<li>remove the code below it</li>
+<li>remove all code above it which does not influence this part of the
+code
 <ul>
-<li>Know how to use the “mute my microphone” button. It is crucial in an
-online conference that only those who speak actually turn their
-microphone on.</li>
-<li>Zoom actually has several functions that are rarely used but could
-be nice if everyone knew how to use them. A simple one is the chat
-function which is always on during the course. But you may also share
-your screen with us if you have a problem or simply give a “thumbs up”
-directly next to you face. You can also play around with the video
-settings to hide your background etc. Try to click yourself through the
-options or watch a youtube tutorial on this!</li>
+<li>Obviously we cannot delete code that imports <code>mydata</code>,
+because it is used in the <code>lm()</code> function.</li>
+<li>However, we can remove the section summarizing the means, as it has
+no effect on the <code>lm()</code> function. We then even no longer need
+to load the {dplyr} package, since the remaining code works fine without
+it.</li>
+<li>Importantly, the error we are investigating is still there.</li>
 </ul></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> PlantGrowth</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">weight =</span> group, <span class="at">data =</span> mydata)</span></code></pre></div>
+<pre><code>## Error in lm(weight = group, data = mydata): &#39;weights&#39; must be a numeric vector</code></pre>
+<p>We have now successfully reduced the code to a minimum while still
+facing the same error message.</p>
+</div>
+<div id="step-2-dont-depend-on-data-that-only-you-can-access"
+class="section level2">
+<h2>Step 2: don’t depend on data that only you can access</h2>
+<p>Sharing the code above does not allow others to run it and reproduce
+the error, because no one else has access to the data you are importing.
+You must therefore choose one of these solutions:</p>
+<ul>
+<li>Option 1: Make your data accessible</li>
+<li>Option 2: Replace your data by a data set built into R like
+<code>mtcars</code> or <code>PlantGrowth</code>.</li>
 </ul>
 </div>
 </div>
@@ -631,11 +706,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

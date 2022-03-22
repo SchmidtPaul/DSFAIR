@@ -13,7 +13,7 @@
 
 <title>Alpha design</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -588,7 +595,20 @@ div.tocify {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from Chapter <em>“3.8 Analysis of an <span class="math inline">\(\alpha\)</span>-design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/bimj.4710380703" target="_blank">John and Williams (1995)</a> from a yield (t/ha) trial laid out as an alpha design. The trial had 24 genotypes (<code>gen</code>), 3 complete replicates (<code>rep</code>) and 6 incomplete blocks (<code>inc.block</code>) within each replicate. The block size was 4.</p>
+<p>This example is taken from Chapter <em>“3.8 Analysis of an <span
+class="math inline">\(\alpha\)</span>-design”</em> of the course
+material <a
+href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451"
+target="_blank">“Mixed models for metric data (3402-451)”</a> by <a
+href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257"
+target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data
+published in <a
+href="https://onlinelibrary.wiley.com/doi/abs/10.1002/bimj.4710380703"
+target="_blank">John and Williams (1995)</a> from a yield (t/ha) trial
+laid out as an alpha design. The trial had 24 genotypes
+(<code>gen</code>), 3 complete replicates (<code>rep</code>) and 6
+incomplete blocks (<code>inc.block</code>) within each replicate. The
+block size was 4.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
@@ -613,13 +633,18 @@ div.tocify {
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>plot</code>, <code>rep</code>, <code>inc.block</code> and <code>gen</code> should be encoded as factors, since R by default encoded them as character.</p>
+<p>Before anything, the columns <code>plot</code>, <code>rep</code>,
+<code>inc.block</code> and <code>gen</code> should be encoded as
+factors, since R by default encoded them as character.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(plot<span class="sc">:</span>gen), as.factor)</span></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial.</p>
+<p>In order to obtain a field layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>column</code> of
+each plot in the trial.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">form =</span> gen <span class="sc">~</span> col <span class="sc">+</span> row <span class="sc">|</span> rep,          <span class="co"># fill color per genotype, headers per replicate</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> gen, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></span>
@@ -627,8 +652,21 @@ div.tocify {
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> inc.block,                      <span class="co"># lines between incomplete blocks</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> F)   <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="alpha_JohnWilliams1995_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>An <span class="math inline">\(\alpha\)</span>-design is a design with incomplete blocks, where the blocks can be grouped into complete replicates. Such designs are termed “resolvable”. The model must have an effect for complete replicates, and effects for incomplete blocks must be nested within replicates.</p>
-<p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (<code>gen</code>) or incomplete block (<code>inc.block</code>). Notice that the way the factor variable <code>inc.block</code> is defined, it only has 6 levels (B1, B2, B3, B4, B5, B6). However, as can be clearly seen on the field layout above, there are 18 incomplete blocks, <em>i.e.</em> 6 per replicate. Thus, an actual incomplete block here is identified by the information stored in <code>rep</code> <em>and</em> <code>inc.block</code>. Alternatively, one could have coded the <code>inc.block</code> variable as a factor with 18 levels (B1-B18), but this was not done here.</p>
+<p>An <span class="math inline">\(\alpha\)</span>-design is a design
+with incomplete blocks, where the blocks can be grouped into complete
+replicates. Such designs are termed “resolvable”. The model must have an
+effect for complete replicates, and effects for incomplete blocks must
+be nested within replicates.</p>
+<p>We could also have a look at the arithmetic means and standard
+deviations for yield per genotype (<code>gen</code>) or incomplete block
+(<code>inc.block</code>). Notice that the way the factor variable
+<code>inc.block</code> is defined, it only has 6 levels (B1, B2, B3, B4,
+B5, B6). However, as can be clearly seen on the field layout above,
+there are 18 incomplete blocks, <em>i.e.</em> 6 per replicate. Thus, an
+actual incomplete block here is identified by the information stored in
+<code>rep</code> <em>and</em> <code>inc.block</code>. Alternatively, one
+could have coded the <code>inc.block</code> variable as a factor with 18
+levels (B1-B18), but this was not done here.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -697,7 +735,8 @@ div.tocify {
 </div>
 </div>
 <p>We can also create a plot to get a better feeling for the data.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plotdata <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plotdata <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_yield =</span> <span class="fu">mean</span>(yield)) <span class="sc">%&gt;%</span> <span class="co"># add column with mean yield per gen</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
@@ -716,7 +755,15 @@ div.tocify {
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
-<p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and (fixed) <code>gen</code> and <code>block</code> effects. There also needs to be term for the 18 incomplete blocks (<em>i.e.</em> <code>rep:inc.block</code>) in the model, but it can be taken either as a fixed or a random effect. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.</p>
+<p>Finally, we can decide to fit a linear model with <code>yield</code>
+as the response variable and (fixed) <code>gen</code> and
+<code>block</code> effects. There also needs to be term for the 18
+incomplete blocks (<em>i.e.</em> <code>rep:inc.block</code>) in the
+model, but it can be taken either as a fixed or a random effect. Since
+our goal is to compare genotypes, we will determine which of the two
+models we prefer by comparing the average standard error of a difference
+(s.e.d.) for the comparisons between adjusted genotype means - the lower
+the s.e.d. the better.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blocks as fixed (linear model)</span></span>
@@ -751,10 +798,13 @@ div.tocify {
 ## 1      0.270</code></pre>
 </div>
 </div>
-<p>As a result, we find that the model with random block effects has the smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
+<p>As a result, we find that the model with random block effects has the
+smaller s.e.d. and is therefore more precise in terms of comparing
+genotypes.</p>
 <div id="variance-component-estimates" class="section level2">
 <h2>Variance component estimates</h2>
-<p>We can extract the variance component estimates for our mixed model as follows:</p>
+<p>We can extract the variance component estimates for our mixed model
+as follows:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod.rb <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">VarCorr</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
@@ -765,7 +815,10 @@ div.tocify {
 </div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the <code>gen</code> effects to be statistically significant (p&lt;0.001).</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the
+F-test of the ANOVA (using Kenward-Roger’s method for denominator
+degrees-of-freedom and F-statistic) finds the <code>gen</code> effects
+to be statistically significant (p&lt;0.001).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mod.rb <span class="sc">%&gt;%</span> <span class="fu">anova</span>(<span class="at">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</span></code></pre></div>
 <pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##      Sum Sq Mean Sq NumDF  DenDF F value    Pr(&gt;F)    
@@ -817,15 +870,25 @@ div.tocify {
 ## NOTE: Compact letter displays can be misleading
 ##       because they show NON-findings rather than findings.
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
-<p>Note that if you would like to see the underyling individual contrasts/differences between adjusted means, simply add <code>details = TRUE</code> to the <code>cld()</code> statement. Also, find more information on mean comparisons and the Compact Letter Display in the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<p>Note that if you would like to see the underyling individual
+contrasts/differences between adjusted means, simply add
+<code>details = TRUE</code> to the <code>cld()</code> statement. Also,
+find more information on mean comparisons and the Compact Letter Display
+in the separate <a href="compactletterdisplay.html">Compact Letter
+Display Chapter</a></p>
 </div>
 </div>
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
-<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model. If you would rather have e.g. a bar plot to show these results, check out the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resort gen factor according to adjusted mean</span></span>
+<p>For this example we can create a plot that displays both the raw data
+and the results, <em>i.e.</em> the comparisons of the adjusted means
+that are based on the linear model. If you would rather have e.g. a bar
+plot to show these results, check out the separate <a
+href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resort gen factor according to adjusted mean</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mean_comparisons <span class="sc">%&gt;%</span> </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gen =</span> <span class="fu">fct_reorder</span>(gen, emmean))</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -872,7 +935,10 @@ div.tocify {
 <span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="co"># rotate x-axis</span></span></code></pre></div>
 <p><img src="alpha_JohnWilliams1995_files/figure-html/unnamed-chunk-13-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
-<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
 <ul>
 <li>the entire R-code of each example combined, including</li>
 <li>solutions to the respective exercise(s).</li>

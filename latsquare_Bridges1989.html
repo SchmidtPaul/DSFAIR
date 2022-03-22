@@ -13,7 +13,7 @@
 
 <title>Latin square design</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -586,7 +593,13 @@ div.tocify {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from the <code>agridat</code><em>: Agricultural Datasets</em> package. It considers data published in <a href="https://rdrr.io/github/kwstat/agridat/man/bridges.cucumber.html" target="_blank">Bridges (1989)</a> from a cucumber yield trial set up as a latin square design. Notice that the original dataset considers two trials (at two locations), but we will focus on only a single trial here.</p>
+<p>This example is taken from the <code>agridat</code><em>: Agricultural
+Datasets</em> package. It considers data published in <a
+href="https://rdrr.io/github/kwstat/agridat/man/bridges.cucumber.html"
+target="_blank">Bridges (1989)</a> from a cucumber yield trial set up as
+a latin square design. Notice that the original dataset considers two
+trials (at two locations), but we will focus on only a single trial
+here.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (from agridat package)</span></span>
@@ -615,7 +628,13 @@ div.tocify {
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>While <code>gen</code> is already correctly encoded as factor, the columns <code>row</code> and <code>col</code> should be encoded as factors, too, since R by default encoded them as integer. However, we also want to keep <code>row</code> and <code>col</code> as integer for the <code>desplot()</code> function. Therefore we create copies of these columns encoded as factors and named <code>rowF</code> and <code>colF</code></p>
+<p>While <code>gen</code> is already correctly encoded as factor, the
+columns <code>row</code> and <code>col</code> should be encoded as
+factors, too, since R by default encoded them as integer. However, we
+also want to keep <code>row</code> and <code>col</code> as integer for
+the <code>desplot()</code> function. Therefore we create copies of these
+columns encoded as factors and named <code>rowF</code> and
+<code>colF</code></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="co"># tibble data format for convenience</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rowF =</span> row <span class="sc">%&gt;%</span> as.factor,</span>
@@ -623,7 +642,10 @@ div.tocify {
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial.</p>
+<p>In order to obtain a field layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>col</code> of each
+plot in the trial.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat, <span class="at">flip =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">form =</span> gen <span class="sc">~</span> row <span class="sc">+</span> col, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> row, <span class="at">out1.gpar=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>),</span>
@@ -632,7 +654,9 @@ div.tocify {
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, </span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.key =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="latsquare_Bridges1989_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>We could also have a look at the arithmetic means and standard deviations for yield per <code>genotype</code>, <code>row</code> or <code>col</code>.</p>
+<p>We could also have a look at the arithmetic means and standard
+deviations for yield per <code>genotype</code>, <code>row</code> or
+<code>col</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span> <span class="co"># genotype</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(yield),</span>
@@ -684,11 +708,18 @@ div.tocify {
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
-<p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and (fixed) <code>gen</code> effects, as well as <code>rowF</code> and <code>colF</code> effects. <strong>Important:</strong> Don’t forget to use the variables for rows and columns that are encoded as factors and thus not the ones used in the <code>desplot()</code> function above.</p>
+<p>Finally, we can decide to fit a linear model with <code>yield</code>
+as the response variable and (fixed) <code>gen</code> effects, as well
+as <code>rowF</code> and <code>colF</code> effects.
+<strong>Important:</strong> Don’t forget to use the variables for rows
+and columns that are encoded as factors and thus not the ones used in
+the <code>desplot()</code> function above.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> gen <span class="sc">+</span> rowF <span class="sc">+</span> colF, <span class="at">data =</span> dat)</span></code></pre></div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the <code>gen</code> effects to be statistically significant (p = 0.011 &lt; 0.05).</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the
+F-test of the ANOVA finds the <code>gen</code> effects to be
+statistically significant (p = 0.011 &lt; 0.05).</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
@@ -703,7 +734,8 @@ div.tocify {
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
-<p>Following a significant F-test, one will want to compare genotype means.</p>
+<p>Following a significant F-test, one will want to compare genotype
+means.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mod <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="st">&quot;gen&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># get adjusted means for cultivars</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cld</span>(<span class="at">adjust=</span><span class="st">&quot;tukey&quot;</span>, <span class="at">Letters=</span>letters) <span class="co"># add compact letter display</span></span>
@@ -723,15 +755,25 @@ div.tocify {
 ## NOTE: Compact letter displays can be misleading
 ##       because they show NON-findings rather than findings.
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
-<p>Note that if you would like to see the underyling individual contrasts/differences between adjusted means, simply add <code>details = TRUE</code> to the <code>cld()</code> statement. Also, find more information on mean comparisons and the Compact Letter Display in the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<p>Note that if you would like to see the underyling individual
+contrasts/differences between adjusted means, simply add
+<code>details = TRUE</code> to the <code>cld()</code> statement. Also,
+find more information on mean comparisons and the Compact Letter Display
+in the separate <a href="compactletterdisplay.html">Compact Letter
+Display Chapter</a></p>
 </div>
 </div>
 <div id="present-results" class="section level1">
 <h1>Present results</h1>
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
-<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model. If you would rather have e.g. a bar plot to show these results, check out the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<p>For this example we can create a plot that displays both the raw data
+and the results, <em>i.e.</em> the comparisons of the adjusted means
+that are based on the linear model. If you would rather have e.g. a bar
+plot to show these results, check out the separate <a
+href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># black dots representing the raw data</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> dat,</span>
@@ -768,7 +810,10 @@ div.tocify {
 <span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># clearer plot format </span></span></code></pre></div>
 <p><img src="latsquare_Bridges1989_files/figure-html/unnamed-chunk-13-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
-<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
 <ul>
 <li>the entire R-code of each example combined, including</li>
 <li>solutions to the respective exercise(s).</li>

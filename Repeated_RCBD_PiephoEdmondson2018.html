@@ -13,7 +13,7 @@
 
 <title>Repeated Measures RCBD</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -594,12 +601,44 @@ div.tocify {
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) <span class="co"># set filter() from dplyr as default</span></span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>The example in this chapter is taken from <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank"><em>Example 4</em> in Piepho &amp; Edmondson (2018)</a> (see also the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>). It considers data from a sorghum trial laid out as a randomized complete <code>block</code> design (5 blocks) with <code>variety</code> (4 sorghum varities) being the only treatment factor. Thus, we have a total of 20 <code>plot</code>s. It is important to note that our response variable (<code>y</code>), <strong>the leaf area index, was assessed in five consecutive weeks on each plot</strong> starting 2 weeks after emergence. Therefore, the dataset contains a total of 100 values and what we have here is longitudinal data, <em>a.k.a.</em> repeated measurements over time, <em>a.k.a.</em> a time series analysis.</p>
-<p>As <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> put it: <em>“the week factor is not a treatment factor that can be randomized. Instead, repeated measurements are taken on each plot on five consecutive occasions. Successive measurements on the same plot are likely to be serially correlated, and this means that for a reliable and efficient analysis of repeated-measures data we need to take proper account of the serial correlations between the repeated measures (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1439-037X.2004.00097.x" target="_blank">Piepho, Büchse &amp; Richter, 2004</a>; <a href="http://library.mpib-berlin.mpg.de/toc/z2008_18.pdf" target="_blank">Pinheiro &amp; Bates, 2000</a>).”</em></p>
-<p>Please note that this example is also considered on the <a href="https://schmidtpaul.github.io/MMFAIR/autoregressive_time_series.html" target="_blank">MMFAIR website</a> but with more focus on how to use the different mixed model packages to fit the models.</p>
+<p>The example in this chapter is taken from <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank"><em>Example 4</em> in Piepho &amp; Edmondson (2018)</a>
+(see also the <a
+href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D"
+target="_blank">Agritutorial vigniette</a>). It considers data from a
+sorghum trial laid out as a randomized complete <code>block</code>
+design (5 blocks) with <code>variety</code> (4 sorghum varities) being
+the only treatment factor. Thus, we have a total of 20
+<code>plot</code>s. It is important to note that our response variable
+(<code>y</code>), <strong>the leaf area index, was assessed in five
+consecutive weeks on each plot</strong> starting 2 weeks after
+emergence. Therefore, the dataset contains a total of 100 values and
+what we have here is longitudinal data, <em>a.k.a.</em> repeated
+measurements over time, <em>a.k.a.</em> a time series analysis.</p>
+<p>As <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">Piepho &amp; Edmondson (2018)</a> put it: <em>“the week
+factor is not a treatment factor that can be randomized. Instead,
+repeated measurements are taken on each plot on five consecutive
+occasions. Successive measurements on the same plot are likely to be
+serially correlated, and this means that for a reliable and efficient
+analysis of repeated-measures data we need to take proper account of the
+serial correlations between the repeated measures (<a
+href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1439-037X.2004.00097.x"
+target="_blank">Piepho, Büchse &amp; Richter, 2004</a>; <a
+href="http://library.mpib-berlin.mpg.de/toc/z2008_18.pdf"
+target="_blank">Pinheiro &amp; Bates, 2000</a>).”</em></p>
+<p>Please note that this example is also considered on the <a
+href="https://schmidtpaul.github.io/MMFAIR/autoregressive_time_series.html"
+target="_blank">MMFAIR website</a> but with more focus on how to use the
+different mixed model packages to fit the models.</p>
 <div id="import-formatting" class="section level2">
 <h2>Import &amp; Formatting</h2>
-<p>Note that I here decided to give more intuitive names and labels, but this is optional. We also create a column <code>unit</code> with one factor level per observation, which will be needed later when using <code>glmmTMB()</code>.</p>
+<p>Note that I here decided to give more intuitive names and labels, but
+this is optional. We also create a column <code>unit</code> with one
+factor level per observation, which will be needed later when using
+<code>glmmTMB()</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data - reformatting agriTutorial::sorghum</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> agriTutorial<span class="sc">::</span>sorghum <span class="sc">%&gt;%</span> <span class="co"># data from agriTutorial package</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">block =</span> Replicate, </span>
@@ -632,10 +671,15 @@ div.tocify {
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we would like use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial. These are unfortunately not given here, so that we cannot create the actual field layout plot.</p>
+<p>In order to obtain a field layout of the trial, we would like use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>col</code> of each
+plot in the trial. These are unfortunately not given here, so that we
+cannot create the actual field layout plot.</p>
 <div id="descriptive-tables" class="section level3">
 <h3>descriptive tables</h3>
-<p>We could also have a look at the arithmetic means and standard deviations for yield per <code>variety</code>.</p>
+<p>We could also have a look at the arithmetic means and standard
+deviations for yield per <code>variety</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(variety) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean    =</span> <span class="fu">mean</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
@@ -649,7 +693,8 @@ div.tocify {
 ## 2 var4     4.61   0.802
 ## 3 var2     4.59   0.763
 ## 4 var1     3.50   0.760</code></pre>
-<p>Furthermore, we could look at the arithmetic means for each week as follows:</p>
+<p>Furthermore, we could look at the arithmetic means for each week as
+follows:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(weekF, variety) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
@@ -664,8 +709,11 @@ div.tocify {
 </div>
 <div id="descriptive-plot" class="section level3">
 <h3>descriptive plot</h3>
-<p>We can also create a plot to get a better feeling for the data. Note that here we could even decide to extend the ggplot to become an animated gif as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>var_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#8cb369&quot;</span>, <span class="st">&quot;#f4a259&quot;</span>, <span class="st">&quot;#5b8e7d&quot;</span>, <span class="st">&quot;#bc4b51&quot;</span>)</span>
+<p>We can also create a plot to get a better feeling for the data. Note
+that here we could even decide to extend the ggplot to become an
+animated gif as follows:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>var_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#8cb369&quot;</span>, <span class="st">&quot;#f4a259&quot;</span>, <span class="st">&quot;#5b8e7d&quot;</span>, <span class="st">&quot;#bc4b51&quot;</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(var_colors) <span class="ot">&lt;-</span> dat<span class="sc">$</span>variety <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>gganimate_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
@@ -688,40 +736,94 @@ div.tocify {
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shadow_mark</span>(<span class="at">exclude_layer =</span> <span class="dv">2</span>) </span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(gganimate_plot, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>()) <span class="co"># render gif</span></span></code></pre></div>
-<p><img src="Repeated_RCBD_PiephoEdmondson2018_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
+<p><img
+src="Repeated_RCBD_PiephoEdmondson2018_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
 </div>
 </div>
 </div>
 <div id="model-building" class="section level1">
 <h1>Model building</h1>
-<p>Our goal is therefore to build a suitable model taking serial correlation into account. In order to do this, we will initially consider the model for a single time point. Then, we extend this model to account for multiple weeks by allowing for week-speficic effects. Finally, we further allow for serially correlated error terms.</p>
+<p>Our goal is therefore to build a suitable model taking serial
+correlation into account. In order to do this, we will initially
+consider the model for a single time point. Then, we extend this model
+to account for multiple weeks by allowing for week-speficic effects.
+Finally, we further allow for serially correlated error terms.</p>
 <div id="single-week" class="section level2">
 <h2>Single week</h2>
-<p>When looking at data from a single time point (<em>e.g.</em> the first week), we merely have 20 observations from a randomized complete block design with a single treatment factor. It can therefore be analyzed with a simple one-way ANOVA (fixed <code>variety</code> effect) for randomized complete block designs (fixed <code>block</code> effect):</p>
+<p>When looking at data from a single time point (<em>e.g.</em> the
+first week), we merely have 20 observations from a randomized complete
+block design with a single treatment factor. It can therefore be
+analyzed with a simple one-way ANOVA (fixed <code>variety</code> effect)
+for randomized complete block designs (fixed <code>block</code>
+effect):</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat.wk1 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(weekF <span class="sc">==</span> <span class="st">&quot;week1&quot;</span>) <span class="co"># subset data from first week only</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mod.wk1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> variety <span class="sc">+</span> block,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat.wk1)</span></code></pre></div>
-<p>We could now go on and look at the ANOVA via <code>anova(mod.wk1)</code> and it would indeed not be <em>wrong</em> to simply repeat this for each week. Yet, one may not be satisfied with obtaining multiple ANOVA results - namely one per week. This is especially likeliy in case the results contradict each other, because <em>e.g.</em> the variety effects are found to be significant in only two out of five weeks. Therefore, one may want to analyze the entire dataset <em>i.e.</em> the multiple weeks jointly.</p>
+<p>We could now go on and look at the ANOVA via
+<code>anova(mod.wk1)</code> and it would indeed not be <em>wrong</em> to
+simply repeat this for each week. Yet, one may not be satisfied with
+obtaining multiple ANOVA results - namely one per week. This is
+especially likeliy in case the results contradict each other, because
+<em>e.g.</em> the variety effects are found to be significant in only
+two out of five weeks. Therefore, one may want to analyze the entire
+dataset <em>i.e.</em> the multiple weeks jointly.</p>
 </div>
 <div id="multiple-weeks-mw" class="section level2">
 <h2>Multiple weeks (MW)</h2>
-<p>Going from the single-week-analysis to jointly analyzing the entire dataset is more than just changing the <code>data =</code> statement in the model. This is because <em>“it is realistic to assume that the treatment effects evolve over time and thus are week-specific. Importantly, we must also allow for the block effects to change over time in an individual manner. For example, there could be fertility or soil type differences between blocks and these could have a smooth progressive or cumulative time-based effect on differences between the blocks dependent on factors such as temperature or rainfall”</em> <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">(Piepho &amp; Edmondson, 2018)</a>. We implement this by taking the model in <code>mod.wk1</code> and multipyling each effect with <code>week</code>. Note that this is also true for the general interecept (µ) in <code>mod.wk1</code>, meaning that we would like to include one intercept per week, which can be achieved by simply adding <code>week</code> as a main effect as well. This leaves us with fixed main effects for <code>week</code>, <code>variety</code>, and <code>block</code>, as well as the week-specific effects of the latter two <code>week:variety</code> and <code>week:block</code>.</p>
-<p>Finally, note that we are not doing anything about the model’s error term at this point. More specifically this means that its variance structure is still the default <strong>iid</strong> (independent and identically distributed) - see <a href="variance_structures.html" target="_blank">the summary on correlation/variance strucutres at the MMFAIR website</a>.</p>
+<p>Going from the single-week-analysis to jointly analyzing the entire
+dataset is more than just changing the <code>data =</code> statement in
+the model. This is because <em>“it is realistic to assume that the
+treatment effects evolve over time and thus are week-specific.
+Importantly, we must also allow for the block effects to change over
+time in an individual manner. For example, there could be fertility or
+soil type differences between blocks and these could have a smooth
+progressive or cumulative time-based effect on differences between the
+blocks dependent on factors such as temperature or rainfall”</em> <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">(Piepho &amp; Edmondson, 2018)</a>. We implement this by
+taking the model in <code>mod.wk1</code> and multipyling each effect
+with <code>week</code>. Note that this is also true for the general
+interecept (µ) in <code>mod.wk1</code>, meaning that we would like to
+include one intercept per week, which can be achieved by simply adding
+<code>week</code> as a main effect as well. This leaves us with fixed
+main effects for <code>week</code>, <code>variety</code>, and
+<code>block</code>, as well as the week-specific effects of the latter
+two <code>week:variety</code> and <code>week:block</code>.</p>
+<p>Finally, note that we are not doing anything about the model’s error
+term at this point. More specifically this means that its variance
+structure is still the default <strong>iid</strong> (independent and
+identically distributed) - see <a href="variance_structures.html"
+target="_blank">the summary on correlation/variance strucutres at the
+MMFAIR website</a>.</p>
 <blockquote>
-<p>I decide to use the <code>glmmTMB</code> package to fit the linear models here, because I feel that their syntax is more intuitive. Note that one may also use the <code>nlme</code> package to do this, just as <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">(Piepho &amp; Edmondson, 2018)</a> did and you can find a direct comparison of the R syntax with additional information <a href="https://schmidtpaul.github.io/MMFAIR/autoregressive_time_series.html#nlme-1" target="_blank">in the MMFAIR chapter</a>.</p>
+<p>I decide to use the <code>glmmTMB</code> package to fit the linear
+models here, because I feel that their syntax is more intuitive. Note
+that one may also use the <code>nlme</code> package to do this, just as
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">(Piepho &amp; Edmondson, 2018)</a> did and you can find
+a direct comparison of the R syntax with additional information <a
+href="https://schmidtpaul.github.io/MMFAIR/autoregressive_time_series.html#nlme-1"
+target="_blank">in the MMFAIR chapter</a>.</p>
 </blockquote>
 </div>
-<div id="mw---indepentent-errors" class="section level2 tabset tabset-fade">
+<div id="mw---indepentent-errors"
+class="section level2 tabset tabset-fade">
 <h2 class="tabset tabset-fade">MW - indepentent errors</h2>
 <div id="glmmtmb" class="section level3">
 <h3>glmmTMB</h3>
 <p>With the <code>glmmTMB()</code> function, it is possible to</p>
 <ol style="list-style-type: decimal">
-<li>fix the error variance to 0 via adding the <code>dispformula = ~ 0</code> argument and then</li>
-<li>mimic the error (variance) as a random effect (variance) via the <code>unit</code> column with different entries for each data point.</li>
+<li>fix the error variance to 0 via adding the
+<code>dispformula = ~ 0</code> argument and then</li>
+<li>mimic the error (variance) as a random effect (variance) via the
+<code>unit</code> column with different entries for each data
+point.</li>
 </ol>
-<p>While this may not be necessary for this model with the default homoscedastic, independent error variance structure, using it here will allow for an intuitve comparison to the following model with more sophisticated variance structures.</p>
+<p>While this may not be necessary for this model with the default
+homoscedastic, independent error variance structure, using it here will
+allow for an intuitve comparison to the following model with more
+sophisticated variance structures.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod.iid <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> unit),      <span class="co"># add random unit term to mimic error variance</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">dispformula =</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></span>
@@ -734,11 +836,20 @@ div.tocify {
 <pre><code>##      group    effect variance    sd var_2.5 var_97.5 var_prop
 ## 1     unit Intercept    0.023 0.152   0.016    0.033        1
 ## 2 Residual              0.000 0.000      NA       NA        0</code></pre>
-<p>As expected, we find the residual variance to be 0 and instead we have the mimiced homoscedastic, independent error variance for the random <code>(1 | unit)</code> effect estimated as 0.023.</p>
+<p>As expected, we find the residual variance to be 0 and instead we
+have the mimiced homoscedastic, independent error variance for the
+random <code>(1 | unit)</code> effect estimated as 0.023.</p>
 </div>
 <div id="nlme" class="section level3">
 <h3>nlme</h3>
-<p>Since the models in this chapter do not contain any random effects, we make use of <code>gls()</code> instead of <code>lme()</code>. Furthermore, we specifically write out the <code>correlation = NULL</code> argument to get a homoscedastic, independent error variance structure. While this may not be necessary because it is the default, using it here will allow for an intuitve comparison to the following models with more sophisticated variance structures.</p>
+<p>Since the models in this chapter do not contain any random effects,
+we make use of <code>gls()</code> instead of <code>lme()</code>.
+Furthermore, we specifically write out the
+<code>correlation = NULL</code> argument to get a homoscedastic,
+independent error variance structure. While this may not be necessary
+because it is the default, using it here will allow for an intuitve
+comparison to the following models with more sophisticated variance
+structures.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mod.iid.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety), </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">correlation =</span> <span class="cn">NULL</span>, <span class="co"># default, i.e. homoscedastic, independent errors</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> dat)</span>
@@ -751,24 +862,88 @@ div.tocify {
 ##   varstruct sigma Variance
 ##   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 iid       0.152   0.0232</code></pre>
-<p>It can be seen that the residual homoscedastic, independent error variance was estimated as 0.023.</p>
+<p>It can be seen that the residual homoscedastic, independent error
+variance was estimated as 0.023.</p>
 </div>
 </div>
-<div id="mw---autocorrelated-errors" class="section level2 tabset tabset-fade tabset-pills">
-<h2 class="tabset tabset-fade tabset-pills">MW - autocorrelated errors</h2>
-<p>Note that at this point of the analysis, the model above with an independent, homogeneous error term above is neither the right, nor the wrong choice. It must be clear that <em>“measurements on the same plot are <strong>likely</strong> to be serially correlated”</em>. Thus, it should be investigated whether any covariance structure for the error term (instead of the default independence between errors) is more appropriate to model this dataset. It could theoretically be the case that this <code>mod.iid</code> is the best choice here, but we cannot confirm this yet, as we have not looked at any alternatives. This is what we will do in the next step.</p>
+<div id="mw---autocorrelated-errors"
+class="section level2 tabset tabset-fade tabset-pills">
+<h2 class="tabset tabset-fade tabset-pills">MW - autocorrelated
+errors</h2>
+<p>Note that at this point of the analysis, the model above with an
+independent, homogeneous error term above is neither the right, nor the
+wrong choice. It must be clear that <em>“measurements on the same plot
+are <strong>likely</strong> to be serially correlated”</em>. Thus, it
+should be investigated whether any covariance structure for the error
+term (instead of the default independence between errors) is more
+appropriate to model this dataset. It could theoretically be the case
+that this <code>mod.iid</code> is the best choice here, but we cannot
+confirm this yet, as we have not looked at any alternatives. This is
+what we will do in the next step.</p>
 <blockquote>
-<p>One may ask <strong>at what step of the analysis it is best to compare and find the appropriate covariance structure for the error term</strong> in such a scenario. It is indeed here, at this step. As <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write: <em>“<strong>Before modelling the treatment effect</strong>, a variance–covariance model needs to be identified for these correlations. This is best done by using a saturated model for treatments and time, i.e., a model that considers all treatment factors and time as qualitative.”</em> Note that this <em>saturated model</em> is what we have in <code>mod.iid</code>. So in short: one should compare variance structures for the error term <strong>before</strong> running an ANOVA / conducting model selection steps.</p>
+<p>One may ask <strong>at what step of the analysis it is best to
+compare and find the appropriate covariance structure for the error
+term</strong> in such a scenario. It is indeed here, at this step. As <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">Piepho &amp; Edmondson (2018)</a> write:
+<em>“<strong>Before modelling the treatment effect</strong>, a
+variance–covariance model needs to be identified for these correlations.
+This is best done by using a saturated model for treatments and time,
+i.e., a model that considers all treatment factors and time as
+qualitative.”</em> Note that this <em>saturated model</em> is what we
+have in <code>mod.iid</code>. So in short: one should compare variance
+structures for the error term <strong>before</strong> running an ANOVA /
+conducting model selection steps.</p>
 </blockquote>
-<p>Units on which repeated observations are taken are often referred to as subjects. We would now like to allow measurements taken on the same subjects (plot in this case) to be serially correlated, while observations on different subjects are still considered independent. More specifically, we want the errors of the respective observations to be correlated in our model. <img src="img/corrvalues.PNG" style="width:60%; margin-right: 10px" align="left"></p>
-<p>Take the visualisation on the left depicting a subset of our data. Here, you can see plots 1 and 2 (out of the total of 20 in our dataset) side by side. Furthermore, they are shown for weeks 1-3 (out of the total of 5 in our dataset). Thus, a total of six values are represented, coming from only two subjects/plots, but obtained in three different weeks. The blue arrows represent correlation among errors. For these six measurements, there are six blue arrows, since there are six error pairs that come from the same plot, respectively. The green lines on the other hand represent error pairs that do not come from the same plot and thus are assumed to be independent. Finally, notice that the errors coming from the same plot, but with two instead of just one week between their measurements, are shown in a lighter blue. This is because one may indeed assume a weaker correlation between errors that are further apart in terms of time passed between measurements.</p>
-<p>The latter can be achieved by using a correlation structure for repeated measures over time. Maybe most popular correlation structure is called <strong>first order autoregressive AR(1)</strong>. It should be noted that this correlation structure is useful, if all time points are equally spaced, which is the case here, as there is always exactly one week between consecutive time points. As can be seen in the analysis of <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank"><em>Example 4</em> in Piepho &amp; Edmondson (2018)</a> and the corresponding <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>, however, there are more options that just AR(1). Therefore, we will also try out multiple variance structures to model the serial correlation of our longitudinal data.</p>
+<p>Units on which repeated observations are taken are often referred to
+as subjects. We would now like to allow measurements taken on the same
+subjects (plot in this case) to be serially correlated, while
+observations on different subjects are still considered independent.
+More specifically, we want the errors of the respective observations to
+be correlated in our model.
+<img src="img/corrvalues.PNG" style="width:60%; margin-right: 10px" align="left"></p>
+<p>Take the visualisation on the left depicting a subset of our data.
+Here, you can see plots 1 and 2 (out of the total of 20 in our dataset)
+side by side. Furthermore, they are shown for weeks 1-3 (out of the
+total of 5 in our dataset). Thus, a total of six values are represented,
+coming from only two subjects/plots, but obtained in three different
+weeks. The blue arrows represent correlation among errors. For these six
+measurements, there are six blue arrows, since there are six error pairs
+that come from the same plot, respectively. The green lines on the other
+hand represent error pairs that do not come from the same plot and thus
+are assumed to be independent. Finally, notice that the errors coming
+from the same plot, but with two instead of just one week between their
+measurements, are shown in a lighter blue. This is because one may
+indeed assume a weaker correlation between errors that are further apart
+in terms of time passed between measurements.</p>
+<p>The latter can be achieved by using a correlation structure for
+repeated measures over time. Maybe most popular correlation structure is
+called <strong>first order autoregressive AR(1)</strong>. It should be
+noted that this correlation structure is useful, if all time points are
+equally spaced, which is the case here, as there is always exactly one
+week between consecutive time points. As can be seen in the analysis of
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank"><em>Example 4</em> in Piepho &amp; Edmondson (2018)</a>
+and the corresponding <a
+href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D"
+target="_blank">Agritutorial vigniette</a>, however, there are more
+options that just AR(1). Therefore, we will also try out multiple
+variance structures to model the serial correlation of our longitudinal
+data.</p>
 <div id="ar1" class="section level3 tabset tabset-fade">
 <h3 class="tabset tabset-fade">AR(1)</h3>
 <div id="glmmtmb-1" class="section level4">
 <h4>glmmTMB</h4>
-<p>To model the variance structure of our mimiced error term as first order autoregressive, we replace the <code>(1 | unit)</code> from the <code>iid</code> model with <code>ar1(weekF + 0 | plot)</code>. As can be seen, subjects are identified after the <code>|</code> and the variance structure in this syntax.</p>
-<p>Note that by adding the <code>show_cor = TRUE</code> argument to the <code>extract_vc</code> function, we obtain two outputs: The variance component estimates, as seen above for the <code>iid</code> model, as well as the correlation matrix / variance structure for a single plot.</p>
+<p>To model the variance structure of our mimiced error term as first
+order autoregressive, we replace the <code>(1 | unit)</code> from the
+<code>iid</code> model with <code>ar1(weekF + 0 | plot)</code>. As can
+be seen, subjects are identified after the <code>|</code> and the
+variance structure in this syntax.</p>
+<p>Note that by adding the <code>show_cor = TRUE</code> argument to the
+<code>extract_vc</code> function, we obtain two outputs: The variance
+component estimates, as seen above for the <code>iid</code> model, as
+well as the correlation matrix / variance structure for a single
+plot.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod.AR1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ar1</span>(weekF <span class="sc">+</span> <span class="dv">0</span> <span class="sc">|</span> plot), <span class="co"># ar1 structure as random term to mimic error var</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dispformula =</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></span>
@@ -795,11 +970,17 @@ div.tocify {
 ## weekFweek3      0.561      0.749      1.000      0.749      0.561
 ## weekFweek4      0.420      0.561      0.749      1.000      0.749
 ## weekFweek5      0.315      0.420      0.561      0.749      1.000</code></pre>
-<p>We can see that the we get <span class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
+<p>We can see that the we get <span
+class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and
+a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
 </div>
 <div id="nlme-1" class="section level4">
 <h4>nlme</h4>
-<p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corAR1</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. In its syntax, subjects are identified after the <code>|</code>.</p>
+<p>In <code>nlme</code> we make use of the <code>correlation =</code>
+argument and use the <code>corAR1</code> <a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1"
+target="_blank">correlation strucutre class</a>. In its syntax, subjects
+are identified after the <code>|</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mod.AR1.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety),</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">correlation =</span> <span class="fu">corAR1</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> dat)</span>
@@ -817,12 +998,34 @@ div.tocify {
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1)     0.149 0.749   0.0222   0.749    0.561    0.420    0.315</code></pre>
-<p>We can see that the we get <span class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
+<p>We can see that the we get <span
+class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and
+a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
 </div>
 <div id="nlme-v2" class="section level4">
 <h4>nlme V2</h4>
-<p>For completeness, I want to show that the same model can also be fit in <code>nlme</code> via the <code>corExp</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. Note that this was actually done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a> and <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots.”</p>
-<p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
+<p>For completeness, I want to show that the same model can also be fit
+in <code>nlme</code> via the <code>corExp</code> <a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1"
+target="_blank">correlation strucutre class</a>. Note that this was
+actually done in the <a
+href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D"
+target="_blank">Agritutorial vigniette</a> and <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2:
+“Initially, we used corCAR1() to fit the model correlation structure but
+subsequently found that corExp() was more flexible as it allowed the
+inclusion of a “nugget” term, which seemingly cannot be done with
+corCAR1(). We note that it is essential that the variable weeks in the
+specification of the correlation structure, corr = corExp (form =
+~weeks|Plots), is a numeric variable with values representing the time
+values of the repeated measurements. Note that this code will also work
+for repeated observations that are not necessarily equally spaced. It is
+also necessary that each plot has a unique level for the variable
+Plots.”</p>
+<p>Notice also that the increased flexibility comes at a price:
+Extracting the estimate for <span class="math inline">\(\rho\)</span>
+takes quite some code:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mod.AR1.nlme.V2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block),</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">correlation =</span> <span class="fu">corExp</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot),</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> dat)</span>
@@ -840,7 +1043,9 @@ div.tocify {
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1)     0.149 0.749   0.0222   0.749    0.561    0.420    0.315</code></pre>
-<p>We can see that the we get <span class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
+<p>We can see that the we get <span
+class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.022</code> and
+a <span class="math inline">\(\rho =\)</span> <code>0.749</code>.</p>
 </div>
 </div>
 <div id="ar1-nugget" class="section level3 tabset tabset-fade">
@@ -850,7 +1055,8 @@ div.tocify {
 <p></br></br></br></p>
 <p><span style="color:red"> not possible ?</span></p>
 <p></br></br></br></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mod.AR1nugget <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mod.AR1nugget <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">ar1</span>(weekF <span class="sc">+</span> <span class="dv">0</span> <span class="sc">|</span> plot), <span class="co"># ar1 structure as random term to mimic error var</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                         <span class="co"># dispformula = ~ 0, # error variance allowed = nugget!</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">REML =</span> <span class="cn">TRUE</span>,       <span class="co"># needs to be stated since default = ML</span></span>
@@ -864,8 +1070,24 @@ div.tocify {
 </div>
 <div id="nlme-2" class="section level4">
 <h4>nlme</h4>
-<p>As pointed out by <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2: “Initially, we used corCAR1() to fit the model correlation structure but subsequently found that corExp() was more flexible as it allowed the inclusion of a “nugget” term, which seemingly cannot be done with corCAR1(). We note that it is essential that the variable weeks in the specification of the correlation structure, corr = corExp (form = ~weeks|Plots), is a numeric variable with values representing the time values of the repeated measurements. Note that this code will also work for repeated observations that are not necessarily equally spaced. It is also necessary that each plot has a unique level for the variable Plots.” This was also done in the <a href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D" target="_blank">Agritutorial vigniette</a>.</p>
-<p>Notice also that the increased flexibility comes at a price: Extracting the estimate for <span class="math inline">\(\rho\)</span> takes quite some code:</p>
+<p>As pointed out by <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">Piepho &amp; Edmondson (2018)</a> write in Appendix 2:
+“Initially, we used corCAR1() to fit the model correlation structure but
+subsequently found that corExp() was more flexible as it allowed the
+inclusion of a “nugget” term, which seemingly cannot be done with
+corCAR1(). We note that it is essential that the variable weeks in the
+specification of the correlation structure, corr = corExp (form =
+~weeks|Plots), is a numeric variable with values representing the time
+values of the repeated measurements. Note that this code will also work
+for repeated observations that are not necessarily equally spaced. It is
+also necessary that each plot has a unique level for the variable
+Plots.” This was also done in the <a
+href="https://cran.r-project.org/web/packages/agriTutorial/vignettes/agriTutorialVignette.pdf#%5B%7B%22num%22%3A81%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C28.346%2C813.543%2Cnull%5D"
+target="_blank">Agritutorial vigniette</a>.</p>
+<p>Notice also that the increased flexibility comes at a price:
+Extracting the estimate for <span class="math inline">\(\rho\)</span>
+takes quite some code:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mod.AR1nugget.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(<span class="at">model =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety),</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">correlation =</span> <span class="fu">corExp</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot, <span class="at">nugget =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> dat)</span>
@@ -887,15 +1109,26 @@ div.tocify {
 ##   varstruct      sigma nugget   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1) + nugget 0.150  0.172 0.752   0.0225   0.752    0.565    0.425    0.319</code></pre>
-<p>We can see that the we get <span class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.0225</code> and a <span class="math inline">\(\rho =\)</span> <code>0.752</code>.</p>
+<p>We can see that the we get <span
+class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.0225</code> and
+a <span class="math inline">\(\rho =\)</span> <code>0.752</code>.</p>
 </div>
 </div>
 <div id="cs" class="section level3 tabset tabset-fade">
 <h3 class="tabset tabset-fade">CS</h3>
 <div id="glmmtmb-hcs" class="section level4">
 <h4>glmmTMB (hCS!)</h4>
-<p><strong>Note that <code>glmmTMB()</code> only allows for heterogengeous compound symmetry and not standard compound symmetry!</strong></p>
-<p>To model the variance structure of our mimiced error term as a heterogeneous compound symmetry structure, we use <code>cs(weekF + 0 | plot)</code>. Notice that this is not the simple compound symmetry structure that <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267" target="_blank">Piepho &amp; Edmondson (2018)</a> applied, because <code>glmmTMB()</code> only allows for heterogeneous compound symmetry at the moment.</p>
+<p><strong>Note that <code>glmmTMB()</code> only allows for
+heterogengeous compound symmetry and not standard compound
+symmetry!</strong></p>
+<p>To model the variance structure of our mimiced error term as a
+heterogeneous compound symmetry structure, we use
+<code>cs(weekF + 0 | plot)</code>. Notice that this is not the simple
+compound symmetry structure that <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1111/jac.12267"
+target="_blank">Piepho &amp; Edmondson (2018)</a> applied, because
+<code>glmmTMB()</code> only allows for heterogeneous compound symmetry
+at the moment.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mod.hCS <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">cs</span>(weekF <span class="sc">+</span> <span class="dv">0</span> <span class="sc">|</span> plot), <span class="co"># hcs structure as random term to mimic error var</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dispformula =</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></span>
@@ -922,11 +1155,19 @@ div.tocify {
 ## weekFweek3      0.702      0.702      1.000      0.702      0.702
 ## weekFweek4      0.702      0.702      0.702      1.000      0.702
 ## weekFweek5      0.702      0.702      0.702      0.702      1.000</code></pre>
-<p>We can see that the we get heterogeneous <span class="math inline">\(\sigma^2_{plot}\)</span> estimates per week: <code>0.021</code>, <code>0.022</code>, <code>0.021</code>, <code>0.029</code>, <code>0.022</code> and a <span class="math inline">\(\rho =\)</span> <code>0.702</code>.</p>
+<p>We can see that the we get heterogeneous <span
+class="math inline">\(\sigma^2_{plot}\)</span> estimates per week:
+<code>0.021</code>, <code>0.022</code>, <code>0.021</code>,
+<code>0.029</code>, <code>0.022</code> and a <span
+class="math inline">\(\rho =\)</span> <code>0.702</code>.</p>
 </div>
 <div id="nlme-3" class="section level4">
 <h4>nlme</h4>
-<p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corCompSymm</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a>. In its syntax, subjects are identified after the <code>|</code>.</p>
+<p>In <code>nlme</code> we make use of the <code>correlation =</code>
+argument and use the <code>corCompSymm</code> <a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1"
+target="_blank">correlation strucutre class</a>. In its syntax, subjects
+are identified after the <code>|</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mod.CS.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety),</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">corr =</span> <span class="fu">corCompSymm</span>(<span class="at">form =</span> <span class="sc">~</span> weekN <span class="sc">|</span> plot),</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> dat)</span>
@@ -943,14 +1184,17 @@ div.tocify {
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 cs        0.152 0.701   0.0232   0.701    0.701    0.701    0.701</code></pre>
-<p>We can see that the we get <span class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.023</code> and a <span class="math inline">\(\rho =\)</span> of <code>0.701</code>.</p>
+<p>We can see that the we get <span
+class="math inline">\(\sigma^2_{plot} =\)</span> <code>0.023</code> and
+a <span class="math inline">\(\rho =\)</span> of <code>0.701</code>.</p>
 </div>
 </div>
 <div id="toeplitz" class="section level3 tabset tabset-fade">
 <h3 class="tabset tabset-fade">Toeplitz</h3>
 <div id="glmmtmb-3" class="section level4">
 <h4>glmmTMB</h4>
-<p>To model the variance structure of our mimiced error term as a toeplitz structure, we use <code>toep(weekF + 0 | plot)</code>.</p>
+<p>To model the variance structure of our mimiced error term as a
+toeplitz structure, we use <code>toep(weekF + 0 | plot)</code>.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mod.Toep <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">toep</span>(weekF <span class="sc">+</span> <span class="dv">0</span> <span class="sc">|</span> plot), <span class="co"># teop structure as random term to mimic err var</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dispformula =</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></span>
@@ -977,12 +1221,20 @@ div.tocify {
 ## weekFweek3      0.691      0.764      1.000      0.764      0.691
 ## weekFweek4      0.637      0.691      0.764      1.000      0.764
 ## weekFweek5      0.552      0.637      0.691      0.764      1.000</code></pre>
-<p>We can see that the we get heterogeneous <span class="math inline">\(\sigma^2_{plot}\)</span> estimates per week: <code>0.021</code>, <code>0.023</code>, <code>0.022</code>, <code>0.029</code>, <code>0.020</code> and a heterogeneous <span class="math inline">\(\rho\)</span> per week-difference: <code>0.764</code>, <code>0.691</code>, <code>0.637</code> and <code>0.552</code>.</p>
+<p>We can see that the we get heterogeneous <span
+class="math inline">\(\sigma^2_{plot}\)</span> estimates per week:
+<code>0.021</code>, <code>0.023</code>, <code>0.022</code>,
+<code>0.029</code>, <code>0.020</code> and a heterogeneous <span
+class="math inline">\(\rho\)</span> per week-difference:
+<code>0.764</code>, <code>0.691</code>, <code>0.637</code> and
+<code>0.552</code>.</p>
 </div>
 <div id="nlme-4" class="section level4">
 <h4>nlme</h4>
 <p></br></br></br></p>
-<p><span style="color:red"> not possible? At least it is not included in the agriTutorial vigniette and there is no obviously corresponding cor.class found in the nlme documentation. </span></p>
+<p><span style="color:red"> not possible? At least it is not included in
+the agriTutorial vigniette and there is no obviously corresponding
+cor.class found in the nlme documentation. </span></p>
 <p></br></br></br></p>
 </div>
 </div>
@@ -990,7 +1242,9 @@ div.tocify {
 <h3 class="tabset tabset-fade">UN</h3>
 <div id="glmmtmb-4" class="section level4">
 <h4>glmmTMB</h4>
-<p>To model the variance structure of our mimiced error term as a completely unstrucutred variance structure, we use <code>us(weekF + 0 | plot)</code>.</p>
+<p>To model the variance structure of our mimiced error term as a
+completely unstrucutred variance structure, we use
+<code>us(weekF + 0 | plot)</code>.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mod.UN <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="at">formula =</span> y <span class="sc">~</span> weekF <span class="sc">*</span> (variety <span class="sc">+</span> block) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">us</span>(weekF <span class="sc">+</span> <span class="dv">0</span> <span class="sc">|</span> plot), <span class="co"># us structure as random term to mimic error var</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dispformula =</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># fix original error variance to 0</span></span>
@@ -1017,11 +1271,23 @@ div.tocify {
 ## weekFweek3      0.644      0.634      1.000      0.934      0.718
 ## weekFweek4      0.748      0.744      0.934      1.000      0.776
 ## weekFweek5      0.534      0.549      0.718      0.776      1.000</code></pre>
-<p>As can be seen, each week <em>gets its own</em> variance and also each pair of weeks <em>gets</em> individual correlations.</p>
+<p>As can be seen, each week <em>gets its own</em> variance and also
+each pair of weeks <em>gets</em> individual correlations.</p>
 </div>
 <div id="nlme-5" class="section level4">
 <h4>nlme</h4>
-<p>In <code>nlme</code> we make use of the <code>correlation =</code> argument and use the <code>corSymm</code> <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1" target="_blank">correlation strucutre class</a> in combination with the <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.varIdent.1" target="_blank"><code>varIdent()</code></a> in the <a href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.lme.1" target="_blank"><code>weights=</code></a> argument, which is <em>used to allow for different variances according to the levels of a classification factor</em>. In its syntax, subjects are identified after the <code>|</code>.</p>
+<p>In <code>nlme</code> we make use of the <code>correlation =</code>
+argument and use the <code>corSymm</code> <a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.corClasses.1"
+target="_blank">correlation strucutre class</a> in combination with the
+<a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.varIdent.1"
+target="_blank"><code>varIdent()</code></a> in the <a
+href="https://cran.r-project.org/web/packages/nlme/nlme.pdf#Rfn.lme.1"
+target="_blank"><code>weights=</code></a> argument, which is <em>used to
+allow for different variances according to the levels of a
+classification factor</em>. In its syntax, subjects are identified after
+the <code>|</code>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mod.UN.nlme <span class="ot">&lt;-</span> <span class="fu">gls</span>(y <span class="sc">~</span> weekF <span class="sc">*</span> (block <span class="sc">+</span> variety), </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">corr =</span> <span class="fu">corSymm</span>(<span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> plot), </span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> <span class="fu">varIdent</span>(<span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>weekF), </span>
@@ -1051,7 +1317,8 @@ div.tocify {
 ## 3 0.644 0.634            
 ## 4 0.748 0.744 0.934      
 ## 5 0.534 0.549 0.718 0.776</code></pre>
-<p>As can be seen, each week <em>gets its own</em> variance and also each pair of weeks <em>gets</em> individual correlations.</p>
+<p>As can be seen, each week <em>gets its own</em> variance and also
+each pair of weeks <em>gets</em> individual correlations.</p>
 </div>
 </div>
 </div>
@@ -1062,7 +1329,9 @@ div.tocify {
 <h2 class="tabset tabset-fade">variance structure</h2>
 <div id="glmmtmb-5" class="section level3">
 <h3>glmmTMB</h3>
-<p>In order to select the best model here, we can simply compare their AIC values, since all models are identical regarding their fixed effects part. The smaller the value of AIC, the better is the fit:</p>
+<p>In order to select the best model here, we can simply compare their
+AIC values, since all models are identical regarding their fixed effects
+part. The smaller the value of AIC, the better is the fit:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>AICcmodavg<span class="sc">::</span><span class="fu">aictab</span>(</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cand.set =</span> <span class="fu">list</span>(mod.iid, mod.hCS, mod.AR1, mod.Toep, mod.UN), </span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">modnames =</span> <span class="fu">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;hCS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;Toeplitz&quot;</span>, <span class="st">&quot;UN&quot;</span>),</span>
@@ -1076,11 +1345,18 @@ div.tocify {
 ## UN       55 47.10      9.05  0.01   0.99 31.45
 ## Toeplitz 49 47.88      9.84  0.01   1.00 25.06
 ## iid      41 78.26     40.22  0.00   1.00  1.87</code></pre>
-<p>According to the AIC value, the <code>mod.AR1</code> model is the best, suggesting that the plot values across weeks are indeed autocorrelated (as opposed to the <code>mod.iid</code> model) and that from all the potential variance structures, the first order autoregressive structure was best able to capture this autocorrelation.</p>
+<p>According to the AIC value, the <code>mod.AR1</code> model is the
+best, suggesting that the plot values across weeks are indeed
+autocorrelated (as opposed to the <code>mod.iid</code> model) and that
+from all the potential variance structures, the first order
+autoregressive structure was best able to capture this
+autocorrelation.</p>
 </div>
 <div id="nlme-6" class="section level3">
 <h3>nlme</h3>
-<p>In order to select the best model here, we can simply compare their AIC values, since all models are identical regarding their fixed effects part. The smaller the value of AIC, the better is the fit:</p>
+<p>In order to select the best model here, we can simply compare their
+AIC values, since all models are identical regarding their fixed effects
+part. The smaller the value of AIC, the better is the fit:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>AICcmodavg<span class="sc">::</span><span class="fu">aictab</span>(</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cand.set =</span> <span class="fu">list</span>(mod.iid.nlme, mod.CS.nlme, mod.AR1.nlme, mod.AR1nugget.nlme, mod.UN.nlme), </span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">modnames =</span> <span class="fu">c</span>(<span class="st">&quot;iid&quot;</span>, <span class="st">&quot;CS&quot;</span>, <span class="st">&quot;AR1&quot;</span>, <span class="st">&quot;AR1 + nugget&quot;</span>, <span class="st">&quot;UN&quot;</span>),</span>
@@ -1094,12 +1370,22 @@ div.tocify {
 ## CS           42 38.38      0.90  0.27   1.00  22.81
 ## UN           55 47.10      9.62  0.00   1.00  31.45
 ## iid          41 78.26     40.78  0.00   1.00   1.87</code></pre>
-<p>According to the AIC value, the <code>mod.AR1</code> model is the best, suggesting that the plot values across weeks are indeed autocorrelated (as opposed to the <code>mod.iid</code> model) and that from all the potential variance structures, the first order autoregressive structure was best able to capture this autocorrelation.</p>
+<p>According to the AIC value, the <code>mod.AR1</code> model is the
+best, suggesting that the plot values across weeks are indeed
+autocorrelated (as opposed to the <code>mod.iid</code> model) and that
+from all the potential variance structures, the first order
+autoregressive structure was best able to capture this
+autocorrelation.</p>
 </div>
 </div>
-<div id="time-trend-as-polynomial-regression-model" class="section level2">
+<div id="time-trend-as-polynomial-regression-model"
+class="section level2">
 <h2>time trend as (polynomial) regression model</h2>
-<p>So far, we have focussed on dealing with potentially correlated error terms for our repeated measures data. Now that we dealt with this and found an optimal solution, we are now ready to select a regression model for time trend. As a reminder, this is the data we are dealing with (this time not animated):</p>
+<p>So far, we have focussed on dealing with potentially correlated error
+terms for our repeated measures data. Now that we dealt with this and
+found an optimal solution, we are now ready to select a regression model
+for time trend. As a reminder, this is the data we are dealing with
+(this time not animated):</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, </span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">x =</span> weekF,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> variety,</span>
@@ -1116,8 +1402,15 @@ div.tocify {
 <span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, </span>
 <span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="Repeated_RCBD_PiephoEdmondson2018_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-<p>It can now be asked whether the trend over time is simply linear (in the sense of <code>y = a + bx</code>) or can better be modelled as with a polynomial regression (<em>i.e.</em> <code>y = a + bx + cx²</code> or <code>y = a + bx + cx² + dx³</code> and so on). Very roughly put, we are asking whether a straight line fits the data well enough or if we should instead use a model that results in some sort of curved line.</p>
-<p>In order to answer this question, we use the <em>lack-of-fit</em> method to determine which degree of a polynomial regression we should go with. We start with the linear regression model.</p>
+<p>It can now be asked whether the trend over time is simply linear (in
+the sense of <code>y = a + bx</code>) or can better be modelled as with
+a polynomial regression (<em>i.e.</em> <code>y = a + bx + cx²</code> or
+<code>y = a + bx + cx² + dx³</code> and so on). Very roughly put, we are
+asking whether a straight line fits the data well enough or if we should
+instead use a model that results in some sort of curved line.</p>
+<p>In order to answer this question, we use the <em>lack-of-fit</em>
+method to determine which degree of a polynomial regression we should go
+with. We start with the linear regression model.</p>
 <p></br></br></br></p>
 <p><span style="color:red"> work in progress </span></p>
 <p></br></br></br></p>

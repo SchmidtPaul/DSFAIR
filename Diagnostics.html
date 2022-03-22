@@ -13,7 +13,7 @@
 
 <title>Model diagnostics</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -577,15 +584,22 @@ div.tocify {
 
 <div id="what-are-residuals" class="section level1">
 <h1>What are residuals?</h1>
-<p>A residual is the difference between the actually observed value (<span class="math inline">\(y\)</span>) for a datapoint and the model’s prediction (<span class="math inline">\(\hat{y}\)</span>) for that datapoint:</p>
-<p><span class="math display">\[ Residual = Observed - Predicted \]</span></p>
-<p><span class="math display">\[ r_i = \hat{e}_i = y_i - \hat{y}_i \]</span></p>
-<p>Basically, whenever you fit a statistical model to a dataset, you can obtain the respective residuals.</p>
+<p>A residual is the difference between the actually observed value
+(<span class="math inline">\(y\)</span>) for a datapoint and the model’s
+prediction (<span class="math inline">\(\hat{y}\)</span>) for that
+datapoint:</p>
+<p><span class="math display">\[ Residual = Observed - Predicted
+\]</span></p>
+<p><span class="math display">\[ r_i = \hat{e}_i = y_i - \hat{y}_i
+\]</span></p>
+<p>Basically, whenever you fit a statistical model to a dataset, you can
+obtain the respective residuals.</p>
 <div id="example" class="section level2">
 <h2>Example</h2>
 <div id="observed" class="section level3">
 <h3>Observed</h3>
-<p>Take this example dataset with variables <code>x</code> and <code>y</code> and 29 observations.</p>
+<p>Take this example dataset with variables <code>x</code> and
+<code>y</code> and 29 observations.</p>
 <div class="row">
 <div class="col-md-6">
 <pre><code>## # A tibble: 29 x 2
@@ -610,7 +624,11 @@ div.tocify {
 </div>
 <div id="predicted" class="section level3">
 <h3>Predicted</h3>
-<p>We here fit a simple model, <em>i.e.</em> a simple linear regression to the dataset. Once we have the model’s estimated coefficients, we can use the model to make predictions via the <code>predict()</code> function. For this simple linear regression, the blue line represents the model prediction for every possible x-value.</p>
+<p>We here fit a simple model, <em>i.e.</em> a simple linear regression
+to the dataset. Once we have the model’s estimated coefficients, we can
+use the model to make predictions via the <code>predict()</code>
+function. For this simple linear regression, the blue line represents
+the model prediction for every possible x-value.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> dat)</span>
@@ -637,7 +655,9 @@ div.tocify {
 </div>
 <div id="residuals" class="section level3">
 <h3>Residuals</h3>
-<p>We here calculate residuals once via the <code>resid()</code> function and once via manually subtracting <code>y - y_hat</code> just to show that it really gives us the same result.</p>
+<p>We here calculate residuals once via the <code>resid()</code>
+function and once via manually subtracting <code>y - y_hat</code> just
+to show that it really gives us the same result.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -663,8 +683,11 @@ div.tocify {
 </div>
 <div id="ok-but-why-do-i-care" class="section level1">
 <h1>Ok, but why do I care?</h1>
-<p>You care because residuals can tell you whether your model is valid or not. Very simply put: If they are “bad” your model’s results may be wrong.</p>
-<p>When fitting a general linear model certain things are assumed to be true</p>
+<p>You care because residuals can tell you whether your model is valid
+or not. Very simply put: If they are “bad” your model’s results may be
+wrong.</p>
+<p>When fitting a general linear model certain things are assumed to be
+true</p>
 <p>—&gt; By the ANOVA?</p>
 </div>
 

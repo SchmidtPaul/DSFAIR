@@ -13,7 +13,7 @@
 
 <title>Dr. Paul Schmidt</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -104,6 +104,7 @@
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -128,6 +129,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -356,7 +360,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -369,14 +373,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -390,7 +394,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -400,6 +404,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -416,7 +423,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -432,7 +439,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -460,7 +467,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -507,10 +514,31 @@ a:active {
 p.small {line-height: 1;}
 </style>
 <p class="small">
-<p><i class="fa fa-home" style="color: #003f75ff;"> </i> Hamburg, Germany </br></p>
-<p>Contact </br> <a href="mailto:schmidtpaul1989@outlook.com"> <i class="fa fa-envelope" style="color: #003f75ff;"> </i> schmidtpaul1989@outlook.com </a> </br> <a href="https://github.com/SchmidtPaul/"> <i class="fa fa-github" style="color: #003f75ff;"> </i> GitHub </a> </br> <a href="https://www.linkedin.com/in/schmidtpaul1989/"> <i class="fa fa-linkedin" style="color: #003f75ff;"> </i> LinkedIn </a> </br> <a href="https://www.researchgate.net/profile/Paul_Schmidt17"> <i class="fa fa-pencil" style="color: #003f75ff;"> </i> ResearchGate </a> </br> <a href="https://www.xing.com/profile/Paul_Schmidt393/cv"> <i class="fa fa-xing" style="color: #003f75ff;"> </i> Xing </a></p>
-<p>Websites </br> <a href="https://schmidtpaul.github.io/DSFAIR/"> <img src="https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/img/logo/favicon-32x32.png" width=16 height=16/> </i> DSFAIR: Data Science for Agriculture in R </a> </br> <a href="https://schmidtpaul.github.io/MMFAIR/"> <img src="https://raw.githubusercontent.com/SchmidtPaul/MMFAIR/master/img/logo/favicon-32x32.png" width=16 height=16/> </i> MMFAIR: Mixed Models for Agriculture in R </a> </br> <a href="https://schmidtpaul.github.io/crashcouRse/"> <i class="fa fa-window-maximize" style="color: #003f75ff;"> </i> CrashcouRse: R für Bio- und Agrarwissenschaftler </a> </br></p>
-<p>R-packages </br> <a href="https://schmidtpaul.github.io/CitaviR/"> <img src="https://raw.githubusercontent.com/SchmidtPaul/CitaviR/master/docs/favicon-32x32.png" width=16 height=16/> </i> CitaviR: A set of tools for dealing with Citavi data </a> </br></p>
+<p><i class="fa fa-home" style="color: #003f75ff;"> </i> Hamburg,
+Germany </br></p>
+<p>Contact </br> <a href="mailto:schmidtpaul1989@outlook.com">
+<i class="fa fa-envelope" style="color: #003f75ff;"> </i>
+schmidtpaul1989@outlook.com </a> </br>
+<a href="https://github.com/SchmidtPaul/">
+<i class="fa fa-github" style="color: #003f75ff;"> </i> GitHub </a>
+</br> <a href="https://www.linkedin.com/in/schmidtpaul1989/">
+<i class="fa fa-linkedin" style="color: #003f75ff;"> </i> LinkedIn </a>
+</br> <a href="https://www.researchgate.net/profile/Paul_Schmidt17">
+<i class="fa fa-pencil" style="color: #003f75ff;"> </i> ResearchGate
+</a> </br> <a href="https://www.xing.com/profile/Paul_Schmidt393/cv">
+<i class="fa fa-xing" style="color: #003f75ff;"> </i> Xing </a></p>
+<p>Websites </br> <a href="https://schmidtpaul.github.io/DSFAIR/">
+<img src="https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/img/logo/favicon-32x32.png" width=16 height=16/>
+</i> DSFAIR: Data Science for Agriculture in R </a> </br>
+<a href="https://schmidtpaul.github.io/MMFAIR/">
+<img src="https://raw.githubusercontent.com/SchmidtPaul/MMFAIR/master/img/logo/favicon-32x32.png" width=16 height=16/>
+</i> MMFAIR: Mixed Models for Agriculture in R </a> </br>
+<a href="https://schmidtpaul.github.io/crashcouRse/">
+<i class="fa fa-window-maximize" style="color: #003f75ff;"> </i>
+CrashcouRse: R für Bio- und Agrarwissenschaftler </a> </br></p>
+<p>R-packages </br> <a href="https://schmidtpaul.github.io/CitaviR/">
+<img src="https://raw.githubusercontent.com/SchmidtPaul/CitaviR/master/docs/favicon-32x32.png" width=16 height=16/>
+</i> CitaviR: A set of tools for dealing with Citavi data </a> </br></p>
 </p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -526,10 +554,18 @@ Deutsch
 <tbody>
 <tr>
 <td style="text-align:left;">
-I completed my <strong>PhD</strong> in biostatistics at the University of Hohenheim in 2019 and have been working as a <strong>data scientist</strong> in life sciences at <a href="https://www.biomath.de/">BioMath</a> since then. I also give beginner and advanced <strong>workshops</strong> in R.
+I completed my <strong>PhD</strong> in biostatistics at the University
+of Hohenheim in 2019 and have been working as a <strong>data
+scientist</strong> in life sciences at <a
+href="https://www.biomath.de/">BioMath</a> since then. I also give
+beginner and advanced <strong>workshops</strong> in R.
 </td>
 <td style="text-align:left;">
-Ich habe 2019 meine <strong>Promotion</strong> im Fachgebiet Biostatistik an der Universität Hohenheim abgeschlossen und arbeite seitdem als <strong>Data Scientist</strong> in den Life Sciences bei <a href="https://www.biomath.de/">BioMath</a>. Außerdem gebe ich <strong>Workshops</strong> in R für Einsteiger und Fortgeschrittene.
+Ich habe 2019 meine <strong>Promotion</strong> im Fachgebiet
+Biostatistik an der Universität Hohenheim abgeschlossen und arbeite
+seitdem als <strong>Data Scientist</strong> in den Life Sciences bei <a
+href="https://www.biomath.de/">BioMath</a>. Außerdem gebe ich
+<strong>Workshops</strong> in R für Einsteiger und Fortgeschrittene.
 </td>
 </tr>
 </tbody>
@@ -563,10 +599,12 @@ Mar 2022
 Data science for experimental life sciences with R (part 2)
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -580,10 +618,12 @@ Mar 2022
 Data science for experimental life sciences with R (part 2)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -597,10 +637,12 @@ Mar 2022
 Data science for experimental life sciences with R (part 1)
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -614,10 +656,12 @@ Mar 2022
 Data science for experimental life sciences with R (part 1)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -631,10 +675,12 @@ Dec 2021
 Statistics with R (Beginner)
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Kassel <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Kassel
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 4d
@@ -648,10 +694,12 @@ Jul 2021
 Data science for life sciences with R (part 2)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -665,10 +713,12 @@ May 2021
 Data science for life sciences with R (part 1)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -682,10 +732,12 @@ Mar 2021
 Data science for life sciences with R (part 2)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -696,13 +748,16 @@ Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipe
 Nov 2020
 </td>
 <td style="text-align:left;">
-Planning experimental designs, repeated measurements, and their analyses in R
+Planning experimental designs, repeated measurements, and their analyses
+in R
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Kassel via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Universität Kassel via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 2d
@@ -716,10 +771,12 @@ Nov 2020
 Data science for life sciences with R (part 1)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -733,10 +790,12 @@ Oct 2020
 Experimental Design - Practicals in R
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-CIHEAM Zaragoza via <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+CIHEAM Zaragoza via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 5d
@@ -750,10 +809,12 @@ Mar 2020
 Real-time consultation on statistics and mixed models in R
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Kassel <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Kassel
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 2d
@@ -767,10 +828,12 @@ Dec 2019
 Basics of applied statistics
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Rostock <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Rostock
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 2d
@@ -784,10 +847,12 @@ Nov 2019
 Data science for life sciences with R (part 2)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Thünen-Institut, Braunschweig
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -801,10 +866,12 @@ Oct 2019
 Data science for life sciences with R (part 1)
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Thünen-Institut, Braunschweig
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -818,10 +885,12 @@ Sep 2019
 Essential basics of statistics
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Rostock <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Rostock
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 2d
@@ -835,10 +904,12 @@ Nov 2018
 Mixed models with R
 </td>
 <td style="text-align:right;width: 5em; ">
-Ger <img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Thünen-Institut, Braunschweig <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Thünen-Institut, Braunschweig
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -852,10 +923,12 @@ May 2018
 Implementation of yield stability assessment with ASReml-R
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Bangladesh Rice Res. Inst., Gazipur <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Bangladesh Rice Res. Inst., Gazipur
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 1d
@@ -869,10 +942,12 @@ Bangladesh Rice Res. Inst., Gazipur <img src="https://www.ict-solutions-events.c
 Statistical analysis with SAS (monthly)
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Hohenheim, Stuttgart <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Hohenheim, Stuttgart
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d
@@ -886,10 +961,12 @@ Universität Hohenheim, Stuttgart <img src="https://www.ict-solutions-events.com
 Statistical analysis with R (monthly)
 </td>
 <td style="text-align:right;width: 5em; ">
-Eng <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
 </td>
 <td style="text-align:right;width: 20em; ">
-Universität Hohenheim, Stuttgart <img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
+Universität Hohenheim, Stuttgart
+<img src="https://www.ict-solutions-events.com/wp-content/uploads/2020/03/plain-white-background-300x200.jpg" width="32" height="6.4">
 </td>
 <td style="text-align:right;width: 5em; ">
 3d

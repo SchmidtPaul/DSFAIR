@@ -206,7 +206,7 @@ ggplot() +
   labs(caption = "The four facettes represent genotypes A, B, C and D
        Black dots represent raw data
        Red dots and error bars represent adjusted mean with 95% confidence limits per genotype-nitrogen level combination
-       Separaetly per genotype, means followed by a common letter are not significantly different according to the Tukey-test") +
+       Separately per genotype, means followed by a common letter are not significantly different according to the Tukey-test") +
   theme_bw() + # clearer plot format 
   theme(axis.text.x = element_text(angle=90, vjust=0.5)) # rotate x-axis label
 ```

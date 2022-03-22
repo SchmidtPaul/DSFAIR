@@ -13,7 +13,7 @@
 
 <title>A peculiar split-plot design</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -576,7 +583,11 @@ div.tocify {
 
 
 <blockquote>
-<p>This is an example with an experimental design that may seem unproblematic at first glance, but is actually a not-so-standard experimental design. During consulting, I have come across multiple poeple who had versions of this “issue”. As a result, this chapter focusses a lot more on the experimental design discussion.</p>
+<p>This is an example with an experimental design that may seem
+unproblematic at first glance, but is actually a not-so-standard
+experimental design. During consulting, I have come across multiple
+poeple who had versions of this “issue”. As a result, this chapter
+focusses a lot more on the experimental design discussion.</p>
 </blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(conflicted, <span class="co"># handle conflicting functions</span></span>
@@ -591,17 +602,24 @@ div.tocify {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="co"># set filter() from dplyr as default</span></span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example considers a ficticious series of yield trials. There are 2 treatment factors:</p>
+<p>This example considers a ficticious series of yield trials. There are
+2 treatment factors:</p>
 <ul>
-<li><code>Str</code> with levels <code>Control</code> and <code>Street</code> and</li>
-<li><code>Fru</code> with levels <code>Apple</code>, <code>Banana</code> and <code>Strawberry</code>.</li>
+<li><code>Str</code> with levels <code>Control</code> and
+<code>Street</code> and</li>
+<li><code>Fru</code> with levels <code>Apple</code>, <code>Banana</code>
+and <code>Strawberry</code>.</li>
 </ul>
 <p>The trials were conducted</p>
 <ul>
-<li>at 2 locations (<code>Loc</code> with levels <code>Berlin</code> and <code>Paris</code>). Moreover, the these trials were repeated</li>
-<li>across 2 years (<code>Yea</code> with levels <code>1989</code> and <code>1990</code>).</li>
+<li>at 2 locations (<code>Loc</code> with levels <code>Berlin</code> and
+<code>Paris</code>). Moreover, the these trials were repeated</li>
+<li>across 2 years (<code>Yea</code> with levels <code>1989</code> and
+<code>1990</code>).</li>
 </ul>
-<p>Thus, there are 2 trials with repeated measures across 2 years, respectively. Similar experimental designs (with different randomizations) were used at each location and in each year.</p>
+<p>Thus, there are 2 trials with repeated measures across 2 years,
+respectively. Similar experimental designs (with different
+randomizations) were used at each location and in each year.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataURL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/SchmidtPaul/DSFAIR/master/data/StreetFruit.csv&quot;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
@@ -623,13 +641,18 @@ div.tocify {
 ## # ... with 134 more rows</code></pre>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>Yea</code>, <code>Loc</code>, <code>Str</code>, <code>Fru</code>, <code>Blo</code> and <code>Plot</code> should be encoded as factors, since R by default encoded them as character.</p>
+<p>Before anything, the columns <code>Yea</code>, <code>Loc</code>,
+<code>Str</code>, <code>Fru</code>, <code>Blo</code> and
+<code>Plot</code> should be encoded as factors, since R by default
+encoded them as character.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(Yea<span class="sc">:</span>Blo, Plot), as.factor)</span></code></pre></div>
 </div>
 <div id="preparations" class="section level2">
 <h2>Preparations</h2>
-<p>In this example we will put some extra effort into the created outputs (graphs and tables). Therefore, we now set up some things before we continue.</p>
+<p>In this example we will put some extra effort into the created
+outputs (graphs and tables). Therefore, we now set up some things before
+we continue.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors for Fru levels</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Fru_color <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Apple =</span> <span class="st">&quot;#9bc53d&quot;</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Banana =</span> <span class="st">&quot;#fde74c&quot;</span>,</span>
@@ -641,7 +664,11 @@ div.tocify {
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial. Moreover, we need to use a subset of the data, since we have 2 trials with repeated measurements per plot, respectively.</p>
+<p>In order to obtain a field layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>col</code> of each
+plot in the trial. Moreover, we need to use a subset of the data, since
+we have 2 trials with repeated measurements per plot, respectively.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Yea_i <span class="ot">&lt;-</span> <span class="st">&quot;1990&quot;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Loc_j <span class="ot">&lt;-</span> <span class="st">&quot;Paris&quot;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -656,20 +683,41 @@ div.tocify {
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Field layout:&quot;</span>, Loc_j, Yea_i), <span class="co"># dynamic title</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.7</span>) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>After playing around with <code>Yea_i</code> and <code>Loc_j</code> we can see how all trials are designed similarly and have different randomizations. However, what is peculiar about this trial design is that all plots that received the <code>Street</code> (or <code>Control</code>) treatment appear side-by-side in the same row. Moreover, it remains the same row across the two years. Note that per location the trials were laid out on exactly the same plots across the two years. Thus, the same 18 plots received the same <code>Street</code> (or <code>Control</code>) treatment in both years in <code>Berlin</code> and <code>Paris</code>, respectively.</p>
+<p>After playing around with <code>Yea_i</code> and <code>Loc_j</code>
+we can see how all trials are designed similarly and have different
+randomizations. However, what is peculiar about this trial design is
+that all plots that received the <code>Street</code> (or
+<code>Control</code>) treatment appear side-by-side in the same row.
+Moreover, it remains the same row across the two years. Note that per
+location the trials were laid out on exactly the same plots across the
+two years. Thus, the same 18 plots received the same <code>Street</code>
+(or <code>Control</code>) treatment in both years in <code>Berlin</code>
+and <code>Paris</code>, respectively.</p>
 </div>
 </div>
 <div id="this-experimental-design" class="section level1">
 <h1>This experimental design…</h1>
 <div id="why-is-it" class="section level2">
 <h2>Why is it?</h2>
-<p>The goal of this trial was to find out if crops grown on soil where recently a street had been removed would perform differently compared to those grown on “normal” agricultural soil. Thus, multiple crops were chosen and aimed to grown on the two soil types under investigation.</p>
-<p>The reason for this layout lies in the nature of the <code>Str</code> treatment. These trials were laid out on agricultural fields where there used to be a street that was removed and turned into agricultural field again. Therefore, the plots with the <code>Street</code> treatment could obviously not be randomized.</p>
+<p>The goal of this trial was to find out if crops grown on soil where
+recently a street had been removed would perform differently compared to
+those grown on “normal” agricultural soil. Thus, multiple crops were
+chosen and aimed to grown on the two soil types under investigation.</p>
+<p>The reason for this layout lies in the nature of the <code>Str</code>
+treatment. These trials were laid out on agricultural fields where there
+used to be a street that was removed and turned into agricultural field
+again. Therefore, the plots with the <code>Street</code> treatment could
+obviously not be randomized.</p>
 </div>
 <div id="what-is-it" class="section level2">
 <h2>What is it?</h2>
-<p>Notice that there apparently are 6 blocks (<code>Blo</code>) and they are actually complete blocks, too, because all 6 factor level combinations appear in each one. However, this is not a <em>randomized complete block design</em> because of the restricted limitation of the <code>Str</code> treatment radnomization (inside each block).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<p>Notice that there apparently are 6 blocks (<code>Blo</code>) and they
+are actually complete blocks, too, because all 6 factor level
+combinations appear in each one. However, this is not a <em>randomized
+complete block design</em> because of the restricted limitation of the
+<code>Str</code> treatment radnomization (inside each block).</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Blo <span class="sc">~</span> col <span class="sc">+</span> row, </span>
@@ -681,8 +729,20 @@ div.tocify {
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Ok, so our next guess could be that this is a split-plot design. We could argue that in split-plot designs, one of the treatment factors is harder to randomize than the other(s) and therefore grouped together in main plots. This does indeed seem to fit the setting here: In each of the 6 blocks, we have two main plots - one for each <code>Str</code> level and inside these 12 main plots we have three subplots respectively - one for each <code>Fru</code> level. So far, so good. What should also be done in a split-plot design is that first the main plots should be randomized and second the subplots within each main plot should be randomized. Again, the first step here did not occur. No randomization took place for the <code>Str</code> main plots, because it was simply not possible.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<p>Ok, so our next guess could be that this is a split-plot design. We
+could argue that in split-plot designs, one of the treatment factors is
+harder to randomize than the other(s) and therefore grouped together in
+main plots. This does indeed seem to fit the setting here: In each of
+the 6 blocks, we have two main plots - one for each <code>Str</code>
+level and inside these 12 main plots we have three subplots respectively
+- one for each <code>Fru</code> level. So far, so good. What should also
+be done in a split-plot design is that first the main plots should be
+randomized and second the subplots within each main plot should be
+randomized. Again, the first step here did not occur. No randomization
+took place for the <code>Str</code> main plots, because it was simply
+not possible.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">interaction</span>(Str, Blo)) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
@@ -695,10 +755,23 @@ div.tocify {
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>So is this a split-plot design with a certain lack of randomization? Can we simply acknowledge this minor inconvenience and go ahead with a model for a split-plot design at a single location with subplots nested inside mainplots nested inside 6 complete replicates in order to test both treatment main effects <code>Str</code> and <code>Fru</code> and compare their levels?</p>
+<p>So is this a split-plot design with a certain lack of randomization?
+Can we simply acknowledge this minor inconvenience and go ahead with a
+model for a split-plot design at a single location with subplots nested
+inside mainplots nested inside 6 complete replicates in order to test
+both treatment main effects <code>Str</code> and <code>Fru</code> and
+compare their levels?</p>
 <p><strong>Strictly speaking: No, we should not!</strong></p>
-<p>The crucial and unfortunate detail here is that we do not really have <em>true replicates</em> for the <code>Str</code> treatment levels. Instead, we have a single large area/plot with <code>Street</code> and second one with <code>Control</code>. To make this as clear as possible, we could ignore the <code>Fru</code> factor for now, look at the trial layout via the following desplot and ask ourselves: <em>How is this different from having just 2 large plots where 18 measurements per plot from 2 large plots were taken?</em></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<p>The crucial and unfortunate detail here is that we do not really have
+<em>true replicates</em> for the <code>Str</code> treatment levels.
+Instead, we have a single large area/plot with <code>Street</code> and
+second one with <code>Control</code>. To make this as clear as possible,
+we could ignore the <code>Fru</code> factor for now, look at the trial
+layout via the following desplot and ask ourselves: <em>How is this
+different from having just 2 large plots where 18 measurements per plot
+from 2 large plots were taken?</em></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Str <span class="sc">~</span> col <span class="sc">+</span> row, </span>
@@ -707,33 +780,101 @@ div.tocify {
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(Loc_j, <span class="st">&quot;in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The answer is: There is no difference. As a result of the nature of the <code>Str</code> treatment, its levels could not be randomized at all and we really only have 1 former street whose effect on the yield performance of our fruits could be investigated. Measuring this effect at different positions does not change the fact, that it was still the exact same street. Therefore, there is no true replicate of <code>Street</code> (or <code>Control</code>) at this trial. Regarding the <code>Str</code> factor, the number of true/independent replicates is 1 and when ignoring the second treatment factor <code>Fru</code>, the number of pseudo-replicates (<em>i.e.</em> replicated measurements on the same unit) is 18. In other words, we <strong>do</strong> have a sort of split-plot design, but it only has a single replicate and a total of 2 main plots.</p>
+<p>The answer is: There is no difference. As a result of the nature of
+the <code>Str</code> treatment, its levels could not be randomized at
+all and we really only have 1 former street whose effect on the yield
+performance of our fruits could be investigated. Measuring this effect
+at different positions does not change the fact, that it was still the
+exact same street. Therefore, there is no true replicate of
+<code>Street</code> (or <code>Control</code>) at this trial. Regarding
+the <code>Str</code> factor, the number of true/independent replicates
+is 1 and when ignoring the second treatment factor <code>Fru</code>, the
+number of pseudo-replicates (<em>i.e.</em> replicated measurements on
+the same unit) is 18. In other words, we <strong>do</strong> have a sort
+of split-plot design, but it only has a single replicate and a total of
+2 main plots.</p>
 </div>
 <div id="what-does-this-mean-for-the-analysis" class="section level2">
 <h2>What does this mean for the analysis?</h2>
-<p>Having established that this is not a “standard split-plot” in the sense that we cannot conduct the same statistical analysis as in <a href="splitplot_GomezGomez1984.html">the previous GomezGomez1984 split-plot example</a>, we should clarify what we can and cannot do to analyze this data properly.</p>
-<p>What we can do is a descriptive statistical analysis i.e. calculate arithmetic means, standard deviations etc. and plot these values and/or the raw data. In other words: We can take analogous steps to those in the <a href="splitplot_GomezGomez1984.html#Exploring"><em>Exploring</em> section of the GomezGomez1984 example</a> (but note that the interpretation of these results should ultimately also be put in context of the limitations described below).</p>
-<p>What we cannot do is to apply the same model and/or tests (i.e. statistical inference) as in the <a href="splitplot_GomezGomez1984.html#Modelling"><em>Modelling</em> section of the GomezGomez1984 example</a>. This is because in that example we did have a trial with multiple independent replicates for both our treatments, whereas here we do not.</p>
-<p>Thus, we will take a step-by-step approach to investigate our options in terms of modelling the data.</p>
+<p>Having established that this is not a “standard split-plot” in the
+sense that we cannot conduct the same statistical analysis as in <a
+href="splitplot_GomezGomez1984.html">the previous GomezGomez1984
+split-plot example</a>, we should clarify what we can and cannot do to
+analyze this data properly.</p>
+<p>What we can do is a descriptive statistical analysis i.e. calculate
+arithmetic means, standard deviations etc. and plot these values and/or
+the raw data. In other words: We can take analogous steps to those in
+the <a href="splitplot_GomezGomez1984.html#Exploring"><em>Exploring</em>
+section of the GomezGomez1984 example</a> (but note that the
+interpretation of these results should ultimately also be put in context
+of the limitations described below).</p>
+<p>What we cannot do is to apply the same model and/or tests
+(i.e. statistical inference) as in the <a
+href="splitplot_GomezGomez1984.html#Modelling"><em>Modelling</em>
+section of the GomezGomez1984 example</a>. This is because in that
+example we did have a trial with multiple independent replicates for
+both our treatments, whereas here we do not.</p>
+<p>Thus, we will take a step-by-step approach to investigate our options
+in terms of modelling the data.</p>
 <div id="a-single-location-1-year" class="section level3">
 <h3>A single location (1 year)</h3>
-<p>First, let us keep the focus on a single location in a single year - just like all the <code>desplot</code> graphs from above. Generally, one cannot make statistical inferences if only a single replicate is present.</p>
-<p>Yet, we only have a single replicate for our 2 <code>Str</code> levels (<code>Street</code> and <code>Control</code>). Again: Yes, we have multiple measurements for both of them, but these are not true (i.e. independent) replicates, but pseudo-replicates just like in the <a href="subsampling_Piepho1997.html">subsampling Piepho1997 example</a>. As a consequence, we must not set up a model with a <code>Str</code> main effect, which means that we can neither test its significance in an ANOVA, nor can we compare its adjusted means.</p>
-<p>We do, however, have multiple true replicates for the <code>Fru</code> treatment levels - that is <strong>within</strong> the 2 <code>Str</code> levels. In other words, we have 6 replicates per fruit in the <code>Street</code> row and the <code>Control</code>, respectively. Accordingly, per fruit we have a total of 12 replicates (arranged in blocks) split up evenly between the two rows. This in turn would mean, that we could set up a model with a <code>Fru</code> main effect, which can be tested in an ANOVA and its adjusted means compared.</p>
+<p>First, let us keep the focus on a single location in a single year -
+just like all the <code>desplot</code> graphs from above. Generally, one
+cannot make statistical inferences if only a single replicate is
+present.</p>
+<p>Yet, we only have a single replicate for our 2 <code>Str</code>
+levels (<code>Street</code> and <code>Control</code>). Again: Yes, we
+have multiple measurements for both of them, but these are not true
+(i.e. independent) replicates, but pseudo-replicates just like in the <a
+href="subsampling_Piepho1997.html">subsampling Piepho1997 example</a>.
+As a consequence, we must not set up a model with a <code>Str</code>
+main effect, which means that we can neither test its significance in an
+ANOVA, nor can we compare its adjusted means.</p>
+<p>We do, however, have multiple true replicates for the
+<code>Fru</code> treatment levels - that is <strong>within</strong> the
+2 <code>Str</code> levels. In other words, we have 6 replicates per
+fruit in the <code>Street</code> row and the <code>Control</code>,
+respectively. Accordingly, per fruit we have a total of 12 replicates
+(arranged in blocks) split up evenly between the two rows. This in turn
+would mean, that we could set up a model with a <code>Fru</code> main
+effect, which can be tested in an ANOVA and its adjusted means
+compared.</p>
 <p>Accordingly, we would get the following model:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glmmTMB</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  Yie <span class="sc">~</span> Fru <span class="sc">+</span> Str<span class="sc">:</span>Fru <span class="sc">+</span> Str<span class="sc">:</span>Blo,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i <span class="sc">&amp;</span> Loc <span class="sc">==</span> Loc_j)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>So our two treatment effects are affected differently, which makes sense as only the randomization for the <code>Str</code> treatment was limited. Unfortunately, we are actually much more interested in the <code>Str</code> treatment than we are in the <code>Fru</code> treatment: Nobody really wants to compare apple yields to banana yields (on <code>Street</code> plots and then again on <code>Control</code> plots). What we do want to compare is whether apple/banana/strawberry yields are different on <code>Street</code> plots than they are on <code>Control</code> plots.</p>
-<p>Further notice that the model is similar to a model for one-factorial rcbd trials at two multiple locations if you replace <code>Str</code> with <code>Trial</code>. We would in a way treat the two rows as two separate trials. The difference is, however, that we also assume a <code>Str:Fru</code> interactione effect, which we would usually not do for design effects. Ultimately, this is beceause <code>Str</code> is neither just the effect of the street, nor just the effect of the row, but the <code>Str</code> effects and row effects are completely confounded.</p>
-<p>In conclusion, analyzing a single location will not allow us to make the statistical inferences we want on our main treatment effect <code>Str</code>.</p>
+<p>So our two treatment effects are affected differently, which makes
+sense as only the randomization for the <code>Str</code> treatment was
+limited. Unfortunately, we are actually much more interested in the
+<code>Str</code> treatment than we are in the <code>Fru</code>
+treatment: Nobody really wants to compare apple yields to banana yields
+(on <code>Street</code> plots and then again on <code>Control</code>
+plots). What we do want to compare is whether apple/banana/strawberry
+yields are different on <code>Street</code> plots than they are on
+<code>Control</code> plots.</p>
+<p>Further notice that the model is similar to a model for one-factorial
+rcbd trials at two multiple locations if you replace <code>Str</code>
+with <code>Trial</code>. We would in a way treat the two rows as two
+separate trials. The difference is, however, that we also assume a
+<code>Str:Fru</code> interactione effect, which we would usually not do
+for design effects. Ultimately, this is beceause <code>Str</code> is
+neither just the effect of the street, nor just the effect of the row,
+but the <code>Str</code> effects and row effects are completely
+confounded.</p>
+<p>In conclusion, analyzing a single location will not allow us to make
+the statistical inferences we want on our main treatment effect
+<code>Str</code>.</p>
 </div>
 <div id="both-locations-1-year" class="section level3">
 <h3>Both locations (1 year)</h3>
-<p>At this point it becomes clear our problem is mainly the lack of true replicates for <code>Str</code>. However, we actually do have an additional replicate for <code>Str</code> - it is simply not on the same location!</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<p>At this point it becomes clear our problem is mainly the lack of true
+replicates for <code>Str</code>. However, we actually do have an
+additional replicate for <code>Str</code> - it is simply not on the same
+location!</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Str:Blo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">interaction</span>(Str, Blo)) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
@@ -746,12 +887,33 @@ div.tocify {
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Both locations in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>This is the game changer here. While everything that was said is indeed true for a single location, jointly modelling data from more than one location finally allows us to make desired statistical inferences about <code>Str</code>. Looking at the <code>desplot</code> above, it can be seen how we can take a step back and view the location as a true replicate, because the <code>Street</code> plots in Berlin are independent of those in Paris. Thus, we have 2 complete and true replicates for <code>Street</code> and <code>Control</code>, respectively. It is still true that those 4 rows (i.e. <code>Loc:Str</code> combinations) are grouped together and only within each one we have 6 true replicates for <code>Fru</code> arranged as blocks. Therefore, as design effects we have <strong>plots nested in blocks nested in rows nested in locations</strong>.</p>
-<p>In order to avoid confusion in this complex model, we should create an additional factor variable in the dataset that denotes a trial’s row, so that we do not actually write <code>Loc:Str</code> in the model. Furthermore, and albeit not strictly being necessary, we could reformat the block levels correctly:</p>
+<p>This is the game changer here. While everything that was said is
+indeed true for a single location, jointly modelling data from more than
+one location finally allows us to make desired statistical inferences
+about <code>Str</code>. Looking at the <code>desplot</code> above, it
+can be seen how we can take a step back and view the location as a true
+replicate, because the <code>Street</code> plots in Berlin are
+independent of those in Paris. Thus, we have 2 complete and true
+replicates for <code>Street</code> and <code>Control</code>,
+respectively. It is still true that those 4 rows
+(i.e. <code>Loc:Str</code> combinations) are grouped together and only
+within each one we have 6 true replicates for <code>Fru</code> arranged
+as blocks. Therefore, as design effects we have <strong>plots nested in
+blocks nested in rows nested in locations</strong>.</p>
+<p>In order to avoid confusion in this complex model, we should create
+an additional factor variable in the dataset that denotes a trial’s row,
+so that we do not actually write <code>Loc:Str</code> in the model.
+Furthermore, and albeit not strictly being necessary, we could reformat
+the block levels correctly:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row =</span> <span class="fu">as.factor</span>(row)) <span class="sc">%&gt;%</span>    </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Blo =</span> <span class="fu">interaction</span>(Row, Blo)) </span></code></pre></div>
-<p>As treatment effects, we can now have both main effects and their interaction effect. Again, this is possible since we now also have true replicates for <code>Str</code> (and not only for <code>Fru</code>). Notice further that across multiple locations <code>Row</code> is no longer confunded with <code>Str</code>. Here is a summary table with all the effects:</p>
+<p>As treatment effects, we can now have both main effects and their
+interaction effect. Again, this is possible since we now also have true
+replicates for <code>Str</code> (and not only for <code>Fru</code>).
+Notice further that across multiple locations <code>Row</code> is no
+longer confunded with <code>Str</code>. Here is a summary table with all
+the effects:</p>
 <table>
 <colgroup>
 <col width="14%" />
@@ -834,7 +996,9 @@ div.tocify {
 </div>
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
-<p>Having established a general approach for modelling, we should probably first get a feeling for our data. Therefore, we explore it with several descriptive measures and plots.</p>
+<p>Having established a general approach for modelling, we should
+probably first get a feeling for our data. Therefore, we explore it with
+several descriptive measures and plots.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Fru, Str) <span class="sc">%&gt;%</span> <span class="co"># or go all the way to group_by(Yea, Loc, Fru, Str)</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanYield =</span> <span class="fu">mean</span>(Yie),</span>
@@ -852,8 +1016,10 @@ div.tocify {
 ## 4 Banana     Street       42.8     43.0     44.8     41.2        1.05
 ## 5 Strawberry Control      44.5     44.6     47.7     40.0        1.86
 ## 6 Strawberry Street       43.5     43.4     46.5     40.7        1.58</code></pre>
-<p>A <code>ggplot</code> packed with information could look like this:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat,</span>
+<p>A <code>ggplot</code> packed with information could look like
+this:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Yie, <span class="at">x =</span> Loc)) <span class="sc">+</span>    <span class="co"># y-axis: yield, x-axis: year</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(Fru)) <span class="sc">+</span> <span class="co"># one facette per fruit</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># boxplot </span></span>
@@ -890,8 +1056,11 @@ div.tocify {
 <span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> Fru_color, <span class="at">name =</span> <span class="st">&quot;Fruit&quot;</span>) <span class="sc">+</span></span>
 <span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_modern</span>()</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Additionally, it may also be informative to visualize the data using desplot. Obviously, we could simply create a desplot and fill the plots according to the raw data:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<p>Additionally, it may also be informative to visualize the data using
+desplot. Obviously, we could simply create a desplot and fill the plots
+according to the raw data:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">desplot</span>(<span class="at">data =</span> .,</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> Yie <span class="sc">~</span> col <span class="sc">+</span> row<span class="sc">|</span>Loc,</span>
@@ -902,8 +1071,12 @@ div.tocify {
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Absolute yield for both locations in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>However, this is not very helpful as the values vary too much for the different <code>Loc</code> and <code>Fru</code>. We can, however, express the raw data per plot as the deviation from the average value per Location and Fruit:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
+<p>However, this is not very helpful as the values vary too much for the
+different <code>Loc</code> and <code>Fru</code>. We can, however,
+express the raw data per plot as the deviation from the average value
+per Location and Fruit:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Yea <span class="sc">==</span> Yea_i) <span class="sc">%&gt;%</span> </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Loc, Fru) <span class="sc">%&gt;%</span> </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -920,13 +1093,17 @@ div.tocify {
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.55</span>,</span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Relative yield ratio to fruit-location-mean for both locations in&quot;</span>, Yea_i))</span></code></pre></div>
 <p><img src="splitplot_StreetFruit_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Roughly summarizing, we can say that yield measurements on <code>Street</code> plots have generally been lower than thos on <code>Control</code> plots.</p>
+<p>Roughly summarizing, we can say that yield measurements on
+<code>Street</code> plots have generally been lower than thos on
+<code>Control</code> plots.</p>
 </div>
 <div id="inferential-statistics-modelling" class="section level1">
 <h1>Inferential Statistics (Modelling)</h1>
 <div id="year" class="section level2">
 <h2>1 Year</h2>
-<p>Finally, we can fit the model we suggested above. As a reminder: This is only a model for data from a single year. We will explicitely go with 1989 for now.</p>
+<p>Finally, we can fit the model we suggested above. As a reminder: This
+is only a model for data from a single year. We will explicitely go with
+1989 for now.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  Yie <span class="sc">~</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    Str <span class="sc">+</span> Fru <span class="sc">+</span> Str<span class="sc">:</span>Fru <span class="sc">+</span>                    <span class="co"># Treatment</span></span>
@@ -936,7 +1113,8 @@ div.tocify {
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div id="check-model-assumptions" class="section level3">
 <h3>Check model assumptions</h3>
-<p>We can very efficiently check the residual plots using the <code>DHARMa</code> package. No problem is suggested.</p>
+<p>We can very efficiently check the residual plots using the
+<code>DHARMa</code> package. No problem is suggested.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>DHARMa<span class="sc">::</span><span class="fu">plotResiduals</span>(mod1989)</span></code></pre></div>
@@ -950,7 +1128,9 @@ div.tocify {
 </div>
 <div id="variance-components" class="section level3">
 <h3>Variance components</h3>
-<p>We can check the variance components and see that as expected a considerably large portion of the variance is attributed to the blocks.</p>
+<p>We can check the variance components and see that as expected a
+considerably large portion of the variance is attributed to the
+blocks.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mod1989 <span class="sc">%&gt;%</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">effects =</span> <span class="st">&quot;ran_pars&quot;</span>, <span class="at">scales =</span> <span class="st">&quot;vcov&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(group, estimate)</span></code></pre></div>
@@ -963,7 +1143,8 @@ div.tocify {
 </div>
 <div id="anova" class="section level3">
 <h3>ANOVA</h3>
-<p>Looking at the ANOVA, we see that both treatment main effects, but not their interaction effects are statistically significant.</p>
+<p>Looking at the ANOVA, we see that both treatment main effects, but
+not their interaction effects are statistically significant.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod1989)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 

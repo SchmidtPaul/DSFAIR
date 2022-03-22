@@ -13,7 +13,7 @@
 
 <title>Augmented design</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -586,7 +593,20 @@ div.tocify {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from Chapter <em>“3.7 Analysis of a non-resolvable augmented design”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data published in <a href="https://www.taylorfrancis.com/books/9780429078491" target="_blank">Peterson (1994)</a> from a yield trial laid out as an augmented design. The genotypes (<code>gen</code>) include 3 standards (<code>st</code>, <code>ci</code>, <code>wa</code>) and 30 new cultivars of interest. The trial was laid out in 6 blocks (<code>block</code>). The 3 standards are tested in each block, while each entry is tested in only one of the blocks. Therefore, the blocks are <em>“incomplete blocks”</em>.</p>
+<p>This example is taken from Chapter <em>“3.7 Analysis of a
+non-resolvable augmented design”</em> of the course material <a
+href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451"
+target="_blank">“Mixed models for metric data (3402-451)”</a> by <a
+href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257"
+target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data
+published in <a href="https://www.taylorfrancis.com/books/9780429078491"
+target="_blank">Peterson (1994)</a> from a yield trial laid out as an
+augmented design. The genotypes (<code>gen</code>) include 3 standards
+(<code>st</code>, <code>ci</code>, <code>wa</code>) and 30 new cultivars
+of interest. The trial was laid out in 6 blocks (<code>block</code>).
+The 3 standards are tested in each block, while each entry is tested in
+only one of the blocks. Therefore, the blocks are <em>“incomplete
+blocks”</em>.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
@@ -611,13 +631,21 @@ div.tocify {
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>gen</code> and <code>block</code> should be encoded as factors, since R by default encoded them as character.</p>
+<p>Before anything, the columns <code>gen</code> and <code>block</code>
+should be encoded as factors, since R by default encoded them as
+character.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(gen, block), as.factor)</span></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>column</code> of each plot in the trial. Notice that for this example it makes sense to put in some extra effort to explicitly assign colors to the genotypes in a way that differentiates the standards (<code>st</code>, <code>ci</code>, <code>wa</code>) from all other genotypes.</p>
+<p>In order to obtain a field layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>column</code> of
+each plot in the trial. Notice that for this example it makes sense to
+put in some extra effort to explicitly assign colors to the genotypes in
+a way that differentiates the standards (<code>st</code>,
+<code>ci</code>, <code>wa</code>) from all other genotypes.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a color-generating function</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>get_shades_of_blue <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="at">colors=</span><span class="fu">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>blue_30  <span class="ot">&lt;-</span> <span class="fu">get_shades_of_blue</span>(<span class="dv">30</span>) <span class="co"># 30 shades of blue</span></span>
@@ -635,7 +663,12 @@ div.tocify {
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">out1 =</span> block,                        <span class="co"># lines between complete blocks/replicates</span></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> F) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-5-1.png" width="288" style="display: block; margin: auto;" /></p>
-<p>We could also have a look at the arithmetic means and standard deviations for yield per genotype (gen) or block (inc.block). It must be clear, however, that except for the standards (<code>st</code>, <code>ci</code>, <code>wa</code>), there is always only a single value per genotype, so that the mean simply is that value and a standard error cannot be calculated at all.</p>
+<p>We could also have a look at the arithmetic means and standard
+deviations for yield per genotype (gen) or block (inc.block). It must be
+clear, however, that except for the standards (<code>st</code>,
+<code>ci</code>, <code>wa</code>), there is always only a single value
+per genotype, so that the mean simply is that value and a standard error
+cannot be calculated at all.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -707,7 +740,7 @@ div.tocify {
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># scatter plot with larger dots</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># force y-axis to start at 0</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> blue_30_and_orange_3) <span class="sc">+</span> <span class="co"># custom colors</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co"># clearer plot format</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="co"># legend on top</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
@@ -715,7 +748,15 @@ div.tocify {
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
-<p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable and <code>gen</code> as fixed effects, since our goal is to compare them to each other. Since the trial was laid out in blocks, we also need <code>block</code> effects in the model, but these can be taken either as a fixed or as random effects. Since our goal is to compare genotypes, we will determine which of the two models we prefer by comparing the average standard error of a difference (s.e.d.) for the comparisons between adjusted genotype means - the lower the s.e.d. the better.</p>
+<p>Finally, we can decide to fit a linear model with <code>yield</code>
+as the response variable and <code>gen</code> as fixed effects, since
+our goal is to compare them to each other. Since the trial was laid out
+in blocks, we also need <code>block</code> effects in the model, but
+these can be taken either as a fixed or as random effects. Since our
+goal is to compare genotypes, we will determine which of the two models
+we prefer by comparing the average standard error of a difference
+(s.e.d.) for the comparisons between adjusted genotype means - the lower
+the s.e.d. the better.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blocks as fixed (linear model)</span></span>
@@ -747,10 +788,14 @@ div.tocify {
 <pre><code>## [1] 462.0431</code></pre>
 </div>
 </div>
-<p>As a result, we find that the model with fixed block effects has the slightly smaller s.e.d. and is therefore more precise in terms of comparing genotypes.</p>
+<p>As a result, we find that the model with fixed block effects has the
+slightly smaller s.e.d. and is therefore more precise in terms of
+comparing genotypes.</p>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA finds the <code>gen</code> effects to be statistically significant (p = 0.0091 &lt; 0.05).</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the
+F-test of the ANOVA finds the <code>gen</code> effects to be
+statistically significant (p = 0.0091 &lt; 0.05).</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod.fb <span class="sc">%&gt;%</span> <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
@@ -764,7 +809,12 @@ div.tocify {
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
-<p>It can be seen that while some genotypes have a higher yield than others, no differences are found to be statistically significant here. Accordingly, notice that <em>e.g.</em> for <code>gen 11</code>, which is the genotype with the highest adjusted yield mean (=3055), its lower confidence limit (=1587) includes <code>gen 12</code>, which is the genotype with the lowest adjusted yield mean (=1632).</p>
+<p>It can be seen that while some genotypes have a higher yield than
+others, no differences are found to be statistically significant here.
+Accordingly, notice that <em>e.g.</em> for <code>gen 11</code>, which is
+the genotype with the highest adjusted yield mean (=3055), its lower
+confidence limit (=1587) includes <code>gen 12</code>, which is the
+genotype with the lowest adjusted yield mean (=1632).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mean_comparisons <span class="ot">&lt;-</span> mod.fb <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> <span class="st">&quot;gen&quot;</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;tukey&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -824,7 +874,9 @@ div.tocify {
 <h1>Present results</h1>
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
-<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model.</p>
+<p>For this example we can create a plot that displays both the raw data
+and the results, <em>i.e.</em> the comparisons of the adjusted means
+that are based on the linear model.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># genotypes ordered by mean yield</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>gen_order_emmean <span class="ot">&lt;-</span> mean_comparisons<span class="sc">$</span>emmeans <span class="sc">%&gt;%</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(emmean) <span class="sc">%&gt;%</span> </span>
@@ -845,7 +897,7 @@ div.tocify {
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> yield, <span class="at">x =</span> gen, <span class="at">color =</span> gen)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> blue_30_and_orange_3) <span class="sc">+</span> <span class="co"># custom colors</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="co"># turn off legend for colors</span></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># red dots representing the adjusted means</span></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mean_comparisons<span class="sc">$</span>emmeans,</span>
@@ -884,7 +936,20 @@ div.tocify {
 <h1>Exercises</h1>
 <div id="exercise-1" class="section level2">
 <h2>Exercise 1</h2>
-<p>TThis example is taken from Chapter <em>“3.9 Analysis of a resolvable design with checks”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data from an augmented design that was laid out for 90 entries and 6 checks. The block size was 10. Incomplete blocks were formed according to a 10 x 10 lattice design, in which incomplete blocks can be grouped into complete replicates. Thus, this is a resolvable design. Checks are coded as 1001 to 1006, while the 90 entries are coded as 2 to 100 (note that there are no entries with labels 11, 21, 31, 41, 51, 61, 71, 81 and 91). Some of the checks have extra replication. We here consider the trait “yield”.</p>
+<p>TThis example is taken from Chapter <em>“3.9 Analysis of a resolvable
+design with checks”</em> of the course material <a
+href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451"
+target="_blank">“Mixed models for metric data (3402-451)”</a> by <a
+href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257"
+target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers data from
+an augmented design that was laid out for 90 entries and 6 checks. The
+block size was 10. Incomplete blocks were formed according to a 10 x 10
+lattice design, in which incomplete blocks can be grouped into complete
+replicates. Thus, this is a resolvable design. Checks are coded as 1001
+to 1006, while the 90 entries are coded as 2 to 100 (note that there are
+no entries with labels 11, 21, 31, 41, 51, 61, 71, 81 and 91). Some of
+the checks have extra replication. We here consider the trait
+“yield”.</p>
 <ul>
 <li>Explore
 <ul>
@@ -892,7 +957,9 @@ div.tocify {
 </ul></li>
 <li>Analyze
 <ul>
-<li>Set up two models: One with blocks as fixed and one with blocks as random. Compare their average s.e.d. between genotype means. Choose the model with the smaller value.</li>
+<li>Set up two models: One with blocks as fixed and one with blocks as
+random. Compare their average s.e.d. between genotype means. Choose the
+model with the smaller value.</li>
 <li>Compute an ANOVA for the chose model.</li>
 <li>Perform multiple (mean) comparisons based on the chosen model.</li>
 </ul></li>
@@ -910,7 +977,10 @@ div.tocify {
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> F) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="augmented_Pattersen1994_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
-<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
 <ul>
 <li>the entire R-code of each example combined, including</li>
 <li>solutions to the respective exercise(s).</li>

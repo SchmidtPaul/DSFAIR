@@ -13,7 +13,7 @@
 
 <title>Correlation &amp; Regression</title>
 
-<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -507,6 +507,9 @@ div.tocify {
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
         </li>
         <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
+        </li>
+        <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
         </li>
         <li>
@@ -579,7 +582,10 @@ div.tocify {
 </div>
 
 
-<p>This chapter is trying to give you a feeling for what correlation and (simple linear) regression is. I am aware that the example data doesn’t have anything to do with agriculture or related fields, but I decided to keep it because it allows for an intuitive conclusion at the end.</p>
+<p>This chapter is trying to give you a feeling for what correlation and
+(simple linear) regression is. I am aware that the example data doesn’t
+have anything to do with agriculture or related fields, but I decided to
+keep it because it allows for an intuitive conclusion at the end.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  modelbased, <span class="co"># get model predictions/expectations</span></span>
@@ -587,7 +593,9 @@ div.tocify {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This is data I made up: Peter and Max went out multiple evenings and at the end of every evening wrote down how many drinks they had and what the alcohol content in their blood was.</p>
+<p>This is data I made up: Peter and Max went out multiple evenings and
+at the end of every evening wrote down how many drinks they had and what
+the alcohol content in their blood was.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
@@ -621,11 +629,17 @@ div.tocify {
 </div>
 <div id="goal" class="section level2">
 <h2>Goal</h2>
-<p>The goal of this analysis is to answer the question how the number of drinks relates to the blood alcohol level. Note that we will completely ignore the column <code>Person</code>, since we do not care whether data came from Peter or Max in this chapter. Thus, we only focus on the two <em>numeric</em> columns <code>drinks</code> and <code>blood_alc</code>.</p>
+<p>The goal of this analysis is to answer the question how the number of
+drinks relates to the blood alcohol level. Note that we will completely
+ignore the column <code>Person</code>, since we do not care whether data
+came from Peter or Max in this chapter. Thus, we only focus on the two
+<em>numeric</em> columns <code>drinks</code> and
+<code>blood_alc</code>.</p>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>To quickly get a first feeling for this dataset, we can use <code>summary()</code> and draw a <code>plot()</code>:</p>
+<p>To quickly get a first feeling for this dataset, we can use
+<code>summary()</code> and draw a <code>plot()</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat)</span></code></pre></div>
 <pre><code>##     Person              drinks       blood_alc    
 ##  Length:20          Min.   :1.00   Min.   :0.100  
@@ -636,9 +650,14 @@ div.tocify {
 ##                     Max.   :9.00   Max.   :1.300</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y =</span> dat<span class="sc">$</span>blood_alc, <span class="at">x =</span> dat<span class="sc">$</span>drinks)</span></code></pre></div>
 <p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Apparently, the number of drinks ranges from 1 to 9 with a mean of 3.85, while the measured blood alcohol levels range from 0.1 to 1.3 with a mean of 0.515. The plot shows a clear trend of increasing blood alcohol levels with a higher number of drinks - which is what we would expect.</p>
+<p>Apparently, the number of drinks ranges from 1 to 9 with a mean of
+3.85, while the measured blood alcohol levels range from 0.1 to 1.3 with
+a mean of 0.515. The plot shows a clear trend of increasing blood
+alcohol levels with a higher number of drinks - which is what we would
+expect.</p>
 <p>Here is the same plot created with {ggplot2}:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Number of drinks&quot;</span>,</span>
@@ -658,20 +677,48 @@ div.tocify {
 <h1>Correlation</h1>
 <div id="what-is-it" class="section level2">
 <h2>What is it?</h2>
-<p>One way of actually putting a number on this relationship is to estimate the correlation. When people talk about correlation (<span class="math inline">\(\rho\)</span> or <span class="math inline">\(r\)</span>) in statistics, they usually refer to the <a href="https://www.wikiwand.com/en/Pearson_correlation_coefficient">Pearson correlation coefficient</a>, which is a measure of linear correlation between two numeric variables. Correlation can only have values between -1 and 1, where 0 means <em>no correlation</em>, while all other possible values are either negative or positive correlations. The farther away from 0, the stronger is the correlation.</p>
+<p>One way of actually putting a number on this relationship is to
+estimate the correlation. When people talk about correlation (<span
+class="math inline">\(\rho\)</span> or <span
+class="math inline">\(r\)</span>) in statistics, they usually refer to
+the <a
+href="https://www.wikiwand.com/en/Pearson_correlation_coefficient">Pearson
+correlation coefficient</a>, which is a measure of linear correlation
+between two numeric variables. Correlation can only have values between
+-1 and 1, where 0 means <em>no correlation</em>, while all other
+possible values are either negative or positive correlations. The
+farther away from 0, the stronger is the correlation.</p>
 <p><img src="img/correlation.PNG" width="60%" style="display: block; margin: auto;" /></p>
-<p>Simply put, a positive correlation means <em>“if one variable gets bigger, the other also gets bigger”</em> and a negative correlation means <em>“if one variable gets bigger, the other gets smaller”</em>. Therefore, it does not matter which of the two variables is the first (“x”) or the second (“y”) variable. Thus, a correlation estimate is not like a model and it cannot make predictions. Finally, <a href="https://www.wikiwand.com/en/Correlation_does_not_imply_causation"><em>“correlation does not imply causation”</em></a> means that just because you found a (strong) correlation between two things, you cannot conclude that there is a cause-and-effect relationship between the two, which becomes clear when looking at <a href="https://www.tylervigen.com/spurious-correlations">these examples</a>.</p>
+<p>Simply put, a positive correlation means <em>“if one variable gets
+bigger, the other also gets bigger”</em> and a negative correlation
+means <em>“if one variable gets bigger, the other gets smaller”</em>.
+Therefore, it does not matter which of the two variables is the first
+(“x”) or the second (“y”) variable. Thus, a correlation estimate is not
+like a model and it cannot make predictions. Finally, <a
+href="https://www.wikiwand.com/en/Correlation_does_not_imply_causation"><em>“correlation
+does not imply causation”</em></a> means that just because you found a
+(strong) correlation between two things, you cannot conclude that there
+is a cause-and-effect relationship between the two, which becomes clear
+when looking at <a
+href="https://www.tylervigen.com/spurious-correlations">these
+examples</a>.</p>
 </div>
 <div id="how-to-get-it" class="section level2">
 <h2>How to get it</h2>
-<p>If you only want to get the actual correlation estimate, you can use the function <code>cor()</code> and provide the two numeric variables (as vectors):</p>
+<p>If you only want to get the actual correlation estimate, you can use
+the function <code>cor()</code> and provide the two numeric variables
+(as vectors):</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat<span class="sc">$</span>drinks, dat<span class="sc">$</span>blood_alc)</span></code></pre></div>
 <pre><code>## [1] 0.9559151</code></pre>
-<p>So the correlation between number of drinks and blood alcohol content in our sample is ca. 0.96 and thus very strong, since it is almost 1.</p>
+<p>So the correlation between number of drinks and blood alcohol content
+in our sample is ca. 0.96 and thus very strong, since it is almost
+1.</p>
 </div>
 <div id="how-to-test-it" class="section level2">
 <h2>How to test it</h2>
-<p>If you would like additional information, such as a confidence interval and a test resulting in a p-value, you can use <code>cor.test()</code> instead of <code>cor()</code>:</p>
+<p>If you would like additional information, such as a confidence
+interval and a test resulting in a p-value, you can use
+<code>cor.test()</code> instead of <code>cor()</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat<span class="sc">$</span>drinks, dat<span class="sc">$</span>blood_alc)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
@@ -684,12 +731,25 @@ div.tocify {
 ## sample estimates:
 ##       cor 
 ## 0.9559151</code></pre>
-<p>Looking at this longer output, you can see the sample estimate at the bottom, a confidence interval above it and a p-value with the corresponding test hypothesis above that. Run <code>?cor.test()</code> and look at the “Details” section for more info. Here, our correlation estimate of 0.96 is signficantly different from 0, since the p-value is 0.0000000000509 and therefore <span class="math inline">\(&lt; 0.05\)</span>. Furthermore, the confidence interval is 0.890 - 0.983 meaning that we are 95% sure that the true correlation is somewhere in that range.</p>
+<p>Looking at this longer output, you can see the sample estimate at the
+bottom, a confidence interval above it and a p-value with the
+corresponding test hypothesis above that. Run <code>?cor.test()</code>
+and look at the “Details” section for more info. Here, our correlation
+estimate of 0.96 is signficantly different from 0, since the p-value is
+0.0000000000509 and therefore <span class="math inline">\(&lt;
+0.05\)</span>. Furthermore, the confidence interval is 0.890 - 0.983
+meaning that we are 95% sure that the true correlation is somewhere in
+that range.</p>
 <aside>
-You can get the results in a tidy format by using the <code>tidy()</code> function from <a href="https://broom.tidymodels.org/">{broom}</a>.
+You can get the results in a tidy format by using the
+<code>tidy()</code> function from <a
+href="https://broom.tidymodels.org/">{broom}</a>.
 </aside>
 <blockquote>
-<p>Note that correlation is a widely used statistic so that there are several R packages that deal with it. I suggest taking a look at <a href="https://easystats.github.io/correlation/">{correlation}</a> and <a href="https://corrr.tidymodels.org/">{corrr}</a>.</p>
+<p>Note that correlation is a widely used statistic so that there are
+several R packages that deal with it. I suggest taking a look at <a
+href="https://easystats.github.io/correlation/">{correlation}</a> and <a
+href="https://corrr.tidymodels.org/">{corrr}</a>.</p>
 </blockquote>
 </div>
 </div>
@@ -697,19 +757,41 @@ You can get the results in a tidy format by using the <code>tidy()</code> functi
 <h1>Simple linear regression</h1>
 <div id="what-is-it-1" class="section level2">
 <h2>What is it?</h2>
-<p>When people talk about regression in statistics, they usually refer to <a href="https://www.wikiwand.com/en/Simple_linear_regression">simple linear regression</a>, which - simply put - finds the best straight line that goes through dots in a scatter plot of two numeric variables:</p>
+<p>When people talk about regression in statistics, they usually refer
+to <a href="https://www.wikiwand.com/en/Simple_linear_regression">simple
+linear regression</a>, which - simply put - finds the best straight line
+that goes through dots in a scatter plot of two numeric variables:</p>
 <p><img src="img/regressionexamples.png" width="60%" style="display: block; margin: auto;" /></p>
 <p>The linear model behind such a straight line is simply:</p>
 <p><span class="math display">\[ y = \alpha + \beta x\]</span></p>
-<p>where <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(a\)</span> is the intercept and <span class="math inline">\(\beta\)</span> or <span class="math inline">\(b\)</span> is the slope, while <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are our data points. Fitting such a regression is really just finding the optimal estimates for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.</p>
+<p>where <span class="math inline">\(\alpha\)</span> or <span
+class="math inline">\(a\)</span> is the intercept and <span
+class="math inline">\(\beta\)</span> or <span
+class="math inline">\(b\)</span> is the slope, while <span
+class="math inline">\(y\)</span> and <span
+class="math inline">\(x\)</span> are our data points. Fitting such a
+regression is really just finding the optimal estimates for <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>.</p>
 <p><img src="img/regressiontheory.png" width="60%" style="display: block; margin: auto;" /></p>
-<p>In contrast to correlation, a simple linear regression is a model and it therefore matters which variable is <span class="math inline">\(y\)</span> (dependent variable) and which is <span class="math inline">\(x\)</span> (independent), because after fitting the regression, the latter can be used to predict the former.</p>
+<p>In contrast to correlation, a simple linear regression is a model and
+it therefore matters which variable is <span
+class="math inline">\(y\)</span> (dependent variable) and which is <span
+class="math inline">\(x\)</span> (independent), because after fitting
+the regression, the latter can be used to predict the former.</p>
 </div>
 <div id="how-to-get-it-1" class="section level2">
 <h2>How to get it</h2>
-<p>In R, we can use the <code>lm()</code> function for fitting linear models so that it fits the simple linear regression equation shown above easily:</p>
+<p>In R, we can use the <code>lm()</code> function for fitting linear
+models so that it fits the simple linear regression equation shown above
+easily:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> blood_alc <span class="sc">~</span> drinks, <span class="at">data =</span> dat)</span></code></pre></div>
-<p>As you can see, we refer to our data object <code>dat</code> in the <code>data =</code> argument so that in the <code>formula =</code> argument we only need to write the names of the respective columns in <code>dat</code>. Furthermore, we store the results in the <code>reg</code> object. When looking at this object, we get the following results:</p>
+<p>As you can see, we refer to our data object <code>dat</code> in the
+<code>data =</code> argument so that in the <code>formula =</code>
+argument we only need to write the names of the respective columns in
+<code>dat</code>. Furthermore, we store the results in the
+<code>reg</code> object. When looking at this object, we get the
+following results:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>reg</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -718,9 +800,14 @@ You can get the results in a tidy format by using the <code>tidy()</code> functi
 ## Coefficients:
 ## (Intercept)       drinks  
 ##     0.04896      0.12105</code></pre>
-<p>First, our command is repeated and then the “Coefficients” are shown, which are indeed the estimates for <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. So the best straight line is:</p>
-<p><span class="math display">\[ bloodalc = 0.049 + 0.121 * drinks \]</span> which looks like this:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
+<p>First, our command is repeated and then the “Coefficients” are shown,
+which are indeed the estimates for <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>. So the best straight line is:</p>
+<p><span class="math display">\[ bloodalc = 0.049 + 0.121 * drinks
+\]</span> which looks like this:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
@@ -741,11 +828,29 @@ You can get the results in a tidy format by using the <code>tidy()</code> functi
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /></p>
-<p>Here is a little more info why <code>formula = blood_alc ~ drinks</code> leads to R estimating the <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> we want. What makes sense is that <code>blood_alc</code> is <span class="math inline">\(y\)</span>, <code>drinks</code> is <span class="math inline">\(x\)</span> and <code>~</code> would therefore be the <span class="math inline">\(=\)</span> in our equation. However, how come we never had to write anything about <span class="math inline">\(a\)</span> or <span class="math inline">\(b\)</span>? The answer is that (i) when fitting a linear model, there is usually always an intercept (=<span class="math inline">\(a\)</span>) by default and (ii) when writing a numeric variable (=<code>drinks</code>) as on the right side of the equation, it will automatically be assumed to have a slope (=<span class="math inline">\(b\)</span>) multiplied with it. Accordingly, <code>blood_alc ~ drinks</code> automatically translates to <code>blood_alc = a + b*drinks</code> so to speak.</p>
+<p>Here is a little more info why
+<code>formula = blood_alc ~ drinks</code> leads to R estimating the
+<span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> we want. What makes sense is that
+<code>blood_alc</code> is <span class="math inline">\(y\)</span>,
+<code>drinks</code> is <span class="math inline">\(x\)</span> and
+<code>~</code> would therefore be the <span
+class="math inline">\(=\)</span> in our equation. However, how come we
+never had to write anything about <span class="math inline">\(a\)</span>
+or <span class="math inline">\(b\)</span>? The answer is that (i) when
+fitting a linear model, there is usually always an intercept (=<span
+class="math inline">\(a\)</span>) by default and (ii) when writing a
+numeric variable (=<code>drinks</code>) as on the right side of the
+equation, it will automatically be assumed to have a slope (=<span
+class="math inline">\(b\)</span>) multiplied with it. Accordingly,
+<code>blood_alc ~ drinks</code> automatically translates to
+<code>blood_alc = a + b*drinks</code> so to speak.</p>
 </div>
 <div id="is-this-right" class="section level2">
 <h2>Is this right?</h2>
-<p>After fitting a model, you may use it to make predictions. Here is one way of obtaining the expected blood alcohol content for having 0, 1, 2, or 3 drinks is according to our simple linear regression:</p>
+<p>After fitting a model, you may use it to make predictions. Here is
+one way of obtaining the expected blood alcohol content for having 0, 1,
+2, or 3 drinks is according to our simple linear regression:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>preddat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">drinks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimate_expectation</span>(<span class="at">model =</span> reg, <span class="at">data =</span> preddat)</span></code></pre></div>
 <pre><code>## Model-based Expectation
@@ -759,18 +864,35 @@ You can get the results in a tidy format by using the <code>tidy()</code> functi
 ## 
 ## Variable predicted: blood_alc</code></pre>
 <aside>
-You may use <code>predict(reg, preddat)</code> instead of <code>estimate_expectation()</code> if you don’t want to rely on <a href="https://easystats.github.io/modelbased/">{modelbased}</a> as an extra package.
+You may use <code>predict(reg, preddat)</code> instead of
+<code>estimate_expectation()</code> if you don’t want to rely on <a
+href="https://easystats.github.io/modelbased/">{modelbased}</a> as an
+extra package.
 </aside>
-<p>You may notice that according to our model, the expected alcohol content in your blood when having 0 drinks is actually ca. 0.05 and thus larger than 0. This is obviously not true in real life. Instead, the true intercept should actually be exactly 0, so what went wrong?</p>
-<p>First of all, data will never be perfect in the sense that the when a parameter really is e.g. 42, its estimate based on measured data is also exactly 42.000000… . Instead, there are e.g. measurement errors: Peter and Max may have forgotten a drink or two or their device to measure the alcohol content is not precise enough. In fact, this would most likely be the underlying reason here - but remember that I made the data up.</p>
-<p>So I would like you to think about the issue from two other angles:</p>
+<p>You may notice that according to our model, the expected alcohol
+content in your blood when having 0 drinks is actually ca. 0.05 and thus
+larger than 0. This is obviously not true in real life. Instead, the
+true intercept should actually be exactly 0, so what went wrong?</p>
+<p>First of all, data will never be perfect in the sense that the when a
+parameter really is e.g. 42, its estimate based on measured data is also
+exactly 42.000000… . Instead, there are e.g. measurement errors: Peter
+and Max may have forgotten a drink or two or their device to measure the
+alcohol content is not precise enough. In fact, this would most likely
+be the underlying reason here - but remember that I made the data
+up.</p>
+<p>So I would like you to think about the issue from two other
+angles:</p>
 <ol style="list-style-type: decimal">
 <li>Are the results really saying the intercept is &gt; 0?</li>
-<li>Did we even ask the right question or should we have fitted a different model?</li>
+<li>Did we even ask the right question or should we have fitted a
+different model?</li>
 </ol>
-<div id="are-the-results-really-saying-the-intercept-is-0" class="section level3">
+<div id="are-the-results-really-saying-the-intercept-is-0"
+class="section level3">
 <h3>Are the results really saying the intercept is &gt; 0?</h3>
-<p>No, they are not. Yes, the sample estimate for the intercept is 0.04896, but when looking at more detailed information via e.g. <code>summary()</code>,</p>
+<p>No, they are not. Yes, the sample estimate for the intercept is
+0.04896, but when looking at more detailed information via
+e.g. <code>summary()</code>,</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -790,16 +912,38 @@ You may use <code>predict(reg, preddat)</code> instead of <code>estimate_expecta
 ## Residual standard error: 0.1009 on 18 degrees of freedom
 ## Multiple R-squared:  0.9138, Adjusted R-squared:  0.909 
 ## F-statistic: 190.8 on 1 and 18 DF,  p-value: 5.089e-11</code></pre>
-<p>you can see that the p-value for the intercept is 0.243, which is larger than 0.05 and thus not significantly different from 0. A second indication can be found when looking at the confidence interval of the expected value for having 0 drinks in the table above: <code>[-0.04, 0.13]</code>. This interval actually includes 0 which suggests that the true expected blood alcohol content for having 0 drinks may indeed be 0.</p>
+<p>you can see that the p-value for the intercept is 0.243, which is
+larger than 0.05 and thus not significantly different from 0. A second
+indication can be found when looking at the confidence interval of the
+expected value for having 0 drinks in the table above:
+<code>[-0.04, 0.13]</code>. This interval actually includes 0 which
+suggests that the true expected blood alcohol content for having 0
+drinks may indeed be 0.</p>
 <aside>
-You can get the results in a tidy format by using the <code>tidy()</code> and <code>glance()</code> functions from <a href="https://broom.tidymodels.org/">{broom}</a>.
+You can get the results in a tidy format by using the
+<code>tidy()</code> and <code>glance()</code> functions from <a
+href="https://broom.tidymodels.org/">{broom}</a>.
 </aside>
 </div>
-<div id="should-we-have-fitted-a-different-model" class="section level3">
+<div id="should-we-have-fitted-a-different-model"
+class="section level3">
 <h3>Should we have fitted a different model?</h3>
-<p>We certainly <strong>could</strong> have and we will actually do it now. It must be clear that statistically speaking there was nothing wrong with our analysis. However, from a biological standpoint or in other words - because of our background knowledge and expertise as scientists, we could have indeed actively decided for a regression analysis that does <strong>not</strong> have an intercept and is thus forced to start 0 in terms of blood alcohol content. After all, statistics is just a tool to help us make conclusions. It is a powerful tool, but it will always be our responsibility to “ask the right questions” i.e. apply expedient methods.</p>
-<p>A simple linear regression without an intercept is strictly speaking no longer “simple”, since it no longer has the typical equation:</p>
-<p><span class="math display">\[ y = \beta x\]</span> To let <code>lm()</code> that it should not estimate the default intercept, we simply add <code>0 +</code> right after the <code>~</code>. As expected, we only get one estimate for the slope:</p>
+<p>We certainly <strong>could</strong> have and we will actually do it
+now. It must be clear that statistically speaking there was nothing
+wrong with our analysis. However, from a biological standpoint or in
+other words - because of our background knowledge and expertise as
+scientists, we could have indeed actively decided for a regression
+analysis that does <strong>not</strong> have an intercept and is thus
+forced to start 0 in terms of blood alcohol content. After all,
+statistics is just a tool to help us make conclusions. It is a powerful
+tool, but it will always be our responsibility to “ask the right
+questions” i.e. apply expedient methods.</p>
+<p>A simple linear regression without an intercept is strictly speaking
+no longer “simple”, since it no longer has the typical equation:</p>
+<p><span class="math display">\[ y = \beta x\]</span> To let
+<code>lm()</code> that it should not estimate the default intercept, we
+simply add <code>0 +</code> right after the <code>~</code>. As expected,
+we only get one estimate for the slope:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>reg_noint <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> blood_alc <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> drinks, <span class="at">data =</span> dat)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>reg_noint</span></code></pre></div>
 <pre><code>## 
@@ -810,9 +954,13 @@ You can get the results in a tidy format by using the <code>tidy()</code> and <c
 ## drinks  
 ## 0.1298</code></pre>
 <p>meaning that this regression with no intercept is estimated as</p>
-<p><span class="math display">\[ bloodalc = 0.1298 * drinks \]</span></p>
-<p>and must definitely predict 0 <code>blood_alc</code> when having 0 <code>drinks</code>. As a final result, we can compare both regression lines visually in a ggplot:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
+<p><span class="math display">\[ bloodalc = 0.1298 * drinks
+\]</span></p>
+<p>and must definitely predict 0 <code>blood_alc</code> when having 0
+<code>drinks</code>. As a final result, we can compare both regression
+lines visually in a ggplot:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> drinks, <span class="at">y =</span> blood_alc)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
@@ -840,6 +988,15 @@ You can get the results in a tidy format by using the <code>tidy()</code> and <c
 <span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /></p>
+<p><strong>R-Code and exercise solutions</strong></p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
+<ul>
+<li>the entire R-code of each example combined, including</li>
+<li>solutions to the respective exercise(s).</li>
+</ul>
 </div>
 </div>
 </div>

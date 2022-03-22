@@ -13,7 +13,7 @@
 
 <title>StdDev or StdErr or ConfInt?</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -577,14 +584,30 @@ div.tocify {
 
 <!-- It is not so simple: databased, modelbased - but how phrase it? -->
 <!-- No Bayesian included here -->
-<div id="which-measure-of-precision-should-we-use" class="section level1">
+<div id="which-measure-of-precision-should-we-use"
+class="section level1">
 <h1>Which measure of precision should we use?</h1>
-<p>In the context of analyzing designed experiments (in agronomy or related fields) we often want to compare treatment means. Often the question comes up which measure of precision one should use. An answer that is detailed regarding Standard Deviation vs. Standard Error can be found in <a href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">Kozak &amp; Piepho (2020)</a>. This summary is heavily based on their conclusions, yet also differs from it as (i) I focus specifically on measures that can be used as error bars for our treatment means in graphs and thus (ii) additionally include confidence intervals.</p>
+<p>In the context of analyzing designed experiments (in agronomy or
+related fields) we often want to compare treatment means. Often the
+question comes up which measure of precision one should use. An answer
+that is detailed regarding Standard Deviation vs. Standard Error can be
+found in <a
+href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">Kozak
+&amp; Piepho (2020)</a>. This summary is heavily based on their
+conclusions, yet also differs from it as (i) I focus specifically on
+measures that can be used as error bars for our treatment means in
+graphs and thus (ii) additionally include confidence intervals.</p>
 </div>
 <div id="example" class="section level1">
 <h1>Example</h1>
-<p>We here make use of the data used in Kozak &amp; Piepho (2020). It is from “an artificial example of an experiment laid out in a randomized complete block design, with four treatments and five blocks. This data set reflects a common experimental design used in agronomy research.”</p>
-<p>The following measures can potentially be used to draw errorbars onto our estimated mean values and thus give the reader a feeling for the respective precision/dispersion:</p>
+<p>We here make use of the data used in Kozak &amp; Piepho (2020). It is
+from “an artificial example of an experiment laid out in a randomized
+complete block design, with four treatments and five blocks. This data
+set reflects a common experimental design used in agronomy
+research.”</p>
+<p>The following measures can potentially be used to draw errorbars onto
+our estimated mean values and thus give the reader a feeling for the
+respective precision/dispersion:</p>
 <ul>
 <li>Standard Deviation (rawSD)</li>
 <li>Standard Error of the Mean (SEM)</li>
@@ -592,8 +615,15 @@ div.tocify {
 <li>95%-Confidence interval of the Mean (CI95)</li>
 <li>80%-Confidence interval of the Mean (CI80)</li>
 </ul>
-<p>The following code estimates all of these measures for the given artificial example. While you can have a look at the underlying code by clicking the “show” button below, note that the way it is written may seem overwhelming. This is only because I tried to get all the different measures, while keeping the code short and efficient. In real life you will go for only one of those measures and thus your code will certainly be shorter and easier to understand.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(modelbased,</span>
+<p>The following code estimates all of these measures for the given
+artificial example. While you can have a look at the underlying code by
+clicking the “show” button below, note that the way it is written may
+seem overwhelming. This is only because I tried to get all the different
+measures, while keeping the code short and efficient. In real life you
+will go for only one of those measures and thus your code will certainly
+be shorter and easier to understand.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(modelbased,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data from Kozak &amp; Piepho (2020)</span></span>
@@ -645,8 +675,12 @@ div.tocify {
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">values_from =</span> value,</span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> lowhigh) <span class="sc">%&gt;%</span></span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">fct_reorder</span>(type, low, median))</span></code></pre></div>
-<p>We can now plot one graph per measure and compare them directly. Keep in mind that all of them are correct and based on the same data leading to identical means, but the reader will usually only ever see one of these graphs.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> result_transposed,</span>
+<p>We can now plot one graph per measure and compare them directly. Keep
+in mind that all of them are correct and based on the same data leading
+to identical means, but the reader will usually only ever see one of
+these graphs.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> result_transposed,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> Mean, <span class="at">ymin =</span> low, <span class="at">ymax =</span> high)) <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type)) <span class="sc">+</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -654,8 +688,10 @@ div.tocify {
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Mean ± ...&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="stddevstderr_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>For an even closer look, we can decide to focus only on the mean for A1:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">filter</span>(result_transposed, treatment <span class="sc">==</span> <span class="st">&quot;A1&quot;</span>),</span>
+<p>For an even closer look, we can decide to focus only on the mean for
+A1:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">filter</span>(result_transposed, treatment <span class="sc">==</span> <span class="st">&quot;A1&quot;</span>),</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> type,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> Mean,</span>
@@ -684,22 +720,45 @@ div.tocify {
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p2, p1, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>), <span class="at">align =</span> <span class="st">&quot;h&quot;</span>)</span></code></pre></div>
 <p><img src="stddevstderr_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Note that I also added the actual values/raw data and the corresponding boxplot on the left. It must be realized that in this example none of the individual values are actually very close to their mean.</p>
+<p>Note that I also added the actual values/raw data and the
+corresponding boxplot on the left. It must be realized that in this
+example none of the individual values are actually very close to their
+mean.</p>
 <!-- Some ranges dont even include a single value -->
 <!-- Min-Max-Range and IQR correspond to median and not mean. All this can be seen in the boxplot -->
 </div>
 <div id="state-your-choice" class="section level1">
 <h1>State your choice!</h1>
-<p>Most importantly and irrespectively of which measure you chose, you must explicitly state which measure was chosen. As [Altman &amp; Bland (2005)] write “<em>The terms “standard error” and “standard deviation” are often confused (Nagele, 2003). […] In many publications a ± sign is used to join the standard deviation (SD) or standard error (SEM) to an observed mean — for example, 69.4±9.3 kg. That notation gives no indication whether the second figure is the standard deviation or the standard error (or indeed something else). A review of 88 articles published in 2002 found that 12 (14%) failed to identify which measure of dispersion was reported (and three failed to report any measure of variability) (Olsten, 2003).</em>”.</p>
+<p>Most importantly and irrespectively of which measure you chose, you
+must explicitly state which measure was chosen. As [Altman &amp; Bland
+(2005)] write “<em>The terms “standard error” and “standard deviation”
+are often confused (Nagele, 2003). […] In many publications a ± sign is
+used to join the standard deviation (SD) or standard error (SEM) to an
+observed mean — for example, 69.4±9.3 kg. That notation gives no
+indication whether the second figure is the standard deviation or the
+standard error (or indeed something else). A review of 88 articles
+published in 2002 found that 12 (14%) failed to identify which measure
+of dispersion was reported (and three failed to report any measure of
+variability) (Olsten, 2003).</em>”.</p>
 </div>
 <div id="further-reading" class="section level1">
 <h1>Further Reading</h1>
-<p>You can read more on this topic in general in this <a href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Visualizing the uncertainty of point estimates</a> chapter, which also includes the <em>Bayesian credible interval</em>.</p>
+<p>You can read more on this topic in general in this <a
+href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Visualizing
+the uncertainty of point estimates</a> chapter, which also includes the
+<em>Bayesian credible interval</em>.</p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
-<p>Kozak, Marcin; Piepho, Hans-Peter (2020): Analyzing designed experiments: Should we report standard deviations or standard errors of the mean or standard errors of the difference or what? In: Ex. Agric. 56 (2), S. 312–319. DOI: <a href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">10.1017/S0014479719000401.</a></p>
-<p>Wilke, Claus O.: Fundamentals of Data Visualization <a href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Chapter 16.2</a> Visualizing the uncertainty of point estimates. ISBN: 978-1492031086</p>
+<p>Kozak, Marcin; Piepho, Hans-Peter (2020): Analyzing designed
+experiments: Should we report standard deviations or standard errors of
+the mean or standard errors of the difference or what? In: Ex. Agric. 56
+(2), S. 312–319. DOI: <a
+href="https://www.cambridge.org/core/journals/experimental-agriculture/article/abs/analyzing-designed-experiments-should-we-report-standard-deviations-or-standard-errors-of-the-mean-or-standard-errors-of-the-difference-or-what/92DB0AF151C157B9C6E2FA40F9C9B635#">10.1017/S0014479719000401.</a></p>
+<p>Wilke, Claus O.: Fundamentals of Data Visualization <a
+href="https://clauswilke.com/dataviz/visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates">Chapter
+16.2</a> Visualizing the uncertainty of point estimates. ISBN:
+978-1492031086</p>
 </div>
 
 &nbsp;

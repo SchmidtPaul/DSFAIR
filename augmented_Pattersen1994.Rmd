@@ -103,7 +103,7 @@ ggplot(data = dat,
   geom_point(size = 2) + # scatter plot with larger dots
   ylim(0, NA) + # force y-axis to start at 0
   scale_color_manual(values = blue_30_and_orange_3) + # custom colors
-  guides(color = FALSE) + # turn off legend for colors
+  guides(color = "none") + # turn off legend for colors
   theme_classic() + # clearer plot format
   theme(legend.position = "top") # legend on top
 ```
@@ -202,7 +202,7 @@ ggplot() +
     aes(y = yield, x = gen, color = gen)
   ) +
   scale_color_manual(values = blue_30_and_orange_3) + # custom colors
-  guides(color = FALSE) + # turn off legend for colors
+  guides(color = "none") + # turn off legend for colors
   # red dots representing the adjusted means
   geom_point(
     data = mean_comparisons$emmeans,
@@ -281,7 +281,7 @@ ggplot(data = ex1dat,
            color = genoCheck)) +
   geom_point(size = 2) + # scatter plot with larger dots
   ylim(0, NA) + # force y-axis to start at 0
-  guides(color = FALSE) + # turn off legend for colors
+  guides(color = "none") + # turn off legend for colors
   theme_classic() + # clearer plot format
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5), # rotate axis label
         panel.grid.major.x = element_line()) # add vertikal grid lines

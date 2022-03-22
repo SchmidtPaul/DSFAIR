@@ -25,6 +25,8 @@ navbar:
           href: RCBD_ClewerScarisbrick2001.html
         - text: "latsquare_Bridges1989"
           href: latsquare_Bridges1989.html
+        - text: "rcbd_RCBD_2f_rice"
+          href: RCBD_2f_rice.html
         - text: "augmented_Pattersen1994"
           href: augmented_Pattersen1994.html
         - text: "alpha_JohnWilliams1995"

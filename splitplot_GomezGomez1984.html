@@ -13,7 +13,7 @@
 
 <title>Split-plot design</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -229,6 +230,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -457,7 +461,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -470,14 +474,14 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting Started</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Getting Started</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="rbasics.html">R Basics</a>
@@ -491,7 +495,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Simple Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Simple Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="CRD_Mead1993.html">crd_Mead1993</a>
@@ -501,6 +505,9 @@ div.tocify {
         </li>
         <li>
           <a href="latsquare_Bridges1989.html">latsquare_Bridges1989</a>
+        </li>
+        <li>
+          <a href="RCBD_2f_rice.html">rcbd_RCBD_2f_rice</a>
         </li>
         <li>
           <a href="augmented_Pattersen1994.html">augmented_Pattersen1994</a>
@@ -517,7 +524,7 @@ div.tocify {
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Complex Experiments</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Complex Experiments</a>
       <ul class="dropdown-menu" role="menu">
         <li>
           <a href="subsampling_Piepho1997.html">subsampling_Piepho1997</a>
@@ -533,7 +540,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Summaries
      
     <span class="caret"></span>
@@ -561,7 +568,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -588,7 +595,19 @@ div.tocify {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;lmer&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>)</span></code></pre></div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>This example is taken from Chapter <em>“5 Split-plots”</em> of the course material <a href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451" target="_blank">“Mixed models for metric data (3402-451)”</a> by <a href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257" target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers slightly modified version of data published in <a href="https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920" target="_blank">Gomez &amp; Gomez (1984)</a> from a yield (kg/ha) trial laid out as a split-plot design. The trial had 4 genotypes (<code>G</code>), 6 nitrogen levels (<code>N</code> or <code>n_amount</code>) with 3 complete replicates (<code>rep</code>) and 6 incomplete blocks (<code>mainplot</code>) within each replicate.</p>
+<p>This example is taken from Chapter <em>“5 Split-plots”</em> of the
+course material <a
+href="https://www.uni-hohenheim.de/en/module-catalogue/lehrveranstaltung/mixed-models-for-metric-data-3402-451"
+target="_blank">“Mixed models for metric data (3402-451)”</a> by <a
+href="https://www.uni-hohenheim.de/organisation?tx_base_lsfcontentadmin%5BlsfPerson%5D=6257"
+target="_blank">Prof. Dr. Hans-Peter Piepho</a>. It considers slightly
+modified version of data published in <a
+href="https://www.wiley.com/en-us/Statistical+Procedures+for+Agricultural+Research%2C+2nd+Edition-p-9780471870920"
+target="_blank">Gomez &amp; Gomez (1984)</a> from a yield (kg/ha) trial
+laid out as a split-plot design. The trial had 4 genotypes
+(<code>G</code>), 6 nitrogen levels (<code>N</code> or
+<code>n_amount</code>) with 3 complete replicates (<code>rep</code>) and
+6 incomplete blocks (<code>mainplot</code>) within each replicate.</p>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data (import via URL)</span></span>
@@ -613,13 +632,18 @@ div.tocify {
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
-<p>Before anything, the columns <code>rep</code>, <code>mainplot</code>, <code>G</code> and <code>N</code> should be encoded as factors, since R by default encoded them as character.</p>
+<p>Before anything, the columns <code>rep</code>, <code>mainplot</code>,
+<code>G</code> and <code>N</code> should be encoded as factors, since R
+by default encoded them as character.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(rep<span class="sc">:</span>N), as.factor)</span></code></pre></div>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
-<p>In order to obtain a field layout of the trial, we can use the <code>desplot()</code> function. Notice that for this we need two data columns that identify the <code>row</code> and <code>col</code> of each plot in the trial.</p>
+<p>In order to obtain a field layout of the trial, we can use the
+<code>desplot()</code> function. Notice that for this we need two data
+columns that identify the <code>row</code> and <code>col</code> of each
+plot in the trial.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">desplot</span>(<span class="at">data =</span> dat,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">form =</span> rep <span class="sc">~</span> col <span class="sc">+</span> row <span class="sc">|</span> rep, <span class="co"># fill color per rep, headers per rep</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> G, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">shorten =</span> <span class="st">&quot;no&quot;</span>, <span class="co"># show genotype names per plot</span></span>
@@ -628,8 +652,25 @@ div.tocify {
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">out2 =</span> row, <span class="at">out2.gpar =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>), <span class="co"># lines between rows</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Field layout&quot;</span>, <span class="at">show.key =</span> <span class="cn">TRUE</span>, <span class="at">key.cex =</span> <span class="fl">0.7</span>) <span class="co"># formatting</span></span></code></pre></div>
 <p><img src="splitplot_GomezGomez1984_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Split-plot designs are designs for factorial experiments, which involve two independent randomization steps. The field was divided into three <strong>blocks (replicates)</strong>. Each block was divided into six main plots. For every block separately, the six fertilizer treatments were randomly allocated to <strong>main plots</strong>. Every main plot was split into four sub plots to accommodate the four varieties. Separately for each main plot, the varieties were randomly allocated to the four <strong>sub-plots</strong>. It is important to recognize that nitrogen, the so-called main plot factor, was randomized according to a randomized complete block design. Varieties, corresponding to the so-called sub-plot factor, were also randomized according to a randomized complete block design, taking main plots as block. This type of split-plot design is the most common form, but there are many other forms of „the“ split-plot design depending on the design according to which the main plot and sub plot factors are randomized.</p>
-<p>We could now have a look at the arithmetic means and standard deviations for yield per genotype (<code>G</code>) and nitrogen level (<code>N</code>).</p>
+<p>Split-plot designs are designs for factorial experiments, which
+involve two independent randomization steps. The field was divided into
+three <strong>blocks (replicates)</strong>. Each block was divided into
+six main plots. For every block separately, the six fertilizer
+treatments were randomly allocated to <strong>main plots</strong>. Every
+main plot was split into four sub plots to accommodate the four
+varieties. Separately for each main plot, the varieties were randomly
+allocated to the four <strong>sub-plots</strong>. It is important to
+recognize that nitrogen, the so-called main plot factor, was randomized
+according to a randomized complete block design. Varieties,
+corresponding to the so-called sub-plot factor, were also randomized
+according to a randomized complete block design, taking main plots as
+block. This type of split-plot design is the most common form, but there
+are many other forms of „the“ split-plot design depending on the design
+according to which the main plot and sub plot factors are
+randomized.</p>
+<p>We could now have a look at the arithmetic means and standard
+deviations for yield per genotype (<code>G</code>) and nitrogen level
+(<code>N</code>).</p>
 <div class="row">
 <div class="col-md-6">
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -678,13 +719,30 @@ div.tocify {
 </div>
 <div id="modelling" class="section level1">
 <h1>Modelling</h1>
-<p>Finally, we can decide to fit a linear model with <code>yield</code> as the response variable. In this example it makes sense to group the effects in our model as either <em>design effects</em> or <em>treatment effects</em>. The <em>treatments</em> here are the genotypes <code>G</code> and the nitrogen levels <code>N</code> which we will include in the model as main effects, but also via their interaction effect <code>G:N</code>. Regarding the <em>design</em>, split-plot designs have two randomization units, which need to be represented in the linear model: main plots and sub plots. As a general principle, each randomization units needs to be represented by a random effect, so each randomization unit has its own error term. In the example, fertilizer levels are compared at the main plot level (<code>mainplot</code>), so the main plot error is the relevant error term. The genotypes are compared at the sub plot level, and so the sub plot error is the relevant error term. Furthermore, the model needs to contain a block (<code>rep</code>) effect because the main plots were randomized in complete blocks.</p>
+<p>Finally, we can decide to fit a linear model with <code>yield</code>
+as the response variable. In this example it makes sense to group the
+effects in our model as either <em>design effects</em> or <em>treatment
+effects</em>. The <em>treatments</em> here are the genotypes
+<code>G</code> and the nitrogen levels <code>N</code> which we will
+include in the model as main effects, but also via their interaction
+effect <code>G:N</code>. Regarding the <em>design</em>, split-plot
+designs have two randomization units, which need to be represented in
+the linear model: main plots and sub plots. As a general principle, each
+randomization units needs to be represented by a random effect, so each
+randomization unit has its own error term. In the example, fertilizer
+levels are compared at the main plot level (<code>mainplot</code>), so
+the main plot error is the relevant error term. The genotypes are
+compared at the sub plot level, and so the sub plot error is the
+relevant error term. Furthermore, the model needs to contain a block
+(<code>rep</code>) effect because the main plots were randomized in
+complete blocks.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(yield <span class="sc">~</span> G <span class="sc">+</span> N <span class="sc">+</span> G<span class="sc">:</span>N <span class="sc">+</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              rep <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>rep<span class="sc">:</span>mainplot), </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span>dat)</span></code></pre></div>
 <div id="variance-component-estimates" class="section level2">
 <h2>Variance component estimates</h2>
-<p>We can extract the variance component estimates for our mixed model as follows:</p>
+<p>We can extract the variance component estimates for our mixed model
+as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">VarCorr</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
@@ -695,7 +753,10 @@ div.tocify {
 </div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
-<p>Thus, we can conduct an ANOVA for this model. As can be seen, the F-test of the ANOVA (using Kenward-Roger’s method for denominator degrees-of-freedom and F-statistic) finds the <code>G:N</code> interaction effects to be statistically significant (p&lt;0.001).</p>
+<p>Thus, we can conduct an ANOVA for this model. As can be seen, the
+F-test of the ANOVA (using Kenward-Roger’s method for denominator
+degrees-of-freedom and F-statistic) finds the <code>G:N</code>
+interaction effects to be statistically significant (p&lt;0.001).</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">anova</span>(<span class="at">ddf=</span><span class="st">&quot;Kenward-Roger&quot;</span>)</span></code></pre></div>
 <pre><code>## Type III Analysis of Variance Table with Kenward-Roger&#39;s method
 ##       Sum Sq  Mean Sq NumDF DenDF F value    Pr(&gt;F)    
@@ -705,7 +766,8 @@ div.tocify {
 ## G:N 69378044  4625203    15    36 13.2360 2.078e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Therefore, we should compare the adjusted means for all genotype-nitrogen level combinations.</p>
+<p>Therefore, we should compare the adjusted means for all
+genotype-nitrogen level combinations.</p>
 </div>
 <div id="mean-comparisons" class="section level2">
 <h2>Mean comparisons</h2>
@@ -806,7 +868,12 @@ div.tocify {
 ## NOTE: Compact letter displays can be misleading
 ##       because they show NON-findings rather than findings.
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
-<p>Note that if you would like to see the underyling individual contrasts/differences between adjusted means, simply add <code>details = TRUE</code> to the <code>cld()</code> statement. Also, find more information on mean comparisons and the Compact Letter Display in the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a></p>
+<p>Note that if you would like to see the underyling individual
+contrasts/differences between adjusted means, simply add
+<code>details = TRUE</code> to the <code>cld()</code> statement. Also,
+find more information on mean comparisons and the Compact Letter Display
+in the separate <a href="compactletterdisplay.html">Compact Letter
+Display Chapter</a></p>
 </div>
 </div>
 </div>
@@ -814,8 +881,14 @@ div.tocify {
 <h1>Present results</h1>
 <div id="mean-comparisons-1" class="section level2">
 <h2>Mean comparisons</h2>
-<p>For this example we can create a plot that displays both the raw data and the results, <em>i.e.</em> the comparisons of the adjusted means that are based on the linear model. If you would rather have e.g. a bar plot to show these results, check out the separate <a href="compactletterdisplay.html">Compact Letter Display Chapter</a>. We will do this for <em>Option 2: Within each genotype</em>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reformatting needed for ggplot</span></span>
+<p>For this example we can create a plot that displays both the raw data
+and the results, <em>i.e.</em> the comparisons of the adjusted means
+that are based on the linear model. If you would rather have e.g. a bar
+plot to show these results, check out the separate <a
+href="compactletterdisplay.html">Compact Letter Display Chapter</a>. We
+will do this for <em>Option 2: Within each genotype</em>:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reformatting needed for ggplot</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>withinG_mean_comparisons <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(withinG_mean_comparisons)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -855,12 +928,15 @@ div.tocify {
 <span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&quot;The four facettes represent genotypes A, B, C and D</span></span>
 <span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="st">       Black dots represent raw data</span></span>
 <span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="st">       Red dots and error bars represent adjusted mean with 95% confidence limits per genotype-nitrogen level combination</span></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="st">       Separaetly per genotype, means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="st">       Separately per genotype, means followed by a common letter are not significantly different according to the Tukey-test&quot;</span>) <span class="sc">+</span></span>
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># clearer plot format </span></span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="co"># rotate x-axis label</span></span></code></pre></div>
 <p><img src="splitplot_GomezGomez1984_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
-<p>Please <a href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl" target="_blank">click here</a> to find a folder with <code>.R</code> files. Each file contains</p>
+<p>Please <a
+href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"
+target="_blank">click here</a> to find a folder with <code>.R</code>
+files. Each file contains</p>
 <ul>
 <li>the entire R-code of each example combined, including</li>
 <li>solutions to the respective exercise(s).</li>

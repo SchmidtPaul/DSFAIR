@@ -1,0 +1,84 @@
+---
+title: "Using {reprex} & {datapasta}"
+output: 
+  html_document:
+    code_folding: "none"
+    includes:
+      in_header: header.html
+      after_body: footer.html	
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+# How to make it easier for people that want to help you
+
+Sometimes people have a problem in R and want to ask others for help. If they do this via the internet, they often 
+
+ * do not provide all of the relevant information
+ * do provide too much of irrelevant information
+ 
+so that they do not get the help they need. This chapter tries to help people to ask for help in a better way.
+
+# An example problem
+
+Let's say this is our code 
+
+```{r, eval=FALSE}
+library(dplyr)
+
+PlantGrowth %>% 
+  group_by(group) %>% 
+  summarise(mean = mean(weight))
+
+model <- lm(weight = group, data = PlantGrowth)
+
+anova(model)
+```
+
+and when running it, it throws errors, but we don't understand why.
+
+```{r, error=TRUE}
+library(dplyr)
+
+mydata <- PlantGrowth
+
+mydata %>% 
+  group_by(group) %>% 
+  summarise(mean = mean(weight))
+
+model <- lm(weight = group, data = mydata)
+
+anova(model)
+```
+
+## Step 1: find the first error and reduce the code
+
+Looking closely, the first error appears after the running `lm()` function, which means that we can focus on it and
+
+ * remove the code below it
+ * remove all code above it which does not influence this part of the code
+   + Obviously we cannot delete code that imports `mydata`, because it is used in the `lm()` function.
+   + However, we can remove the section summarizing the means, as it has no effect on the `lm()` function. We then even no longer need to load the {dplyr} package, since the remaining code works fine without it.
+   + Importantly, the error we are investigating is still there.
+ 
+```{r, error=TRUE}
+mydata <- PlantGrowth
+
+model <- lm(weight = group, data = mydata)
+```
+
+We have now successfully reduced the code to a minimum while still facing the same error message.
+
+## Step 2: don't depend on data that only you can access
+
+Sharing the code above does not allow others to run it and reproduce the error, because no one else has access to the data you are importing. You must therefore choose one of these solutions:
+
+ * Option 1: Make your data accessible
+ * Option 2: Replace your data by a data set built into R like `mtcars` or `PlantGrowth`.
+ 
+ 
+ 
