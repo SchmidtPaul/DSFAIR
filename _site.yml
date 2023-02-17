@@ -50,7 +50,7 @@ navbar:
       - text: "Designing experiments"
         href: DesigningExperiments.html
     - text: "Contact"
-      href: 0contactinfo.html
+      href: https://schmidtpaul.github.io/
 output:
   html_document:
     theme: lumen

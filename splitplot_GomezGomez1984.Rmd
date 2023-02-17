@@ -16,11 +16,11 @@ pacman::p_load(kableExtra, formattable ,htmltools)
 
 ```{r}
 # packages
-pacman::p_load(readr, tidyverse, # data import and handling
-               conflicted,       # handling function conflicts
-               lme4, lmerTest,   # linear mixed model 
+pacman::p_load(tidyverse, # data import and handling
+               conflicted,     # handling function conflicts
+               lme4, lmerTest, pbkrtest, # linear mixed model 
                emmeans, multcomp, multcompView, # mean comparisons
-               ggplot2, desplot) # plots
+               desplot) # plots
 
 # conflicts: identical function names from different packages
 conflict_prefer("select", "dplyr")

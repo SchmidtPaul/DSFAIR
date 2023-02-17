@@ -76,9 +76,13 @@ ggplot(data = dat, aes(x = drinks, y = blood_alc)) +
 
 One way of actually putting a number on this relationship is to estimate the correlation. When people talk about correlation ($\rho$ or $r$) in statistics, they usually refer to the [Pearson correlation coefficient](https://www.wikiwand.com/en/Pearson_correlation_coefficient), which is a measure of linear correlation between two numeric variables. Correlation can only have values between -1 and 1, where 0 means _no correlation_, while all other possible values are either negative or positive correlations. The farther away from 0, the stronger is the correlation. 
 
-```{r pressure, echo=FALSE, out.width = '60%', fig.align='center'}
-knitr::include_graphics("img/correlation.PNG")
-```
+<!-- # ```{r pressure, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/correlation.png", error = FALSE) -->
+<!-- # ``` -->
+
+<center>
+<img src="images/img/correlation.png" style="width:50%">
+</center>
 
 Simply put, a positive correlation means _"if one variable gets bigger, the other also gets bigger"_ and a negative correlation means _"if one variable gets bigger, the other gets smaller"_. Therefore, it does not matter which of the two variables is the first ("x") or the second ("y") variable. Thus, a correlation estimate is not like a model and it cannot make predictions. Finally, [*"correlation does not imply causation"*](https://www.wikiwand.com/en/Correlation_does_not_imply_causation) means that just because you found a (strong) correlation between two things, you cannot conclude that there is a cause-and-effect relationship between the two, which becomes clear when looking at [these examples](https://www.tylervigen.com/spurious-correlations).
 
@@ -119,9 +123,13 @@ You can get the results in a tidy format by using the `tidy()` function from [{b
 
 When people talk about regression in statistics, they usually refer to [simple linear regression](https://www.wikiwand.com/en/Simple_linear_regression), which - simply put - finds the best straight line that goes through dots in a scatter plot of two numeric variables:
 
-```{r, echo=FALSE, out.width = '60%', fig.align='center'}
-knitr::include_graphics("img/regressionexamples.png")
-```
+<!-- # ```{r, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/regressionexamples.png", error = FALSE) -->
+<!-- # ``` -->
+
+<center>
+<img src="img/regressionexamples.png" style="width:50%">
+</center>
 
 The linear model behind such a straight line is simply:
 
@@ -129,9 +137,13 @@ $$ y = \alpha + \beta x$$
 
 where $\alpha$ or $a$ is the intercept and $\beta$ or $b$ is the slope, while $y$ and $x$ are our data points. Fitting such a regression is really just finding the optimal estimates for $\alpha$ and $\beta$. 
 
-```{r, echo=FALSE, out.width = '60%', fig.align='center'}
-knitr::include_graphics("img/regressiontheory.png")
-```
+<!-- # ```{r, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/regressiontheory.png", error = FALSE) -->
+<!-- # ``` -->
+
+<center>
+<img src="img/regressiontheory.png" style="width:50%">
+</center>
 
 In contrast to correlation, a simple linear regression is a model and it therefore matters which variable is $y$ (dependent variable) and which is $x$ (independent), because after fitting the regression, the latter can be used to predict the former. 
 

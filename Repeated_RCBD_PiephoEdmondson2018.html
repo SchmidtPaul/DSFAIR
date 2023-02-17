@@ -13,7 +13,7 @@
 
 <title>Repeated Measures RCBD</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -87,6 +87,9 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
+
+<h1 style="background-color:#00923f;color:white;text-align:center"> There is a newer, revised version of this website: https://schmidtpaul.github.io/dsfair_quarto/ </h1>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -188,13 +191,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -290,11 +300,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -323,8 +337,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -332,16 +346,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -555,7 +562,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="0contactinfo.html">Contact</a>
+  <a href="https://schmidtpaul.github.io/">Contact</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -654,7 +661,7 @@ factor level per observation, which will be needed later when using
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
-<pre><code>## # A tibble: 100 x 8
+<pre><code>## # A tibble: 100 × 8
 ##        y variety block  weekF plot  weekN varblock unit 
 ##    &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt; &lt;int&gt;    &lt;int&gt; &lt;fct&gt;
 ##  1  5    var1    block1 week1 plot1     1        1 obs1 
@@ -667,7 +674,7 @@ factor level per observation, which will be needed later when using
 ##  8  3.67 var1    block2 week3 plot2     3        2 obs8 
 ##  9  3.23 var1    block2 week4 plot2     4        2 obs9 
 ## 10  2.83 var1    block2 week5 plot2     5        2 obs10
-## # ... with 90 more rows</code></pre>
+## # … with 90 more rows</code></pre>
 </div>
 <div id="exploring" class="section level2">
 <h2>Exploring</h2>
@@ -686,7 +693,7 @@ deviations for yield per <code>variety</code>.</p>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
-<pre><code>## # A tibble: 4 x 3
+<pre><code>## # A tibble: 4 × 3
 ##   variety  mean std.dev
 ##   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 var3     4.63   0.757
@@ -699,7 +706,7 @@ follows:</p>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(weekF, variety) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> weekF, <span class="at">values_from =</span> mean)  </span></code></pre></div>
-<pre><code>## # A tibble: 4 x 6
+<pre><code>## # A tibble: 4 × 6
 ##   variety week1 week2 week3 week4 week5
 ##   &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 var1     4.24  4.05  3.41  3.09  2.7 
@@ -833,9 +840,11 @@ sophisticated variance structures.</p>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract variance component estimates</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.iid %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>mod.iid <span class="sc">%&gt;%</span> mixedup<span class="sc">::</span><span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>) </span></code></pre></div>
-<pre><code>##      group    effect variance    sd var_2.5 var_97.5 var_prop
-## 1     unit Intercept    0.023 0.152   0.016    0.033        1
-## 2 Residual              0.000 0.000      NA       NA        0</code></pre>
+<pre><code>## # A tibble: 2 × 7
+##   group    effect    variance    sd var_2.5 var_97.5 var_prop
+##   &lt;chr&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 unit     Intercept    0.023 0.152   0.016    0.033        1
+## 2 Residual &lt;NA&gt;         0     0      NA       NA            0</code></pre>
 <p>As expected, we find the residual variance to be 0 and instead we
 have the mimiced homoscedastic, independent error variance for the
 random <code>(1 | unit)</code> effect estimated as 0.023.</p>
@@ -858,7 +867,7 @@ structures.</p>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">varstruct =</span> <span class="st">&quot;iid&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sigma    =</span> mod.iid.nlme<span class="sc">$</span>sigma) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Variance =</span> sigma<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
+<pre><code>## # A tibble: 1 × 3
 ##   varstruct sigma Variance
 ##   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 iid       0.152   0.0232</code></pre>
@@ -954,13 +963,11 @@ plot.</p>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.ar1 %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mod.AR1 <span class="sc">%&gt;%</span> <span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="at">show_cor =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <pre><code>## $`Variance Components`
-##          group     effect variance    sd var_2.5 var_97.5 var_prop
-## plot1     plot weekFweek1    0.022 0.149   0.013    0.038      0.2
-## plot2     plot weekFweek2    0.022 0.149   0.013    0.038      0.2
-## plot3     plot weekFweek3    0.022 0.149   0.013    0.038      0.2
-## plot4     plot weekFweek4    0.022 0.149   0.013    0.038      0.2
-## plot5     plot weekFweek5    0.022 0.149   0.013    0.038      0.2
-## 1     Residual               0.000 0.000      NA       NA      0.0
+## # A tibble: 2 × 6
+##   group    variance    sd var_2.5 var_97.5 var_prop
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 plot        0.022 0.149   0.013    0.038      0.2
+## 2 Residual    0     0      NA       NA          0  
 ## 
 ## $Cor
 ## $Cor$plot
@@ -994,7 +1001,7 @@ are identified after the <code>|</code>.</p>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr2wks =</span> rho<span class="sc">^</span><span class="dv">2</span>,</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr3wks =</span> rho<span class="sc">^</span><span class="dv">3</span>,</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr4wks =</span> rho<span class="sc">^</span><span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 8
+<pre><code>## # A tibble: 1 × 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1)     0.149 0.749   0.0222   0.749    0.561    0.420    0.315</code></pre>
@@ -1039,7 +1046,7 @@ takes quite some code:</p>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr2wks =</span> rho<span class="sc">^</span><span class="dv">2</span>,</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr3wks =</span> rho<span class="sc">^</span><span class="dv">3</span>,</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr4wks =</span> rho<span class="sc">^</span><span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 8
+<pre><code>## # A tibble: 1 × 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1)     0.149 0.749   0.0222   0.749    0.561    0.420    0.315</code></pre>
@@ -1105,7 +1112,7 @@ takes quite some code:</p>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr2wks =</span> rho<span class="sc">^</span><span class="dv">2</span>,</span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr3wks =</span> rho<span class="sc">^</span><span class="dv">3</span>,</span>
 <span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr4wks =</span> rho<span class="sc">^</span><span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 9
+<pre><code>## # A tibble: 1 × 9
 ##   varstruct      sigma nugget   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ar(1) + nugget 0.150  0.172 0.752   0.0225   0.752    0.565    0.425    0.319</code></pre>
@@ -1139,13 +1146,15 @@ at the moment.</p>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.hCS %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>mod.hCS <span class="sc">%&gt;%</span> <span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="at">show_cor =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <pre><code>## $`Variance Components`
-##          group     effect variance    sd var_2.5 var_97.5 var_prop
-## plot1     plot weekFweek1    0.021 0.144   0.009    0.046    0.181
-## plot2     plot weekFweek2    0.022 0.147   0.010    0.048    0.188
-## plot3     plot weekFweek3    0.021 0.146   0.010    0.047    0.186
-## plot4     plot weekFweek4    0.029 0.171   0.014    0.063    0.254
-## plot5     plot weekFweek5    0.022 0.148   0.010    0.049    0.191
-## 1     Residual               0.000 0.000      NA       NA    0.000
+## # A tibble: 6 × 7
+##   group    effect     variance    sd var_2.5 var_97.5 var_prop
+##   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 plot     weekFweek1    0.021 0.144   0.009    0.046    0.181
+## 2 plot     weekFweek2    0.022 0.147   0.01     0.048    0.188
+## 3 plot     weekFweek3    0.021 0.146   0.01     0.047    0.186
+## 4 plot     weekFweek4    0.029 0.171   0.014    0.063    0.254
+## 5 plot     weekFweek5    0.022 0.148   0.01     0.049    0.191
+## 6 Residual &lt;NA&gt;          0     0      NA       NA        0    
 ## 
 ## $Cor
 ## $Cor$plot
@@ -1180,7 +1189,7 @@ are identified after the <code>|</code>.</p>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr2wks =</span> rho,</span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr3wks =</span> rho,</span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Corr4wks =</span> rho)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 8
+<pre><code>## # A tibble: 1 × 8
 ##   varstruct sigma   rho Variance Corr1wk Corr2wks Corr3wks Corr4wks
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 cs        0.152 0.701   0.0232   0.701    0.701    0.701    0.701</code></pre>
@@ -1205,13 +1214,15 @@ toeplitz structure, we use <code>toep(weekF + 0 | plot)</code>.</p>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.Toep %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>mod.Toep <span class="sc">%&gt;%</span> <span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="at">show_cor =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <pre><code>## $`Variance Components`
-##          group     effect variance    sd var_2.5 var_97.5 var_prop
-## plot1     plot weekFweek1    0.021 0.144   0.009    0.046    0.182
-## plot2     plot weekFweek2    0.023 0.152   0.010    0.052    0.202
-## plot3     plot weekFweek3    0.022 0.147   0.010    0.048    0.190
-## plot4     plot weekFweek4    0.029 0.170   0.013    0.062    0.253
-## plot5     plot weekFweek5    0.020 0.141   0.009    0.043    0.174
-## 1     Residual               0.000 0.000      NA       NA    0.000
+## # A tibble: 6 × 7
+##   group    effect     variance    sd var_2.5 var_97.5 var_prop
+##   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 plot     weekFweek1    0.021 0.144   0.009    0.046    0.182
+## 2 plot     weekFweek2    0.023 0.152   0.01     0.052    0.202
+## 3 plot     weekFweek3    0.022 0.147   0.01     0.048    0.19 
+## 4 plot     weekFweek4    0.029 0.17    0.013    0.062    0.253
+## 5 plot     weekFweek5    0.02  0.141   0.009    0.043    0.174
+## 6 Residual &lt;NA&gt;          0     0      NA       NA        0    
 ## 
 ## $Cor
 ## $Cor$plot
@@ -1255,13 +1266,15 @@ completely unstrucutred variance structure, we use
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative: mod.UN %&gt;% broom.mixed::tidy(effects = &quot;ran_pars&quot;, scales = &quot;vcov&quot;)</span></span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>mod.UN <span class="sc">%&gt;%</span> <span class="fu">extract_vc</span>(<span class="at">ci_scale =</span> <span class="st">&quot;var&quot;</span>, <span class="at">show_cor =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <pre><code>## $`Variance Components`
-##          group     effect variance    sd var_2.5 var_97.5 var_prop
-## plot1     plot weekFweek1    0.020 0.141   0.009    0.044    0.170
-## plot2     plot weekFweek2    0.021 0.143   0.009    0.046    0.177
-## plot3     plot weekFweek3    0.022 0.149   0.010    0.050    0.192
-## plot4     plot weekFweek4    0.033 0.181   0.015    0.073    0.282
-## plot5     plot weekFweek5    0.021 0.143   0.009    0.046    0.178
-## 1     Residual               0.000 0.000      NA       NA    0.000
+## # A tibble: 6 × 7
+##   group    effect     variance    sd var_2.5 var_97.5 var_prop
+##   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 plot     weekFweek1    0.02  0.141   0.009    0.044    0.17 
+## 2 plot     weekFweek2    0.021 0.143   0.009    0.046    0.177
+## 3 plot     weekFweek3    0.022 0.149   0.01     0.05     0.192
+## 4 plot     weekFweek4    0.033 0.181   0.015    0.073    0.282
+## 5 plot     weekFweek5    0.021 0.143   0.009    0.046    0.178
+## 6 Residual &lt;NA&gt;          0     0      NA       NA        0    
 ## 
 ## $Cor
 ## $Cor$plot
@@ -1300,7 +1313,7 @@ the <code>|</code>.</p>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sigma         =</span> mod.UN.nlme<span class="sc">$</span>sigma) <span class="sc">%&gt;%</span></span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">StandardError =</span> sigma <span class="sc">*</span> varStruct) <span class="sc">%&gt;%</span></span>
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Variance      =</span> StandardError <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 5
+<pre><code>## # A tibble: 5 × 5
 ##   grp   varStruct sigma StandardError Variance
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 week1      1    0.141         0.141   0.0197

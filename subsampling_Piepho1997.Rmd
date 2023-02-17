@@ -18,7 +18,7 @@ pacman::p_load(kableExtra, formattable, htmltools)
 # packages
 pacman::p_load(tidyverse,         # data import and handling
                conflicted,        # handling function conflicts
-               lme4, lmerTest,    # linear mixed model 
+               lme4, lmerTest, pbkrtest, # linear mixed model 
                emmeans, multcomp, multcompView, # adjusted mean comparisons
                ggplot2, desplot, see) # plots
 

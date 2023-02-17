@@ -13,7 +13,7 @@
 
 <title>Dr. Paul Schmidt</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -89,6 +89,9 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
+
+<h1 style="background-color:#00923f;color:white;text-align:center"> There is a newer, revised version of this website: https://schmidtpaul.github.io/dsfair_quarto/ </h1>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -189,11 +192,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -222,8 +229,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -231,16 +238,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -454,7 +454,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="0contactinfo.html">Contact</a>
+  <a href="https://schmidtpaul.github.io/">Contact</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -591,6 +591,120 @@ Duration
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Nov 2022
+</td>
+<td style="text-align:left;">
+Data science for experimental life sciences with R (part 2)
+</td>
+<td style="text-align:right;width: 5em; ">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+2.5d
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Nov 2022
+</td>
+<td style="text-align:left;">
+Data science for experimental life sciences with R (part 2)
+</td>
+<td style="text-align:right;width: 5em; ">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+2.5d
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Nov 2022
+</td>
+<td style="text-align:left;">
+Data science for experimental life sciences with R (part 1)
+</td>
+<td style="text-align:right;width: 5em; ">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+2.5d
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Nov 2022
+</td>
+<td style="text-align:left;">
+Data science for experimental life sciences with R (part 1)
+</td>
+<td style="text-align:right;width: 5em; ">
+Ger
+<img src="https://cdn.countryflags.com/thumbs/germany/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+Thünen-Institut, Braunschweig via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+2.5d
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Nov 2022
+</td>
+<td style="text-align:left;">
+Statistics with R - an Introduction
+</td>
+<td style="text-align:right;width: 5em; ">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+Universität Bonn via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+2d
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 5em; ">
+Oct 2022
+</td>
+<td style="text-align:left;">
+R and the {Tidyverse}
+</td>
+<td style="text-align:right;width: 5em; ">
+Eng
+<img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png" width="16" height="16">
+</td>
+<td style="text-align:right;width: 20em; ">
+FBN, Dummerstorf via
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png" width="32" height="6.4">
+</td>
+<td style="text-align:right;width: 5em; ">
+1d
+</td>
+</tr>
 <tr>
 <td style="text-align:right;width: 5em; ">
 Mar 2022
@@ -806,7 +920,7 @@ CIHEAM Zaragoza via
 Mar 2020
 </td>
 <td style="text-align:left;">
-Real-time consultation on statistics and mixed models in R
+Real‑time consultation on statistics and mixed models in R
 </td>
 <td style="text-align:right;width: 5em; ">
 Eng
@@ -920,7 +1034,7 @@ Thünen-Institut, Braunschweig
 May 2018
 </td>
 <td style="text-align:left;">
-Implementation of yield stability assessment with ASReml-R
+Implementation of yield stability assessment with ASReml‑R
 </td>
 <td style="text-align:right;width: 5em; ">
 Eng
@@ -936,7 +1050,7 @@ Bangladesh Rice Res. Inst., Gazipur
 </tr>
 <tr>
 <td style="text-align:right;width: 5em; ">
-2016-2018
+2016‑2018
 </td>
 <td style="text-align:left;">
 Statistical analysis with SAS (monthly)
@@ -955,7 +1069,7 @@ Universität Hohenheim, Stuttgart
 </tr>
 <tr>
 <td style="text-align:right;width: 5em; ">
-2016-2018
+2016‑2018
 </td>
 <td style="text-align:left;">
 Statistical analysis with R (monthly)

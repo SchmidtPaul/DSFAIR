@@ -13,7 +13,7 @@
 
 <title>Alpha design</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -87,6 +87,9 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
+
+<h1 style="background-color:#00923f;color:white;text-align:center"> There is a newer, revised version of this website: https://schmidtpaul.github.io/dsfair_quarto/ </h1>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -188,13 +191,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -290,11 +300,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -323,8 +337,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -332,16 +346,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -555,7 +562,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="0contactinfo.html">Contact</a>
+  <a href="https://schmidtpaul.github.io/">Contact</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -616,7 +623,7 @@ block size was 4.</p>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
-<pre><code>## # A tibble: 72 x 7
+<pre><code>## # A tibble: 72 × 7
 ##     plot rep   inc.block gen   yield   row   col
 ##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1     1 Rep1  B1        G11    4.12     4     1
@@ -629,7 +636,7 @@ block size was 4.</p>
 ##  8     8 Rep1  B2        G02    4.34     1     2
 ##  9     9 Rep1  B3        G23    4.23     4     3
 ## 10    10 Rep1  B3        G14    4.76     3     3
-## # ... with 62 more rows</code></pre>
+## # … with 62 more rows</code></pre>
 </div>
 <div id="formatting" class="section level2">
 <h2>Formatting</h2>
@@ -675,7 +682,7 @@ levels (B1-B18), but this was not done here.</p>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(yield)) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
-<pre><code>## # A tibble: 24 x 3
+<pre><code>## # A tibble: 24 × 3
 ##    gen    mean std.dev
 ##    &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
 ##  1 G01    5.16  0.534 
@@ -710,7 +717,7 @@ levels (B1-B18), but this was not done here.</p>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.dev =</span> <span class="fu">sd</span>(yield))  <span class="sc">%&gt;%</span> </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span> <span class="co"># sort</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n=</span><span class="cn">Inf</span>) <span class="co"># print full table</span></span></code></pre></div>
-<pre><code>## # A tibble: 18 x 4
+<pre><code>## # A tibble: 18 × 4
 ## # Groups:   rep [3]
 ##    rep   inc.block  mean std.dev
 ##    &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;
@@ -776,7 +783,7 @@ the s.e.d. the better.</p>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrast</span>(<span class="at">method =</span> <span class="st">&quot;pairwise&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># get differences between adjusted means</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="co"># format to table</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(SE)) <span class="co"># mean of SE (=Standard Error) column</span></span></code></pre></div>
-<pre><code>## # A tibble: 1 x 1
+<pre><code>## # A tibble: 1 × 1
 ##   `mean(SE)`
 ##        &lt;dbl&gt;
 ## 1      0.277</code></pre>
@@ -792,7 +799,7 @@ the s.e.d. the better.</p>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrast</span>(<span class="at">method =</span> <span class="st">&quot;pairwise&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># get differences between adjusted means</span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="co"># format to table</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(SE)) <span class="co"># mean of SE (=Standard Error) column</span></span></code></pre></div>
-<pre><code>## # A tibble: 1 x 1
+<pre><code>## # A tibble: 1 × 1
 ##   `mean(SE)`
 ##        &lt;dbl&gt;
 ## 1      0.270</code></pre>
@@ -867,9 +874,9 @@ to be statistically significant (p&lt;0.001).</p>
 ## Conf-level adjustment: sidak method for 24 estimates 
 ## P value adjustment: tukey method for comparing a family of 24 estimates 
 ## significance level used: alpha = 0.05 
-## NOTE: Compact letter displays can be misleading
-##       because they show NON-findings rather than findings.
-##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
+## NOTE: If two or more means share the same grouping symbol,
+##       then we cannot show them to be different.
+##       But we also did not show them to be the same.</code></pre>
 <p>Note that if you would like to see the underyling individual
 contrasts/differences between adjusted means, simply add
 <code>details = TRUE</code> to the <code>cld()</code> statement. Also,

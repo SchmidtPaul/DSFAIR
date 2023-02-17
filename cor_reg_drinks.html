@@ -13,7 +13,7 @@
 
 <title>Correlation &amp; Regression</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -87,6 +87,9 @@
 <meta property="twitter:image" content="img/logo/ScreenshotIndex.PNG">
 -->
 
+
+
+<h1 style="background-color:#00923f;color:white;text-align:center"> There is a newer, revised version of this website: https://schmidtpaul.github.io/dsfair_quarto/ </h1>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -188,13 +191,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -290,11 +300,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -323,8 +337,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -332,16 +346,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -555,7 +562,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="0contactinfo.html">Contact</a>
+  <a href="https://schmidtpaul.github.io/">Contact</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -603,7 +610,7 @@ the alcohol content in their blood was.</p>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataURL)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
-<pre><code>## # A tibble: 20 x 3
+<pre><code>## # A tibble: 20 × 3
 ##    Person drinks blood_alc
 ##    &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;
 ##  1 Max         1       0.2
@@ -688,7 +695,12 @@ between two numeric variables. Correlation can only have values between
 -1 and 1, where 0 means <em>no correlation</em>, while all other
 possible values are either negative or positive correlations. The
 farther away from 0, the stronger is the correlation.</p>
-<p><img src="img/correlation.PNG" width="60%" style="display: block; margin: auto;" /></p>
+<!-- # ```{r pressure, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/correlation.png", error = FALSE) -->
+<!-- # ``` -->
+<center>
+<img src="images/img/correlation.png" style="width:50%">
+</center>
 <p>Simply put, a positive correlation means <em>“if one variable gets
 bigger, the other also gets bigger”</em> and a negative correlation
 means <em>“if one variable gets bigger, the other gets smaller”</em>.
@@ -761,7 +773,12 @@ href="https://corrr.tidymodels.org/">{corrr}</a>.</p>
 to <a href="https://www.wikiwand.com/en/Simple_linear_regression">simple
 linear regression</a>, which - simply put - finds the best straight line
 that goes through dots in a scatter plot of two numeric variables:</p>
-<p><img src="img/regressionexamples.png" width="60%" style="display: block; margin: auto;" /></p>
+<!-- # ```{r, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/regressionexamples.png", error = FALSE) -->
+<!-- # ``` -->
+<center>
+<img src="img/regressionexamples.png" style="width:50%">
+</center>
 <p>The linear model behind such a straight line is simply:</p>
 <p><span class="math display">\[ y = \alpha + \beta x\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> or <span
@@ -773,7 +790,12 @@ class="math inline">\(x\)</span> are our data points. Fitting such a
 regression is really just finding the optimal estimates for <span
 class="math inline">\(\alpha\)</span> and <span
 class="math inline">\(\beta\)</span>.</p>
-<p><img src="img/regressiontheory.png" width="60%" style="display: block; margin: auto;" /></p>
+<!-- # ```{r, echo=FALSE, out.width = '60%', fig.align='center'} -->
+<!-- # knitr::include_graphics("img/regressiontheory.png", error = FALSE) -->
+<!-- # ``` -->
+<center>
+<img src="img/regressiontheory.png" style="width:50%">
+</center>
 <p>In contrast to correlation, a simple linear regression is a model and
 it therefore matters which variable is <span
 class="math inline">\(y\)</span> (dependent variable) and which is <span
@@ -827,7 +849,7 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb15-1"><a h
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /></p>
+<p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-10-1.png" width="60%" style="display: block; margin: auto;" /></p>
 <p>Here is a little more info why
 <code>formula = blood_alc ~ drinks</code> leads to R estimating the
 <span class="math inline">\(a\)</span> and <span
@@ -987,7 +1009,7 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb22-1"><a h
 <span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))</span>
 <span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /></p>
+<p><img src="cor_reg_drinks_files/figure-html/unnamed-chunk-14-1.png" width="60%" style="display: block; margin: auto;" /></p>
 <p><strong>R-Code and exercise solutions</strong></p>
 <p>Please <a
 href="https://github.com/SchmidtPaul/DSFAIR/tree/master/Rpurl"

@@ -53,7 +53,7 @@ dat <- dat %>%
 In order to obtain a field layout of the trial, we can use the `desplot()` function. Notice that for this we need two data columns that identify the `row` and `column` of each plot in the trial. 
 
 ```{r, fig.height = 2, fig.width = 4, fig.align = "center"}
-desplot(data = dat,
+desplot(data = dat, flip = T,
   form = cultivar ~ col + row,        # fill color per cultivar
   out1 = block,                       # bold lines between blocks
   text = yield, cex = 1, shorten = F, # show yield for each plot
@@ -110,7 +110,7 @@ Following a significant F-test, one will want to compare cultivar means.
 
 ```{r}
 mean_comparisons <- mod %>% 
-  emmeans(specs = "cultivar") %>% # get adjusted means for cultivars
+  emmeans(specs = ~ cultivar) %>% # get adjusted means for cultivars
   cld(adjust="tukey", Letters=letters) # add compact letter display
 
 mean_comparisons
@@ -200,7 +200,7 @@ pacman::p_load(readr, tidyverse,     # data import and handling
 
 # format
 ex1dat <- ex1dat %>% 
-  mutate_at(vars(density), as.factor)
+  mutate_at(vars(block, density), as.factor)
 
 # Create a field layout with desplot()
 desplot(data = ex1dat,
